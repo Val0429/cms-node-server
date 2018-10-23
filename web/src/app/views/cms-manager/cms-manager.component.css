@@ -1,0 +1,11 @@
+.icon-button {
+    cursor: pointer;
+    font-size: 30px;
+    margin-left: 5px;
+}
+.cms-manager-table-check-cell {
+    width: 30px;
+}
+.cms-manager-table-check-cell i {
+    font-size: 19px;
+}

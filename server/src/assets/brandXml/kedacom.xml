@@ -1,0 +1,123 @@
+<Devices>
+	<Device>
+		<Manufacture>Kedacom</Manufacture>
+		<Model>IPC121-Bi5n</Model>
+		<Type>Camera</Type>
+		<Alias>IPC121-Bi5n(VER.A)</Alias>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<TVStandard value="PAL,NTSC">
+			<ProfileMode value="1">
+				<Profile id="1">
+					<Compression value="H264">
+						<Resolution value="1920x1080,1600x1200,1280x960,1280x720">
+							<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+							<FrameRate PowerFrequency="60">1,5,10,15,20,25,30</FrameRate>
+							<Bitrate>32K,64K,128K,256K,512K,1M,2M,4M,8M,10M,12M,16M</Bitrate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression value="H264">
+						<Resolution value="1920x1080,1600x1200,1280x960,1280x720">
+							<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+							<FrameRate PowerFrequency="60">1,5,10,15,20,25,30</FrameRate>
+							<Bitrate>32K,64K,128K,256K,512K,1M,2M,4M,8M,10M,12M,16M</Bitrate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression value="H264">
+						<Resolution value="704x576,704x480,352x288,176x144">
+							<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+							<FrameRate PowerFrequency="60">1,5,10,15,20,25,30</FrameRate>
+							<Bitrate>32K,64K,128K,256K,512K,1M,2M,4M,8M,10M,12M,16M</Bitrate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+			<ProfileMode value="3">
+				<Profile id="1">
+					<Compression value="H264">
+						<Resolution value="1920x1080,1600x1200,1280x960,1280x720">
+							<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+							<FrameRate PowerFrequency="60">1,5,10,15,20,25,30</FrameRate>
+							<Bitrate>32K,64K,128K,256K,512K,1M,2M,4M,8M,10M,12M,16M</Bitrate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression value="H264">
+						<Resolution value="704x576,704x480,352x288,176x144">
+							<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+							<FrameRate PowerFrequency="60">1,5,10,15,20,25,30</FrameRate>
+							<Bitrate>32K,64K,128K,256K,512K,1M,2M,4M,8M,10M,12M,16M</Bitrate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="3">
+					<Compression value="H264">
+						<Resolution value="1920x1080,1600x1200,1280x960,1280x720,704x576,704x480,352x288">
+							<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+							<FrameRate PowerFrequency="60">1,5,10,15,20,25,30</FrameRate>
+							<Bitrate>32K,64K,128K,256K,512K,1M,2M,4M,8M,10M,12M,16M</Bitrate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</TVStandard>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfDI>4</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Kedacom</Manufacture>
+		<Model>IPC425-i020-N</Model>
+		<Type>Camera</Type>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<TVStandard value="PAL,NTSC">
+			<ProfileMode value="1">
+				<Profile id="1">
+					<Compression value="H264">
+						<Resolution value="1920x1080">
+							<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+							<Bitrate>32K,64K,128K,256K,512K,1M,2M,4M,8M,10M,12M,16M</Bitrate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression value="H264">
+						<Resolution value="1920x1080">
+							<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+							<Bitrate>32K,64K,128K,256K,512K,1M,2M,4M,8M,10M,12M,16M</Bitrate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression value="H264">
+						<Resolution value="1280x720,704x576,704x480,352x288,176x144">
+							<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+							<Bitrate>32K,64K,128K,256K,512K,1M,2M,4M,8M,10M,12M,16M</Bitrate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</TVStandard>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfDI>4</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+</Devices>

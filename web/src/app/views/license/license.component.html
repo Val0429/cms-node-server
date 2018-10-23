@@ -1,0 +1,107 @@
+<div class="col-12">
+  <button class="btn btn-secondary mb-xs" role="button" (click)="clickOnlineRegistration();modalWindow.show()">Online Registration</button>
+  <button class="btn btn-secondary mb-xs" role="button" (click)="clickOfflineRegistration();modalWindow.show()">Offline Registration</button>
+</div>
+<div class="col-12">
+  <section class="widget">
+    <header>
+      <legend>
+        <strong>License Overview</strong>
+      </legend>
+    </header>
+    <div class="widget-body" *ngIf="statistics">
+      <table class="table table-bordered table-lg mb-lg">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>License Key</th>
+            <th>MAC</th>
+            <th>Count</th>
+            <th>Type</th>
+            <th>Register Date</th>
+            <th>Expire Date</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let product of statistics">
+            <tr *ngFor="let key of product.License">
+              <td>{{product.ProductType}}</td>
+              <td>{{key.LicenseKey}}</td>
+              <td>{{key.MAC}}</td>
+              <td>{{key.LicenseCount}}</td>
+              <td>
+                <span *ngIf="key.Trial">Trial</span>
+                <span *ngIf="!key.Trial">Formal</span>
+              </td>
+              <td>
+                <span *ngIf="key.RegisterDate">{{key.RegisterDate}}</span>
+                <span *ngIf="!key.RegisterDate">Unlimited</span>
+              </td>
+              <td>{{key.ExpireDate}}</td>
+              <td>
+                <p class="mb-0" *ngFor="let desc of product.Description">{{desc}}</p>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <div class="widget-body" *ngIf="!licenseInfo">
+      <span>Loading...</span>
+    </div>
+  </section>
+</div>
+<div class="col-12">
+  <section class="widget">
+    <header>
+      <legend>
+        <strong>License Use Statistics</strong>
+      </legend>
+    </header>
+    <div class="widget-body" *ngIf="statistics">
+      <table class="table table-bordered table-lg mb-lg">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>License Count</th>
+            <th>Used Count</th>
+            <th>Unused Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of statistics">
+            <td>{{product.ProductType}}</td>
+            <td>{{product.LicenseCount}}</td>
+            <td>{{product.UsageCount}}</td>
+            <td>{{product.LicenseCount - product.UsageCount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="widget-body" *ngIf="!licenseInfo">
+      <span>Loading...</span>
+    </div>
+  </section>
+</div>
+
+<div bsModal #modalWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <button (click)="modalWindow.hide()" aria-label="Close" class="close ml-auto" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-center fw-bold">
+          <span *ngIf="currentEditorMode === 4">Online Registration</span>
+          <span *ngIf="currentEditorMode === 5">Offline Registration</span>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <app-online-registration [licenseInfo]="licenseInfo" (closeModalEvent)="modalWindow.hide()" (reloadEvent)="reloadLicenseInfo()"
+          *ngIf="currentEditorMode === 4"></app-online-registration>
+        <app-offline-registration (closeModalEvent)="modalWindow.hide()" (reloadEvent)="reloadLicenseInfo()" *ngIf="currentEditorMode === 5"></app-offline-registration>
+      </div>
+    </div>
+  </div>
+</div>

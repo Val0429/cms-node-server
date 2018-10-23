@@ -1,0 +1,19 @@
+<div class="app chat-sidebar-container nav-collapsed" [ngClass]="{'nav-static': isStaticSidebar, 'nav-collapsed': !isStaticSidebar && !isMouseInSidebar}">
+  <!-- 左側選單 -->
+  <nav class="sidebar" #sidebar (mouseenter)="isMouseInSidebar=true" (mouseleave)="isMouseInSidebar=false">
+    <app-isap-sidebar [isStaticSidebar]="isStaticSidebar" [isMouseInSidebar]="isMouseInSidebar"></app-isap-sidebar>
+  </nav>
+  <!-- 上方選單 -->
+  <nav class="page-controls navbar navbar-dashboard">
+    <app-isap-header (notifySidebarStatus)="isStaticSidebar = !isStaticSidebar"></app-isap-header>
+  </nav>
+  <!-- Layout 主體 -->
+  <div class="content-wrap" #content>
+    <!-- 內容呈現處 -->
+    <main class="content">
+      <div class="router-component">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>

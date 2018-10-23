@@ -1,0 +1,102 @@
+<div class="row">
+  <div class="col-12">
+    <section class="widget">
+      <header>
+        <legend>
+          <strong>Camera List
+            <span>{{deviceCountInfo}}</span>
+          </strong>
+        </legend>
+        <div class="float-right">
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="searchWindow.show()">
+            Search
+          </button>
+          <button *ngIf="cameraConfigs.length > 0" class="btn btn-secondary width-100 mb-xs" role="button" (click)="cloneWindow.show()">
+            Clone
+          </button>
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addDevice()">
+            Create
+          </button>
+        </div>
+      </header>
+      <div class="widget-body">
+        <table class="table table-hover table-lg mt-lg mb-0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Brand</th>
+              <th>Model</th>
+              <th>Name</th>
+              <th>Network Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cam of cameraConfigs" (click)="currentEditCamera = cam" [class.active]="cam === currentEditCamera">
+              <td>{{cam.Channel}}</td>
+              <td>{{cam.Config.Brand}}</td>
+              <td>{{cam.Config.Model}}</td>
+              <td>{{cam.Name}}</td>
+              <td><span *ngIf="cam.Config.IPAddress !== ''">{{cam.Config.IPAddress}}:{{cam.Config.Http}}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  <div class="col-12">
+    <app-camera-editor [currentCamera]="currentEditCamera" (reloadDataEvent)="reloadData()"></app-camera-editor>
+  </div>
+</div>
+<div bsModal #searchWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <button (click)="searchWindow.hide()" aria-label="Close" class="close ml-auto" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-center fw-bold">Search Device</h4>
+      </div>
+      <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
+        <app-camera-search (addDevice)="addDevice($event)" (closeModal)="searchWindow.hide();"></app-camera-search>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-gray" (click)="searchWindow.hide();">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div bsModal #cloneWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <button (click)="cloneWindow.hide()" aria-label="Close" class="close ml-auto" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-center fw-bold">Clone Device</h4>
+      </div>
+      <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
+        <div class="form-group row">
+          <label class="col-md-4  col-form-label text-md-right">Device</label>
+          <div class="col-md-8">
+            <select class="select1" (change)="setCloneDevice($event)">
+              <option *ngFor="let item of cameraConfigs;" value= {{item.id}}>{{item.Channel}} {{item.Name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4  col-form-label text-md-right">Quantity</label>
+          <div class="col-md-8">
+            <div class="input-group">
+              <input type="number" class="form-control" [(ngModel)]="cloneCameraParam.quantity">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="clickClone();">Clone</button>
+        <button type="button" class="btn btn-gray" (click)="cloneWindow.hide();">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

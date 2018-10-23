@@ -1,0 +1,31 @@
+<div class="week-scheduler">
+  <div class="row week-scheduler-control-bar">
+    <div *ngIf="!customMode.enable" class="col-md-12">
+      <button type="button" class="btn btn-default float-right" (click)="setCustomMode(true, 0)">
+        Custom
+      </button>
+    </div>
+    <div *ngIf="customMode.enable" class="col-md-12">
+      <div class="custom-mode-select" style="background-color: white;" [class.active]="this.customMode.index === -1"
+        (click)="setCustomMode(true, -1)" placement="top" tooltip="Clear"></div>
+      <div class="custom-mode-select" *ngFor="let plan of plans; let i = index" [ngStyle]="{ 'background-color': options.colors[i]}"
+        [class.active]="this.customMode.index === i" (click)="setCustomMode(true, i)" placement="top" [tooltip]="options.tooltips[i]"></div>
+      <button type="button" class="btn btn-primary float-right" (click)="setCustomMode(false, 0)">
+        Update
+      </button>
+    </div>
+  </div>
+
+  <div class="week-scheduler-container">
+    <div class="week-scheduler-sidebar">
+      <div>Hour</div>
+      <div *ngFor="let hour of sideTimeHours">{{hour}}</div>
+    </div>
+    <div class="weekDay" *ngFor="let day of dayOfWeek; let i = index;">
+      <div>{{day}}</div>
+      <div [ngStyle]="{ 'background-color': getTimeBlockStyle(tb)}" *ngFor="let tb of getTimeBlockByDay(i); let j = index"
+        (mousedown)="setBeginDragEvent($event, i, j)" (mouseenter)="onDragHover(i, j)">
+      </div>
+    </div>
+  </div>
+</div>

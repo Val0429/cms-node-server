@@ -1,0 +1,251 @@
+<div class="col-12">
+  <section class="widget">
+    <header>
+      <legend>
+        <strong>General</strong>
+      </legend>
+    </header>
+    <div class="widget-body" *ngIf="generalSetting">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Dwell Time of Patrol</label>
+        <div class="col-md-8">
+          <div class="input-group width-150">
+            <input type="number" class="form-control" id="dwell-dropdown" [(ngModel)]="generalSetting.LivePatrolInterval">
+            <div class="input-group-btn" dropdown>
+              <button class="btn btn-default dropdown-toggle" dropdownToggle>
+                <i class="fa fa-angle-down"></i>
+              </button>
+              <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <li *ngFor="let item of dwellTimeOfPatrolOptionsObject">
+                  <a class="dropdown-item" (click)="generalSetting.LivePatrolInterval = item?.value">{{item?.key}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <span class="help-block">Range from 5 to 3600</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Display Device ID</label>
+        <div class="col-md-8" style="padding-top: 4px;">
+          <input id="display-device-id" type="checkbox" [checked]="generalSetting.DisplayDeviceId == 'true'" (change)="generalSetting.DisplayDeviceId = generalSetting.DisplayDeviceId == 'true' ? 'false' : 'true'">
+          <label for="display-device-id">Display</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Display View ID</label>
+        <div class="col-md-8" style="padding-top: 4px;">
+          <input id="display-view-id" type="checkbox" [checked]="generalSetting.DisplayGroupId == 'true'" (change)="generalSetting.DisplayGroupId = generalSetting.DisplayGroupId == 'true' ? 'false' : 'true'">
+          <label for="display-view-id">Display</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Display NVR ID</label>
+        <div class="col-md-8" style="padding-top: 4px;">
+          <input id="display-nvr-id" type="checkbox" [checked]="generalSetting.DisplayNVRId == 'true'" (change)="generalSetting.DisplayNVRId = generalSetting.DisplayNVRId == 'true' ? 'false' : 'true'">
+          <label for="display-nvr-id">Display</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Snapshot / Save Image</label>
+        <div class="col-md-8" style="padding-top: 4px;">
+          <input id="timestamp-osd" type="checkbox" [checked]="generalSetting.ImageWithTimestamp == 'true'" (change)="generalSetting.ImageWithTimestamp = generalSetting.ImageWithTimestamp == 'true' ? 'false' : 'true'">
+          <label for="timestamp-osd">Timestamp OSD</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Mail Server</label>
+        <div class="col-md-8">
+          <button class="btn btn-secondary" role="button" (click)="mailServerIsCollapsed = !mailServerIsCollapsed">
+            Setup
+          </button>
+          <div [collapse]="mailServerIsCollapsed">
+            <app-mail-server [mail]="generalSetting.Mail"></app-mail-server>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">FTP Server</label>
+        <div class="col-md-8">
+          <button class="btn btn-secondary" role="button" (click)="ftpServerIsCollapsed = !ftpServerIsCollapsed">
+            Setup
+          </button>
+          <div [collapse]="ftpServerIsCollapsed">
+            <app-ftp-server [ftp]="generalSetting.Ftp"></app-ftp-server>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Save Image Path</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="generalSetting.SaveImagePath">
+            <option *ngFor="let item of localPathOptions;" value= {{item}}>{{item}}</option>
+          </select>
+          <span class="help-block">Save Image folder name is "CMS Image (IP_ADDRESS)"</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Export Video Path</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="generalSetting.ExportVideoPath">
+            <option *ngFor="let item of localPathOptions;" value= {{item}}>{{item}}</option>
+          </select>
+          <span class="help-block">Export Video folder name is "CMS Video (IP_ADDRESS)"</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Enable Video-Stretch function to stretch images to fill the display panes</label>
+        <div class="col-md-8" style="padding-top: 4px;">
+          <input id="panes-live" type="checkbox" [checked]="generalSetting.StretchLiveVideo == 'true'" (change)="generalSetting.StretchLiveVideo = generalSetting.StretchLiveVideo == 'true' ? 'false' : 'true'">
+          <label for="panes-live">Live</label>
+          <input id="panes-playback" type="checkbox" [checked]="generalSetting.StretchPlaybackVideo == 'true'" (change)="generalSetting.StretchPlaybackVideo = generalSetting.StretchPlaybackVideo == 'true' ? 'false' : 'true'">
+          <label for="panes-playback">Playback</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Dynamic Stream Profile Setup</label>
+        <div class="col-md-8">
+          <button class="btn btn-secondary" role="button" (click)="dynamicStreamProfileIsCollapsed = !dynamicStreamProfileIsCollapsed">
+            Setup
+          </button>
+          <div [collapse]="dynamicStreamProfileIsCollapsed">
+            <app-dynamic-stream-profile [generalSetting]="generalSetting"></app-dynamic-stream-profile>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Decode I-Frame Setup</label>
+        <div class="col-md-8">
+          <button class="btn btn-secondary" role="button" (click)="decodeIframeIsCollapsed = !decodeIframeIsCollapsed">
+            Setup
+          </button>
+          <div [collapse]="decodeIframeIsCollapsed">
+            <app-decode-iframe [generalSetting]="generalSetting"></app-decode-iframe>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Video Title Bar Setup</label>
+        <div class="col-md-8">
+          <button class="btn btn-secondary" role="button" (click)="videoTitleBarIsCollapsed = !videoTitleBarIsCollapsed">
+            Setup
+          </button>
+          <div [collapse]="videoTitleBarIsCollapsed">
+            <app-video-title-bar [titleBarInformations]="generalSetting.VideoTitleBar"></app-video-title-bar>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Watermark</label>
+        <div class="col-md-8">
+          <button class="btn btn-secondary" role="button" (click)="watermarkIsCollapsed = !watermarkIsCollapsed">
+            Setup
+          </button>
+          <div [collapse]="watermarkIsCollapsed">
+            <app-watermark [watermarkInformations]="generalSetting.Watermark"></app-watermark>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">CPU Protection Setup</label>
+        <div class="col-md-8">
+          <div class="input-group width-100">
+            <input type="number" class="form-control" id="cpu-protection-dropdown" [(ngModel)]="generalSetting.CPULoadingUpperBoundary">
+            <div class="input-group-btn" dropdown>
+              <button class="btn btn-default dropdown-toggle" dropdownToggle>
+                <i class="fa fa-angle-down"></i>
+              </button>
+              <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <li *ngFor="let item of cpuProtectionOptions">
+                  <a class="dropdown-item" (click)="generalSetting.CPULoadingUpperBoundary = item">{{item}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <span class="help-block">Application will start adjusting frame rate when usage reached the user defined threshold. System allowed threshold
+            range is 50% ~ 95%.</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Startup Options</label>
+        <div class="col-md-8">
+          <button class="btn btn-secondary" role="button" (click)="startupOptionsIsCollapsed = !startupOptionsIsCollapsed">
+            Setup
+          </button>
+          <div [collapse]="startupOptionsIsCollapsed">
+            <app-startup-options [startupOptions]="generalSetting.StartupOptions"></app-startup-options>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Bandwidth Control Setting</label>
+        <div class="col-md-8">
+          <button class="btn btn-secondary" role="button" (click)="bandwidthControlIsCollapsed = !bandwidthControlIsCollapsed">
+            Setup
+          </button>
+          <div [collapse]="bandwidthControlIsCollapsed">
+            <app-bandwidth-control [generalSetting]="generalSetting" [nvrConfig]="nvrConfig"></app-bandwidth-control>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Auto Lock Application Timer</label>
+        <div class="col-md-8">
+          <div class="input-group width-150">
+            <input type="number" class="form-control" id="auto-lock-dropdown" [(ngModel)]="generalSetting.AutoLockApplicationTimer">
+            <div class="input-group-btn" dropdown>
+              <button class="btn btn-default dropdown-toggle" dropdownToggle>
+                <i class="fa fa-angle-down"></i>
+              </button>
+              <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <li *ngFor="let item of autoLockTimerObject">
+                  <a class="dropdown-item" (click)="generalSetting.AutoLockApplicationTimer = item?.value">{{item?.key}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <span class="help-block">Lock Interval should between 30 secs to 1 hour.</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Keep the last scene received as a still when camera disconnects</label>
+        <div class="col-md-8" style="padding-top: 4px;">
+          <input id="display-nvr-id" type="checkbox" [checked]="generalSetting.KeepLastFrame == 'true'" (change)="generalSetting.KeepLastFrame = generalSetting.KeepLastFrame == 'true' ? 'false' : 'true'">
+          <label for="display-nvr-id">Enabled</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Keep the last scene received as a still when view patrols</label>
+        <div class="col-md-8" style="padding-top: 4px;">
+          <input id="display-nvr-id" type="checkbox" [checked]="generalSetting.LastPictureEnabled == 'true'" (change)="generalSetting.LastPictureEnabled = generalSetting.LastPictureEnabled == 'true' ? 'false' : 'true'">
+          <label for="display-nvr-id">Enabled</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Save Image Format</label>
+        <div class="col-md-8">
+          <select class="select1 width-100" [(ngModel)]="generalSetting.SaveImageFormat">
+            <option *ngFor="let item of imageFormatOptions;" value= {{item}}>{{item}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Export Filename Format</label>
+        <div class="col-md-8">
+          <select class="select1" [(ngModel)]="generalSetting.ExportFileNameFormat" (change)="changedExportFilenameFormat()">
+            <option *ngFor="let item of exportFilenameFormat" value= {{item}}>{{item}}</option>
+          </select>
+          <span class="help-block">{{exportFilenameFormatDemo}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="widget-footer">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right"></label>
+        <div class="col-md-8">
+          <button class="btn btn-primary width-100 mb-xs" role="button" (click)="clickSaveConfig()">Save</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

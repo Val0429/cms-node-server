@@ -1,0 +1,36 @@
+.table-hover tr td {
+    border-top: 0px;
+}
+.card-header {
+    border-bottom: 0px;
+    padding: 10px 20px;
+    line-height: 30px;
+}
+.card-header:hover{
+    background: #eee;
+}
+.card-header .fa {
+    margin-top: 5px;
+    /* font-size: 1.5rem;
+    cursor: pointer; */
+}
+.card-header .float-right input {
+    display: inline-block; 
+    padding: 3px 12px; 
+    width: 60px;
+}
+.card-header .float-right span {
+    display: inline-block; 
+}
+.card .fa {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.modal-body .table-hover tr {
+    cursor: pointer;
+}
+.modal-body .table-hover tr.active {
+    /* border: 1px solid #f2bd37; */
+    background: rgba(242,189,55,0.2);
+    font-weight: bold;
+}

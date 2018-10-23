@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-12">
+    <section class="widget">
+      <header>
+        <legend>
+          <strong>Added NVR</strong>
+        </legend>
+        <!-- <div class="row">
+          <div class="col-lg-3">
+            <div>
+              <h4>iSap</h4>
+              <h1 class="text-center">{{licenseCount.device}} / {{licenseService.licenseLimit['00166']}}</h1>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div>
+              <h4>3rd NVR</h4>
+              <h1 class="text-center">{{licenseCount.thirdNvr}} / {{licenseService.licenseLimit['00167']}}</h1>
+            </div>
+          </div>
+        </div> -->
+        <div class="float-right">
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="modalWindow.show()">
+            Search
+          </button>
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addNVR()">
+            Create
+          </button>
+        </div>
+      </header>
+      <div class="widget-body">
+        <table class="table table-hover table-lg mt-lg mb-0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Domain</th>
+              <th>Event</th>
+              <th>Patrol</th>
+              <th>Port</th>
+              <th>Devices Qantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let nvr of nvrList" (click)="clickEditNVR(nvr)" [class.active]="nvr == currentEditNVR">
+              <td>{{nvr.Id}}</td>
+              <td>{{nvr.Name}}</td>
+              <td>{{nvr.Domain}}</td>
+              <td>{{nvr.IsListenEvent}}</td>
+              <td>{{nvr.IsPatrolInclude}}</td>
+              <td>{{nvr.Port}}</td>
+              <td>{{getDeviceQuantity(nvr)}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+  <div class="col-12">
+    <app-nvr-editor [editNvr]="currentEditNVR" (reloadDataEvent)="reloadData()"></app-nvr-editor>
+  </div>
+</div>
+
+<!--
+<ng-template #editorModal>
+  <div class="modal-header flex-column">
+    <button (click)="modalRef?.hide()" aria-label="Close" class="close ml-auto" type="button">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="modal-title text-center fw-bold">
+      <span *ngIf="currentEditorMode === 1">Add NVR</span>
+      <span *ngIf="currentEditorMode === 2">Edit NVR</span>
+    </h4>
+  </div>
+  <div class="modal-body">
+    
+  </div>
+</ng-template>
+-->
+<div bsModal #modalWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <button (click)="modalWindow.hide()" aria-label="Close" class="close ml-auto" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-center fw-bold">Search NVR</h4>
+      </div>
+      <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
+        <app-nvr-search (addNVR)="addNVR($event)"></app-nvr-search>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-gray" (click)="modalWindow.hide();">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

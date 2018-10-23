@@ -1,0 +1,57 @@
+<div class="col-12">
+  <section class="widget">
+    <header>
+      <legend>
+        <strong>CMS Manager Server</strong>
+      </legend>
+    </header>
+    <div class="widget-body" *ngIf="cmsManager">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Name</label>
+        <div class="col-md-8">
+          <div class="input-group width-200">
+            <input type="text" class="form-control" [(ngModel)]="cmsManager.Name">
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Domain</label>
+        <div class="col-md-8">
+          <div class="input-group width-200">
+            <input type="text" class="form-control" [(ngModel)]="cmsManager.Domain">
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Port</label>
+        <div class="col-md-8">
+          <div class="input-group width-100">
+            <input type="number" class="form-control" [(ngModel)]="cmsManager.Port">
+          </div>
+        </div>
+      </div>
+      <!-- <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Failover Setup</label>
+        <div class="col-md-8">
+          <button class="btn btn-secondary" role="button" (click)="failoverSetupIsCollapsed = !failoverSetupIsCollapsed">
+            Setup
+          </button>
+          <div [collapse]="failoverSetupIsCollapsed">
+            <app-failover-setup [failoverConfigs]="failoverConfigs"></app-failover-setup>
+          </div>
+        </div>
+      </div> -->
+    </div>
+    <div class="widget-footer">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right"></label>
+        <div class="col-md-4">
+          <button class="btn btn-primary width-100 mb-xs" role="button" (click)="clickSaveConfig()">
+            <i *ngIf="isSaving" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

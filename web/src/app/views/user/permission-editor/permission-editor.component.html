@@ -1,0 +1,14 @@
+<ng-container *ngIf="currentConfig">
+  <div class="form-group row" *ngFor="let page of currentConfig.Page">
+    <div class="col-md-4">
+      <div class="page-name fw-semi-bold">
+        {{page.Name}}
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="page-permission" *ngFor="let p of page.Permission">
+        {{p}}
+      </div>
+    </div>
+  </div>
+</ng-container>

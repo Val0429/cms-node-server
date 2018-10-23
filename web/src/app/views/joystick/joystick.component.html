@@ -1,0 +1,33 @@
+<div class="col-12">
+  <section class="widget">
+    <header>
+      <legend>
+        <strong>Joystick</strong>
+      </legend>
+    </header>
+    <div class="widget-body" *ngIf="generalSetting">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Select to enable Joystick</label>
+        <div class="col-md-7" style="padding-top: 4px;">
+          <input id="check-joystick-enable" type="checkbox" [checked]="generalSetting.EnableJoystick == 'true'" (change)="generalSetting.EnableJoystick = generalSetting.EnableJoystick == 'true' ? 'false' : 'true'">
+          <label for="check-joystick-enable">Enable</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Select to enable Axis Joystick</label>
+        <div class="col-md-7" style="padding-top: 4px;">
+          <input id="check-axis-joystick-enable" type="checkbox" [checked]="generalSetting.EnableAxisJoystick == 'true'" (change)="generalSetting.EnableAxisJoystick = generalSetting.EnableAxisJoystick == 'true' ? 'false' : 'true'">
+          <label for="check-axis-joystick-enable">Enable</label>
+        </div>
+      </div>
+    </div>
+    <div class="widget-footer">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right"></label>
+        <div class="col-md-4">
+          <button class="btn btn-primary width-100 mb-xs" role="button" (click)="clickSaveConfig()">Save</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

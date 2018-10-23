@@ -1,0 +1,454 @@
+<section class="widget" *ngIf="currentCamera">
+  <header>
+    <legend>
+      <strong>Channel: {{currentCamera.Channel}} / Name: {{currentCamera.Name}}</strong>
+    </legend>
+  </header>
+  <div class="widget-body">
+    <legend>Brand</legend>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">Brand</label>
+      <div class="col-md-8">
+        <select class="select1 width-200" [(ngModel)]="currentCamera.Config.Brand" #brand (change)="onChangeBrand(brand.value)">
+          <option *ngFor="let item of brandList;" value= {{item.Name}}>{{item.Name}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">Model</label>
+      <div class="col-md-8" *ngIf="modelList">
+        <select class="select1 width-200" [(ngModel)]="currentCamera.Config.Model" #model (change)="onChangeModel(model.value)" [disabled]="modelList.length === 1">
+          <option *ngFor="let item of modelList;" value= {{item}}>{{item}}</option>
+        </select>
+      </div>
+      <label class="col-md-8 col-form-label" *ngIf="!modelList">
+        <i class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+      </label>
+    </div>
+    <div class="form-group row" *ngIf="groupOptions">
+      <label class="col-md-4 col-form-label text-md-right" for="grouped-select">Group</label>
+      <div class="col-md-8">
+        <select class="select1 width-200" [(ngModel)]="selectedSubGroup">
+          <optgroup *ngFor="let group of groupOptions" label= {{group.text}}>
+            <option *ngFor="let item of group.children" value= {{item.id}}>{{item.text}}</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">Name</label>
+      <div class="col-md-8">
+        <div class="input-group width-200">
+          <input type="text" class="form-control" [(ngModel)]="currentCamera.Name">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">Tags</label>
+      <div class="col-md-8">
+        <div class="input-group width-200">
+          <input type="text" class="form-control" placeholder="tag1,tag2,..." [(ngModel)]="tags">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="editorParam && editorParam.TypeOptions.length > 1">
+      <label class="col-md-4 col-form-label text-md-right">Type</label>
+      <div class="col-md-8">
+        <select class="select1 width-200" [(ngModel)]="currentCamera.Capability.Type">
+          <option *ngFor="let item of editorParam.TypeOptions;" value= {{item}}>{{item}}</option>
+        </select>
+      </div>
+    </div>
+    <ng-container *ngIf="checkDisplayAuthentication()">
+      <legend>Authentication</legend>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Account</label>
+        <div class="col-md-8">
+          <div class="input-group width-200">
+            <input type="text" class="form-control" [(ngModel)]="currentCamera.Config.Authentication.Account">
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Password</label>
+        <div class="col-md-8">
+          <div class="input-group width-200">
+            <input type="password" class="form-control" [(ngModel)]="currentCamera.Config.Authentication.Password">
+          </div>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="editorParam && editorParam.OccupancyPriorityOptions.length > 0">
+        <label class="col-md-4 col-form-label text-md-right">Who has higher channel occupancy priority?</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentCamera.Config.Authentication.OccupancyPriority">
+            <option *ngFor="let item of editorParam.OccupancyPriorityOptions;" value= {{item.value}}>{{item.key}}</option>
+          </select>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="currentCamera.Config.Brand !== 'iSapSolution'">
+      <legend>Connection</legend>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">IP Address</label>
+        <div class="col-md-8">
+          <div class="input-group width-200">
+            <input type="text" class="form-control" [(ngModel)]="currentCamera.Config.IPAddress">
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Port</label>
+        <div class="col-md-8">
+          <div class="input-group width-200">
+            <input type="number" class="form-control" [(ngModel)]="currentCamera.Config.Http">
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="editorParam && currentCamera">
+      <div class="form-group row" *ngIf="editorParam.AspectRatioCorrection">
+        <label class="col-md-4 col-form-label text-md-right">Aspect Ratio Correction</label>
+        <div class="col-md-8" style="padding-top: 4px;">
+          <input id="aspectRatioCorrection" type="checkbox" [checked]="currentCamera.CameraSetting.AspectRatioCorrection" (change)="currentCamera.CameraSetting.AspectRatioCorrection = !currentCamera.CameraSetting.AspectRatioCorrection; onChangeDynamicOptions()">
+          <label for="aspectRatioCorrection">Enabled</label>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="editorParam.AspectRatioOptions.length > 0">
+        <label class="col-md-4 col-form-label text-md-right">Aspect Ratio</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentCamera.CameraSetting.AspectRatio" (change)="onChangeDynamicOptions()">
+            <option *ngFor="let item of editorParam.AspectRatioOptions;" value= {{item}}>{{item}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="editorParam.ModeList.length > 0">
+        <label class="col-md-4 col-form-label text-md-right">Mode</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentCamera.CameraSetting.Mode" #mode (change)="onChangeMode()" [disabled]="editorParam.ModeList.length <= 1">
+            <option *ngFor="let item of editorParam.ModeList;" value= {{item.value}}>{{item.key}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="editorParam.StreamProfileList.length > 1">
+        <label class="col-md-4 col-form-label text-md-right">Live Stream</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentCamera.CameraSetting.LiveStream">
+            <option *ngFor="let item of editorParam.StreamProfileList;" value= {{item.value}}>{{item.key}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="editorParam.StreamProfileList.length > 1">
+        <label class="col-md-4 col-form-label text-md-right">Recording Stream</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentCamera.CameraSetting.RecordStream">
+            <option *ngFor="let item of editorParam.StreamProfileList;" value= {{item.value}}>{{item.key}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="editorParam.TVStandardOptions.length > 1">
+        <label class="col-md-4 col-form-label text-md-right">TV Standard</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentCamera.CameraSetting.TVStandard" (change)="onChangeMode()">
+            <option *ngFor="let item of editorParam.TVStandardOptions;" value= {{item}}>{{item}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="editorParam.SensorModeOptions.length > 0">
+        <label class="col-md-4 col-form-label text-md-right">Sensor Mode</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentCamera.CameraSetting.SensorMode" (change)="onChangeMode()" [disabled]="editorParam.SensorModeOptions.length === 1">
+            <option *ngFor="let item of editorParam.SensorModeOptions;" value= {{item}}>{{item}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="editorParam.PowerFrequencyOptions.length > 0">
+        <label class="col-md-4 col-form-label text-md-right">Power Frequency</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentCamera.CameraSetting.PowerFrequency" (change)="onChangeDynamicOptions()">
+            <option *ngFor="let item of editorParam.PowerFrequencyOptions;" value= {{item.value}}>{{item.key}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="editorParam.DewarpTypeOptions.length > 0">
+        <label class="col-md-4 col-form-label text-md-right">Dewarp Type</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentCamera.CameraSetting.DewarpType">
+            <option *ngFor="let item of editorParam.DewarpTypeOptions;" value= {{item}}>{{item}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="editorParam.MountTypeOptions.length > 0">
+        <label class="col-md-4 col-form-label text-md-right">Mount Type</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentCamera.CameraSetting.MountType">
+            <option *ngFor="let item of editorParam.MountTypeOptions;" value= {{item}}>{{item}}</option>
+          </select>
+        </div>
+      </div>
+      <!-- <div class="form-group row" *ngIf="editorParam.SeamlessEdgeRecording">
+        <label class="col-md-4 col-form-label text-md-right">Seamless Edge Recording</label>
+        <div class="col-md-8" style="padding-top: 4px;">
+          <input id="seamlessEdgeRecording" type="checkbox" [checked]="currentCamera.CameraSetting.SeamlessEdgeRecording == 'true'"
+            (change)="currentCamera.CameraSetting.SeamlessEdgeRecording = currentCamera.CameraSetting.SeamlessEdgeRecording == 'true' ? 'false' : 'true'">
+          <label for="seamlessEdgeRecording">Enabled</label>
+        </div>
+      </div> -->
+      <ng-container *ngFor="let stream of currentCamera.Config.Stream; let i = index;">
+        <legend>Video Stream Profile {{i + 1}}</legend>
+        <div class="form-group row" *ngIf="editorParam.ChannelIdOptions.length > 1">
+          <label class="col-md-4 col-form-label text-md-right">Channel ID</label>
+          <div class="col-md-8">
+            <select class="select1 width-200" [(ngModel)]="stream.Video.ChannelId">
+              <option *ngFor="let item of editorParam.ChannelIdOptions;" value= {{item}}>{{item}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="editorParam.ProtocolOptions.length > 0">
+          <label class="col-md-4 col-form-label text-md-right">Protocol</label>
+          <div class="col-md-8">
+            <select class="select1 width-200" [(ngModel)]="stream.Video.Protocol">
+              <option *ngFor="let item of editorParam.ProtocolOptions;" value= {{item}}>{{item}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="editorParam.ResolutionModeOptions.length > 1">
+          <label class="col-md-4 col-form-label text-md-right">Resolution Mode</label>
+          <div class="col-md-8">
+            <select class="select1 width-200" [(ngModel)]="stream.Video.ResolutionScale">
+              <option *ngFor="let item of editorParam.ResolutionModeOptions;" value= {{item}}>{{item}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="editorParam.getDewarpModeOptions(i+1).length > 0">
+          <label class="col-md-4 col-form-label text-md-right">Dewarp Mode</label>
+          <div class="col-md-8">
+            <select class="select1 width-200" [(ngModel)]="stream.Video.DewarpMode" (change)="onChangeDynamicOptions()">
+              <option *ngFor="let item of editorParam.getDewarpModeOptions(i+1)" value= {{item}}>{{item}}</option>
+            </select>
+          </div>
+        </div>
+        <ng-container *ngIf="editorParam.getCurrnentStreamProfileParamById(i+1)">
+          <div class="form-group row" *ngIf="editorParam.getCompressionOptionsByStreamId(i+1).length > 0">
+            <label class="col-md-4 col-form-label text-md-right">Compression</label>
+            <div class="col-md-8">
+              <select class="select1 width-200" [(ngModel)]="stream.Video.Encode" [disabled]="editorParam.CompressionOptions.length === 1"
+                (change)="onChangeDynamicOptions()">
+                <option *ngFor="let item of editorParam.getCompressionOptionsByStreamId(i+1)" value= {{item}}>{{item}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="editorParam.getResolutionOptionsByStreamId(i+1).length > 0">
+            <label class="col-md-4 col-form-label text-md-right">Resolution</label>
+            <div class="col-md-8">
+              <select class="select1 width-200" [(ngModel)]="stream.Video.Resolution" (change)="onChangeDynamicOptions()">
+                <option *ngFor="let item of editorParam.getResolutionOptionsByStreamId(i+1);" value= {{item}}>{{item}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="editorParam.getFpsOptionsByStreamId(i+1).length > 0">
+            <label class="col-md-4 col-form-label text-md-right">FPS</label>
+            <div class="col-md-8">
+              <select class="select1 width-200" [(ngModel)]="stream.Video.Fps" (change)="onChangeDynamicOptions()">
+                <option *ngFor="let item of editorParam.getFpsOptionsByStreamId(i+1);" value= {{item}}>{{item}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="editorParam.BitrateControlOptions.length > 0">
+            <label class="col-md-4 col-form-label text-md-right">Bitrate Control</label>
+            <div class="col-md-8">
+              <select class="select1 width-200" [(ngModel)]="stream.Video.BitrateControl">
+                <option *ngFor="let item of editorParam.BitrateControlOptions;" value= {{item}}>{{item}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="editorParam.getBitrateOptionsByStreamId(i+1).length > 0">
+            <label class="col-md-4 col-form-label text-md-right">Bitrate</label>
+            <div class="col-md-8">
+              <select class="select1 width-200" [(ngModel)]="stream.Video.Bitrate" (change)="onChangeDynamicOptions()">
+                <option *ngFor="let item of editorParam.getBitrateOptionsByStreamId(i+1);" value= {{item.value}}>{{item.key}}</option>
+              </select>
+            </div>
+          </div>
+        </ng-container>
+        <div class="form-group row" *ngIf="stream.Video.Protocol && stream.Video.Protocol.indexOf('RTSP') < 0">
+          <label class="col-md-4 col-form-label text-md-right">Stream Port</label>
+          <div class="col-md-8">
+            <div class="input-group width-200">
+              <input type="number" class="form-control" [(ngModel)]="stream.Port.Stream">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="stream.Video.Protocol && stream.Video.Protocol.indexOf('RTSP') >= 0">
+          <label class="col-md-4 col-form-label text-md-right">RTSP Port</label>
+          <div class="col-md-8">
+            <div class="input-group width-200">
+              <input type="number" class="form-control" [(ngModel)]="stream.Port.RTSP">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="editorParam.QualityOptions.length > 0">
+          <label class="col-md-4 col-form-label text-md-right">Quality</label>
+          <div class="col-md-8">
+            <select class="select1 width-200" [(ngModel)]="stream.Video.Quality">
+              <option *ngFor="let item of editorParam.QualityOptions;" value= {{item}}>{{item}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="editorParam.StreamProfileModeOptions.length > 0">
+          <label class="col-md-4 col-form-label text-md-right">Profile Mode</label>
+          <div class="col-md-8">
+            <select class="select1 width-200" [(ngModel)]="stream.ProfileMode">
+              <option *ngFor="let item of editorParam.StreamProfileModeOptions;" value= {{item.value}}>{{item.key}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="editorParam.MotionThresholdOptions.length > 0">
+          <label class="col-md-4 col-form-label text-md-right">Motion Threshold</label>
+          <div class="col-md-8">
+            <select class="select1 width-200" [(ngModel)]="stream.Video.MotionThreshold">
+              <option *ngFor="let item of editorParam.MotionThresholdOptions;" value= {{item}}>{{item}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="editorParam.ResolutionRegionConfig">
+          <label class="col-md-4 col-form-label text-md-right">Resolution Region Config</label>
+          <div class="col-md-8">
+            <app-resolution-region [maxResolution]="getMaxResolutionOption(i+1)" [currentResolution]="stream.Video.Resolution" [realResolutionPosition]="getCurrentRegionPosition(stream)"
+              (currentRegionCoordinateEvent)="currentRegionCoordinateEvent(stream, $event)">
+            </app-resolution-region>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="currentCamera.Config.Brand === 'Customization'">
+          <label class="col-md-4 col-form-label text-md-right">URI</label>
+          <div class="col-md-8">
+            <div class="input-group width-200">
+              <input type="text" class="form-control" [(ngModel)]="stream.RTSPURI">
+            </div>
+            <span class="help-block">rtsp://{{currentCamera.Config.IPAddress}}:{{stream.Port.RTSP}}/{{stream.RTSPURI}}</span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="currentCamera.Config.Brand === 'Customization'">
+        <legend>Live Check</legend>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">URI</label>
+          <div class="col-md-8">
+            <div class="input-group width-200">
+              <input type="text" class="form-control" [(ngModel)]="currentCamera.CameraSetting.Url">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">Interval (Sec)</label>
+          <div class="col-md-8">
+            <div class="input-group width-200">
+              <input type="text" class="form-control" [(ngModel)]="currentCamera.CameraSetting.Interval">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">Retry Count</label>
+          <div class="col-md-8">
+            <div class="input-group width-200">
+              <input type="text" class="form-control" [(ngModel)]="currentCamera.CameraSetting.RetryCount">
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="ptzPresets">
+        <legend>PTZ Command</legend>
+        <div class="widget-body no-padding">
+          <div id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card" *ngFor="let preset of ptzPresets">
+              <div class="card-header" role="tab" (click)="ptzDisplayType = ptzDisplayType === preset.key ? '' : preset.key;">
+                <span class="text-primary">{{preset.key}}</span>
+              </div>
+              <div class="collapse" [class.show]="ptzDisplayType === preset.key" role="tabpanel" aria-labelledby="headingOne">
+                <div class="card-block">
+                  <table class="table table-hover table-lg mb-0">
+                    <tbody>
+                      <tr *ngFor="let item of preset.value">
+                        <td width="100">
+                          <span>{{item.Name}}</span>
+                        </td>
+                        <td width="80">
+                          <select class="select1" [(ngModel)]="item.Method" (change)="item.onChangedMethod()">
+                            <option value="Get">Get</option>
+                            <option value="Post">Post</option>
+                          </select>
+                        </td>
+                        <td width="100">
+                          <span class="float-right">http://{{currentCamera.Config.IPAddress}}:{{currentCamera.Config.Http}}/</span>
+                        </td>
+                        <td style="width: auto;">
+                          <input type="text" class="form-control" [(ngModel)]="item.Command" placement="top" tooltip="Command">
+                        </td>
+                        <td style="width: auto;">
+                          <input type="text" class="form-control" [(ngModel)]="item.Parameter" [disabled]="item.Method !== 'Post'" placement="top"
+                            tooltip="Parameter" placeholder="ex: direction=up&speed=2">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="currentCamera.CameraSetting.IOPort.length > 0">
+        <legend>I/O Port Config</legend>
+        <div class="form-group row" *ngFor="let item of currentCamera.CameraSetting.IOPort">
+          <label class="col-md-4 col-form-label text-md-right">I/O Port {{item.Id}}</label>
+          <div class="col-md-8">
+            <select class="select1 width-200" [(ngModel)]="item.Mode" [disabled]="!editorParam.IOPortConfigurable">
+              <option *ngFor="let item of editorParam.IOPortOptions;" value= {{item}}>{{item}}</option>
+            </select>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="editorParam.getStreamOptions().length > 0">
+        <legend>Multi-streaming</legend>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">High Profile</label>
+          <div class="col-md-8">
+            <select class="select1 width-200" [(ngModel)]="currentCamera.Config['Multi-Stream'].High">
+              <option *ngFor="let item of editorParam.getStreamOptions();" value= {{item.value}}>{{item.key}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">Medium Profile</label>
+          <div class="col-md-8">
+            <select class="select1 width-200" [(ngModel)]="currentCamera.Config['Multi-Stream'].Medium">
+              <option *ngFor="let item of editorParam.getStreamOptions();" value= {{item.value}}>{{item.key}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label text-md-right">Low Profile</label>
+          <div class="col-md-8">
+            <select class="select1 width-200" [(ngModel)]="currentCamera.Config['Multi-Stream'].Low">
+              <option *ngFor="let item of editorParam.getStreamOptions();" value= {{item.value}}>{{item.key}}</option>
+            </select>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+  <div class="widget-footer">
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right"></label>
+      <div class="col-md-8">
+        <button type="button" class="btn btn-danger" (click)="clickDelete()" *ngIf="currentCamera.id" [disabled]="flag.delete || flag.save">
+          <i *ngIf="flag.delete" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+          Delete
+        </button>
+        <button type="button" class="btn btn-primary" (click)="clickSave()" [disabled]="flag.delete || flag.save">
+          <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

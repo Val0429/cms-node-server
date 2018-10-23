@@ -1,0 +1,82 @@
+/* Theme 畫面修正 */
+
+input,
+button,
+textarea,
+*:focus {
+  outline-style: none;
+}
+
+ul.unstyled,
+ol.unstyled {
+  margin-left: 0;
+  list-style: none;
+  padding: 0;
+}
+
+
+/* 套件修正相關 */
+
+.mwlResizable {
+  box-sizing: border-box;
+}
+
+
+/* ExtraButtonDirective */
+
+.extra-button-container {
+  width: 30px;
+  text-align: center;
+  padding-left: 6px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.extra-button-container.hide {
+  display: none;
+}
+
+.extra-button {
+  background-color: #fff;
+  color: #5d8fc2;
+  line-height: 24px;
+  height: 24px;
+  border-radius: .2rem;
+  border: 1px solid #5d8fc2;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+
+/* 自訂常用 Class */
+
+.pointer {
+  cursor: pointer;
+}
+
+.text-white {
+  color: #fff !important;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.text-size-85 {
+  font-size: 85%;
+}
+
+.select1 {
+  width: 100%;
+  height: 35px;
+}
+
+.editor-footer {
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  justify-content: flex-end;
+}
+.editor-footer button {
+  margin-left: 0.25rem;
+}

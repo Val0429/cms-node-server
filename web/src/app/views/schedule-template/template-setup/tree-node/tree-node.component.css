@@ -1,0 +1,22 @@
+.tree-node-container {
+    margin-top: 5px;
+}
+.tree-node-fa {
+    width: 14px;
+    font-size: 20px;
+}
+.tree-node {
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 3px 8px;
+}
+.tree-node-no-child {
+    cursor: default;
+}
+.tree-node-none-partial {
+    background-color: #eee;
+}
+.tree-node-partial {
+    color: white;
+    background-color: #5d8fc2;
+}

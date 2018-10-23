@@ -1,0 +1,14 @@
+.widget-controls .fa {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.list-group-item .fa {
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.list-group-item.active {
+    background: rgba(242,189,55,0.2);
+    border-color: rgba(0, 0, 0, 0.125);
+}

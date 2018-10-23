@@ -1,0 +1,7 @@
+.sidebar-nav.labels>li>a {
+  border-top: 0;
+}
+
+.sidebar-nav.labels>li:last-child>a {
+  border-bottom: 0;
+}

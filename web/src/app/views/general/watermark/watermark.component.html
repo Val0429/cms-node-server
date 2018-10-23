@@ -1,0 +1,36 @@
+<legend>Watermark</legend>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">FontFamily</label>
+  <div class="col-md-8">
+    <select class="select1" [(ngModel)]="watermarkInformations.FontFamily">
+      <option *ngFor="let item of fontFamilyOptions;" value= {{item}}>{{item}}</option>
+    </select>
+    <span class="help-block">FontFamily is not supported to update.</span>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">Font Size</label>
+  <div class="col-md-8">
+    <select class="select1 width-100" [(ngModel)]="watermarkInformations.FontSize">
+      <option *ngFor="let item of fontSizeOptions;" value= {{item}}>{{item}}</option>
+    </select>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">Font Color</label>
+  <div class="col-md-8">
+    <div class="input-group width-200">
+      <input type="text" class="form-control" [(ngModel)]="watermarkInformations.FontColor">
+      <input style="width: 40px;" [(colorPicker)]="watermarkInformations.FontColor" [style.background]="watermarkInformations.FontColor" [cpAlphaChannel]="'disabled'" />
+    </div>
+    <span class="help-block">Format Hex (ex: #FFFFFF), please not select RGBA or HSLA format.</span>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">Text</label>
+  <div class="col-md-8">
+    <div class="input-group">
+      <input type="text" class="form-control" [(ngModel)]="watermarkInformations.Text">
+    </div>
+  </div>
+</div>

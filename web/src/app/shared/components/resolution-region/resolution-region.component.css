@@ -1,0 +1,16 @@
+.basic-container {
+    background-color: #242424;
+    /* border: 3px solid rgb(166, 166, 166); */
+    min-height: 200px;
+}
+.basic-container-text {
+    position: absolute;
+    margin-Top: 10px;
+    margin-left: 10px;
+}
+.current-region {
+    cursor: move;
+    position: relative;
+    background-color: rgba(242, 190, 53, 0.5);
+    border: 1px solid #F2BE35;
+}

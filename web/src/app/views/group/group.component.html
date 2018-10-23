@@ -1,0 +1,93 @@
+<div class="row">
+  <div class="col-sm-6">
+    <section class="widget">
+      <header>
+        <h6>
+          <span class="fw-semi-bold">Main Group</span>&nbsp;&nbsp;&nbsp;
+        </h6>
+        <div class="widget-controls">
+          <span placement="top" tooltip="Create Main Group" (click)="modalWindow.show();editDataModel = { Level: '0' };currentEditData=undefined">
+            <i class="fa fa-plus text-default"></i>
+          </span>
+        </div>
+      </header>
+      <div class="widget-body no-padding">
+        <div class="list-group list-group-lg">
+          <a class="list-group-item" *ngFor="let mg of mainGroups" (click)="selectedMainGroup = mg" [class.active]="selectedMainGroup === mg">
+            <span class="thumb-sm mr" (click)="setEditData(mg);modalWindow.show();">
+              <i class="fa fa-pencil-square-o text-success" placement="top" tooltip="Edit"></i>
+            </span>
+            <i class="fa fa-angle-right flex-last ml-auto"></i>
+            <div>
+              <h6 class="no-margin text-primary">{{mg.Name}}</h6>
+              <small class="text-muted">Quantity: SubGroup {{mg?.SubGroup?.length || '0'}}</small>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="col-sm-6" *ngIf="selectedMainGroup">
+    <section class="widget">
+      <header>
+        <h6>
+          <span class="fw-semi-bold">Sub Group ({{selectedMainGroup.Name}})</span>&nbsp;&nbsp;&nbsp;
+          <!-- <span class="badge badge-pill badge-primary">{{userGroups[i].length}} Users</span> -->
+        </h6>
+        <div class="widget-controls">
+          <span placement="top" tooltip="Create Sub Group" (click)="modalWindow.show();editDataModel = { Level: '1' };currentEditData=undefined;">
+            <i class="fa fa-plus text-default"></i>
+          </span>
+        </div>
+      </header>
+      <div class="widget-body no-padding">
+        <div class="list-group list-group-lg">
+          <div class="list-group-item" *ngFor="let sg of subGroups[selectedMainGroup.id]">
+            <span class="thumb-sm mr" (click)="setEditData(sg);modalWindow.show()">
+              <i class="fa fa-pencil-square-o text-success" placement="top" tooltip="Edit"></i>
+            </span>
+            <!-- <i class="fa fa-angle-right flex-last ml-auto"></i> -->
+            <div>
+              <h6 class="no-margin text-primary">{{sg.Name}}</h6>
+              <small class="text-muted">
+                <span>Quantity: Nvr {{sg.Nvr ? sg.Nvr.length : 0 }}</span>
+                <span>,IP Camera {{sg.Channel ? sg.Channel.length : 0}}</span>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div bsModal #modalWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <button (click)="modalWindow.hide()" aria-label="Close" class="close ml-auto" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-center fw-bold">
+          {{ currentEditData ? 'Update' : 'Create' }} Group
+        </h4>
+      </div>
+      <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
+        <ng-container *ngIf="editDataModel">
+          <div class="form-group row">
+            <label class="col-md-4  col-form-label text-md-right">Name</label>
+            <div class="col-md-8">
+              <div class="input-group">
+                <input type="text" class="form-control" [(ngModel)]="editDataModel.Name">
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modalWindow.hide();clickModalDelete()" *ngIf="currentEditData">Delete</button>
+        <button type="button" class="btn btn-primary" (click)="modalWindow.hide();clickModalSave()">Save</button>
+        <button type="button" class="btn btn-gray" (click)="modalWindow.hide();">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

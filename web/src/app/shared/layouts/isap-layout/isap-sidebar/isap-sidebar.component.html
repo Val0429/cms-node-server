@@ -1,0 +1,159 @@
+<div class="js-sidebar-content">
+  <ul class="sidebar-nav">
+    <li routerLinkActive="active" *ngIf="checkPagePermission('CMSManager')">
+      <a routerLink="/cms-manager">
+        <span class="icon">
+          <i class="fa fa-desktop"></i>
+        </span> CMS Manager
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('Server')">
+      <a routerLink="/server">
+        <span class="icon">
+          <i class="fa fa-server"></i>
+        </span> Server
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('Storage')">
+      <a routerLink="/storage">
+        <span class="icon">
+          <i class="fa fa-floppy-o"></i>
+        </span> Storage
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('NVR')">
+      <a routerLink="/nvr">
+        <span class="icon">
+          <i class="fa fa-sitemap"></i>
+        </span> NVR
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('Group')">
+      <a routerLink="/group">
+        <span class="icon">
+          <i class="fa fa-users"></i>
+        </span> Group
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('Camera')">
+      <a routerLink="/camera">
+        <span class="icon">
+          <i class="fa fa-camera"></i>
+        </span> Camera
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('SmartMedia')">
+      <a routerLink="/smart-media">
+        <span class="icon">
+          <i class="fa fa-mobile"></i>
+        </span> Smart Media
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('General')">
+      <a routerLink="/general">
+        <span class="icon">
+          <i class="fa fa-cog"></i>
+        </span> General
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('User')">
+      <a routerLink="/user">
+        <span class="icon">
+          <i class="fa fa-user"></i>
+        </span> User
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('Event')">
+      <a routerLink="/event">
+        <span class="icon">
+          <i class="fa fa-exclamation-circle"></i>
+        </span> Event
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <!-- <li routerLinkActive="active">
+      <a routerLink="/schedule">
+        <span class="icon">
+          <i class="fa fa-calendar"></i>
+        </span> Schedule
+        <i class="toggle fa"></i>
+      </a>
+    </li> -->
+    <li routerLinkActive="active" *ngIf="checkPagePermission('ScheduleTemplate')">
+      <a routerLink="/schedule-template">
+        <span class="icon">
+          <i class="fa fa-calendar"></i>
+        </span> Schedule Template
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('Joystick')">
+      <a routerLink="/joystick">
+        <span class="icon">
+          <i class="fa fa-gamepad"></i>
+        </span> Joystick
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('License')">
+      <a routerLink="/license">
+        <span class="icon">
+          <i class="fa fa-key"></i>
+        </span> License
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('I/OEvent')">
+      <a routerLink="/io-event">
+        <span class="icon">
+          <i class="fa fa-exclamation-circle"></i>
+        </span> I/O Event
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('Event/LogOption')">
+      <a routerLink="/event-recovery">
+        <span class="icon">
+          <i class="fa fa-cogs"></i>
+        </span> Event/Log Option
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('Log')">
+      <a routerLink="/log">
+        <span class="icon">
+          <i class="fa fa-book"></i>
+        </span> Log
+        <i class="toggle fa"></i>
+      </a>
+    </li>
+    <!--
+        <li routerLinkActive="active">
+      <a (click)="memu1.collapse = !memu1.collapse">
+        <span class="icon"><i class="fa fa-cloud"></i></span> Server
+        <i class="toggle fa"></i>
+      </a>
+      <ul #memu1 [collapse]="!memu1?.collapse || isInStaticAndMouseIn">
+        <li routerLinkActive="active">
+          <a routerLink="/cms-manager">CMS Manager</a>
+        </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/other-server">Other Server</a>
+        </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/temporarily-store">Temporarily Store</a>
+        </li>
+      </ul>
+    </li>
+  -->
+  </ul>
+</div>

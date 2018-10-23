@@ -1,0 +1,2529 @@
+<Devices>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV20365DN</Model>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Type>SurroundVideoMegapixelIPCamera</Type>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>2</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800,1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>4</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV20365CO</Model>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Type>SurroundVideoMegapixelIPCamera</Type>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>2</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800,1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>4</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV20185DN</Model>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Type>SurroundVideoMegapixelIPCamera</Type>
+		<Series>2</Series>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800,1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>4</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV20185DN</SameAs>
+		<Model>AV20185CO</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV8185DN</Model>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Type>SurroundVideoMegapixelIPCamera</Type>
+		<Series>2</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="1600x1184">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</FrameRate>
+				</Resolution>
+				<Resolution value="1280x800">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>4</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV8185DN</SameAs>
+		<Model>AV8365DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV10115</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="3648x2752">
+					<FrameRate>1,2,3,4,5,6,7</FrameRate>
+				</Resolution>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV10115</SameAs>
+		<Model>AV10115AI</Model>
+	</Device>
+	<Device>
+		<SameAs>AV10115</SameAs>
+		<Model>AV10115DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV10255AMIR</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="3648x2752">
+					<FrameRate>1,2,3,4,5,6,7</FrameRate>
+				</Resolution>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,12</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV10255AMIR</SameAs>
+		<Model>AV10255AMIR-H</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV2145</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800,1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145-3310-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145-04-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145-3310-D-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145DN-04-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145DN-04-D-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145DN-04-DA-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145DN-3310-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145DN-3310-DA-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145-04-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145-3310-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145DN-04-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2145DN-3310-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2146DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2146DN-04-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2146DN-3310-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2146DN-04-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2146DN-3310-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2146DN-3310-D-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2146DN-04-D-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2125DNv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2125IRv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2115AIDNv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2115DNv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2805</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2805-AI</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2145</SameAs>
+		<Model>AV2805DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV2255AM</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800,1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV2255AM</SameAs>
+		<Model>AV2256PM</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2255AM</SameAs>
+		<Model>AV2256PMIR</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV5255DN</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<Series>1</Series>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV5255DN</SameAs>
+		<Model>AV5255AM</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5255DN</SameAs>
+		<Model>AV5145</Model>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV5255DN</SameAs>
+		<Model>AV5145DN</Model>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV5145DN</SameAs>
+		<Model>AV5145-3310-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5145DN</SameAs>
+		<Model>AV5145-04-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5145DN</SameAs>
+		<Model>AV5145DN-04-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5145DN</SameAs>
+		<Model>AV5145DN-3310-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5145DN</SameAs>
+		<Model>AV5145-3310-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5145DN</SameAs>
+		<Model>AV5145DN-04-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5145DN</SameAs>
+		<Model>AV5145DN-3310-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5145DN</SameAs>
+		<Model>AV5145DN-3310-WA</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5145DN</SameAs>
+		<Model>AV5145DN-3310-D-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5145DN</SameAs>
+		<Model>AV5145DN-04-D-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5145DN</SameAs>
+		<Model>AV5145DN-04-DA-LG</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV10005</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="3648x2752">
+					<FrameRate>1,2,3,4,5,6</FrameRate>
+				</Resolution>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV10005</SameAs>
+		<Model>AV10005DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV5155</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<Series>1</Series>
+		<PowerFrequency>50,60</PowerFrequency>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9</FrameRate>
+				</Resolution>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV5155</SameAs>
+		<Model>AV5155DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5155</SameAs>
+		<Model>AV5155DNAIv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5155</SameAs>
+		<Model>AV5155DNv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5155</SameAs>
+		<Model>AV5155v1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5155</SameAs>
+		<Model>AV5155AI</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV5125</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<Series>1</Series>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV5125</SameAs>
+		<Model>AV5125DNv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5125</SameAs>
+		<Model>AV5125IRv1</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3155</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV2155</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="1600x1184">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV2155</SameAs>
+		<Model>AV2155DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV2105</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV2105</SameAs>
+		<Model>AV2105DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2105</SameAs>
+		<Model>AV2105-AI</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV1305</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV1305</SameAs>
+		<Model>AV1305DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1305</SameAs>
+		<Model>AV1305-AI</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV1300M</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV1300M</SameAs>
+		<Model>AV1300DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1300M</SameAs>
+		<Model>AV1300-AI</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1300M</SameAs>
+		<Model>AV1310</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1300M</SameAs>
+		<Model>AV1310DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV1315</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1125</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1125DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1125IR</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1125DNv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1125IRv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1325</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1325DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1325IR</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1145</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1145DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1145-04-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1145-3310-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1145-04-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1145-3310-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1145DN-04-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1145DN-3310-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1145DN-04-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1145DN-3310-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1145DN-04-D-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1145DN-3310-D-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1355</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1355DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1355-16</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1355DN-16</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1355-1HK</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1355DN-1HK</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1255AM</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1255AM-H</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1255AMIR</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1315</SameAs>
+		<Model>AV1255AMIR-H</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3115</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<Series>1</Series>
+		<PowerFrequency>50,60</PowerFrequency>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800,1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV3115</SameAs>
+		<Model>AV3115DNv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3115</SameAs>
+		<Model>AV3115DNAIv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3115</SameAs>
+		<Model>AV3115AI</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3115</SameAs>
+		<Model>AV3115DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3116DN</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV3116DN</SameAs>
+		<Model>AV3116DNv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3116DN</SameAs>
+		<Model>AV3116DNv1x</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3125</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800,1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV3125</SameAs>
+		<Model>AV3125DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3125</SameAs>
+		<Model>AV3125IR</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3125</SameAs>
+		<Model>AV3125IRv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3125</SameAs>
+		<Model>AV3125DNv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3125</SameAs>
+		<Model>AV3145-04-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3125</SameAs>
+		<Model>AV3145-3310-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3125</SameAs>
+		<Model>AV3145-04-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3125</SameAs>
+		<Model>AV3145-3310-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3125</SameAs>
+		<Model>AV3145DN-04-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3125</SameAs>
+		<Model>AV3145DN-3310-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3125</SameAs>
+		<Model>AV3145DN-04-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3125</SameAs>
+		<Model>AV3145DN-3310-D</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3146DN-04-W</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800,1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3146DN-3310-W</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3146DN-04-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3146DN-3310-D</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3146DN-04-DA</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3146DN-3310-DA</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3146DN-3310-D-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3146DN-04-D-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3146DN-04-DA-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3146DN-3310-DA-LG</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3146DN</Model>
+	</Device>
+<!--	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3155</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<Series>1</Series>
+		<PowerFrequency>50,60</PowerFrequency>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</FrameRate>
+				</Resolution>
+				<Resolution value="1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+-->
+	<Device>
+		<SameAs>AV3155</SameAs>
+		<Model>AV3155DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3155</SameAs>
+		<Model>AV3155-16</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3155</SameAs>
+		<Model>AV3155DN-16</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3155</SameAs>
+		<Model>AV3155-1HK</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3155</SameAs>
+		<Model>AV3155DN-1HK</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3255AM</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800,1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV3255AM</SameAs>
+		<Model>AV3255AM-H</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3255AM</SameAs>
+		<Model>AV3255AMIR</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3255AM</SameAs>
+		<Model>AV3255AMIR-H</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3256PM</Model>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3256PM-A</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3256PMIR</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3146DN-04-W</SameAs>
+		<Model>AV3256PMIR-A</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV12186DN</Model>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Type>SurroundVideoMegapixelIPCamera</Type>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>2</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1056">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x800">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>4</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV1125IRv1x</Model>
+		<Type>MegaViewIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV1125IRv1x</SameAs>
+		<Model>AV1125DNv1x</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV2125IRv1x</Model>
+		<Type>MegaViewIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024,1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV1125IRv1x</SameAs>
+		<Model>AV2125DNv1x</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3125IRv1x</Model>
+		<Type>MegaViewIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV3125IRv1x</SameAs>
+		<Model>AV3125DNv1x</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV5125DNv1x</Model>
+		<Type>MegaViewIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14</FrameRate>
+				</Resolution>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV5125DNv1x</SameAs>
+		<Model>AV5125IRv1x</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV1115v1</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV1115v1</SameAs>
+		<Model>AV1115DNAIv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV1115v1</SameAs>
+		<Model>AV1115DNv1</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV2110</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV2110</SameAs>
+		<Model>AV2110DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV2116DNv1</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024,1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV2116DNv1</SameAs>
+		<Model>AV2115v1</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3110</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</FrameRate>
+				</Resolution>
+				<Resolution value="1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV3110</SameAs>
+		<Model>AV3110DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3115v1</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024,1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+<!--	<Device>
+		<SameAs>AV3110</SameAs>
+		<Model>AV3115DNv1</Model>
+	</Device>
+-->
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV5110</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9</FrameRate>
+				</Resolution>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</FrameRate>
+				</Resolution>
+				<Resolution value="1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV5110</SameAs>
+		<Model>AV5110DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV5115</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14</FrameRate>
+				</Resolution>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024,1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV5115</SameAs>
+		<Model>AV5115v1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5115</SameAs>
+		<Model>AV5115DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5115</SameAs>
+		<Model>AV5115DNv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5115</SameAs>
+		<Model>AV5115DNAIv1</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5115</SameAs>
+		<Model>AV5115AI</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV2100</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>MJPEG</Compression>
+				<Resolution value="1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV2100</SameAs>
+		<Model>AV2100M</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2100</SameAs>
+		<Model>AV2100-AI</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2100</SameAs>
+		<Model>AV2100DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3100</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV3100</SameAs>
+		<Model>AV3100-AI</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3100</SameAs>
+		<Model>AV3100DN</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3100</SameAs>
+		<Model>AV3100M</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3105</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</FrameRate>
+				</Resolution>
+				<Resolution value="1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV3105</SameAs>
+		<Model>AV3105-AI</Model>
+	</Device>
+	<Device>
+		<SameAs>AV3105</SameAs>
+		<Model>AV3105DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3130</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</FrameRate>
+				</Resolution>
+				<Resolution value="1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV3130</SameAs>
+		<Model>AV3130M</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3135</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</FrameRate>
+				</Resolution>
+				<Resolution value="1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV5100</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>MJPEG</Compression>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9</FrameRate>
+				</Resolution>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</FrameRate>
+				</Resolution>
+				<Resolution value="1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV5100</SameAs>
+		<Model>AV5100M</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5100</SameAs>
+		<Model>AV5100-AI</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5100</SameAs>
+		<Model>AV5100DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV5105</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9</FrameRate>
+				</Resolution>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22</FrameRate>
+				</Resolution>
+				<Resolution value="1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV5105</SameAs>
+		<Model>AV5105-AI</Model>
+	</Device>
+	<Device>
+		<SameAs>AV5105</SameAs>
+		<Model>AV5105DN</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>D4F-AV1115-3312</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV1115-3312</SameAs>
+		<Model>D4F-AV1115DN-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV1115-3312</SameAs>
+		<Model>D4F-AV1115-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV1115-3312</SameAs>
+		<Model>D4F-AV1115DN-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV1115-3312</SameAs>
+		<Model>D4S-AV1115-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV1115-3312</SameAs>
+		<Model>D4S-AV1115DN-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV1115-3312</SameAs>
+		<Model>D4S-AV1115-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV1115-3312</SameAs>
+		<Model>D4S-AV1115DN-04</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>D4SO-AV1115-3312</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>D4SO-AV1115-3312</SameAs>
+		<Model>D4SO-AV1115DN-3312</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>D4F-AV2115-3312</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024,1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV2115-3312</SameAs>
+		<Model>D4F-AV2115DN-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV2115-3312</SameAs>
+		<Model>D4F-AV2115-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV2115-3312</SameAs>
+		<Model>D4S-AV2115-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV2115-3312</SameAs>
+		<Model>D4F-AV2115DN-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV2115-3312</SameAs>
+		<Model>D4SO-AV2115-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV2115-3312</SameAs>
+		<Model>D4SO-AV2115ND-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV2115-3312</SameAs>
+		<Model>D4SO-AV2115-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV2115-3312</SameAs>
+		<Model>D4SO-AV2115ND-04</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>D4F-AV3115-3312</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024,1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV3115-3312</SameAs>
+		<Model>D4F-AV3115ND-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV3115-3312</SameAs>
+		<Model>D4F-AV3115-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV3115-3312</SameAs>
+		<Model>D4F-AV3115ND-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV3115-3312</SameAs>
+		<Model>D4S-AV3115-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV3115-3312</SameAs>
+		<Model>D4S-AV3115DN-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV3115-3312</SameAs>
+		<Model>D4S-AV3115-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV3115-3312</SameAs>
+		<Model>D4S-AV3115DN-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV3115-3312</SameAs>
+		<Model>D4SO-AV3115-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV3115-3312</SameAs>
+		<Model>D4SO-AV3115DN-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV3115-3312</SameAs>
+		<Model>D4SO-AV3115-04</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>D4F-AV5115-3312</Model>
+		<Type>MegaVideoIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>MJPEG</Compression>
+				<Resolution value="2560x1920">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14</FrameRate>
+				</Resolution>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024,1600x1200">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV5115-3312</SameAs>
+		<Model>D4F-AV5115DN-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV5115-3312</SameAs>
+		<Model>D4F-AV5115-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV5115-3312</SameAs>
+		<Model>D4F-AV5115DN-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV5115-3312</SameAs>
+		<Model>D4S-AV5115-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV5115-3312</SameAs>
+		<Model>D4S-AV5115DN-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV5115-3312</SameAs>
+		<Model>D4S-AV5115-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV5115-3312</SameAs>
+		<Model>D4S-AV5115DN-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV5115-3312</SameAs>
+		<Model>D4SO-AV5115-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV5115-3312</SameAs>
+		<Model>D4SO-AV5115DN-3312</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV5115-3312</SameAs>
+		<Model>D4SO-AV5115-04</Model>
+	</Device>
+	<Device>
+		<SameAs>D4F-AV5115-3312</SameAs>
+		<Model>D4SO-AV5115DN-04</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV1455DN-F</Model>
+		<Type>MegaViewIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV2455DN-F</Model>
+		<Type>MegaViewIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024,1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV2455DN-F</SameAs>
+		<Model>AV2456DN-F</Model>
+	</Device>
+	<Device>
+		<SameAs>AV2455DN-F</SameAs>
+		<Model>AV2456DN</Model>
+	</Device>
+		<Device>
+		<SameAs>AV2455DN-F</SameAs>
+		<Model>AV2456DN-96</Model>
+	</Device>	
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV3455DN-F</Model>
+		<Type>MegaViewIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>AV3455DN-F</SameAs>
+		<Model>AV3456DN-F</Model>
+	</Device>
+	<Device>
+		<Manufacture>ArecontVision</Manufacture>
+		<Model>AV5455DN-F</Model>
+		<Type>MegaViewIPCamera</Type>
+		<PowerFrequency>50,60</PowerFrequency>
+		<SensorMode>BinningDayMode,BinningNightMode,BinningOff</SensorMode>
+		<Series>1</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1,2">
+				<Compression>H264,MJPEG</Compression>
+				<Resolution value="2592x1944">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14</FrameRate>
+				</Resolution>
+				<Resolution value="2048x1536">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21</FrameRate>
+				</Resolution>
+				<Resolution value="1920x1080">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29</FrameRate>
+				</Resolution>
+				<Resolution value="320x256,640x480,800x480,1024x768,1280x1024">
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+				</Resolution>
+				<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,8M</Bitrate>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+</Devices>

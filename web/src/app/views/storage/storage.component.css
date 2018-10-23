@@ -1,0 +1,16 @@
+.table-hover tbody tr {
+    cursor: pointer;
+}
+.table-hover tr.first td {
+    border-top: 1px solid #ccc;
+}
+.table-hover tr.other td {
+    border-top: 0px;
+}
+/* .table-hover tr td {
+    border-top: 0px;
+}
+.table-hover tr.active {
+    background: rgba(242,189,55,0.2);
+    font-weight: bold;
+} */

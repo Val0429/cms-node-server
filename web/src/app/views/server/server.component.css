@@ -1,0 +1,7 @@
+.btn-remove {
+  font-size: 20px;
+}
+
+.btn-remove:hover {
+  color: #ff0000;
+}

@@ -1,0 +1,1726 @@
+<Devices>
+  <Device>
+    <Manufacture>Panasonic</Manufacture>
+    <Model>SFN611L</Model>
+    <Type>Dynamic HD Dome</Type>
+    <Series>SFx611L</Series>
+    <ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+    <AspectRatio value="4:3">
+      <ProfileMode value="4">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2,3,4">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="16:9">
+      <ProfileMode value="4">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180,160x90">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x720,640x360,320x180,160x90">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2,3,4">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180,160x90">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>3</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>4</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <Manufacture>Panasonic</Manufacture>
+    <Model>SP306</Model>
+    <Type>HD Network Camera</Type>
+    <Series>SP30X</Series>
+    <ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+    <AspectRatio value="4:3">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="16:9">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>4</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>SP306</SameAs>
+    <Model>SF135</Model>
+    <Type>HD Dome Network Camera</Type>
+    <Series>SF13X</Series>
+    <NumberOfAudioIn>0</NumberOfAudioIn>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+  </Device>
+  <Device>
+    <Manufacture>Panasonic</Manufacture>
+    <Model>SF538</Model>
+    <Type>Super Dynamic Full HD Network Camera</Type>
+    <Series>SF5XX</Series>
+    <ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+    <AspectRatio value="2M-16:9">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="1.3M-16:9">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="1.3M-4:3">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="3M-4:3">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="MJPEG">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="2048x1536">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>0</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>4</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>SF538</SameAs>
+    <Model>SF539</Model>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfDI>3</NumberOfDI>
+  </Device>
+  <Device>
+    <SameAs>SP306</SameAs>
+    <Model>SW314</Model>
+    <NumberOfAudioIn>0</NumberOfAudioIn>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+  </Device>
+  <Device>
+    <SameAs>SP306</SameAs>
+    <Model>SF336</Model>
+  </Device>
+  <Device>
+    <SameAs>SP306</SameAs>
+    <Model>SW155</Model>
+    <NumberOfAudioIn>0</NumberOfAudioIn>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+  </Device>
+  <Device>
+    <SameAs>SF538</SameAs>
+    <Model>SW158</Model>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+  </Device>
+  <Device>
+    <SameAs>SF538</SameAs>
+    <Model>SP509</Model>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfDI>3</NumberOfDI>
+  </Device>
+  <Device>
+    <SameAs>SF538</SameAs>
+    <Model>SW558</Model>
+    <NumberOfDI>3</NumberOfDI>
+  </Device>
+  <Device>
+    <Manufacture>Panasonic</Manufacture>
+    <Model>SFV631L</Model>
+    <Type>Super Dynamic Full HD Network Camera</Type>
+    <Series>SFx631L</Series>
+    <ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+    <AspectRatio value="2M-16:9">
+      <ProfileMode value="4">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1920x1080,1280x720,640x360,320x180,160x90">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,1280x720,640x360,320x180,160x90">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2,3,4">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="2M-4:3">
+      <ProfileMode value="4">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1600x1200,1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1600x1200,1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2,3,4">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1600x1200,1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="3M-4:3">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="MJPEG">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="2048x1536,1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="2048x1536,1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>3</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>4</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <Manufacture>Panasonic</Manufacture>
+    <Model>SW458</Model>
+    <Type>360-degree Network Camera</Type>
+    <Series>SW4x8</Series>
+    <ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+    <AspectRatio value="Ceiling-2M-Double Panorama-16:9">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-1M-Double Panorama-16:9">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-1.3M-Quad PTZ-4:3">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-1.3M-Single PTZ-4:3">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-Double Panorama + Double PTZ">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,1280x960,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-Double Panorama + Single PTZ">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,1280x960,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-VGA-Quad streams-4:3">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x480">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-3M-Fisheye-4:3">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="MJPEG">
+            <Resolution value="2048x1536">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-1.3M-Fisheye-4:3">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-2M-Double Panorama + Fisheye">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,1280x960,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-1M-Double Panorama + Fisheye">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,1280x720,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-Fisheye + Quad PTZ">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,1280x720,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-2M-Panorama + Fisheye">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,1280x960,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-1M-Panorama + Fisheye">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,1280x720,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-1.3M-Fisheye-4:3">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-2M-Double Panorama + Fisheye">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,1280x960,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-1M-Double Panorama + Fisheye">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,1280x720,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-Fisheye + Quad PTZ">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,1280x720,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-2M-Panorama + Fisheye">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,1280x960,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-1M-Panorama + Fisheye">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,1280x720,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-2M-Panorama-16:9">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-1M-Panorama-16:9">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-1.3M-Quad PTZ-4:3">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-1.3M-Single PTZ-4:3">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-Panorama + Quad PTZ">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,1280x960,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-Panorama + Single PTZ">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1920x1080,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,1280x960,640x480,640x360,320x240,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>3</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>4</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>SW458</SameAs>
+    <Model>SF438</Model>
+  </Device>
+  <Device>
+    <Manufacture>Panasonic</Manufacture>
+    <Model>SW396</Model>
+    <Type>Dynamic HD Dome</Type>
+    <Series>SW3X6</Series>
+    <ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+    <AspectRatio value="4:3-VGA">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MPEG4">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MPEG4">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="4:3-800x600">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,800x600,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,800x600,320x240">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,800x600,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="16:9">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,2,3,5</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>3</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>4</NumberOfMotion>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>true</FocusSupport>
+    <AutoTrackingSupport>true</AutoTrackingSupport>
+  </Device>
+  <Device>
+    <Manufacture>Panasonic</Manufacture>
+    <Model>SF336E</Model>
+    <Type>HD Network Camera</Type>
+    <Series>SW3X6</Series>
+    <ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+    <AspectRatio value="4:3">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MPEG4">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M</Bitrate>
+            <Resolution value="640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,8M</Bitrate>
+            <Resolution value="1280x960,640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MPEG4">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M</Bitrate>
+            <Resolution value="640x480,320x240">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="16:9">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>4</NumberOfMotion>
+    <PanSupport>False</PanSupport>
+    <TiltSupport>False</TiltSupport>
+    <ZoomSupport>True</ZoomSupport>
+    <FocusSupport>False</FocusSupport>
+    <AutoTrackingSupport>True</AutoTrackingSupport>
+  </Device>
+  <Device>
+    <Manufacture>Panasonic</Manufacture>
+    <Model>WV-S4150</Model>
+    <Type>360-degree Network Camera</Type>
+    <Series>WV-S4xxx</Series>
+    <Alias>S4150</Alias>
+    <ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+    <AspectRatio value="Ceiling-Wall-5M-Fisheye">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="640x640,1280x1280,2192x2192">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x640,1280x1280,2192x2192">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x640,1280x1280">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x640,1280x1280">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-5M-Double Panorama">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="640x360,1280x720,1920x1080">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x640,1280x720,1920x1080">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x360,1280x720">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x360,1280x720">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-5M-Quad PTZ">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="640x480,800x600,1280x960,1600x1200">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x480,800x600,1280x960,1600x1200">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x480,1280x960">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x480,1280x960">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-5M-Single PTZ">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="640x480,800x600,1280x960,1600x1200">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x480,800x600,1280x960,1600x1200">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x480,1280x960">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x480,1280x960">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-5M-Fisheye + Double Panorama">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="640x640,1280x1280,2192x2192">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x640,1280x1280,2192x2192">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x360,1280x720">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x360,1280x720">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Ceiling-5M-Fisheye + Quad PTZ">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="640x640,1280x1280,2192x2192">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x640,1280x1280,2192x2192">
+              <FrameRate>1,2,3,5,6,10,12,15</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x480,800x600,1280x960">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x480,800x600,1280x960">
+              <FrameRate>1,2,3,5,6,10,12,15</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-5M-Panorama">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="640x360,1280x720,1920x1080">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x360,1280x720,1920x1080">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x360,1280x720">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x360,1280x720">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-5M-Quad PTZ">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="640x480,800x600,1280x960,1600x1200">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x480,800x600,1280x960,1600x1200">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x480,1280x960">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x480,1280x960">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-5M-Single PTZ">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="640x480,800x600,1280x960,1600x1200">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x480,800x600,1280x960,1600x1200">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x480,1280x960">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x480,1280x960">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="Wall-5M-Fisheye + Panorama">
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="640x640,1280x1280,2192x2192">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x640,1280x1280,2192x2192">
+              <FrameRate>1,2,3,5,6,10,12,15</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="640x360,1280x720">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="640x360,1280x720">
+              <FrameRate>1,2,3,5,6,10,12,15</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>3</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>4</NumberOfMotion>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <Manufacture>Panasonic</Manufacture>
+    <Model>WV-SFV130</Model>
+    <Type>Super Dynamic Full HD Network Camera</Type>
+    <Series>SFVxxx</Series>
+    <Alias>SFV130</Alias>
+    <ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+    <AspectRatio value="2M-16:9">
+      <ProfileMode value="4">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="1920x1080,1280x720,640x360,320x180,160x90">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1920x1080,1280x720,160x90">
+              <FrameRate>1,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="1920x1080,1280x720,640x360,320x180,160x90">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="1280x720,640x360,160x90">
+              <FrameRate>1,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="3">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180,160x90">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Resolution value="320x180,160x90">
+              <FrameRate>1,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="4">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x720,640x360,320x180,160x90">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="2M-4:3">
+      <ProfileMode value="4">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="1600x1200,1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1600x1200,1280x960,800x600,400x300,160x120">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="1600x1200,1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,800x600,640x480,400x300,160x120">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="3">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="800x600,400x300,320x240,160x120">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="4">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <AspectRatio value="3M-4:3">
+      <ProfileMode value="4">
+        <Profile id="1">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="2048x1536,1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="2048x1536,1280x960,800x600,400x300,320x240,160x120">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="2">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M,12M,14M,16M,20M,24M</Bitrate>
+            <Resolution value="2048x1536,1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,800x600,400x300,320x240,160x120">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="3">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+          <Compression codes="MJPEG">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="800x600,400x300,320x240,160x120">
+              <FrameRate>1,2,3,5,6,10,12,15,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+        <Profile id="4">
+          <Compression codes="H264">
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M</Bitrate>
+            <Resolution value="1280x960,800x600,640x480,400x300,320x240,160x120">
+              <FrameRate>1,3,5,8,10,12,15,20,30</FrameRate>
+            </Resolution>
+          </Compression>
+        </Profile>
+      </ProfileMode>
+    </AspectRatio>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+    <NumberOfMotion>4</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>WV-S4150</SameAs>
+    <Model>WV-S4550L</Model>
+    <Alias>S4550L</Alias>
+  </Device>  
+</Devices>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Devices>
+  <Device>
+    <Manufacture>ZAVIO</Manufacture>
+    <Model>F7110</Model>
+    <Type>MP Box</Type>
+    <Series>P51</Series>
+    <ConnectionProtocol>RTSP Over HTTP</ConnectionProtocol>
+    <ProfileMode value="3">
+      <Profile id="1">
+        <Compression value="H264">
+          <Resolution value="320x240,640x480,1280x720,1280x1024">
+            <FrameRate>2,3,4,5,7,10,15,20,25,30</FrameRate>
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+          </Resolution>
+        </Compression>
+      </Profile>
+      <Profile id="2">
+        <Compression value="MPEG4">
+          <Resolution value="320x240,640x480,1280x720,1280x1024">
+            <FrameRate>2,3,4,5,7,10,15,20,25,30</FrameRate>
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+          </Resolution>   
+        </Compression>
+      </Profile>
+      <Profile id="3">
+        <Compression value="MJPEG">
+          <Resolution value="320x240,640x480,1280x720,1280x1024">
+            <FrameRate>1,2,3,4,5,7,10,15,20,25,30</FrameRate>
+          </Resolution>
+        </Compression>
+      </Profile>
+    </ProfileMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <Manufacture>ZAVIO</Manufacture>
+    <Model>F210A</Model>
+    <Type>VGA</Type>
+    <Series>P51</Series>
+    <ConnectionProtocol>RTSP Over HTTP</ConnectionProtocol>
+    <ProfileMode value="2">
+      <Profile id="1">
+        <Compression value="MPEG4">
+          <Resolution value="160x120,320x240,640x480">
+            <FrameRate>1,2,3,4,5,7,10,15,20,25,30</FrameRate>
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.2M,1.5M,2M</Bitrate>
+          </Resolution>
+        </Compression>
+      </Profile>
+      <Profile id="2">
+        <Compression value="MJPEG">
+          <Resolution value="160x120,320x240,640x480">
+            <FrameRate>1,2,3,4,5,7,10,15</FrameRate>
+          </Resolution>
+        </Compression>
+      </Profile>
+    </ProfileMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <Manufacture>ZAVIO</Manufacture>
+    <Model>F7210</Model>
+    <Type>MP Box</Type>
+    <Series></Series>
+    <ConnectionProtocol>RTSP Over HTTP</ConnectionProtocol>
+    <ProfileMode value="3">
+      <Profile id="1">
+        <Compression value="MJPEG,H264,MPEG4">
+          <Resolution value="160x120,320x240,640x480,1024x768,1280x720,1280x960,1280x1024,1920x1080">
+            <FrameRate>1,2,3,4,5,7,10,15,20,25,30</FrameRate>
+            <Bitrate>32K,64K,128K,256K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M</Bitrate>            
+          </Resolution>
+        </Compression>
+      </Profile>
+      <Profile id="2">
+        <Compression value="MJPEG,H264,MPEG4">
+          <Resolution value="160x120,320x240,640x480,1024x768,1280x720,1280x960,1280x1024,1920x1080">
+            <FrameRate>1,2,3,4,5,7,10,15,20,25,30</FrameRate>
+            <Bitrate>32K,64K,128K,256K,512K,768K,1M,1.5M,2M,3M,4M,6M,8M,10M</Bitrate>            
+          </Resolution>
+        </Compression>
+      </Profile>
+      <Profile id="3">
+        <Compression value="MJPEG">
+          <Resolution value="160x120,320x240,640x480,1024x768,1280x720,1280x960,1280x1024,1920x1080">
+            <FrameRate>1,2,3,4,5,7,10,15,20,25,30</FrameRate>
+          </Resolution>
+        </Compression>
+      </Profile>
+    </ProfileMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <Manufacture>ZAVIO</Manufacture>
+    <Model>P5110</Model>
+    <Type>PT IP Cam</Type>
+    <Series>P51</Series>
+    <ConnectionProtocol>RTSP Over HTTP</ConnectionProtocol>
+    <ProfileMode value="3">
+      <Profile id="1">
+        <Compression value="H264">
+          <Resolution value="320x240,640x480,1280x720,1280x1024">
+            <FrameRate>2,3,4,5,7,10,15,20,25,30</FrameRate>
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+          </Resolution>
+        </Compression>
+      </Profile>
+      <Profile id="2">
+        <Compression value="MPEG4">
+          <Resolution value="320x240,640x480,1280x720,1280x1024">
+            <FrameRate>2,3,4,5,7,10,15,20,25,30</FrameRate>
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+          </Resolution>
+        </Compression>
+      </Profile>
+      <Profile id="3">
+        <Compression value="MJPEG">
+          <Resolution value="320x240,640x480,1280x720,1280x1024">
+            <FrameRate>1,2,3,4,5,7,10,15,20,25,30</FrameRate>
+          </Resolution>
+        </Compression>
+      </Profile>
+    </ProfileMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <Manufacture>ZAVIO</Manufacture>
+    <Model>F3101</Model>
+    <Type>M IP Cam</Type>
+    <Series>P51</Series>
+    <ConnectionProtocol>RTSP Over HTTP</ConnectionProtocol>
+    <ProfileMode value="2">
+      <Profile id="1">
+        <Compression value="MPEG4">
+          <Resolution value="320x240,640x480,1280x720,1280x1024">
+            <FrameRate>2,3,4,5,7,10,15,20,25,30</FrameRate>
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+          </Resolution>
+        </Compression>
+      </Profile>
+      <Profile id="2">
+        <Compression value="H264">
+          <Resolution value="320x240,640x480,1280x720,1280x1024">
+            <FrameRate>2,3,4,5,7,10,15,20,25,30</FrameRate>
+            <Bitrate>64K,128K,256K,384K,512K,768K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+          </Resolution>
+        </Compression>
+        <Compression value="MJPEG">
+          <Resolution value="320x240,640x480,1280x720,1280x1024">
+            <FrameRate>1,2,3,4,5,7,10,15</FrameRate>
+          </Resolution>
+        </Compression>
+      </Profile>
+    </ProfileMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+</Devices>

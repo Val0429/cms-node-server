@@ -1,0 +1,48 @@
+<section class="widget" *ngIf="currentDevice">
+  <header>
+    <legend>
+      <strong><span *ngIf="this.currentDevice">{{this.currentDevice.Name}}</span> Event Handling</strong>
+    </legend>
+  </header>
+  <div class="widget-body" *ngIf="currentSchedule">
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Pre Event Recording</label>
+      <div class="col-md-8">
+        <div class="input-group width-100">
+          <input type="text" class="form-control" [(ngModel)]="currentSchedule.PreRecord">
+        </div>
+        <span class="help-block">Video record seconds before event occurred.</span>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Post Event Recording</label>
+      <div class="col-md-8">
+        <div class="input-group width-100">
+          <input type="text" class="form-control" [(ngModel)]="currentSchedule.PostRecord">
+        </div>
+        <span class="help-block">Video record seconds after event occurred.</span>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Plan</label>
+      <div class="col-md-8">
+        <select class="select1 width-200" [(ngModel)]="currentSchedule.Schedule" (change)="setSchedulePlan()">
+          <option *ngFor="let item of weekScheduleOptions;" value= {{item.value}}>{{item.key}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="currentScheduleTime">
+      <div class="col-12">
+        <app-week-board [scheduleTime]="currentScheduleTime"></app-week-board>
+      </div>
+    </div>
+  </div>
+  <div class="widget-footer">
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right"></label>
+      <div class="col-md-4">
+        <button class="btn btn-primary width-100 mb-xs" role="button" (click)="clickSaveConfig()">Save</button>
+      </div>
+    </div>
+  </div>
+</section>

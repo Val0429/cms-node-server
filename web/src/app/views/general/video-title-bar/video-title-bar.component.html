@@ -1,0 +1,14 @@
+<section class="widget">
+  <div class="widget-body no-padding">
+    <div class="list-group" dnd-sortable-container [sortableData]="editDataModel">
+      <div class="list-group-item video-title-bar-item" *ngFor="let item of editDataModel; let itemIndex = index" dnd-sortable [sortableIndex]="itemIndex" (click)="clickTitleBarItem(item)" (onDropSuccess)="onDragSuccess($event)">
+        <span [ngClass]="getTitleBarItemIconClasses(item.Seq)"></span>
+        <div>
+          <h6 class="no-margin text-primary">{{item.Type}}</h6>
+          <small class="text-muted">Sequence: {{item.Seq}}</small>
+        </div>
+      </div>
+    </div>
+    <span class="help-block">Drag and move to change display orders. Information will be displayed from left to right on the Video Title Bar.</span>
+  </div>
+</section>

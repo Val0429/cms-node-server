@@ -1,0 +1,11 @@
+.table-hover tbody tr {
+    cursor: pointer;
+}
+.table-hover tr td {
+    border-top: 0px;
+}
+.table-hover tr.active {
+    /* border: 1px solid #f2bd37; */
+    background: rgba(242,189,55,0.2);
+    font-weight: bold;
+}

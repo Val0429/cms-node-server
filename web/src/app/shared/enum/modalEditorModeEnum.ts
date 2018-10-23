@@ -1,0 +1,8 @@
+export enum ModalEditorModeEnum {
+  NONE,
+  ADD,
+  EDIT,
+  CONFIG,
+  ONLINE_REGISTRATION,
+  OFFLINE_REGISTRATION
+}

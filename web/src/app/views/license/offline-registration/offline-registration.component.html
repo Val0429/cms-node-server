@@ -1,0 +1,16 @@
+<ng-container>
+  <div class="widget-body">
+    <div class="form-group">
+      <label for="search-input">Import Activated License Files</label>
+      <div class="input-group">
+        <input class="form-control" type="file" (change)="getFiles($event)" #licenseFile>
+      </div>
+    </div>
+  </div>
+  <div class="editor-footer">
+    <button class="btn btn-primary width-100 mb-xs" role="button" (click)="clickConfirm()">Confirm</button>
+  </div>
+  <div class="editor-footer mt-1">
+    <h6>{{displayProcess}}</h6>
+  </div>
+</ng-container>

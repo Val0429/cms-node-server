@@ -1,0 +1,46 @@
+<div class="login-page app">
+  <div class="container">
+    <main id="content" class="widget-login-container" role="main">
+      <div class="row">
+        <div class="col-xl-4 col-md-6 col-10 offset-xl-4 offset-md-3 offset-1">
+          <h5 class="widget-login-logo animated fadeInUp">
+            <i class="fa fa-circle text-gray"></i>
+            CMS 3 Config Tool
+            <i class="fa fa-circle text-warning"></i>
+          </h5>
+          <section class="widget widget-login animated fadeInUp">
+            <header>
+              <h3>LOGIN</h3>
+            </header>
+            <div class="widget-body">
+              <p class="widget-login-info">
+                This tool is build for Administrator only.
+              </p>
+              <form class="login-form mt-lg">
+                <div class="form-group">
+                  <input type="username" class="form-control" name="username" placeholder="username" maxlength="128" [(ngModel)]="model.username">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control" name="password" placeholder="Password" maxlength="128" [(ngModel)]="model.password">
+                </div>
+                <div class="clearfix" style="position: relative;">
+                  <!-- <div class="checkbox" style="position: absolute; top: 10px; left: 5px; padding: 0;">
+                    <label for="rememberMe">
+                      <input type="checkbox" id="rememberMe" [checked]="model.rememberMe" (change)="model.rememberMe = !model.rememberMe"> Remember me
+                    </label>
+                  </div> -->
+                  <div class="btn-toolbar float-right m-t-1">
+                    <button type="submit" class="btn btn-inverse btn-sm text-white" (click)="login()">Login</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer">
+      2017 &copy; Sing. Admin Dashboard Template.
+    </footer>
+  </div>
+</div>

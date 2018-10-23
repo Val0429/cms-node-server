@@ -1,0 +1,64 @@
+<div class="col-12">
+  <section class="widget">
+    <header>
+      <legend>
+        <strong>Log</strong>
+      </legend>
+    </header>
+    <div class="widget-body">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Date</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control width-150" style="display: inline-block;" id="startDate" name="startDate" placeholder="Start Date"
+            [value]="queryParams.startDate" (click)="dateType='Begin'" (datepickerChange)="datePeriodChange($event)" appDatepicker>
+          <span>&nbsp;~&nbsp;</span>
+          <input type="text" class="form-control width-150" style="display: inline-block;" id="endDate" name="endDate" placeholder="End Date"
+            [value]="queryParams.endDate" (click)="dateType='End'" (datepickerChange)="datePeriodChange($event)" appDatepicker>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Keyword</label>
+        <div class="col-md-4">
+          <div class="input-group">
+            <input class="form-control" id="search-input" type="search" [(ngModel)]="queryParams.keyword">
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="button" (click)="pageChange()" [disabled]="flag.search">
+                <i *ngIf="flag.search" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+                Search
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-12">
+          <table class="table table-bordered table-lg mb-lg" *ngIf="dataList">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Type</th>
+                <th>Server Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let log of dataList;">
+                <td>{{getDate(log.Time)}}</td>
+                <td>{{log.Type}}</td>
+                <td>{{log.ServerName}}</td>
+                <td>{{log.Description}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-12">
+          <app-page-viewer style="display: inline-block;" [pageViewerOptions]="pageViewerOptions" (pageChange)="pageChange($event)"></app-page-viewer>
+          <div class="btn btn-success" style="margin-bottom: 3px;" (click)="exportCSV()">
+            <i class="fa fa-download"></i>
+            <span>Export Log Data</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

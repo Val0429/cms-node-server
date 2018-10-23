@@ -1,0 +1,10 @@
+.form-group .fa {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.table-hover tr {
+    cursor: pointer;
+}
+.table-hover tr td {
+    border-top: 0px;
+}

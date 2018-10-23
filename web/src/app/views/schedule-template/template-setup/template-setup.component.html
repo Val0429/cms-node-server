@@ -1,0 +1,61 @@
+<section class="widget" *ngIf="currentTemplate">
+  <header>
+    <legend>
+      <strong>Template Usage Setup, current template: {{currentTemplate.Name}}</strong>
+    </legend>
+  </header>
+  <div class="widget-body">
+    <div class="pull-right">
+      <button class="btn btn-secondary mb-xs" role="button" (click)="clickExpandAll();">Expand</button>
+      <button class="btn btn-secondary mb-xs" role="button" (click)="clickCollapseAll();">Collapse</button>
+    </div>
+    <div>
+      <span class="icon">
+        <i class="fa fa-folder-open"></i>
+      </span>
+      All Groups
+    </div>
+    <ul *ngIf="!flag.load">
+      <li *ngFor="let mgNode of setupNode">
+        <app-tree-node [treeNode]="mgNode" [hasChild]="mgNode.child.length > 0" (changeSetupNodeEvent)="changeSetupNode($event)"></app-tree-node>
+        <ul [ngClass]="getULCollapseClasses(mgNode.collapsed)">
+          <li *ngFor="let sgNode of mgNode.child">
+            <app-tree-node [treeNode]="sgNode" [hasChild]="sgNode.child.length > 0" (changeSetupNodeEvent)="changeSetupNode($event)"></app-tree-node>
+            <ul [ngClass]="getULCollapseClasses(sgNode.collapsed)">
+              <li *ngFor="let nvrNode of sgNode.child">
+                <app-tree-node [treeNode]="nvrNode" [hasChild]="nvrNode.child.length > 0" (changeSetupNodeEvent)="changeSetupNode($event)"></app-tree-node>
+                <ul [ngClass]="getULCollapseClasses(nvrNode.collapsed)">
+                  <li *ngFor="let devNode of nvrNode.child">
+                    <app-tree-node [treeNode]="devNode" [hasChild]="devNode.child.length > 0" (changeSetupNodeEvent)="changeSetupNode($event)"></app-tree-node>
+                    <ul *ngIf="setupMode === 1" [ngClass]="getULCollapseClasses(devNode.collapsed)">
+                      <li *ngFor="let strNode of devNode.child">
+                        <app-tree-node [treeNode]="strNode" (changeSetupNodeEvent)="changeSetupNode($event)"></app-tree-node>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <div class="widget-body" *ngIf="flag.load">
+      <div class="text-center">
+        <i class="fa fa-refresh fa-spin fa-fw" style="font-size: 30px;"></i>
+      </div>
+    </div>
+
+  </div>
+  <div class="widget-footer">
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right"></label>
+      <div class="col-md-4">
+        <button class="btn btn-primary width-100 mb-xs" role="button" (click)="clickSave()" [disabled]="flag.save">
+          <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

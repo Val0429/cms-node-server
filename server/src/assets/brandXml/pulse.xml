@@ -1,0 +1,304 @@
+<Devices>
+
+  <Device>
+    <Manufacture>PULSE</Manufacture>
+    <Model>P30DS1P-36</Model>
+    <Type>Mega-Pixel Network Camera</Type>
+    <Series>1</Series>
+    <PowerFrequency>50,60,61</PowerFrequency>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,HTTP</ConnectionProtocol>
+    <ProfileMode value="2">
+      <Profile id="1">
+        <Compression codes="H264">
+          <Bitrate>256K,384K,512K,768K,1M,1.25M,1.5M,1.75M,2M,3M,4M,6M,8M</Bitrate>
+          <Resolution value="2048x1536">
+            <FrameRate>1,2,3,4,5,10,15</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264,MJPEG">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="352x288,320x240,320x176,256x192,256x144">
+                  <FrameRate>1,2,3,4,5,10,15</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="1920x1080,1600x1200">
+            <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264,MJPEG">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="352x288,320x240,320x176,256x192,256x144">
+                  <FrameRate>1,2,3,4,5,10,15</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="1280x960">
+            <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264,MJPEG">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="640x480">
+                  <FrameRate>1,2,3,4,5,10,13,15,20,25</FrameRate>
+                </Resolution>
+                <Resolution value="640x368,480x368,480x272,352x288,320x240,320x176,256x192,256x144">
+                  <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="1280x720,1024x768,800x592,800x480,640x480">
+            <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264,MJPEG">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="640x480,640x368,480x368,480x272,352x288,320x240,320x176,256x192,256x144">
+                  <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="640x368">
+            <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264,MJPEG">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="640x368,480x368,480x272,352x288,320x240,320x176,256x192,256x144">
+                  <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="480x368">
+            <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264,MJPEG">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="480x368,480x272,352x288,320x240,320x176,256x192,256x144">
+                  <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="480x272">
+            <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264,MJPEG">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="480x272,352x288,320x240,320x176,256x192,256x144">
+                  <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+        </Compression>
+      </Profile>
+    </ProfileMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+    <NumberOfMotion>0</NumberOfMotion>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>true</FocusSupport>
+  </Device>
+
+  <Device>
+    <Manufacture>PULSE</Manufacture>
+    <Model>P2DV1P-28</Model>
+    <Type>Mega-Pixel Network Camera</Type>
+    <Series>1</Series>
+    <PowerFrequency>50,60</PowerFrequency>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,HTTP</ConnectionProtocol>
+    <ProfileMode value="2">
+      <Profile id="1">
+        <Compression codes="H264,MJPEG">
+          <Bitrate>256K,384K,512K,768K,1M,1.25M,1.5M,1.75M,2M,3M,4M,6M,8M</Bitrate>
+          <Resolution value="1600x1200">
+            <FrameRate>5,10</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="320x240,320x176,256x192,256x144,160x112">
+                  <FrameRate>5,10</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="1280x720,1024x768">
+            <FrameRate>5,10,13,15,20,25</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="320x240,320x176,256x192,256x144,160x112">
+                  <FrameRate>5,10,13,15,20</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+
+          </Resolution>
+          <Resolution value="800x592,800x480">
+            <FrameRate>5,10,13,15,20,25</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="480x272,320x240,320x176,256x192,256x144,160x112">
+                  <FrameRate>5,10,13,15,20,25</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="640x480">
+            <FrameRate>5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="640x480,640x368,480x368,480x272,320x240,320x176,256x192,256x144,160x112">
+                  <FrameRate>5,10,13,15,20,25</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="640x368">
+            <FrameRate>5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="640x368,480x368,480x272,320x240,320x176,256x192,256x144,160x112">
+                  <FrameRate>5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="480x368">
+            <FrameRate>5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="480x368,480x272,320x240,320x176,256x192,256x144,160x112">
+                  <FrameRate>5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="480x272">
+            <FrameRate>5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="480x272,320x240,320x176,256x192,256x144,160x112">
+                  <FrameRate>5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+        </Compression>
+      </Profile>
+    </ProfileMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+    <NumberOfMotion>0</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+
+  <Device>
+    <Manufacture>PULSE</Manufacture>
+    <Model>P13DS1P-36</Model>
+    <Type>Mega-Pixel Network Camera</Type>
+    <Series>1</Series>
+    <PowerFrequency>50,60,61</PowerFrequency>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,HTTP</ConnectionProtocol>
+    <ProfileMode value="2">
+      <Profile id="1">
+        <Compression codes="H264">
+          <Bitrate>256K,384K,512K,768K,1M,1.25M,1.5M,1.75M,2M,3M,4M,6M,8M</Bitrate>
+          <Resolution value="1280x960">
+            <FrameRate>1,2,3,4,5,10,13,15,20,25</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264,MJPEG">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="640x480,640x368,480x368,480x272,320x240,320x176,256x192,256x144">
+                  <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="1280x720,1024x768,800x592,800x480,640x480">
+            <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264,MJPEG">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="640x480,640x368,480x368,480x272,320x240,320x176,256x192,256x144">
+                  <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="640x368">
+            <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264,MJPEG">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="640x368,480x368,480x272,320x240,320x176,256x192,256x144">
+                  <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="480x368">
+            <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264,MJPEG">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="480x368,480x272,320x240,320x176,256x192,256x144">
+                  <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+          <Resolution value="480x272">
+            <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+            <Profile id="2">
+              <Compression codes="H264,MJPEG">
+                <Bitrate>32K,64K,128K,256K,384K,512K,768K,1M,1.5M</Bitrate>
+                <Resolution value="480x272,320x240,320x176,256x192,256x144">
+                  <FrameRate>1,2,3,4,5,10,13,15,20,25,30</FrameRate>
+                </Resolution>
+              </Compression>
+            </Profile>
+          </Resolution>
+        </Compression>
+      </Profile>
+    </ProfileMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+    <NumberOfMotion>0</NumberOfMotion>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>true</FocusSupport>
+  </Device>
+  
+  <Device>
+    	<SameAs>P13DS1P-36</SameAs>
+   		<Model>P13DV1P-28</Model>
+  	</Device>
+  	
+  	<Device>
+    	<SameAs>P2DV1P-28</SameAs>
+   		<Model>P2DIR1-28</Model>
+  	</Device>
+
+</Devices>

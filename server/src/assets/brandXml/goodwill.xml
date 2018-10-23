@@ -1,0 +1,69 @@
+<Devices>
+	<Device>
+		<Manufacture>GoodWill</Manufacture>
+		<Model>GNC-971</Model>
+		<Type/>
+		<Series>FINE</Series>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<TVStandard value="PAL,NTSC">
+			<ProfileMode value="3">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Resolution value="1280x800,1280x720,640x480,320x240,176x144">
+							<FrameRate value="5">
+								<Bitrate>32K,48K,64K,96K,128K,192K,256K,320K,384K,448K,512K,576K,640K,704K,768K,1M</Bitrate>
+							</FrameRate>
+							<FrameRate value="6,7,8,9,10,15,20,25,30">
+								<Bitrate>32K,48K,64K,96K,128K,192K,256K,320K,384K,448K,512K,576K,640K,704K,768K,1M,1.5M,2M,2.5M,3M,3.5M,4M,5M,6M,7M,8M</Bitrate>
+							</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1280x800,1280x720,640x480,320x240,176x144">
+							<FrameRate value="5,6,7,8,9,10,15,20,25,30"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264">
+						<Resolution value="1280x800,1280x720,640x480,320x240,176x144">
+							<FrameRate value="5">
+								<Bitrate>32K,48K,64K,96K,128K,192K,256K,320K,384K,448K,512K,576K,640K,704K,768K,1M</Bitrate>
+							</FrameRate>
+							<FrameRate value="6,7,8,9,10,15,20,25,30">
+								<Bitrate>32K,48K,64K,96K,128K,192K,256K,320K,384K,448K,512K,576K,640K,704K,768K,1M,1.5M,2M,2.5M,3M,3.5M,4M,5M,6M,7M,8M</Bitrate>
+							</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1280x800,1280x720,640x480,320x240,176x144">
+							<FrameRate value="5,6,7,8,9,10,15,20,25,30"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="3">
+					<Compression codes="H264">
+						<Resolution value="640x480,320x240,176x144">
+							<FrameRate value="3">
+								<Bitrate>32K,48K,64K,96K,128K,192K,256K,320K,384K,448K,512K,576K</Bitrate>
+							</FrameRate>
+							<FrameRate value="4,5,6,7,8,9,10,11,12,13,14,15">
+								<Bitrate>32K,48K,64K,96K,128K,192K,256K,320K,384K,448K,512K,576K,640K,704K,768K,1M</Bitrate>
+							</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</TVStandard>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>3</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+</Devices>

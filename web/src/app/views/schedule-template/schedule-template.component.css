@@ -1,0 +1,9 @@
+.widget-controls .fa {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.list-group-item .fa {
+    font-size: 2rem;
+    cursor: pointer;
+}

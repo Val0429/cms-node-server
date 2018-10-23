@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Devices>
+  <Device>
+    <Manufacture>EverFocus</Manufacture>
+    <Model>EZN3260</Model>
+    <Type>Bullet</Type>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+    <ProfileMode value="3">
+      <Profile id="1">
+        <Compression>H264,MJPEG</Compression>
+        <Resolution>1920x1080,1280x1024,1280x720,1024x768,720x576,704x576,640x480</Resolution>
+        <FrameRate>1,2,5,6,8,12,25</FrameRate>
+        <Bitrate>256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+      </Profile>
+      <Profile id="2">
+        <Compression>H264,MJPEG</Compression>
+        <Resolution>720x576,704x576,640x480,352x288,320x240</Resolution>
+        <FrameRate>1,2,5,6,8,12,25</FrameRate>
+        <Bitrate>256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+      </Profile>
+      <Profile id="3">
+        <Compression>H264,MJPEG</Compression>
+        <Resolution>352x288,320x240,160x120</Resolution>
+        <FrameRate>1,2,5,6,8,12,25</FrameRate>
+        <Bitrate>256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+      </Profile>
+    </ProfileMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>4</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <Manufacture>EverFocus</Manufacture>
+    <Model>EPN4122</Model>
+    <Type>Dome</Type>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+    <ProfileMode value="2">
+      <Profile id="1">
+        <Compression>H264,MJPEG</Compression>
+        <Resolution>1280x960,1280x720,1024x768,720x576,704x576,640x480</Resolution>
+        <FrameRate>1,2,5,6,8,12,25</FrameRate>
+        <Bitrate>256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+      </Profile>
+      <Profile id="2">
+        <Compression>H264,MJPEG</Compression>
+        <Resolution>720x576,704x576,640x480,352x288</Resolution>
+        <FrameRate>1,2,5,6,8,12,25</FrameRate>
+        <Bitrate>256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+      </Profile>
+    </ProfileMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>4</NumberOfMotion>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+</Devices>

@@ -1,0 +1,82 @@
+{
+	"CameraId": "1", // 除了ID之外其他都省略
+	"Config": {
+		"Brand": "Axis",
+		"Model": "P1344",
+		"Name": "Axis P1344",
+		"IPAddress": "172.16.10.71",
+		"Http": "80",
+		"Authentication": {
+			"Account": "zQjDgOyQcPU=",
+			"Password": "JRp9eL+fp18=",
+			"Encryption": "BASIC",
+			"OccupancyPriority": "0"
+		},
+		"PTZSupport": {
+			"Pan": "false",
+			"Tilt": "false",
+			"Zoom": "false"
+		},
+		"Multi-Stream": {
+			"High": "1",
+			"Medium": "1",
+			"Low": "1"
+		},
+		"Stream": [{
+			"Id": "1",
+			"Video": {
+				"ChannelId": "", // device type=VideoServer, 需要填寫此欄位
+				"Protocal": "RTSP", // NVR設定有, ParseDevice無
+				"Encode": "H264",
+				"Width": "640",
+				"Height": "480",
+				"Quality": "60", // 部分model有此欄位
+				"FPS": "15",
+				"Bitrate": "1500",
+				"RTSPPort": "" // 部分model有此欄位
+			}
+		}, {
+			"Id": "2",
+			"Video": {
+				"ChannelId": "",
+				"Protocal": "RTSP",
+				"Encode": "MJPEG",
+				"Width": "640",
+				"Height": "480",
+				"Quality": "60",
+				"FPS": "15",
+				"Bitrate": "1500",
+				"RTSPPort": ""
+			}
+		}]
+	},
+	"Capability": {
+		"NumberOfAudioOut": "1",
+        "NumberOfAudioIn": "1",
+        "NumberOfMotion": "10",
+        "NumberOfChannel": "1",
+        "NumberOfDi": "1",
+        "NumberOfDo": "1",
+        "FocusSupport": "false",
+        "Type": "IPBoxCamera"
+	},
+	"CameraSetting": { // 針對直連Camera的設定
+		"AspectRatioCorrection": "false", // 如何決定應出現此欄位?
+		"Mode": "2", // 如何決定可選的Mode? ex: single stream, dual stream, 其儲存值要用數字代表stream數量或字串'single stream'?
+		"TVStandard": "NTSC", // 部分model有此欄位
+		"LiveStream": "1", // Stream Id
+		"RecordStream": "2", // Stream Id
+		"SensorMode": "1080p60", // Auto select and hide if cap only one option.
+		"PowerFrequency": "50", // Hz
+		"DewarpType": "Off",
+		"MountType": "Ceiling",
+		"SeamlessEdgeRecording": "false",
+		"IOPort": [{
+			"Id": "1",
+			"Mode": "Input" // 儲存值要用字串或其他方式?
+		}, {
+			"Id": "2",
+			"Mode": "Output"
+		}]
+	}
+}

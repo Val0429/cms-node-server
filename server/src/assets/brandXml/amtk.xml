@@ -1,0 +1,1282 @@
+<Devices>
+	<Device>
+		<Manufacture>A-MTK</Manufacture>
+		<Model>AH2573D-AAFCLAO</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="5">
+			<Profile id="1,2,3,4,5">
+				<Compression codes="H264">
+					<Resolution value="1920x1080,1280x720,640x360,320x180">
+						<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					</Resolution>
+				</Compression>
+				<Compression codes="MJPEG">
+					<Resolution value="1920x1080,1280x720,640x360,320x180">
+						<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>A-MTK</Manufacture>
+		<Model>AN2006D-A4V5BAO</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<Alias>NDV-4202H-AEIRV-AM</Alias>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,HTTPS</ConnectionProtocol>
+		<SensorMode value="1080pWDR">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p25WDR">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p25">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p60">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p50">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<NumberOfIntrusion>1</NumberOfIntrusion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>A-MTK</Manufacture>
+		<Model>AN2706D-A4V5BAP</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<Alias>NDV-4201H-INR-AM</Alias>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<SensorMode value="1080pWDR">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>32k,64K,128K,256K,384K,500K</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p25WDR">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>32k,64K,128K,256K,384K,500K,750K,1M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>32k,64K,128K,256K,384K,500K</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>32k,64K,128K,256K,384K,500K,750K,1M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>32k,64K,128K,256K,384K,500K,750K,1M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p25">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>32k,64K,128K,256K,384K,500K</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>32k,64K,128K,256K,384K,500K</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p60">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p50">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>0</NumberOfMotion>
+		<NumberOfIntrusion>1</NumberOfIntrusion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>A-MTK</Manufacture>
+		<Model>AN2723T-AGFEBAO</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<Alias>NDF-4201NR-AM</Alias>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<SensorMode value="3M30FPS">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="2048x1536">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M,16M,18M,20M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+						</Resolution>
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+						</Resolution>
+						<Resolution value="1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+						</Resolution>
+						<Resolution value="640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+						</Resolution>
+						<Resolution value="320x240,320x180">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="2048x1536,1920x1080,1280x960,1280x720,640x480,640x360,320x240,320x180">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="3M25FPS">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="2048x1536">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M,16M,18M,20M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+						</Resolution>
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+						</Resolution>
+						<Resolution value="1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+						</Resolution>
+						<Resolution value="640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+						</Resolution>
+						<Resolution value="320x240,320x180">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="2048x1536,1920x1080,1280x960,1280x720,640x480,640x360,320x240,320x180">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<NumberOfIntrusion>1</NumberOfIntrusion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>A-MTK</Manufacture>
+		<Model>AV2723D-AAFGBOO</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<Alias>NDF-4201F-N-AM</Alias>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="4">
+			<Profile id="1,2,3,4">
+				<Compression codes="H264">
+					<Resolution value="1920x1080">
+						<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					</Resolution>
+					<Resolution value="1280x720">
+						<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate>
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					</Resolution>
+					<Resolution value="640x360">
+						<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					</Resolution>
+					<Resolution value="320x180">
+						<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M</Bitrate>
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					</Resolution>
+					<Resolution value="160x90">
+						<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					</Resolution>
+				</Compression>
+				<Compression codes="MJPEG">
+					<Resolution value="1920x1080,1280x720,640x360,320x180,160x90">
+						<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>A-MTK</Manufacture>
+		<Model>AN2606D</Model>
+		<Type>MegaIVABOXIPCamera</Type>
+		<Series/>
+		<Alias>NXV-4202H-AI-AM</Alias>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,HTTPS</ConnectionProtocol>
+		<SensorMode value="1080pWDR">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p25WDR">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p25">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p60">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30,50,60</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30,50,60</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p50">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30,50</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30,50</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<NumberOfIntrusion>1</NumberOfIntrusion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>A-MTK</Manufacture>
+		<Model>AH5583D-ALZ3AAO</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<PowerFrequency value="60">
+		<ProfileMode value="3">
+			<Profile id="1,2,3">
+				<Compression codes="H264,H265">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+						</Resolution>
+						<Resolution value="1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate>
+							<FrameRate>3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,720x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+						</Resolution>
+				</Compression>
+				<Compression codes="MJPEG">
+					<Resolution value="1920x1080,1280x960,1280x720,800x600,720x576,640x480,640x360">
+						<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						<FrameRate>3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		</PowerFrequency>
+		<PowerFrequency value="50">
+		<ProfileMode value="3">
+			<Profile id="1,2,3">
+				<Compression codes="H264,H265">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+						</Resolution>
+						<Resolution value="1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate>
+							<FrameRate>3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,720x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+						</Resolution>
+				</Compression>
+				<Compression codes="MJPEG">
+					<Resolution value="1920x1080,1280x960,1280x720,800x600,720x576,640x480,640x360">
+						<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						<FrameRate>3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		</PowerFrequency>		
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>A-MTK</Manufacture>
+		<Model>AN2553D-AEZ3AAO</Model>
+		<Type>MegaIVABOXIPCamera</Type>
+		<Series/>		
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,HTTPS</ConnectionProtocol>
+		<SensorMode value="1080pWDR">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>64K,128K,256K,384K,500K</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p25WDR">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>64K,128K,256K,384K,500K</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p25">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1280x1024,1280x960,1280x720">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="1024x768">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="800x600,800x480,720x576,720x480,704x576,640x480,640x360">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="352x288,352x240,320x240,320x192">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+						<Resolution value="176x144,160x120">
+							<Bitrate>64K,128K,256K,384K,500K</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080,1280x1024,1280x960,1280x720,1024x768,800x600,800x480,720x576,720x480,704x576,640x480,640x360,352x288,352x240,320x240,320x192,176x144,160x120">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p60">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30,50,60</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30,50,60</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p50">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30,50</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="1920x1080">
+							<Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,15M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25,30,50</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Resolution value="640x480">
+							<Bitrate>384K,500K,750K,1M,1.5M,2M</Bitrate>
+							<FrameRate>1,2,3,4,5,6,8,10,12,15,16,20,25</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<NumberOfIntrusion>1</NumberOfIntrusion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+</Devices>

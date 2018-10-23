@@ -1,0 +1,61 @@
+.week-scheduler {
+  position: relative;
+  background-color: white;
+}
+
+.week-scheduler-control-bar {
+  margin-bottom: 5px;
+}
+
+.custom-mode-select {
+  cursor: pointer;
+  border: 1px solid #eee;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin: 2px;
+}
+
+.custom-mode-select.active {
+  border: 2px solid black;
+}
+
+.week-scheduler-container {
+  text-align: center;
+  display: table;
+}
+
+.week-scheduler-sidebar {
+  width: 64px;
+  display: table-cell;
+  border-left: 1px solid #eee;
+}
+
+.week-scheduler-sidebar div {
+  height: 22px;
+  border-bottom: 1px solid #eee;
+}
+
+.week-scheduler-sidebar div:first-child {
+  border-top: 1px solid #eee;
+}
+
+.weekDay {
+  width: 52px;
+  display: inline-block;
+  border-left: 1px solid #eee;
+}
+
+.weekDay:last-child {
+  border-right: 1px solid #eee;
+}
+
+.weekDay div {
+  height: 11px;
+  border-bottom: 1px solid #eee;
+}
+
+.weekDay div:first-child {
+  height: 22px;
+  border-top: 1px solid #eee;
+}

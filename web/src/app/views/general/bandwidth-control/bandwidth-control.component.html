@@ -1,0 +1,39 @@
+<legend>Bandwidth Control Setting</legend>
+<div class="row">
+  <div class="col-md-12">
+    <input id="enable-bandwidth" type="checkbox" [checked]="generalSetting.EnableBandwidthControl == 'true'" (change)="generalSetting.EnableBandwidthControl = generalSetting.EnableBandwidthControl == 'true' ? 'false' : 'true'">
+    <label for="enable-bandwidth">Bandwidth Control Enabled</label>
+  </div>
+</div>
+<table class="table table-bordered table-lg mb-lg" *ngIf="nvrConfig">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Domain</th>
+      <th>Port</th>
+      <th>Manufacturer</th>
+      <th>Bandwidth</th>
+      <th>Stream</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let nvr of nvrConfig">
+      <td>{{nvr.Id}}</td>
+      <td>{{nvr.Name}}</td>
+      <td>{{nvr.Domain}}</td>
+      <td>{{nvr.Port}}</td>
+      <td>{{nvr.Manufacture}}</td>
+      <td>
+        <select class="select1" [(ngModel)]="nvr.BandwidthBitrate" [disabled]="generalSetting.EnableBandwidthControl == 'false'">
+          <option *ngFor="let item of bandwidthOptionsObject" [ngValue]="item.value">{{item.key}}</option>
+        </select>
+      </td>
+      <td>
+        <select class="select1" [(ngModel)]="nvr.BandwidthStream" [disabled]="generalSetting.EnableBandwidthControl == 'false'">
+          <option *ngFor="let item of streamOptions" [ngValue]="item">{{item}}</option>
+        </select>
+      </td>
+    </tr>
+  </tbody>
+</table>

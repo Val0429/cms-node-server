@@ -1,0 +1,28 @@
+<Devices>
+	<Device>
+		<Manufacture>MOBOTIX</Manufacture>
+		<Model>Q24</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series>Fisheye</Series>
+		<ConnectionProtocol>HTTP</ConnectionProtocol>
+		<ProfileMode value="1">
+			<Profile id="1">
+				<Compression codes="MJPEG">
+					<Resolution value="2048x1536,1920x1080,1280x960,1280x720,1024x768,800x600,768x576,704x576,640x480,384x288,352x288,320x240,160x120">
+						<FrameRate>4,6,8,10,12,14,16,20,25</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>2</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+</Devices>

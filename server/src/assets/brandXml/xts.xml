@@ -1,0 +1,1053 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Devices>
+  <Device>
+    <Manufacture>XTS</Manufacture>
+    <Model>XTS-BC5MPDN</Model>
+    <Alias>EV8180F</Alias>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+    <SensorMode value="5MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">2592x1920,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">2592x1920,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="3MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">2048x1536,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,20</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">2048x1536,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="1080p">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1920x1080,1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1920x1080,1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="1.3MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="720p">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>XTS-BC5MPDN</SameAs>
+    <Model>XTS-BU5MPDN</Model>
+    <Alias>EV8781F</Alias>
+  </Device>
+  
+  <Device>
+    <Manufacture>XTS</Manufacture>
+    <Model>XTS-MDVP5MPDN-4</Model>
+    <Alias>EV8580F</Alias>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+    <SensorMode value="5MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">2592x1920,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">2592x1920,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="3MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">2048x1536,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,20</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">2048x1536,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="1080p">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1920x1080,1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1920x1080,1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="1.3MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="720p">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  
+  <Device>
+    <Manufacture>XTS</Manufacture>
+    <Model>XTS-BC3MPDN</Model>
+    <Alias>EV8180Q</Alias>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+    <SensorMode value="3MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">2048x1536,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,20</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">2048x1536,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="1080p">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1920x1080,1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1920x1080,1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="1.3MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="720p">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>XTS-BC5MPDN</SameAs>
+    <Model>XTS-BU3MPDNVF</Model>
+    <Alias>EV8781Q</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-BU3MPDNVF</SameAs>
+    <Model>XTS-BU3MPDNZF</Model>
+    <Alias>EV8781Q-MD</Alias>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>true</FocusSupport>
+  </Device>
+  
+  <Device>
+    <Manufacture>XTS</Manufacture>
+    <Model>XTS-MDVP3MPDN</Model>
+    <Alias>EV8580Q</Alias>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+    <SensorMode value="3MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">2048x1536,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,20</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">2048x1536,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="1080p">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1920x1080,1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1920x1080,1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="1.3MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="720p">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDVP3MPDN</SameAs>
+    <Model>XTS-MDI3MPDN</Model>
+    <Alias>EV8581Q</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDVP3MPDN</SameAs>
+    <Model>XTS-BU3MPB</Model>
+    <Alias>EV8782Q</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDVP3MPDN</SameAs>
+    <Model>XTS-MDVP3MPDNZF</Model>
+    <Alias>EV8580Q-MD</Alias>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>true</FocusSupport>
+  </Device>
+  
+  <Device>
+    <Manufacture>XTS</Manufacture>
+    <Model>XTS-BC2MPDN</Model>
+    <Alias>EV8180U</Alias>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+    <SensorMode value="1080p">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1920x1080,1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1920x1080,1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="1.3MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>XTS-BC2MPDN</SameAs>
+    <Model>XTS-BU2MPDNVF</Model>
+    <Alias>EV8781U</Alias>
+  </Device>
+  
+  <Device>
+    <Manufacture>XTS</Manufacture>
+    <Model>XTS-MDVP2MPDN</Model>
+    <Alias>EV8580U</Alias>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+    <SensorMode value="1080p">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1920x1080,1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1920x1080,1280x720</Resolution>
+          <FrameRate>1,2,3,4,5,10,15</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <SensorMode value="1.3MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDVP2MPDN</SameAs>
+    <Model>XTS-MDI2MPDN</Model>
+    <Alias>EV8581U</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDVP2MPDN</SameAs>
+    <Model>XTS-BU2MP</Model>
+    <Alias>EV8780U</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDVP2MPDN</SameAs>
+    <Model>XTS-BU2MPB</Model>
+    <Alias>EV8782U</Alias>
+  </Device>
+  
+  <Device>
+    <Manufacture>XTS</Manufacture>
+    <Model>XTS-BC1.3DN30</Model>
+    <Alias>EV8180A</Alias>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+    <SensorMode value="1.3MP">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1">
+          <Resolution PowerFrequency="50,60">1280x1024,1024x768,800x600</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25</FrameRate>
+          <Bitrate>1M,2M,4M,6M,8M,10M,12M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+        <Profile id="2">
+          <Resolution PowerFrequency="60">736x480,640x480,320x240,160x120</Resolution>
+          <Resolution PowerFrequency="50">736x576,640x480,320x240,160x120</Resolution>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="4">
+        <Profile id="1,2,3,4">
+          <Resolution PowerFrequency="50,60">640x480</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20</FrameRate>
+          <Bitrate>256K,512K,1M,2M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>XTS-BC1.3DN30</SameAs>
+    <Model>XTS-BU1.3MPDNVF</Model>
+    <Alias>EV8781A</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-BC1.3DN30</SameAs>
+    <Model>XTS-MDVP1.3DN</Model>
+    <Alias>EV8580A</Alias>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDVP1.3DN</SameAs>
+    <Model>XTS-MDI1.3DNVF</Model>
+    <Alias>EV8581A</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDVP1.3DN</SameAs>
+    <Model>XTS-MDI1.3MP</Model>
+    <Alias>EV8582A</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDVP1.3DN</SameAs>
+    <Model>XTS-BU1.3MP</Model>
+    <Alias>EV8780A</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDVP1.3DN</SameAs>
+    <Model>XTS-BU1.3MPB</Model>
+    <Alias>EV8782A</Alias>
+  </Device>
+
+  <Device>
+    <Manufacture>XTS</Manufacture>
+    <Model>XTS-MDIVGA-IP</Model>
+    <Alias>EV6552A</Alias>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP Over UDP</ConnectionProtocol>
+    <SensorMode value="">
+      <ProfileMode value="2">
+        <Profile id="1,2">
+          <Resolution>640x480,320x240,160x120</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDIVGA-IP</SameAs>
+    <Model>XTS-MDIVGALL-IP</Model>
+    <Alias>EV6552R</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDIVGA-IP</SameAs>
+    <Model>XTS-MDVP540IR-IP</Model>
+    <Alias>EV6551A</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-MDIVGA-IP</SameAs>
+    <Model>XTS-BCVGA-IP</Model>
+    <Alias>EV6151A</Alias>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+  </Device>
+  <Device>
+    <SameAs>XTS-BCVGA-IP</SameAs>
+    <Model>XTS-BCVGADN-IP</Model>
+    <Alias>EV6153A</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-BCVGA-IP</SameAs>
+    <Model>XTS-BUVGALL-IP</Model>
+    <Alias>EV6750</Alias>
+  </Device>
+
+  <Device>
+    <Manufacture>XTS</Manufacture>
+    <Model>XTS-BU540FX-IP</Model>
+    <Alias>EV6355A</Alias>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP Over UDP</ConnectionProtocol>
+    <SensorMode value="">
+      <ProfileMode value="2">
+        <Profile id="1,2">
+          <Resolution>720x480,352x240,176x120</Resolution>
+          <FrameRate>1,2,3,4,5,10,15,20,25,30</FrameRate>
+          <Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M</Bitrate>
+          <Compression>H264,MPEG4,MJPEG</Compression>
+        </Profile>
+      </ProfileMode>
+    </SensorMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>XTS-BU540FX-IP</SameAs>
+    <Model>XTS-BU540VF-IP</Model>
+    <Alias>EV6356A</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-BU540FX-IP</SameAs>
+    <Model>XTS-BC600-IP</Model>
+    <Alias>EV6150A</Alias>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+  </Device>
+  <Device>
+    <SameAs>XTS-BC600-IP</SameAs>
+    <Model>XTSBC540DNWDRIP</Model>
+    <Alias>EV6156A</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-BC600-IP</SameAs>
+    <Model>XTS-NVS-11</Model>
+    <Alias>EV3151</Alias>
+    <Type>VideoServer</Type>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>true</FocusSupport>
+  </Device>
+  <Device>
+    <SameAs>XTS-NVS-11</SameAs>
+    <Model>XTS-NVS-11A</Model>
+    <Alias>EV3151A</Alias>
+  </Device>
+  <Device>
+    <SameAs>XTS-NVS-11</SameAs>
+    <Model>XTS-NVS-1</Model>
+    <Alias>EV3150A</Alias>
+  </Device>
+</Devices>

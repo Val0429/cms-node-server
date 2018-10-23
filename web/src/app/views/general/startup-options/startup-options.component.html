@@ -1,0 +1,56 @@
+<legend>Startup Options</legend>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">Startup Options</label>
+  <div class="col-md-8" style="padding-top: 4px;">
+    <input id="startup-enabled" type="checkbox" [checked]="startupOptions.Enabled == 'true'" (change)="startupOptions.Enabled = startupOptions.Enabled == 'true' ? 'false' : 'true'">
+    <label for="startup-enabled">Enabled</label>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">Video Title Bar</label>
+  <div class="col-md-8" style="padding-top: 4px;">
+    <input id="startup-videoTitleBar" type="checkbox" [checked]="startupOptions.VideoTitleBar == 'true'" (change)="startupOptions.VideoTitleBar = startupOptions.VideoTitleBar == 'true' ? 'false' : 'true'"
+      [disabled]="startupOptions.Enabled == 'false'">
+    <label for="startup-videoTitleBar">Enabled</label>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">Full Screen</label>
+  <div class="col-md-8" style="padding-top: 4px;">
+    <input id="startup-fullScreen" type="checkbox" [checked]="startupOptions.FullScreen == 'true'" (change)="startupOptions.FullScreen = startupOptions.FullScreen == 'true' ? 'false' : 'true'"
+      [disabled]="startupOptions.Enabled == 'false'">
+    <label for="startup-fullScreen">Enabled</label>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">Hide Panel</label>
+  <div class="col-md-8" style="padding-top: 4px;">
+    <input id="startup-hidePanel" type="checkbox" [checked]="startupOptions.HidePanel == 'true'" (change)="startupOptions.HidePanel = startupOptions.HidePanel == 'true' ? 'false' : 'true'"
+      [disabled]="startupOptions.FullScreen == 'true' || startupOptions.Enabled == 'false'">
+    <label for="startup-hidePanel">Hide</label>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">Bandwidth</label>
+  <div class="col-md-8">
+    <select class="select1" [(ngModel)]="startupOptions.TotalBitrate" [disabled]="startupOptions.Enabled == 'false'">
+      <option *ngFor="let item of bandwidthOptionsObject" value= {{item.value}}>{{item.key}}</option>
+    </select>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">View Patrol</label>
+  <div class="col-md-8" style="padding-top: 4px;">
+    <input id="view-patrol-enabled" type="checkbox" [checked]="startupOptions.Patrol == 'true'" (change)="startupOptions.Patrol = startupOptions.Patrol == 'true' ? 'false' : 'true'"
+      [disabled]="startupOptions.Enabled == 'false'">
+    <label for="view-patrol-enabled">Enabled</label>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">View</label>
+  <div class="col-md-8">
+    <select class="select1" [(ngModel)]="startupOptions.View" [disabled]="startupOptions.Patrol == 'true' || startupOptions.Enabled == 'false'">
+      <option *ngFor="let item of viewOptionsObject" value={{item.value}}>{{item.key}}</option>
+    </select>
+  </div>
+</div>

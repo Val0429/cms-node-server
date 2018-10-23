@@ -1,0 +1,12 @@
+{
+  "PORT": 3000,
+  "SSL_PORT": 443,
+  "IS_HTTPS": false,
+  "HOST": "localhost",
+  "DATABASE_URI": "mongodb://localhost:27017/CMS3",
+  "APPLICATION_ID": "CMS3-Parse-API",
+  "JAVASCRIPT_KEY": "JAVASCRIPT_KEY",
+  "MASTER_KEY": "MASTER_KEY",
+  "FILE_KEY": "FILE_KEY",
+  "DB_BACKUP_PERIOD": 600
+}

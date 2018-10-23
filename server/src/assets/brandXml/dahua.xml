@@ -1,0 +1,2004 @@
+<Devices>
+	<Device>
+		<Manufacture>Dahua</Manufacture>
+		<Model>Generic</Model>
+		<Type>Fixed,PTZ</Type>
+		<Series>GenericModel</Series>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2"/>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>4</NumberOfMotion>
+	</Device>
+	<Device>
+		<Manufacture>Dahua</Manufacture>
+		<Model>IPC-HDW4100C</Model>
+		<Type>HD Network Camera</Type>
+		<Series>IPC-HDW4100C</Series>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="3">
+			<Profile id="1">
+				<Compression codes="H264">
+					<Resolution value="1280x960">
+						<FrameRate value="1">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="1280x720">
+						<FrameRate value="1">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+				<Compression codes="MJPEG">
+					<Resolution value="1280x960">
+						<FrameRate value="1">
+							<Bitrate>500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>5M,5.5M,6M,6.5M,7M,7.5M,8M,8.5M,9M,9.5M,10M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>5M,5.5M,6M,6.5M,7M,7.5M,8M,8.5M,9M,9.5M,10M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>5M,5.5M,6M,6.5M,7M,7.5M,8M,8.5M,9M,9.5M,10M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>6M,6.5M,7M,7.5M,8M,8.5M,9M,9.5M,10M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>6M,6.5M,7M,7.5M,8M,8.5M,9M,9.5M,10M,10.5M,11M,11.5M,12M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>6M,6.5M,7M,7.5M,8M,8.5M,9M,9.5M,10M,10.5M,11M,11.5M,12M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>6M,6.5M,7M,7.5M,8M,8.5M,9M,9.5M,10M,10.5M,11M,11.5M,12M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="1280x720">
+						<FrameRate value="1">
+							<Bitrate>384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>5M,5.5M,6M,6.5M,7M,7.5M,8M,8.5M,9M,9.5M,10M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+			<Profile id="2">
+				<Compression codes="H264">
+					<Resolution value="704x576">
+						<FrameRate value="1">
+							<Bitrate>32K,64K,128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="352x288">
+						<FrameRate value="1">
+							<Bitrate>32K,64K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>32K,64K,128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>32K,64K,128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>32K,64K,128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>32K,64K,128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>32K,64K,128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>32K,64K,128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>32K,64K,128K,256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>32K,64K,128K,256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>32K,64K,128K,256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+				<Compression codes="MJPEG">
+					<Resolution value="704x576">
+						<FrameRate value="1">
+							<Bitrate>256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>750K,1M,1.2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="352x288">
+						<FrameRate value="1">
+							<Bitrate>64K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>64K,128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>500K,750K,1M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+			<Profile id="3">
+				<Compression codes="H264">
+					<Resolution value="1280x720">
+						<FrameRate value="1">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="704x576">
+						<FrameRate value="1">
+							<Bitrate>32K,64K,128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="352x288">
+						<FrameRate value="1">
+							<Bitrate>32K,64K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>32K,64K,128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>32K,64K,128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>32K,64K,128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>32K,64K,128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>32K,64K,128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>32K,64K,128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>32K,64K,128K,256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>32K,64K,128K,256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>32K,64K,128K,256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>32K,64K,128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>64K,128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+				<Compression codes="MJPEG">
+					<Resolution value="1280x720">
+						<FrameRate value="1">
+							<Bitrate>384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>5M,5.5M,6M,6.5M,7M,7.5M,8M,8.5M,9M,9.5M,10M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="704x576">
+						<FrameRate value="1">
+							<Bitrate>256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>750K,1M,1.2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="352x288">
+						<FrameRate value="1">
+							<Bitrate>64K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>64K,128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>500K,750K,1M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>4</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>IPC-HDW4100C</SameAs>
+		<Model>DH-IPC-HDW4100C</Model>
+	</Device>
+	<Device>
+		<Manufacture>Dahua</Manufacture>
+		<Model>IPC-K15-LTE</Model>
+		<Type>HD Network Camera</Type>
+		<Series>IPC-HDW4100C</Series>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1">
+				<Compression codes="H264">
+					<Resolution value="1280x960">
+						<FrameRate value="1">
+							<Bitrate>128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="1280x720">
+						<FrameRate value="1">
+							<Bitrate>128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>500K,750K,1M,1.2M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,6.5M,7M,7.5M,8M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="640x480">
+						<FrameRate value="1">
+							<Bitrate>128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>128K,256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+			<Profile id="2">
+				<Compression codes="H264">
+					<Resolution value="640x480">
+						<FrameRate value="1">
+							<Bitrate>128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>128K,256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>128K,256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>256K,384K,500K,750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>256K,384K,500K,750K,1M,1.2M,1.5M,2M,2.5M,3M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="320x240">
+						<FrameRate value="1">
+							<Bitrate>64K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>64K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>128K,256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>128K,256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>128K,256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>128K,256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>128K,256K,384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>128K,256K,384K,500K,750K</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+				<Compression codes="MJPEG">
+					<Resolution value="640x480">
+						<FrameRate value="1">
+							<Bitrate>256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>750K,1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>750K,1M,1.2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>1M,1.2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>1.5M,2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>2M,2.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>2M,2.5M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>2M,2.5M,3M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="320x240">
+						<FrameRate value="1">
+							<Bitrate>64K</Bitrate>
+						</FrameRate>
+						<FrameRate value="2">
+							<Bitrate>64K</Bitrate>
+						</FrameRate>
+						<FrameRate value="3">
+							<Bitrate>128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="4">
+							<Bitrate>128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="6">
+							<Bitrate>128K</Bitrate>
+						</FrameRate>
+						<FrameRate value="7">
+							<Bitrate>128K,256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="8">
+							<Bitrate>256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="9">
+							<Bitrate>256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>256K</Bitrate>
+						</FrameRate>
+						<FrameRate value="11">
+							<Bitrate>256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="12">
+							<Bitrate>256K,384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="13">
+							<Bitrate>384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="14">
+							<Bitrate>384K</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="16">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="17">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="18">
+							<Bitrate>384K,500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="19">
+							<Bitrate>500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="21">
+							<Bitrate>500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="22">
+							<Bitrate>500K</Bitrate>
+						</FrameRate>
+						<FrameRate value="23">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="24">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>500K,750K</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>4</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Dahua</Manufacture>
+		<Model>IPC-HFW4231B-AS</Model>
+		<Alias>IPC-HFW4231B</Alias>
+		<Type>HD Network Camera</Type>
+		<Series>SDK</Series>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="3">
+			<Profile id="1">
+				<Compression codes="H264">
+					<Resolution value="1920x1080">
+						<FrameRate value="1">
+							<Bitrate>1M,1.2M,1.5M,2M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1M,1.2M,1.5M,2M,4M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>1M,1.2M,1.5M,2M,4M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>1.5M,2M,4M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>2M,4M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>2M,4M,6M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="30">
+							<Bitrate>2M,4M,6M,8M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="1280x1024">
+						<FrameRate value="1">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1M,1.2M,1.5M,2M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>1M,1.2M,1.5M,2M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>1M,1.2M,1.5M,2M,4M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>1.2M,1.5M,2M,4M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>1.5M,2M,4M,6M</Bitrate>
+						</FrameRate>
+						<FrameRate value="30">
+							<Bitrate>2M,4M,6M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="1280x720">
+						<FrameRate value="1">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>1M,1.2M,1.5M,2M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>1M,1.2M,1.5M,2M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>1M,1.2M,1.5M,2M,4M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>1M,1.2M,1.5M,2M,4M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="30">
+							<Bitrate>1M,1.2M,1.5M,2M,4M,5M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+				<Compression codes="MJPEG">
+					<Resolution value="1920x1080">
+						<FrameRate value="1">
+							<Bitrate>1M,1.2M,1.5M,2M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>4M,6M,8M,10M,12M,14M,16M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>8M,10M,12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>10M,12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="30">
+							<Bitrate>20M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="1280x1024">
+						<FrameRate value="1">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>4M,6M,8M,10M,12M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>6M,8M,10M,12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>8M,10M,12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>10M,12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="30">
+							<Bitrate>14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="1280x720">
+						<FrameRate value="1">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1.5M,2M,4M,6M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>4M,6M,8M,10M,12M,14M,16M,18M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>6M,8M,10M,12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>8M,10M,12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>10M,12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="30">
+							<Bitrate>10M,12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+			<Profile id="2">
+				<Compression codes="H264">
+					<Resolution value="704x576">
+						<FrameRate value="1">
+							<Bitrate>1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+				<Compression codes="MJPEG">
+					<Resolution value="704x576">
+						<FrameRate value="1">
+							<Bitrate>1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1M,1.2M,1.5M,2M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>1.5M,2M,4M,6M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>4M,6M,8M,10M,12M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>4M,6M,8M,10M,12M,14M,16M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>4M,6M,8M,10M,12M,14M,16M,18M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+			<Profile id="3">
+				<Compression codes="H264">
+					<Resolution value="1280x720">
+						<FrameRate value="1">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>1M,1.2M,1.5M,2M,3M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>1M,1.2M,1.5M,2M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>1M,1.2M,1.5M,2M,4M,5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>1M,1.2M,1.5M,2M,4M,5M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="704x576">
+						<FrameRate value="1">
+							<Bitrate>1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>1M,1.2M,1.5M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+				<Compression codes="MJPEG">
+					<Resolution value="1280x720">
+						<FrameRate value="1">
+							<Bitrate>1M,1.2M,1.5M,2M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1.5M,2M,4M,6M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>4M,6M,8M,10M,12M,14M,16M,18M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>6M,8M,10M,12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>8M,10M,12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>10M,12M,14M,16M,18M,20M</Bitrate>
+						</FrameRate>
+					</Resolution>
+					<Resolution value="704x576">
+						<FrameRate value="1">
+							<Bitrate>1M</Bitrate>
+						</FrameRate>
+						<FrameRate value="5">
+							<Bitrate>1M,1.2M,1.5M,2M,4M</Bitrate>
+						</FrameRate>
+						<FrameRate value="10">
+							<Bitrate>1.5M,2M,4M,6M,8M</Bitrate>
+						</FrameRate>
+						<FrameRate value="15">
+							<Bitrate>4M,6M,8M,10M,12M</Bitrate>
+						</FrameRate>
+						<FrameRate value="20">
+							<Bitrate>4M,6M,8M,10M,12M,14M,16M</Bitrate>
+						</FrameRate>
+						<FrameRate value="25">
+							<Bitrate>4M,6M,8M,10M,12M,14M,16M,18M</Bitrate>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>IPC-HFW4231B-AS</SameAs>
+		<Model>IPC-HDB4231E-AS</Model>
+		<Alias>IPC-HDB4231E</Alias>		
+	</Device>
+</Devices>

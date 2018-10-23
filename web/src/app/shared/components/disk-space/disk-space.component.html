@@ -1,0 +1,29 @@
+<table class="table table-bordered table-lg mb-lg">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Drive</th>
+      <th>Capacity</th>
+      <th>Free Space</th>
+      <th>Used Space</th>
+      <th>Usage %</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let disk of mediaDiskspace">
+      <td>
+        <input type="checkbox" [checked]="checkDiskSelected(disk)" (change)="setDiskStorage(disk)">
+      </td>
+      <td>{{getDiskLetterCode(disk)}}</td>
+      <td>{{countBytes(disk.TotalBytes)}}</td>
+      <td>{{countBytes(disk.FreeBytes)}}</td>
+      <td>{{countUsageSpace(disk)}}</td>
+      <td>
+        {{countUsagePercent(disk)}}%
+        <div class="bg-gray-lighter progress progress-xs">
+          <div class="progress-bar progress-xs bg-bar-gray" [style.width]="countUsagePercent(disk) + '%'"></div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

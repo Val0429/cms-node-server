@@ -1,0 +1,16 @@
+<Devices>
+  <Device>
+    <Manufacture>ONVIF</Manufacture>
+    <Model>Profile S</Model>
+    <Type>Camera</Type>
+    <ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>    
+	<NumberOfChannel>1</NumberOfChannel>
+	<NumberOfAudioIn>1</NumberOfAudioIn>	
+	<NumberOfDI>2</NumberOfDI>	
+	<NumberOfMotion>4</NumberOfMotion>
+	<PanSupport>true</PanSupport>
+	<TiltSupport>true</TiltSupport>
+	<ZoomSupport>true</ZoomSupport>
+	<FocusSupport>true</FocusSupport>
+  </Device>
+</Devices>

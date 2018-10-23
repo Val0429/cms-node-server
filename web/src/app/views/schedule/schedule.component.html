@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-lg-6">
+    <app-nvr-device-selector [updateLatest]="updateLatest" (selectDeviceEvent)="selectDeviceEvent($event)"></app-nvr-device-selector>
+  </div>
+  <div class="col-lg-6">
+    <app-week-scheduler [currentDevice]="currentDevice" (updateScheduleEvent)="updateScheduleEvent($event)"></app-week-scheduler>
+  </div>
+</div>

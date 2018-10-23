@@ -1,0 +1,23 @@
+<div class="week-board-container">
+  <div class="week-board-toolbar">Hour</div>
+  <div class="week-board-header">
+    <div class="day-bar">
+      <div class="day-bar-cell" *ngFor="let day of headerWeekDay">
+        {{day}}
+      </div>
+    </div>
+  </div>
+  <div class="week-board-sidebar">
+    <div class="time-bar" *ngFor="let hour of sideTimeHours">
+      {{hour}}
+    </div>
+  </div>
+  <div class="week-board-content">
+    <div class="week-board-content-day-bar">
+      <div class="week-board-content-day-bar-cell" *ngFor="let day of displayBlock">
+        <div class="week-board-content-hour-block" [ngStyle]="{ 'background-color': getHalfHourBlockStyle(halfHour)}" *ngFor="let halfHour of day">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

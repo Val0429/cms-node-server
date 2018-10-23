@@ -1,0 +1,78 @@
+<section class="widget">
+  <header>
+    <!-- <legend>
+      <strong>Added NVR</strong>
+    </legend> -->
+    <h6>
+      <span class="fw-semi-bold">Added NVR</span>
+    </h6>
+    <div class="widget-controls" style="padding-right: 20px;">
+      <span class="fa fa-refresh widget-controls-icon" placement="top" tooltip="Reload" (click)="reloadScheduleData()"></span>
+    </div>
+  </header>
+  <div class="widget-body no-padding">
+    <div id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="card" *ngFor="let nvr of nvrConfigs">
+        <div class="card-header" role="tab" (click)="showedNvrId = showedNvrId === nvr.objectId ? '' : nvr.objectId;">
+          <span class="text-primary">{{nvr.Name}}</span>
+          <span class="text-info">&nbsp;-&nbsp;{{nvr.Manufacture}}</span>
+          <span class="text-mute">&nbsp;&nbsp;&nbsp;{{nvr.Domain}}:{{nvr.Port}}</span>
+          <i class="fa fa-angle-down float-right" style="font-size: 1.5rem;" *ngIf="showedNvrId !== nvr.objectId"></i>
+          <i class="fa fa-angle-up float-right" style="font-size: 1.5rem;" *ngIf="showedNvrId === nvr.objectId"></i>
+        </div>
+        <div class="collapse" [class.show]="showedNvrId === nvr.objectId" role="tabpanel" aria-labelledby="headingOne">
+          <div class="card-block">
+            <table class="table table-hover table-lg mb-0">
+              <tbody *ngIf="getDevicesByNvr(nvr)">
+                <tr *ngFor="let device of getDevicesByNvr(nvr)" (click)="clickDevice(device)" [class.active]="device == selectedDevice">
+                  <td width="5%">{{device.Channel}}</td>
+                  <td width="45%">{{device.Name}}</td>
+                  <td width="25%">{{getPlanName(device)}}</td>
+                  <td width="25%">
+                    <span class="text-success" placement="top" tooltip="Pre-Event Recording">{{getPreRecordSetting(device)}} sec.</span>
+                    &nbsp;/&nbsp;
+                    <span class="text-primary" placement="top" tooltip="Post-Event Recording">{{getPostRecordSetting(device)}} sec.</span>
+                  </td>
+                </tr>
+              </tbody>
+              <tbody *ngIf="!getDevicesByNvr(nvr)">
+                <tr>
+                  <td width="100%">No Device Available.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <accordion [closeOthers]="true" class="show" id="accordion2">
+      <accordion-group *ngFor="let nvr of nvrConfigs">
+        <div accordion-heading>
+          <span class="text-primary">{{nvr.Name}}</span>
+          <span class="text-info">&nbsp;-&nbsp;{{nvr.Manufacture}}</span>
+          <span class="text-mute">&nbsp;&nbsp;&nbsp;{{nvr.Domain}}:{{nvr.Port}}</span>
+          <i class="fa fa-angle-down float-right" style="font-size: 1.5rem;"></i>
+        </div>
+        <table class="table table-hover table-lg mb-0">
+          <tbody *ngIf="getDevicesByNvr(nvr)">
+            <tr *ngFor="let device of getDevicesByNvr(nvr)" (click)="clickDevice(device)" [class.active]="device == selectedDevice">
+              <td width="5%">{{device.Channel}}</td>
+              <td width="45%">{{device.Name}}</td>
+              <td width="25%">{{getPlanName(device)}}</td>
+              <td width="25%">
+                <span class="text-success" placement="top" tooltip="Pre-Event Recording">{{getPreRecordSetting(device)}} sec.</span>
+                &nbsp;/&nbsp;
+                <span class="text-primary" placement="top" tooltip="Post-Event Recording">{{getPostRecordSetting(device)}} sec.</span>
+              </td>
+            </tr>
+          </tbody>
+          <tbody *ngIf="!getDevicesByNvr(nvr)">
+            <tr>
+              <td width="100%">No Device Available.</td>
+            </tr>
+          </tbody>
+        </table>
+      </accordion-group>
+    </accordion> -->
+  </div>
+</section>

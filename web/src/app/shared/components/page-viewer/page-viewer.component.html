@@ -1,0 +1,24 @@
+<ng-container *ngIf="debug">
+  <pre>pageViewerOptions = {{pageViewerOptions|json}}</pre>
+  <pre>infos = {{infos|json}}</pre>
+</ng-container>
+
+<div class="btn-toolbar" role="toolbar">
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-secondary pointer" (click)="notifyPageChange(1)" [disabled]="pageViewerOptions?.currentPage === 1">{{ pageViewerOptions?.firstPageText || 'First' }}</button>
+    <button type="button" class="btn btn-secondary pointer" (click)="notifyPageChange(infos?.previousPage)" [disabled]="pageViewerOptions?.currentPage === 1">{{ pageViewerOptions?.previousPageText || 'Previous' }}</button>
+  </div>
+
+  <div class="btn-group mr-2 ml-2">
+    <button type="button" class="btn btn-secondary" disabled *ngIf="infos?.hasPreviousPage">...</button>
+    <button type="button" class="btn btn-secondary pointer pointer" *ngFor="let page of fakePageDataSet()" [ngClass]="{active: pageViewerOptions?.currentPage === page }"
+      (click)="notifyPageChange(page)">{{page}}</button>
+    <button type="button" class="btn btn-secondary" disabled *ngIf="infos?.hasNextPage">...</button>
+  </div>
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-secondary pointer" (click)="notifyPageChange(infos?.nextPage)" [disabled]="pageViewerOptions?.currentPage === infos?.lastPage">{{ pageViewerOptions?.nextPageText || 'Next' }}</button>
+    <button type="button" class="btn btn-secondary pointer" (click)="notifyPageChange(infos?.lastPage)" [disabled]="pageViewerOptions?.currentPage === infos?.lastPage">{{ pageViewerOptions?.lastPageText || 'Last' }}</button>
+  </div>
+</div>

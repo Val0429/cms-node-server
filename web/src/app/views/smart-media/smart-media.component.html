@@ -1,0 +1,196 @@
+<section class="widget">
+  <div class="widget-body" *ngIf="!dataList">
+    <div class="text-center">
+      <i class="fa fa-refresh fa-spin fa-fw" style="font-size: 30px;"></i>
+    </div>
+  </div>
+  <div class="widget-body" *ngIf="dataList">
+    <div class="mt float-right">
+      <button type="button" class="btn btn-default" (click)="filterModal.show()">
+        Display Filter
+      </button>
+      <button type="button" class="btn btn-default" (click)="editModal.show();setCreateData();">
+        Create
+      </button>
+    </div>
+    <div class="widget-table-overflow">
+      <table class="table table-lg mt-lg mb-0 table-hover">
+        <thead class="no-bd">
+          <tr>
+            <th>Channel Id</th>
+            <th>Name</th>
+            <th>Account</th>
+            <th>Occupancy Priority</th>
+            <th>Auth File</th>
+            <th>QR Code</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let data of dataList">
+            <tr>
+              <td class="pointer" (click)="editModal.show();setEditData(data)">{{data?.Channel}}</td>
+              <td class="pointer" (click)="editModal.show();setEditData(data)">{{data?.Name}}</td>
+              <td class="pointer" (click)="editModal.show();setEditData(data)">{{data?.Config?.Authentication?.Account}}</td>
+              <td class="pointer" (click)="editModal.show();setEditData(data)">
+                <i class="fa fa-check table-icon" *ngIf="data?.Config?.Authentication?.OccupancyPriority === 1"></i>
+              </td>
+              <td style="padding: 8px;">
+                <button type="button" class="btn btn-default" style="padding: 0 1rem" (click)="clickDownloadAuth(data);">
+                  <i class="fa fa-download" aria-hidden="true"></i>
+                </button>
+              </td>
+              <td style="padding: 8px;">
+                <button type="button" class="btn btn-default" style="padding: 0 1rem" (click)="clickGenerateQRCode(data);">
+                  <i class="fa fa-filter" aria-hidden="true"></i>
+                  Generate
+                </button>
+              </td>
+              <td class="text-right">
+                <i class="fa fa-times table-icon btn-remove pointer" aria-hidden="true" (click)="remove(data)"></i>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="text-bold" *ngIf="dataList.length < 1" style="margin: 15px;">
+        NO DATA
+      </div>
+    </div>
+
+    <div class="row mt pt" *ngIf="dataList.length > 0">
+      <div class="col-md-12">
+        <app-page-viewer [pageViewerOptions]="pageViewerOptions" (pageChange)="pageChange($event)"></app-page-viewer>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Edit Modal -->
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <button (click)="editModal.hide();" aria-label="Close" class="close ml-auto" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-center fw-bold">{{ currentEditData ? 'Update' : 'Create' }} Smart Media</h4>
+      </div>
+      <div class="modal-body" *ngIf="!flag.editDefault">
+        <form role="form" *ngIf="editDataModel">
+          <fieldset>
+            <div class="form-horizontal">
+              <div class="form-group row">
+                <label class="form-control-label col-md-3 col-12 text-right text-bold">Channel:</label>
+                <div class="col-md-9 col-12">
+                  <input type="number" class="form-control" id="channel" name="channel" placeholder="Channel Id" [(ngModel)]="editDataModel.channelId"
+                    [disabled]="true">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="form-control-label col-md-3 col-12 text-right text-bold">Model:</label>
+                <div class="col-md-9 col-12">
+                  <select class="select1" id="model" name="model" [(ngModel)]="editDataModel.model">
+                    <option *ngFor="let item of smartMediaModelList" [ngValue]="item">{{item}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="form-control-label col-md-3 col-12 text-right text-bold">Name:</label>
+                <div class="col-md-9 col-12">
+                  <input class="form-control" id="name" name="name" [(ngModel)]="editDataModel.name">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="form-control-label col-md-3 col-12 text-right text-bold">Account:</label>
+                <div class="col-md-9 col-12">
+                  <input type="text" class="form-control" id="displayAccount" name="displayAccount" [(ngModel)]="editDataModel.account">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="form-control-label col-md-3 col-12 text-right text-bold">Password:</label>
+                <div class="col-md-9 col-12">
+                  <input type="password" class="form-control" id="displayPassword" name="displayPassword" [(ngModel)]="editDataModel.password"
+                    autocomplete="new-password">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="form-control-label col-md-3 col-12 text-right text-bold">Occupancy Priority:</label>
+                <div class="col-md-9 col-12">
+                  <div class="checkbox abc-checkbox abc-checkbox-primary" style="padding-left: 5px;">
+                    <input id="firstLogin" name="firstLogin" type="checkbox" [checked]="editDataModel.firstLogin" (change)="editDataModel.firstLogin = !editDataModel.firstLogin">
+                    <label for="firstLogin">True</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-body" *ngIf="flag.editDefault">
+        <div class="text-center">
+          <i class="fa fa-refresh fa-spin fa-fw" style="font-size: 30px;"></i>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="clickSave()">
+          <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+          {{ currentEditData ? 'Update' : 'Create' }}
+        </button>
+        <button type="button" class="btn btn-gray" (click)="editModal.hide()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filter Modal -->
+<div bsModal #filterModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <button (click)="filterModal.hide();" aria-label="Close" class="close ml-auto" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-center fw-bold">Filter Smart Media</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" *ngIf="editDataModel">
+          <fieldset>
+            <div class="form-horizontal">
+              <div class="form-group row">
+                <label class="form-control-label col-md-3 col-12 text-right text-bold">Channel:</label>
+                <div class="col-md-9 col-12">
+                  <input type="number" class="form-control" id="query_channel" name="query_channel" placeholder="Channel" [(ngModel)]="queryParams.channel">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="filterModal.hide();pageChange()">
+          Filter
+        </button>
+        <button type="button" class="btn btn-gray" (click)="filterModal.hide();clearSearch()">
+          Clear
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="widget" *ngIf="currentQRCode">
+  <div class="widget-body text-center">
+    <img [src]="domSanitizer.bypassSecurityTrustUrl(currentQRCode?.base64)" />
+    <div>
+      <h4>Channel Id:
+        <b>{{currentQRCode.device.Channel}}</b>
+      </h4>
+      <h4>Account:
+        <b>{{currentQRCode.device.Config.Authentication.Account}}</b>
+      </h4>
+    </div>
+  </div>
+</section>

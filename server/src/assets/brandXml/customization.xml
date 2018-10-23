@@ -1,0 +1,14 @@
+<Devices>
+    <Device>
+        <Manufacture>Customization</Manufacture>
+        <Model>PTZ Camera</Model>
+        <Type>PTZCamera</Type>
+        <ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+        <NumberOfAudioIn>1</NumberOfAudioIn>
+        <NumberOfMotion>4</NumberOfMotion>
+        <PanSupport>true</PanSupport>
+        <TiltSupport>true</TiltSupport>
+        <ZoomSupport>true</ZoomSupport>
+        <FocusSupport>true</FocusSupport>
+    </Device>
+</Devices>

@@ -1,0 +1,199 @@
+<Devices>
+  <Device>
+    <Manufacture>BOSCH</Manufacture>
+    <Model>Dinion NBN-921-P</Model>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP</ConnectionProtocol>
+    <Compression>H264</Compression>
+    <ProfileMode value="3">
+      <Profile id="1">
+        <Compression>H264</Compression>
+      </Profile>
+      <Profile id="2">
+        <Compression>H264</Compression>
+      </Profile>      
+      <Profile id="3">
+        <Compression>MJPEG</Compression>
+      </Profile>      
+    </ProfileMode>
+    <StreamProfileModes>
+      <StreamProfileMode id="0">1</StreamProfileMode>
+      <StreamProfileMode id="1">2</StreamProfileMode>
+      <StreamProfileMode id="2">3</StreamProfileMode>
+      <StreamProfileMode id="3">4</StreamProfileMode>
+      <StreamProfileMode id="4">5</StreamProfileMode>
+      <StreamProfileMode id="5">6</StreamProfileMode>
+      <StreamProfileMode id="6">7</StreamProfileMode>
+      <StreamProfileMode id="7">8</StreamProfileMode>
+    </StreamProfileModes>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+  <Device>
+    <Manufacture>BOSCH</Manufacture>
+    <Model>Dinion HD 720p</Model>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP</ConnectionProtocol>
+    <Compression>H264</Compression>
+    <ProfileMode value="3">
+      <Profile id="1">
+        <Compression>H264</Compression>
+      </Profile>
+      <Profile id="2">
+        <Compression>H264</Compression>
+      </Profile>      
+      <Profile id="3">
+        <Compression>MJPEG</Compression>
+      </Profile>      
+    </ProfileMode>
+    <StreamProfileModes>
+      <StreamProfileMode id="0">1</StreamProfileMode>
+      <StreamProfileMode id="1">2</StreamProfileMode>
+      <StreamProfileMode id="2">3</StreamProfileMode>
+      <StreamProfileMode id="3">4</StreamProfileMode>
+      <StreamProfileMode id="4">5</StreamProfileMode>
+      <StreamProfileMode id="5">6</StreamProfileMode>
+      <StreamProfileMode id="6">7</StreamProfileMode>
+      <StreamProfileMode id="7">8</StreamProfileMode>
+    </StreamProfileModes>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>  
+  <Device>
+    <SameAs>Dinion HD 720p</SameAs>
+    <Model>Dinion NBN-733V-P</Model>    
+  </Device> 
+  <Device>
+    <SameAs>Dinion HD 720p</SameAs>
+    <Model>Dinion IP starlight 7000 HD</Model>    
+  </Device>  
+  <Device>
+    <SameAs>Dinion HD 720p</SameAs>
+    <Model>AUTODOME IP starlight 7000 HD</Model> 
+    <NumberOfDI>7</NumberOfDI>
+    <NumberOfDO>4</NumberOfDO>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>true</FocusSupport> 
+    <AutoTrackingSupport>true</AutoTrackingSupport>  
+  </Device>  
+  <Device>
+    <SameAs>Dinion HD 720p</SameAs>
+    <Model>VIP-X1600-XFM4</Model>
+    <Type>VideoServer</Type>
+    <NumberOfChannel>4</NumberOfChannel>
+    <NumberOfDI>4</NumberOfDI> 
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>true</FocusSupport> 
+  </Device>    
+  <Device>
+    <SameAs>Dinion HD 720p</SameAs>
+    <Model>VIP X1600 XF</Model>
+    <Alias>VIP-X1600-M4S</Alias>
+    <Type>VideoServer</Type>
+    <NumberOfChannel>4</NumberOfChannel>
+    <NumberOfDI>4</NumberOfDI> 
+    <NumberOfDO>4</NumberOfDO> 
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>true</FocusSupport> 
+  </Device>
+    <Device>
+    <Manufacture>BOSCH</Manufacture>
+    <Model>DINION IP 5000 HD (CPP4)</Model>
+    <Alias>Dinion IP 5000 HD</Alias>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP</ConnectionProtocol>
+    <Compression>H264</Compression>
+    <ProfileMode value="3">
+      <Profile id="1">
+        <Compression>H264</Compression>
+      </Profile>
+      <Profile id="2">
+        <Compression>H264</Compression>
+      </Profile>      
+      <Profile id="3">
+        <Compression>MJPEG</Compression>
+      </Profile>      
+    </ProfileMode>
+    <StreamProfileModes>
+      <StreamProfileMode id="0">1</StreamProfileMode>
+      <StreamProfileMode id="1">2</StreamProfileMode>
+      <StreamProfileMode id="2">3</StreamProfileMode>
+      <StreamProfileMode id="3">4</StreamProfileMode>
+      <StreamProfileMode id="4">5</StreamProfileMode>
+      <StreamProfileMode id="5">6</StreamProfileMode>
+      <StreamProfileMode id="6">7</StreamProfileMode>
+      <StreamProfileMode id="7">8</StreamProfileMode>
+    </StreamProfileModes>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>  
+  <Device>
+    <Manufacture>BOSCH</Manufacture>
+    <Model>FLEXIDOME IP indoor 5000 HD (CPP4)</Model>
+    <Alias>FLEXIDOME IP INDOOR 5000 HD</Alias>
+    <Type>IPBoxCamera</Type>
+    <ConnectionProtocol>RTSP</ConnectionProtocol>
+    <Compression>H264</Compression>
+    <ProfileMode value="3">
+      <Profile id="1">
+        <Compression>H264</Compression>
+      </Profile>
+      <Profile id="2">
+        <Compression>H264</Compression>
+      </Profile>      
+      <Profile id="3">
+        <Compression>MJPEG</Compression>
+      </Profile>      
+    </ProfileMode>
+    <StreamProfileModes>
+      <StreamProfileMode id="0">1</StreamProfileMode>
+      <StreamProfileMode id="1">2</StreamProfileMode>
+      <StreamProfileMode id="2">3</StreamProfileMode>
+      <StreamProfileMode id="3">4</StreamProfileMode>
+      <StreamProfileMode id="4">5</StreamProfileMode>
+      <StreamProfileMode id="5">6</StreamProfileMode>
+      <StreamProfileMode id="6">7</StreamProfileMode>
+      <StreamProfileMode id="7">8</StreamProfileMode>
+    </StreamProfileModes>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>1</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>  
+</Devices>

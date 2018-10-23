@@ -1,0 +1,42 @@
+<legend>Live View</legend>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">Dynamic Stream Profile Mode</label>
+  <div class="col-md-8" style="padding-top: 4px;">
+    <input id="live-stream-enable" type="checkbox" [checked]="generalSetting.EnableAutoSwitchLiveStream == 'true'" (change)="generalSetting.EnableAutoSwitchLiveStream = generalSetting.EnableAutoSwitchLiveStream == 'true' ? 'false' : 'true'">
+    <label for="live-stream-enable">Enabled</label>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">Switch to Medium Profile in between</label>
+  <div class="col-md-8">
+    <select class="select1 width-100" [(ngModel)]="generalSetting.AutoSwitchLiveHighProfileCount" [disabled]="generalSetting.EnableAutoSwitchLiveStream == 'false'">
+      <option *ngFor="let item of streamProfileOptions" value= {{item}}>{{item}}</option>
+    </select>
+    <span>&nbsp;~&nbsp;</span>
+    <select class="select1 width-100" [(ngModel)]="generalSetting.AutoSwitchLiveLowProfileCount" [disabled]="generalSetting.EnableAutoSwitchLiveStream == 'false'">
+      <option *ngFor="let item of streamProfileOptions" value= {{item}}>{{item}}</option>
+    </select>
+  </div>
+</div>
+<legend>Playback (Only support Hikvision NVR now)</legend>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">Dynamic Stream Profile Mode</label>
+  <div class="col-md-8" style="padding-top: 4px;">
+    <input id="playback-stream-enable" type="checkbox" [checked]="generalSetting.EnableAutoSwitchPlaybackStream == 'true'" (change)="generalSetting.EnableAutoSwitchPlaybackStream = generalSetting.EnableAutoSwitchPlaybackStream == 'true' ? 'false' : 'true'">
+    <label for="playback-stream-enable">Enabled</label>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-4  col-form-label text-md-right">Switch to Medium Profile in between</label>
+  <div class="col-md-8">
+    <select class="select1 width-100" [(ngModel)]="generalSetting.AutoSwitchPlaybackHighProfileCount" [disabled]="generalSetting.EnableAutoSwitchPlaybackStream == 'false'">
+      <option *ngFor="let item of streamProfileOptions" value= {{item}}>{{item}}</option>
+    </select>
+    <span>&nbsp;~&nbsp;</span>
+    <select class="select1 width-100" [(ngModel)]="generalSetting.AutoSwitchPlaybackLowProfileCount" [disabled]="generalSetting.EnableAutoSwitchPlaybackStream == 'false'">
+      <option *ngFor="let item of streamProfileOptions" value= {{item}}>{{item}}</option>
+    </select>
+  </div>
+</div>
+<span class="help-block">High Profile is used for low number of video streams. Please configure High Profile with lower number of video streams and
+  Low Profile with higher number of video streams."</span>

@@ -1,0 +1,173 @@
+<Devices>
+	<Device>
+		<Manufacture>VIGZUL</Manufacture>
+		<Model>C3103-W-VIGZ-71e0</Model>
+		<Type>IPBoxCamera</Type>
+		<Alias>WCB-200AF</Alias>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="3">
+			<Profile id="1">
+				<Compression codes="H264,MJPEG">
+					<Resolution value="1280x800,1280x720,1024x768">
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+						<Profile id="2">
+							<Compression codes="H264,MJPEG,DISABLE">
+								<Resolution value="1280x800,1280x720,640x400,320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+							<Compression codes="MPEG4">
+								<Resolution value="1280x800,1280x720">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+								</Resolution>
+								<Resolution value="640x400,320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+						</Profile>
+						<Profile id="3">
+							<Compression codes="H264,MJPEG,MPEG4,DISABLE">
+								<Resolution value="320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+						</Profile>
+					</Resolution>
+				</Compression>
+				<Compression codes="MPEG4">
+					<Resolution value="1920x1080">
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14</FrameRate>
+						<Profile id="2">
+							<Compression codes="H264,MJPEG,DISABLE">
+								<Resolution value="1920x1080,1280x1024,1280x800,1280x720,1024x768,800x600,720x480,640x480,640x400,480x272,336x320,320x240,320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+							<Compression codes="MPEG4">
+								<Resolution value="1920x1080">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14</FrameRate>
+								</Resolution>
+								<Resolution value="1280x1024">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</FrameRate>
+								</Resolution>
+								<Resolution value="1280x800,1280x720,1024x768">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+								</Resolution>
+								<Resolution value="800x600,720x480,640x480,640x400,480x272,336x320,320x240,320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+						</Profile>
+						<Profile id="3">
+							<Compression codes="H264,MJPEG,MPEG4,DISABLE">
+								<Resolution value="320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+						</Profile>
+					</Resolution>
+					<Resolution value="1280x1024">
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</FrameRate>
+						<Profile id="2">
+							<Compression codes="H264,MJPEG,DISABLE">
+								<Resolution value="1920x1080,1280x1024,1280x800,1280x720,1024x768,800x600,720x480,640x480,640x400,480x272,336x320,320x240,320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+							<Compression codes="MPEG4">
+								<Resolution value="1920x1080">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14</FrameRate>
+								</Resolution>
+								<Resolution value="1280x1024">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</FrameRate>
+								</Resolution>
+								<Resolution value="1280x800,1280x720,1024x768">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+								</Resolution>
+								<Resolution value="800x600,720x480,640x480,640x400,480x272,336x320,320x240,320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+						</Profile>
+						<Profile id="3">
+							<Compression codes="H264,MJPEG,MPEG4,DISABLE">
+								<Resolution value="320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+						</Profile>
+					</Resolution>
+					<Resolution value="1280x800,1280x720,1024x768">
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+						<Profile id="2">
+							<Compression codes="H264,MJPEG,DISABLE">
+								<Resolution value="1920x1080,1280x1024,1280x800,1280x720,1024x768,800x600,720x480,640x480,640x400,480x272,336x320,320x240,320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+							<Compression codes="MPEG4">
+								<Resolution value="1920x1080">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14</FrameRate>
+								</Resolution>
+								<Resolution value="1280x1024">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</FrameRate>
+								</Resolution>
+								<Resolution value="1280x800,1280x720,1024x768">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+								</Resolution>
+								<Resolution value="800x600,720x480,640x480,640x400,480x272,336x320,320x240,320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+						</Profile>
+						<Profile id="3">
+							<Compression codes="H264,MJPEG,MPEG4,DISABLE">
+								<Resolution value="320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+						</Profile>
+					</Resolution>
+				</Compression>
+				<Compression codes="H264,MJPEG,MPEG4">
+					<Resolution value="800x600,720x480,640x480,640x400,320x192">
+						<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+						<Profile id="2">
+							<Compression codes="H264,MJPEG,DISABLE">
+								<Resolution value="1280x800,1280x720,640x400,320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+							<Compression codes="MPEG4">
+								<Resolution value="1280x800,1280x720">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+								</Resolution>
+								<Resolution value="640x400,320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+						</Profile>
+						<Profile id="3">
+							<Compression codes="H264,MJPEG,MPEG4,DISABLE">
+								<Resolution value="320x192">
+									<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+								</Resolution>
+							</Compression>
+						</Profile>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>3</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+</Devices>

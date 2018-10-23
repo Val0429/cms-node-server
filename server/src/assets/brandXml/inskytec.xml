@@ -1,0 +1,121 @@
+<Devices>
+	<Device>
+		<Manufacture>inskytec</Manufacture>
+		<Model>SKY-BO4NL</Model>
+		<Type>FixedDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<TVStandard value="NTSC">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264,MJPEG">
+						<Resolution value="2592x1520,2048x1520,1920x1080">
+							<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,14M,16M</Bitrate>
+							<FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264,MJPEG">
+						<Resolution value="704x576,640x480,320x240">
+							<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,14M,16M</Bitrate>
+							<FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</TVStandard>
+		<TVStandard value="PAL">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264,MJPEG">
+						<Resolution value="2592x1520,2048x1520,1920x1080">
+							<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,14M,16M</Bitrate>
+							<FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264,MJPEG">
+						<Resolution value="704x576,640x480,320x240">
+							<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,14M,16M</Bitrate>
+							<FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</TVStandard>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<!--	<Device><Manufacture>inskytec</Manufacture><Model>SKY-BU2F36</Model><Type>FixedDome</Type><Series></Series><ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol><TVStandard value="NTSC"><ProfileMode value="2"><Profile id="1"><Compression codes="H264"><Resolution value="1920x1080,1280x720,704x480"><Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate><FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30"/></Resolution></Compression></Profile><Profile id="2"><Compression codes="H264"><Resolution value="704x480,352x240"><Bitrate>16k,48k,96K,129K,193k,258K</Bitrate><FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30"/></Resolution></Compression></Profile></ProfileMode></TVStandard><TVStandard value="PAL"><ProfileMode value="2"><Profile id="1"><Compression codes="H264"><Resolution value="1920x1080,1280x720,704x480"><Bitrate>1M,1.5M,2M,3M,4M,5M,6M,8M</Bitrate><FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25"/></Resolution></Compression></Profile><Profile id="2"><Compression codes="H264"><Resolution value="704x480,352x240"><Bitrate>19k,57k,115k,154k,231k,308k</Bitrate><FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25"/></Resolution></Compression></Profile></ProfileMode></TVStandard><NumberOfChannel>1</NumberOfChannel><NumberOfAudioIn>1</NumberOfAudioIn><NumberOfAudioOut>0</NumberOfAudioOut><NumberOfDI>1</NumberOfDI><NumberOfDO>1</NumberOfDO><NumberOfMotion>1</NumberOfMotion><PanSupport>true</PanSupport><TiltSupport>true</TiltSupport><ZoomSupport>true</ZoomSupport><FocusSupport>true</FocusSupport></Device>-->
+	<Device>
+		<Manufacture>inskytec</Manufacture>
+		<Model>SX-FE4F360</Model>
+		<Type>FixedDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<TVStandard value="NTSC">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264,MJPEG">
+						<Resolution value="2592x1520,2048x1520,1920x1080,1280x720">
+							<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,14M,16M</Bitrate>
+							<FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264,MJPEG">
+						<Resolution value="704x576,640x480,320x240">
+							<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,14M,16M</Bitrate>
+							<FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</TVStandard>
+		<TVStandard value="PAL">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264,MJPEG">
+						<Resolution value="2592x1520,2048x1520,1920x1080,1280x720">
+							<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,14M,16M</Bitrate>
+							<FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+				<Profile id="2">
+					<Compression codes="H264,MJPEG">
+						<Resolution value="704x576,640x480,320x240">
+							<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,14M,16M</Bitrate>
+							<FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</TVStandard>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>SX-FE4F360</SameAs>
+		<Model>SKY-VD4F4</Model>
+	</Device>
+</Devices>

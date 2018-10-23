@@ -1,0 +1,147 @@
+<div class="col-12">
+  <section class="widget">
+    <header>
+      <legend>
+        <strong>Event/Log Recovery</strong>
+      </legend>
+    </header>
+    <div class="widget-body" *ngIf="eventRecoveryConfig">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Event Recovery Enable</label>
+        <div class="col-md-7" style="padding-top: 4px;">
+          <input id="event-enable" type="checkbox" [checked]="eventRecoveryConfig.Event.Enable == true" (change)="eventRecoveryConfig.Event.Enable = !eventRecoveryConfig.Event.Enable">
+          <label for="event-enable">Enable</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Event Recovery Auto</label>
+        <div class="col-md-7" style="padding-top: 4px;">
+          <input id="event-auto" type="checkbox" [checked]="eventRecoveryConfig.Event.Auto == true" (change)="eventRecoveryConfig.Event.Auto = !eventRecoveryConfig.Event.Auto"
+            [disabled]="eventRecoveryConfig.Event.Enable == false">
+          <label for="event-auto">Auto</label>
+        </div>
+      </div>
+      <ng-container *ngIf="flag.manual">
+        <div class="form-group row">
+          <label class="col-md-4  col-form-label text-md-right">Event Recovery Manual</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control width-150" style="display: inline-block;" placeholder="Date From" tooltip="Date From"
+              placement="top" [value]="manualTime[0].dateFrom" appDatepicker (datepickerChange)="manualTime[0].dateFrom = $event"
+              [disabled]="eventRecoveryConfig.Event.Enable == false">
+            <input type="text" class="form-control width-150" style="display: inline-block;" placeholder="Time From" tooltip="Time From"
+              placement="top" [value]="manualTime[0].timeFrom" appTimepicker (timepickerChange)="manualTime[0].timeFrom = $event"
+              [disabled]="eventRecoveryConfig.Event.Enable == false">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4  col-form-label text-md-right"></label>
+          <div class="col-md-8">
+            <input type="text" class="form-control width-150" style="display: inline-block;" placeholder="Date To" tooltip="Date To"
+              placement="top" [value]="manualTime[0].dateTo" appDatepicker (datepickerChange)="manualTime[0].dateTo = $event"
+              [disabled]="eventRecoveryConfig.Event.Enable == false">
+            <input type="text" class="form-control width-150" style="display: inline-block;" placeholder="Time To" tooltip="Time To"
+              placement="top" [value]="manualTime[0].timeTo" appTimepicker (timepickerChange)="manualTime[0].timeTo = $event"
+              [disabled]="eventRecoveryConfig.Event.Enable == false">
+            <button class="btn btn-default width-100 mb-xs" role="button" (click)="clickEventAction(0)" [disabled]="eventRecoveryConfig.Event.Enable == false">Action</button>
+          </div>
+        </div>
+      </ng-container>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">System Log Enable</label>
+        <div class="col-md-7" style="padding-top: 4px;">
+          <input id="system-log-enable" type="checkbox" [checked]="eventRecoveryConfig.SystemLog.Enable == true" (change)="eventRecoveryConfig.SystemLog.Enable = !eventRecoveryConfig.SystemLog.Enable">
+          <label for="system-log-enable">Enable</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">System Log Auto</label>
+        <div class="col-md-7" style="padding-top: 4px;">
+          <input id="system-log-auto" type="checkbox" [checked]="eventRecoveryConfig.SystemLog.Auto == true" (change)="eventRecoveryConfig.SystemLog.Auto = !eventRecoveryConfig.SystemLog.Auto"
+            [disabled]="eventRecoveryConfig.SystemLog.Enable == false">
+          <label for="system-log-auto">Auto</label>
+        </div>
+      </div>
+      <ng-container *ngIf="flag.manual">
+        <div class="form-group row">
+          <label class="col-md-4  col-form-label text-md-right">System Log Manual</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control width-150" style="display: inline-block;" placeholder="Date From" tooltip="Date From"
+              placement="top" [value]="manualTime[1].dateFrom" appDatepicker (datepickerChange)="manualTime[1].dateFrom = $event"
+              [disabled]="eventRecoveryConfig.SystemLog.Enable == false">
+            <input type="text" class="form-control width-150" style="display: inline-block;" placeholder="Time From" tooltip="Time From"
+              placement="top" [value]="manualTime[1].timeFrom" appTimepicker (timepickerChange)="manualTime[1].timeFrom = $event"
+              [disabled]="eventRecoveryConfig.SystemLog.Enable == false">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4  col-form-label text-md-right"></label>
+          <div class="col-md-8">
+            <input type="text" class="form-control width-150" style="display: inline-block;" placeholder="Date To" tooltip="Date To"
+              placement="top" [value]="manualTime[1].dateTo" appDatepicker (datepickerChange)="manualTime[1].dateTo = $event"
+              [disabled]="eventRecoveryConfig.SystemLog.Enable == false">
+            <input type="text" class="form-control width-150" style="display: inline-block;" placeholder="Time To" tooltip="Time To"
+              placement="top" [value]="manualTime[1].timeTo" appTimepicker (timepickerChange)="manualTime[1].timeTo = $event"
+              [disabled]="eventRecoveryConfig.SystemLog.Enable == false">
+            <button class="btn btn-default width-100 mb-xs" role="button" (click)="clickEventAction(1)" [disabled]="eventRecoveryConfig.SystemLog.Enable == false">Action</button>
+          </div>
+        </div>
+      </ng-container>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Operator Log Enable</label>
+        <div class="col-md-7" style="padding-top: 4px;">
+          <input id="op-log-enable" type="checkbox" [checked]="eventRecoveryConfig.OperationLog.Enable == true" (change)="eventRecoveryConfig.OperationLog.Enable = !eventRecoveryConfig.OperationLog.Enable">
+          <label for="op-log-enable">Enable</label>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Operator Log Auto</label>
+        <div class="col-md-7" style="padding-top: 4px;">
+          <input id="op-log-auto" type="checkbox" [checked]="eventRecoveryConfig.OperationLog.Auto == true" (change)="eventRecoveryConfig.OperationLog.Auto = !eventRecoveryConfig.OperationLog.Auto"
+            [disabled]="eventRecoveryConfig.OperationLog.Enable == false">
+          <label for="op-log-auto">Auto</label>
+        </div>
+      </div>
+      <ng-container *ngIf="flag.manual">
+        <div class="form-group row">
+          <label class="col-md-4  col-form-label text-md-right">Operator Log Manual</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control width-150" style="display: inline-block;" placeholder="Date From" tooltip="Date From"
+              placement="top" [value]="manualTime[2].dateFrom" appDatepicker (datepickerChange)="manualTime[2].dateFrom = $event"
+              [disabled]="eventRecoveryConfig.OperationLog.Enable == false">
+            <input type="text" class="form-control width-150" style="display: inline-block;" placeholder="Time From" tooltip="Time From"
+              placement="top" [value]="manualTime[2].timeFrom" appTimepicker (timepickerChange)="manualTime[2].timeFrom = $event"
+              [disabled]="eventRecoveryConfig.OperationLog.Enable == false">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4  col-form-label text-md-right"></label>
+          <div class="col-md-8">
+            <input type="text" class="form-control width-150" style="display: inline-block;" placeholder="Date To" tooltip="Date To"
+              placement="top" [value]="manualTime[2].dateTo" appDatepicker (datepickerChange)="manualTime[2].dateTo = $event"
+              [disabled]="eventRecoveryConfig.OperationLog.Enable == false">
+            <input type="text" class="form-control width-150" style="display: inline-block;" placeholder="Time To" tooltip="Time To"
+              placement="top" [value]="manualTime[2].timeTo" appTimepicker (timepickerChange)="manualTime[2].timeTo = $event"
+              [disabled]="eventRecoveryConfig.OperationLog.Enable == false">
+            <button class="btn btn-default width-100 mb-xs" role="button" (click)="clickEventAction(2)" [disabled]="eventRecoveryConfig.OperationLog.Enable == false">Action</button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="widget-body" *ngIf="!eventRecoveryConfig">
+      <div class="text-center">
+        <i class="fa fa-refresh fa-spin fa-fw" style="font-size: 30px;"></i>
+      </div>
+    </div>
+    <div class="widget-footer">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right"></label>
+        <div class="col-md-4">
+          <button class="btn btn-primary width-100 mb-xs" role="button" (click)="clickSaveConfig()" [disabled]="flag.save">
+            <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,161 @@
+<Devices>
+	<Device>
+		<Manufacture>Avigilon</Manufacture>
+		<Model>Generic</Model>
+		<Type>Fixed,PTZ,ONVIF</Type>
+		<Series>GenericModel</Series>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="1"/>			
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>4</NumberOfMotion>	
+	</Device>
+	<Device>
+		<Manufacture>Avigilon</Manufacture>
+		<Model>VAA-I4-S40GB</Model>
+		<Type>IVS BOX</Type>
+		<Series>SDK</Series>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<TVStandard value="OFF">
+			<ProfileMode value="2">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Bitrate>500K,750K,1M,2M,3M,4.5M,6M</Bitrate>
+						<Resolution value="1920x1080">
+							<FrameRate value="2,5,10,15,30">
+								<Profile id="2">
+									<Compression codes="H264">
+										<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.2M,1.5M,2M</Bitrate>
+										<Resolution value="1920x1080">
+											<FrameRate value="1,2,5,10,15"/>
+										</Resolution>
+										<Resolution value="960x540">
+											<FrameRate value="1,2,5,10,15"/>
+										</Resolution>
+										<Resolution value="480x270">
+											<FrameRate value="1,2,5,10,15"/>
+										</Resolution>
+									</Compression>
+								</Profile>
+							</FrameRate>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</TVStandard>
+		<NumberOfChannel>4</NumberOfChannel>
+		<NumberOfAudioIn>2</NumberOfAudioIn>
+		<NumberOfAudioOut>2</NumberOfAudioOut>
+		<NumberOfDI>4</NumberOfDI>
+		<NumberOfDO>4</NumberOfDO>
+		<NumberOfMotion>4</NumberOfMotion>
+		<NumberOfLoitering>4</NumberOfLoitering>
+		<NumberOfIntrusion>4</NumberOfIntrusion>
+		<NumberOfCrossLine>4</NumberOfCrossLine>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Avigilon</Manufacture>
+		<Model>3.0W-H3-BO2-IR</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series>ONVIF</Series>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<TVStandard value="NTSC">
+			<ProfileMode value="1">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Bitrate>256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+						<Resolution value="2048x1536,1920x1080,1280x960,1280x720,768x576,768x432">
+							<FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</TVStandard>
+		<TVStandard value="PAL">
+			<ProfileMode value="1">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Bitrate>256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+						<Resolution value="2048x1536,1920x1080,1280x960,1280x720,768x576,768x432">
+							<FrameRate value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</TVStandard>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>3.0W-H3-BO2-IR</SameAs>
+		<Model>3.0W-H3-D1-IR</Model>
+	</Device>
+	<Device>
+		<Manufacture>Avigilon</Manufacture>
+		<Model>2.0C-H4A-DO1</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series>ONVIF</Series>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP</ConnectionProtocol>
+		<TVStandard value="NTSC">
+			<ProfileMode value="1">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Bitrate>256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+						<Resolution value="1920x1080,1280x720,768x432">
+							<FrameRate value="1,2,3,4,5,7,10,20,30"/>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Bitrate>256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+						<Resolution value="1920x1080,1280x720,768x432">
+							<FrameRate value="1,2,3,4,5,7,10,20,30"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</TVStandard>
+		<TVStandard value="PAL">
+			<ProfileMode value="1">
+				<Profile id="1">
+					<Compression codes="H264">
+						<Bitrate>256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+						<Resolution value="1920x1080,1280x720,768x432">
+							<FrameRate value="1,2,3,4,5,7,10,20,25"/>
+						</Resolution>
+					</Compression>
+					<Compression codes="MJPEG">
+						<Bitrate>256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+						<Resolution value="1920x1080,1280x720,768x432">
+							<FrameRate value="1,2,3,4,5,7,10,20,25"/>
+						</Resolution>
+					</Compression>
+				</Profile>
+			</ProfileMode>
+		</TVStandard>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+</Devices>

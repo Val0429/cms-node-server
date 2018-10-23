@@ -1,0 +1,7 @@
+.license-key-input {
+    width: 66px; 
+    margin: 0 auto;
+}
+.license-key-input .form-control {
+    padding: 6px 2px;
+}

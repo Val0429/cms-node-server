@@ -1,0 +1,691 @@
+<Devices>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>Generic</Model>
+		<Type>Fixed,PTZ</Type>
+		<Series>GenericModel</Series>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="2"/>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+	</Device>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>DS-2CD7153-E</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1">
+				<Compression codes="H264,MPEG4">
+					<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M</Bitrate>
+					<Resolution powerFrequency="50" value="1600x1200,1600x912,1280x960,1280x720,800x600,704x480,640x480,352x240">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M</Bitrate>
+									<Resolution value="740x480,352x240,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="60" value="1600x1200,1600x912,1280x960,1280x720,800x600,704x480,640x480,352x240">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M</Bitrate>
+									<Resolution value="740x480,352x240,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>DS-2CD864FWD-E</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1">
+				<Compression codes="H264,MPEG4">
+					<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M</Bitrate>
+					<Resolution powerFrequency="50" value="1280x960,1280x720,704x576,640x480">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M</Bitrate>
+									<Resolution value="704x576,352x288,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="60" value="1280x960,1280x720,704x576,640x480">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M</Bitrate>
+									<Resolution value="704x576,352x288,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>DS-2CD2132-I</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1">
+				<Compression codes="H264">
+					<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M</Bitrate>
+					<Resolution powerFrequency="50" value="2048x1536">
+						<FrameRate value="1,2,4,6,8,10,12">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+									<Resolution value="704x576,352x288,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="50" value="1920x1080,1280x720">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+									<Resolution value="704x576,352x288,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="60" value="2048x1536">
+						<FrameRate value="1,2,4,6,8,10,12,15">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+									<Resolution value="704x480,352x240,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="60" value="1920x1080,1280x720">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+									<Resolution value="704x480,352x240,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>DS-2CD2032-I</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1">
+				<Compression codes="H264">
+					<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M</Bitrate>
+					<Resolution powerFrequency="50" value="2048x1536">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+									<Resolution value="640x480,704x576,352x288">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="50" value="1920x1080,1280x720">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+									<Resolution value="640x480,704x576,352x288">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="60" value="2048x1536">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+									<Resolution value="640x480,704x480,352x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="60" value="1920x1080,1280x720">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+									<Resolution value="640x480,704x480,352x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>DS-2CD2032-I</SameAs>
+		<Model>DS-2CD2632F-I</Model>
+	</Device>
+	<Device>
+		<SameAs>DS-2CD2032-I</SameAs>
+		<Model>DS-2CD2732F-I</Model>
+	</Device>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>DFI6117</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1">
+				<Compression codes="H264">
+					<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M</Bitrate>
+					<Resolution powerFrequency="50" value="1280x960,1280x720,704x576,640x480">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+									<Resolution value="704x576,640x480,352x288,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="60" value="1280x960,1280x720,704x480,640x480">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25,30">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+									<Resolution value="704x480,640x480,352x240,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25,30"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>HNP302A-IR/30X</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="3">
+			<Profile id="1">
+				<Compression codes="H264,MPEG4">
+					<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M,14M,16M</Bitrate>
+					<Resolution powerFrequency="50" value="1920x1080,1280x960,1280x720">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG,MPEG4">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M,14M,16M</Bitrate>
+									<Resolution value="704x576,352x288,176x144">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+											<Profile id="3">
+												<Compression codes="H264,MJPEG,MPEG4">
+													<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M,14M,16M</Bitrate>
+													<Resolution value="1920x1080,1280x960,1280x720,704x576,352x288,176x144">
+														<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/>
+													</Resolution>
+												</Compression>
+											</Profile>
+										</FrameRate>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="60" value="1920x1080,1280x960,1280x720">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25,30">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M,14M,16M</Bitrate>
+									<Resolution value="704x480,352x240,176x120">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25,30">
+											<Profile id="3">
+												<Compression codes="H264,MJPEG,MPEG4">
+													<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M,14M,16M</Bitrate>
+													<Resolution value="1920x1080,1280x960,1280x720,704x480,352x240,176x120">
+														<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25,30"/>
+													</Resolution>
+												</Compression>
+											</Profile>
+										</FrameRate>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>7</NumberOfDI>
+		<NumberOfDO>2</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>DFI6316F</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="5">
+			<Profile id="1">
+				<Compression codes="H264">
+					<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M</Bitrate>
+					<Resolution powerFrequency="50,60" value="1536x1536">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20">
+							<Profile id="2">
+								<Compression codes="H264">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+									<Resolution value="1600x1200,1280x720">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20">
+											<Profile id="3">
+												<Compression codes="H264,MJPEG">
+													<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+													<Resolution value="800x600,704x480,640x480,320x240">
+														<FrameRate value="1,2,4,6,8,10,12,15,16,18,20">
+															<Profile id="4">
+																<Compression codes="H264,MJPEG">
+																	<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+																	<Resolution value="800x600,704x480,640x480,320x240">
+																		<FrameRate value="1,2,4,6,8,10,12,15,16,18,20">
+																			<Profile id="5">
+																				<Compression codes="H264,MJPEG">
+																					<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+																					<Resolution value="800x600,704x480,640x480,320x240">
+																						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20"/>
+																					</Resolution>
+																				</Compression>
+																			</Profile>
+																		</FrameRate>
+																	</Resolution>
+																</Compression>
+															</Profile>
+														</FrameRate>
+													</Resolution>
+												</Compression>
+											</Profile>
+										</FrameRate>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>DS-2CD2112F-I</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1">
+				<Compression codes="H264">
+					<Bitrate>256K,500K,1M,2M,3M,3.5M,4M,5M,6M,7M,8M</Bitrate>
+					<Resolution powerFrequency="50" value="1280x960,1280x720,704x576,640x480">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>256K,500K,1M,2M,3M,3.5M,4M,5M,6M,7M,8M</Bitrate>
+									<Resolution value="640x480,704x576,352x288,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="60" value="1280x960,1280x720,704x480,640x480">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>256K,500K,1M,2M,3M,3.5M,4M,5M,6M,7M,8M</Bitrate>
+									<Resolution value="640x480,704x480,352x288,352x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>DS-2CD4026FWD/E-IR5</Model>
+		<Alias>DS-2CD4026FWD-A</Alias>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="3">
+			<Profile id="1">
+				<Compression codes="H264,MPEG4">
+					<Bitrate>256K,500K,1M,2M,3M,4M,6M,8M,12M,16M</Bitrate>
+					<Resolution powerFrequency="50" value="1920x1080,1280x960,1280x720">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25,50">
+							<Profile id="2">
+								<Compression codes="H264,MPEG4,MJPEG">
+									<Bitrate>256K,500K,1M,2M,3M,4M,6M,8M,12M,16M</Bitrate>
+									<Resolution value="704x576,640x480,352x288">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+											<Profile id="3">
+												<Compression codes="H264,MPEG4,MJPEG">
+													<Bitrate>256K,500K,1M,2M,3M,4M,6M,8M,12M,16M</Bitrate>
+													<Resolution value="1920x1080,1280x960,1280x720,704x576,640x480,352x288">
+														<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/>
+													</Resolution>
+												</Compression>
+											</Profile>
+										</FrameRate>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="60" value="1920x1080,1280x960,1280x720">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25,30,60">
+							<Profile id="2">
+								<Compression codes="H264,MPEG4,MJPEG">
+									<Bitrate>256K,500K,1M,2M,3M,4M,6M,8M,12M,16M</Bitrate>
+									<Resolution value="704x480,640x480,352x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30">
+											<Profile id="3">
+												<Compression codes="H264,MPEG4,MJPEG">
+													<Bitrate>256K,500K,1M,2M,3M,4M,6M,8M,12M,16M</Bitrate>
+													<Resolution value="1920x1080,1280x960,1280x720,704x480,640x480,352x240">
+														<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25,30"/>
+													</Resolution>
+												</Compression>
+											</Profile>
+										</FrameRate>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>DS-2CD2520F</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1">
+				<Compression codes="H264">
+					<Bitrate>256K,500K,1M,2M,3M,4M,5M,6M,7M,8M</Bitrate>
+					<Resolution powerFrequency="50" value="1920x1080,1280x960,1280x720">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>256K,500K,1M,2M,3M,4M,5M,6M,7M,8M</Bitrate>
+									<Resolution value="704x576,640x480,352x288,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="60" value="1920x1080,1280x960,1280x720">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>256K,500K,1M,2M,3M,4M,5M,6M,7M,8M</Bitrate>
+									<Resolution value="704x480,640x480,352x240,320x240">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>DS-2CD6362F-I</Model>		
+		<Alias>DS-2CD6362F-IS</Alias>
+		<Type>MegapixelIPDome</Type>
+		<Series/>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1">
+				<Compression codes="H264">
+					<Bitrate>256K,500K,1M,2M,3M,4M,6M,8M,12M,16M</Bitrate>
+					<Resolution powerFrequency="50" value="2048x2048,1024x1024,1024x768">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>256K,500K,1M,2M,3M,4M,5M,6M,7M,8M</Bitrate>
+									<Resolution value="720x720">
+										<FrameRate value="1,2,4,6,8,10,12"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+					<Resolution powerFrequency="60" value="2048x2048,1024x1024,1024x768">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG">
+									<Bitrate>256K,500K,1M,2M,3M,4M,5M,6M,7M,8M</Bitrate>
+									<Resolution value="720x720">
+										<FrameRate value="1,2,4,6,8,10,12,15"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>4</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>HIKVISION</Manufacture>
+		<Model>DS-6716HWI</Model>
+		<Type>MegapixelIPDome</Type>
+		<Series>VideoServer</Series>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol>
+		<ProfileMode value="2">
+			<Profile id="1">
+				<Compression codes="H264,MJPEG,MPEG4">
+					<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate>
+					<Resolution powerFrequency="50" value="960x576,704x576,704x288,352x288,176x144">
+						<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25">
+							<Profile id="2">
+								<Compression codes="H264,MJPEG,MPEG4">
+									<Bitrate>32K,64K,128K,256K,384K,500K,750K,1M</Bitrate>
+									<Resolution value="960x576,704x576,704x288,352x288,176x144">
+										<FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/>
+									</Resolution>
+								</Compression>
+							</Profile>
+						</FrameRate>
+					</Resolution>
+				</Compression>
+			</Profile>
+		</ProfileMode>
+		<NumberOfChannel>16</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>16</NumberOfDI>
+		<NumberOfDO>4</NumberOfDO>
+		<NumberOfMotion>1</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<!--
+	<Device><Manufacture>HIKVISION</Manufacture><Model>IPDV-755-HV</Model><Type>MegapixelIPDome</Type><Series/><ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol><ProfileMode value="2"><Profile id="1"><Compression codes="H264"><Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M,10M,12M,14M,16M</Bitrate><Resolution powerFrequency="50" value="1280x960,1280x720"><FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"><Profile id="2"><Compression codes="H264,MJPEG"><Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate><Resolution value="704x576,352x288,320x240"><FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/></Resolution></Compression></Profile></FrameRate></Resolution><Resolution powerFrequency="60" value="1280x960,1280x720"><FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30"><Profile id="2"><Compression codes="H264,MJPEG"><Bitrate>32K,64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M,7M,7.5M,8M</Bitrate><Resolution value="704x480,352x240,320x240"><FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30"/></Resolution></Compression></Profile></FrameRate></Resolution></Compression></Profile></ProfileMode><NumberOfChannel>1</NumberOfChannel><NumberOfAudioIn>0</NumberOfAudioIn><NumberOfAudioOut>0</NumberOfAudioOut><NumberOfDI>0</NumberOfDI><NumberOfDO>0</NumberOfDO><NumberOfMotion>1</NumberOfMotion><PanSupport>true</PanSupport><TiltSupport>true</TiltSupport><ZoomSupport>true</ZoomSupport><FocusSupport>true</FocusSupport></Device><Device><Manufacture>HIKVISION</Manufacture><Model>IPDV-230-HV</Model><Type>MegapixelIPDome</Type><Series/><ConnectionProtocol>RTSP Over UDP,RTSP Over TCP,RTSP Over HTTP</ConnectionProtocol><ProfileMode value="2"><Profile id="1"><Compression codes="H264"><Bitrate>256K,500K,1M,2M,3M,3.5M,4M,5M,6M,7M,8M</Bitrate><Resolution powerFrequency="50" value="1920x1080,1280x960,1280x720"><FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"><Profile id="2"><Compression codes="H264,MJPEG"><Bitrate>256K,500K,1M,2M,3M,3.5M,4M,5M,6M,7M,8M</Bitrate><Resolution value="704x576,704x396,640x480,352x288,352x198,320x240"><FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,25"/></Resolution></Compression></Profile></FrameRate></Resolution><Resolution powerFrequency="60" value="1920x1080,1280x960,1280x720"><FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30"><Profile id="2"><Compression codes="H264,MJPEG"><Bitrate>256K,500K,1M,2M,3M,3.5M,4M,5M,6M,7M,8M</Bitrate><Resolution value="704x576,704x396,640x480,352x288,352x198,320x240"><FrameRate value="1,2,4,6,8,10,12,15,16,18,20,22,30"/></Resolution></Compression></Profile></FrameRate></Resolution></Compression></Profile></ProfileMode><NumberOfChannel>1</NumberOfChannel><NumberOfAudioIn>0</NumberOfAudioIn><NumberOfAudioOut>0</NumberOfAudioOut><NumberOfDI>0</NumberOfDI><NumberOfDO>0</NumberOfDO><NumberOfMotion>1</NumberOfMotion><PanSupport>true</PanSupport><TiltSupport>true</TiltSupport><ZoomSupport>true</ZoomSupport><FocusSupport>true</FocusSupport></Device>-->
+</Devices>

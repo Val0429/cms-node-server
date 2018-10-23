@@ -1,0 +1,51 @@
+<div class="container-fluid no-gutters">
+  <div class="navbar-header">
+    <ul class="nav navbar-nav flex-row">
+      <li class="nav-item" (click)="notifySidebarStatus.emit()">
+        <a class="nav-link hidden-md-down" placement="bottom">
+          <i class="fa fa-bars fa-lg"></i>
+        </a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link hidden-md-down" placement="bottom">
+          Live
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link hidden-md-down" placement="bottom">
+          Playback
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link hidden-md-down" placement="bottom">
+          Investigation
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link hidden-md-down" placement="bottom">
+          eMap
+        </a>
+      </li> -->
+      <li class="nav-item ml-lg hidden-sm-down">
+        <!-- 無作用，配合 Template 做調整，誤寫入任何 DOM -->
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- this part is hidden for xs screens -->
+  <div class="collapse navbar-collapse">
+    <ul class="nav navbar-nav flex-row float-right">
+      <li class="nav-item dropdown" dropdown>
+        <a *ngIf="userService.currentUser" class="nav-link dropdown-toggle dropdown-toggle-notifications" dropdownToggle>
+          <strong>{{username}}</strong> ({{usermail}})
+        </a>
+        <ul *dropdownMenu class="dropdown-menu" role="menu">
+          <li role="menuitem">
+            <a class="dropdown-item" (click)="logout()">Logout</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="col-12">
+  <section class="widget">
+    <div class="widget-header">
+      <header>
+        <legend>
+          <strong>Event Generator</strong>
+        </legend>
+      </header>
+    </div>
+    <div class="widget-body">
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">NvrId</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentData.nvrId" (change)="onChangeNvr()">
+            <option *ngFor="let item of nvrOptions;" [value]="item.value">{{item.key}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">ChannelId</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentData.channelId" (change)="onChangeDevice()">
+            <option *ngFor="let item of deviceOptions;" [value]="item.value">{{item.key}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">DeviceId</label>
+        <div class="col-md-8">
+          <input type="number" class="form-control width-200" id="event-generator-deviceId" [(ngModel)]="currentData.deviceId">
+          <!-- <input type="number" class="form-control width-200" [(ngModel)]="currentData?.deviceId"> -->
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Date</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control width-200" [value]="currentData?.date" appDatepicker (datepickerChange)="currentData.date = $event">
+          <span class="help-block">Select your local date</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Time</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control width-200" [value]="currentData?.time" appTimepicker (timepickerChange)="currentData.time = $event">
+          <span class="help-block">Select your local time</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Status</label>
+        <div class="col-md-8">
+          <select class="select1 width-200" [(ngModel)]="currentData.status">
+            <option *ngFor="let item of statusOptions;" [value]="item">{{item}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label text-md-right">Type</label>
+        <div class="col-md-8">
+          <div *ngFor="let item of eventTypeOptions;" style="padding-top: 5px;">
+            <input [id]="item.key" type="checkbox" [checked]="item.checked" (change)="item.checked = !item.checked">
+            <label [for]="item.key">{{item.key}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="widget-footer">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right"></label>
+        <div class="col-md-8">
+          <button type="button" class="btn btn-primary" (click)="clickGenerate()" [disabled]="flag.save">
+            <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+            Generate
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

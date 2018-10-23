@@ -1,0 +1,2026 @@
+<Devices>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Generic</Model>
+		<Type>Fixed,PTZ</Type>
+		<Series>GenericModel</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<ProfileMode value="2"/>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q6034</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x120,176x144,192x144,240x180,320x180,320x240,352x240,352x288,384x288,480x270,480x360,640x360,640x480,704x240,704x288,704x480,720x576,768x576,800x450,800x600,1024x576,1024x768,1280x720</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+			<Port id="3">Input</Port>
+			<Port id="4">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>Q6034</SameAs>
+		<Model>Q6034-E</Model>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<IOPort/>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q6035</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x120,176x144,192x144,240x180,320x180,320x240,352x240,352x288,384x288,480x270,480x360,640x360,640x480,704x240,704x288,704x480,720x576,768x576,800x450,800x600,1024x576,1024x768,1280x720,1920x1080</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p25">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x120,176x144,192x144,240x180,320x180,320x240,352x240,352x288,384x288,480x270,480x360,640x360,640x480,704x240,704x288,704x480,720x576,768x576,800x450,800x600,1024x576,1024x768,1280x720,1920x1080</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="720p60,720p50">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x120,176x144,192x144,240x180,320x180,320x240,352x240,352x288,384x288,480x270,480x360,640x360,640x480,704x240,704x288,704x480,720x576,768x576,800x450,800x600,1024x576,1024x768,1280x720</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+			<Port id="3">Input</Port>
+			<Port id="4">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>Q6035</SameAs>
+		<Model>Q6035-E</Model>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<IOPort/>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q6045-E</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,480x270</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q1921</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x120,176x144,160x128,240x180,320x240,320x256,384x288,480x360,640x480,640x512,720x576,768x576</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q1922</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x120,176x144,160x128,240x180,320x240,320x256,384x288,480x360,640x480,640x512,720x576,800x600</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q1755</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="1080i60,720p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,480x270,800x450,1280x720,1920x1080</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080i50,720p25">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,480x270,800x450,1280x720,1920x1080</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q1604</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="720p25">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,176x144,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,800x600,1024x640,1024x768,1280x720,1280x960</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="720p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,176x144,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,800x600,1024x640,1024x768,1280x720,1280x960</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P7210</Model>
+		<Type>VideoServer</Type>
+		<Series>ARC</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>176x120,176x144,352x240,352x288,704x240,704x288,704x480,704x576,720x480,720x576</Resolution>
+					<Resolution arc="true">640x480,768x576,640x240,768x288,320x240,384x288,160x120,192x144</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+			<Port id="3">Input</Port>
+			<Port id="4">Input</Port>
+		</IOPort>
+		<NumberOfChannel>4</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P5522</Model>
+		<Type>IPBoxCamera</Type>
+		<Series>ARC</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution PowerFrequency="60" arc="true">160x120,320x240,640x240,640x480</Resolution>
+					<Resolution PowerFrequency="60">176x120,352x240,704x240,704x480,720x480</Resolution>
+					<Resolution PowerFrequency="50" arc="true">160x120,320x240,640x240,640x480</Resolution>
+					<Resolution PowerFrequency="50">176x144,352x288,704x288,704x576,720x576</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+			<Port id="3">Input</Port>
+			<Port id="4">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>P5522</SameAs>
+		<Model>P5532</Model>
+	</Device>
+	<Device>
+		<SameAs>P5522</SameAs>
+		<Model>P5532-E</Model>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<IOPort/>
+	</Device>
+	<Device>
+		<SameAs>P5522</SameAs>
+		<Model>P5522-E</Model>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<IOPort/>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Manufacture>Axis</Manufacture>
+		<Model>P3354</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1280x720,1280x960</Resolution>
+					<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P3364</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x144,240x180,320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1024x768,1280x720,1280x960</Resolution>
+					<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P3346</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="3MP">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x144,240x180,320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1024x768,1280x720,1280x960,1280x1024,1600x1200,1920x1080,1920x1200,2048x1536</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x144,240x180,320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1024x768,1280x720,1280x960,1280x1024,1920x1080</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="2MP">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x144,240x180,320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1024x768,1280x720,1280x960,1280x1024,1600x1200</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P3344</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,176x144,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,800x600,1024x640,1024x768,1280x720,1280x800</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P3343</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,176x144,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,800x600</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P3304</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,176x144,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,800x600,1024x640,1024x768,1280x720,1280x800</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P3301</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x120,176x144,240x180,320x240,480x360,640x480</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P1347</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="5MP">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x144,240x180,320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1024x768,1280x720,1280x960,1280x1024,1600x1200,1920x1080,1920x1200,2048x1536,2560x1440,2560x1600,2560x1920</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="3MP">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x144,240x180,320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1024x768,1280x720,1280x960,1280x1024,1600x1200,1920x1080,1920x1200,2048x1536</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x144,240x180,320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1024x768,1280x720,1280x960,1280x1024,1920x1080</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="2MP">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x144,240x180,320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1024x768,1280x720,1280x960,1280x1024,1600x1200</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P1346</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="3MP">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x144,240x180,320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1024x768,1280x720,1280x960,1280x1024,1600x1200,1920x1080,2048x1536</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x144,240x180,320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1024x768,1280x720,1280x960,1280x1024,1920x1080</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="2MP">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x120,176x144,240x180,320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1024x768,1280x720,1280x960,1280x1024,1600x1200</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P1344</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,176x144,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,800x600,1024x640,1024x768,1280x720,1280x800,1440x900</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>M5013</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>M3004</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x240,352x240,480x360,640x360,640x400,640x480,800x600,1024x640,1280x720,1280x800</Resolution>
+					<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>M3005</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x240,352x240,480x360,640x360,640x400,640x480,800x600,1024x640,1280x720,1280x800,1920x1080</Resolution>
+					<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>M3014</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x120,240x180,320x240,480x360,640x480,800x600,1024x768</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>M3204</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x240,352x240,480x360,640x360,640x400,640x480,800x600,1024x768,1280x720,1280x800</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>M3204</SameAs>
+		<Model>M1114</Model>
+	</Device>
+	<Device>
+		<SameAs>M3204</SameAs>
+		<Model>M1054</Model>
+		<IOPort configurable="false" setting="Input,Output,PIR">
+			<Port id="1">Input</Port>
+			<Port id="2">PIR</Port>
+			<Port id="3">Output</Port>
+		</IOPort>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+	</Device>
+	<Device>
+		<SameAs>M3204</SameAs>
+		<Model>M3114</Model>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>M1031-W</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MPEG4,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x120,176x144,240x180,320x240,480x360,640x480</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="false" setting="Input,Output,PIR">
+			<Port id="1">PIR</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>M1034</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MPEG4,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1280x800,1280x720,1024x640,800x600,640x480,640x400,640x360,480x360,352x240,320x240</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="false" setting="Input,Output,PIR">
+			<Port id="1">PIR</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>M1031-W</SameAs>
+		<Model>M1011</Model>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<IOPort/>
+	</Device>
+	<Device>
+		<SameAs>M1031-W</SameAs>
+		<Model>M1011-W</Model>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<IOPort/>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>M5014</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1280x720</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P5512</Model>
+		<Type>IPBoxCamera</Type>
+		<Series>ARC</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution PowerFrequency="60" arc="true">160x120,320x240,640x240,640x480</Resolution>
+					<Resolution PowerFrequency="60">176x120,352x240,704x240,704x480</Resolution>
+					<Resolution PowerFrequency="50" arc="true">160x120,320x240,640x240,640x480</Resolution>
+					<Resolution PowerFrequency="50">176x144,352x288,704x288,704x576</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+			<Port id="3">Input</Port>
+			<Port id="4">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>P5512</SameAs>
+		<Model>P5512-E</Model>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<IOPort/>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P5534</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,480x270,800x450,1280x720</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+			<Port id="3">Input</Port>
+			<Port id="4">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>P5534</SameAs>
+		<Model>P5534-E</Model>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<IOPort/>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P8221</Model>
+		<Type>AudioBox</Type>
+		<ConnectionProtocol>RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression/>
+		<SensorMode>
+			<ProfileMode value="1">
+				<Profile id="1"/>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+			<Port id="3">Input</Port>
+			<Port id="4">Input</Port>
+			<Port id="5">Input</Port>
+			<Port id="6">Input</Port>
+			<Port id="7">Input</Port>
+			<Port id="8">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P1204</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,320x240,480x270,480x360,640x360,640x480,800x450,800x600,1280x720</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>M7016</Model>
+		<Type>VideoServer</Type>
+		<Series>ARC</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>176x120,176x144,352x240,352x288,704x240,704x288,704x480,704x576,720x480,720x576</Resolution>
+					<Resolution arc="true">640x480,768x576,640x240,768x288,320x240,384x288,160x120,192x144</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>4</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q1615</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1920x1080,1400x1050,1280x960,1280x720,1024x768,1024x640,800x600,800x500,800x450,640x480,640x400,640x360,480x360,480x300,480x270,320x240,320x200,320x180,240x180,176x144,160x120,160x100,160x90,768x576,720x576,704x576,704x480,704x288,704x240,384x288,352x288,352x240,240x135,192x144,176x120,80x50</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P3365</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1920x1080,1280x960,1280x800,1280x720,1024x768,800x600,800x450,768x576,720x576,704x576,704x480,704x288,704x240,640x480,640x360,480x360,480x270,384x288,352x288,352x240,320x240,320x180,240x180,240x135,192x144,176x144,176x120,160x120,160x100,160x90</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<SameAs>P3365</SameAs>
+		<Model>P1355</Model>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q6045-S MK II</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,480x270,800x450,1280x720,1920x1080</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="720p60">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,480x270,800x450,1280x720</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P1365</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="1080p">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,800x600,854x480,1024x768,1024x640,1280x720,1280x800,1280x960,1920x1080,1400x1050,1600x1200</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="WUXGA">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,800x600,854x480,1024x768,1024x640,1280x720,1280x800,1280x960,1920x1080,1400x1050,1600x1200,1920x1200</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q7424-R MK II</Model>
+		<Type>VideoServer</Type>
+		<Series>ARC</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution PowerFrequency="60">720x576,704x576,704x288,352x288,176x144</Resolution>
+					<Resolution PowerFrequency="60" arc="true">768x576,768x288,384x288,192x144</Resolution>
+					<Resolution PowerFrequency="50">720x576,704x576,704x288,352x288,176x144</Resolution>
+					<Resolution PowerFrequency="50" arc="true">768x576,768x288,384x288,192x144</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+			<ProfileMode value="5">
+				<Profile id="1,2">
+					<Resolution PowerFrequency="60" arc="true">1024x768,1280x960,640x480,640x240,320x240,160x120</Resolution>
+					<Resolution PowerFrequency="60">1024x768,1280x960,720x480,704x480,704x240,352x240,176x120</Resolution>
+					<Resolution PowerFrequency="50" arc="true">1024x768,1536x1152,768x576,768x288,384x288,192x144</Resolution>
+					<Resolution PowerFrequency="50">1024x768,1536x1152,720x576,704x576,704x288,352x288,176x144</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+			<Port id="3">Input</Port>
+			<Port id="4">Input</Port>
+		</IOPort>
+		<NumberOfChannel>4</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>M3027</Model>
+		<Type>fisheye</Type>
+		<Series>fisheye</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<DeviceMountType value="Ceiling,Floor">
+						<DewarpMode value="1O">
+							<Resolution>2592x1944,2048x1536,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="1P">
+							<Resolution>1920x720,1600x600,1280x480,960x360,640x240,480x180,320x120</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="2P">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="4R">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 1">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 2">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 3">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 4">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+					</DeviceMountType>
+					<DeviceMountType value="Wall">
+						<DewarpMode value="1O">
+							<Resolution>2592x1944,2048x1536,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="1P">
+							<Resolution>1920x720,1600x600,1280x480,960x360,640x240,480x180,320x120</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 1">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 2">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 3">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 4">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+					</DeviceMountType>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P1425-LE</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90,1280x800,160x100,176x144</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q6000-E</Model>
+		<Type>PTZ Dome Network Camera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="4">
+				<Profile id="1,2,3,4">
+					<Resolution>960x720,800x600,640x480,1280x720,800x450,480x270</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,20M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+			<ProfileMode value="5">
+				<Profile id="1,2">
+					<Resolution>1920x1440,1440x1080,1280x960,960x720,800x600,640x480,1920x1080,1280x720,800x450,480x270</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,20M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>4</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>M3007</Model>
+		<Type>fisheye</Type>
+		<Series>fisheye</Series>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<DeviceMountType value="Ceiling,Floor">
+						<DewarpMode value="1O">
+							<Resolution>2592x1944,2048x1536,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="1P">
+							<Resolution>1920x720,1600x600,1280x480,960x360,640x240,480x180,320x120</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="2P">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="4R">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 1">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 2">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 3">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 4">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+					</DeviceMountType>
+					<DeviceMountType value="Wall">
+						<DewarpMode value="1O">
+							<Resolution>2592x1944,2048x1536,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="1P">
+							<Resolution>1920x720,1600x600,1280x480,960x360,640x240,480x180,320x120</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 1">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 2">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 3">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+						<DewarpMode value="View Area 4">
+							<Resolution>1920x1440,1600x1200,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,160x90</Resolution>
+							<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+					</DeviceMountType>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P3225-LV</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="WUXGA">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,854x480,800x600,1024x640,1024x768,1280x720,1280x800,1280x960,1400x1050,1600x1200,1920x1200</Resolution>
+					<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p60">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,854x480,800x600,1024x640,1024x768,1280x720,1280x800,1280x960,1400x1050,1920x1080</Resolution>
+					<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60</FrameRate>
+					<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,854x480,800x600,1024x640,1024x768,1280x720,1280x800,1280x960,1400x1050,1920x1080</Resolution>
+					<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P1354</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1280x720,800x450,640x360,480x270,320x180,160x90,1280x800,176x144</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,20M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>			
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+		<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>F41</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="WUXGA">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,854x480,800x600,1024x640,1024x768,1280x720,1280x800,1280x960,1400x1050,1600x1200,1920x1200</Resolution>
+					<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p60">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,854x480,800x600,1024x640,1024x768,1280x720,1280x800,1280x960,1400x1050,1920x1080</Resolution>
+					<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60</FrameRate>
+					<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>160x90,160x100,160x120,240x180,320x180,320x200,320x240,480x270,480x300,480x360,640x360,640x400,640x480,800x450,800x500,854x480,800x600,1024x640,1024x768,1280x720,1280x800,1280x960,1400x1050,1920x1080</Resolution>
+					<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="720p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1280x720,1024x768,1024x640,800x600,800x500,854x480,800x450,640x480,640x400,640x360,480x360,480x300,480x270</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+			<Port id="3">Input</Port>
+			<Port id="4">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q6055-E</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="1080p25">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,480x270,800x450,1280x720,1920x1080</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="720p50">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,480x270,800x450,1280x720</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q1615 MK II</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1920x1080,1600x1200,1400x1050,1280x960,1280x720,800x600,800x450,640x480,640x360,480x360,480x270,320x240,320x180,240x180,240x135,160x120,160x90</Resolution>
+					<FrameRate PowerFrequency="60">1,5,10,15,20,25,30</FrameRate>
+					<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p60">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1920x1080,1600x1200,1400x1050,1280x960,1280x720,800x600,800x450,640x480,640x360,480x360,480x270,320x240,320x180,240x180,240x135,160x120,160x90</Resolution>
+					<FrameRate PowerFrequency="60">1,5,10,15,20,25,30,35,40,45,50,55,60</FrameRate>
+					<FrameRate PowerFrequency="50">1,5,10,15,20,25,30,35,40,45,50</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="720p120">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1280x720,1024x768,800x600,800x450,640x480,640x360,480x360,480x270,320x240,320x180,240x180,240x135,160x120,160x90</Resolution>
+					<FrameRate PowerFrequency="60">1,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120</FrameRate>
+					<FrameRate PowerFrequency="50">1,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P1365 MK II</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1920x1080,1280x960,1280x800,1280x720,1024x768,1024x640,800x600,800x500,800x450,640x480,640x400,640x360,480x360,480x300,480x270,320x240,320x200,320x180,240x180,240x135,160x120,160x100,160x90</Resolution>
+					<FrameRate PowerFrequency="60">1,5,10,15,20,25,30</FrameRate>
+					<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p60">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1920x1080,1280x960,1280x800,1280x720,1024x768,1024x640,800x600,800x500,800x450,640x480,640x400,640x360,480x360,480x300,480x270,320x240,320x200,320x180,240x180,240x135,160x120,160x100,160x90</Resolution>
+					<FrameRate PowerFrequency="60">1,5,10,15,20,25,30,35,40,45,50,55,60</FrameRate>
+					<FrameRate PowerFrequency="50">1,5,10,15,20,25,30,35,40,45,50</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>M3105-L</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<DeviceMountType value="Ceiling,Wall">
+						<DewarpMode>
+							<Resolution>1920x1080,1280x960,1280x800,1280x720,1024x768,1024x640,800x600,800x500,800x450,640x480,640x400,640x360,480x360,480x300,480x270,320x240,320x200,320x180,240x180,240x135,160x120,160x100,160x90</Resolution>
+							<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+							<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+					</DeviceMountType>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q2901-E</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>720x576,672x512,640x512,640x480,480x360,384x288,336x256,320x256,320x240,240x180,176x144,160x128,160x120</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q3505-VE</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1920x1080,1400x1050,1280x960,1280x800,1280x720,1024x768,1024x640,800x600,854x480,800x500,800x450,640x480,640x400,640x360,480x360,480x300,320x240,320x200,320x180,160x120,160x100,160x90</Resolution>
+					<FrameRate PowerFrequency="60">1,5,10,15,20,25,30</FrameRate>
+					<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p60">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1920x1080,1400x1050,1280x960,1280x800,1280x720,1024x768,1024x640,800x600,854x480,800x500,800x450,640x480,640x400,640x360,480x360,480x300,320x240,320x200,320x180,160x120,160x100,160x90</Resolution>
+					<FrameRate PowerFrequency="60">1,5,10,15,20,25,30,35,40,45,50,55,60</FrameRate>
+					<FrameRate PowerFrequency="50">1,5,10,15,20,25,30,35,40,45,50</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="720p120">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1280x960,1280x720,1024x768,1024x640,800x600,800x500,800x450,640x480,640x400,640x360,480x360,480x300,480x270,320x240,320x200,320x180,240x180,160x120,160x100,160x90,176x144</Resolution>
+					<FrameRate PowerFrequency="60">1,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120</FrameRate>
+					<FrameRate PowerFrequency="50">1,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P3225-LVE</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="1080p60">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<DeviceMountType value="Ceiling,Wall">
+						<DewarpMode>
+							<Resolution>1400x1050,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,854x480,800x450,640x360,480x270,320x180,160x90,1280x800,1024x640,800x500,640x400,480x300,320x200,160x100</Resolution>
+							<FrameRate PowerFrequency="60">1,5,10,15,20,25,30,35,40,45,50,55,60</FrameRate>
+							<FrameRate PowerFrequency="50">1,5,10,15,20,25,30,35,40,45,50</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+					</DeviceMountType>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<DeviceMountType value="Ceiling,Wall">
+						<DewarpMode>
+							<Resolution>1400x1050,1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,854x480,800x450,640x360,480x270,320x180,160x90,1280x800,1024x640,800x500,640x400,480x300,320x200,160x100</Resolution>
+							<FrameRate PowerFrequency="60">1,5,10,15,20,25,30</FrameRate>
+							<FrameRate PowerFrequency="50">1,5,10,15,20,25</FrameRate>
+							<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+						</DewarpMode>
+					</DeviceMountType>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+	<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>Q6054</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode>
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>320x180,480x270,800x450,1280x720</Resolution>
+					<FrameRate>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<IOPort configurable="true" setting="Input,Output">
+			<Port id="1">Input</Port>
+			<Port id="2">Input</Port>
+			<Port id="3">Input</Port>
+			<Port id="4">Input</Port>
+		</IOPort>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>1</NumberOfAudioIn>
+		<NumberOfAudioOut>1</NumberOfAudioOut>
+		<NumberOfDI>0</NumberOfDI>
+		<NumberOfDO>0</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>true</PanSupport>
+		<TiltSupport>true</TiltSupport>
+		<ZoomSupport>true</ZoomSupport>
+		<FocusSupport>true</FocusSupport>
+	</Device>
+</Devices>
+<!--<Device>
+		<Manufacture>Axis</Manufacture>
+		<Model>P1435-LE</Model>
+		<Type>IPBoxCamera</Type>
+		<ConnectionProtocol>HTTP,RTSP Over UDP,RTSP Over HTTP,RTSP Over TCP</ConnectionProtocol>
+		<Compression>H264,MJPEG</Compression>
+		<SensorMode value="1080p60">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,240x135,160x90,1280x800,1024x640,800x500,640x400,480x300,320x200,160x100</Resolution>
+					<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60</FrameRate>
+					<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<SensorMode value="1080p30">
+			<ProfileMode value="2">
+				<Profile id="1,2">
+					<Resolution>1280x960,1024x768,800x600,640x480,480x360,320x240,240x180,160x120,1920x1080,1280x720,800x450,640x360,480x270,320x180,240x135,160x90,1280x800,1024x640,800x500,640x400,480x300,320x200,160x100</Resolution>
+					<FrameRate PowerFrequency="60">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30</FrameRate>
+					<FrameRate PowerFrequency="50">1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25</FrameRate>
+					<Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,3M,4M,5M,6M,8M,10M,12M,100M</Bitrate>
+				</Profile>
+			</ProfileMode>
+		</SensorMode>
+		<NumberOfChannel>1</NumberOfChannel>
+		<NumberOfAudioIn>0</NumberOfAudioIn>
+		<NumberOfAudioOut>0</NumberOfAudioOut>
+		<NumberOfDI>1</NumberOfDI>
+		<NumberOfDO>1</NumberOfDO>
+		<NumberOfMotion>10</NumberOfMotion>
+		<PanSupport>false</PanSupport>
+		<TiltSupport>false</TiltSupport>
+		<ZoomSupport>false</ZoomSupport>
+		<FocusSupport>false</FocusSupport>
+	</Device>-->

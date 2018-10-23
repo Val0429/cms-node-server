@@ -1,0 +1,192 @@
+<section class="widget" *ngIf="currentEditModel">
+  <header>
+    <legend>
+      <strong>NVR Editor ID:{{editNvr.Id}} / Name:{{currentEditModel.Name}}</strong>
+    </legend>
+  </header>
+  <div class="widget-body">
+    <div class="form-group row">
+      <label class="col-md-4 col-form-label text-md-right">Name</label>
+      <div class="col-md-4">
+        <div class="input-group width-200">
+          <input type="text" class="form-control" [(ngModel)]="currentEditModel.Name" maxlength="25">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="groupOptions">
+      <label class="col-md-4 col-form-label text-md-right" for="grouped-select">Group</label>
+      <div class="col-md-8">
+        <select class="select1 width-200" [(ngModel)]="currentEditModel.Group">
+          <optgroup *ngFor="let group of groupOptions" label= {{group.text}}>
+            <option *ngFor="let item of group.children" value= {{item.id}}>{{item.text}}</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Manufacturer</label>
+      <div class="col-md-4" *ngIf="editNvr.Id !== '2'">
+        <select class="select1 width-200" [(ngModel)]="currentEditModel.Manufacture" (change)="onChangeManufacture()">
+          <option *ngFor="let item of manufactureOptions;" [value]="item">{{item}}</option>
+        </select>
+      </div>
+      <div class="col-md-4" *ngIf="editNvr.Id === '2'">
+        <label class="col-form-label">SmartMedia</label>
+      </div>
+    </div>
+    <ng-container *ngIf="currentEditModel.Manufacture !== 'iSapP2P'">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Domain</label>
+        <div class="col-md-4">
+          <div class="input-group width-200">
+            <input type="text" class="form-control" [(ngModel)]="currentEditModel.Domain">
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Port</label>
+        <div class="col-md-4">
+          <div class="input-group width-200">
+            <input type="number" class="form-control" [(ngModel)]="currentEditModel.Port">
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="currentEditModel.Manufacture === 'Hikvision'">
+        <div class="form-group row">
+          <label class="col-md-4  col-form-label text-md-right">Server Port</label>
+          <div class="col-md-4">
+            <div class="input-group width-200">
+              <input type="number" class="form-control" [(ngModel)]="currentEditModel.ServerPort">
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <div class="form-group row" *ngIf="currentEditModel.Manufacture !== 'SmartMedia'">
+        <label class="col-md-4  col-form-label text-md-right">Account</label>
+        <div class="col-md-4">
+          <div class="input-group width-200">
+            <input type="text" class="form-control" [(ngModel)]="currentEditModel.Account">
+          </div>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="currentEditModel.Manufacture !== 'SmartMedia'">
+        <label class="col-md-4  col-form-label text-md-right">Password</label>
+        <div class="col-md-4">
+          <div class="input-group width-200">
+            <input type="password" class="form-control" [(ngModel)]="currentEditModel.Password">
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="currentEditModel.Manufacture === 'iSapP2P'">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">Server</label>
+        <div class="col-md-4">
+          <select class="select1" [(ngModel)]="currentEditModel.ServerId" (change)="onChangeServer()">
+            <option *ngFor="let item of iSapP2PServerList;" [value]="item.id">{{item.Name}} ({{item.Domain}}:{{item.Port}})</option>
+          </select>
+        </div>
+      </div>
+    </ng-container>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Tags</label>
+      <div class="col-md-4">
+        <div class="input-group width-200">
+          <input type="text" class="form-control" placeholder="tag1,tag2,..." [(ngModel)]="currentEditModel.Tags">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Events receiving and actions in Client</label>
+      <div class="col-md-8" style="padding-top: 4px;">
+        <input id="events-receiving" type="checkbox" [checked]="currentEditModel.IsListenEvent" (change)="currentEditModel.IsListenEvent = !currentEditModel.IsListenEvent">
+        <label for="events-receiving">Enable</label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Patrol</label>
+      <div class="col-md-8" style="padding-top: 4px;">
+        <input id="patrol-enable" type="checkbox" [checked]="currentEditModel.IsPatrolInclude" (change)="currentEditModel.IsPatrolInclude = !currentEditModel.IsPatrolInclude">
+        <label for="patrol-enable">Enable</label>
+      </div>
+    </div>
+    <ng-container *ngIf="currentEditModel.Manufacture !== 'iSapP2P' && currentEditModel.Manufacture !== 'SmartMedia'">
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right">SSL Connection</label>
+        <div class="col-md-8" style="padding-top: 4px;">
+          <input id="ssl-enable" type="checkbox" [checked]="currentEditModel.SSLEnable" (change)="currentEditModel.SSLEnable = !currentEditModel.SSLEnable">
+          <label for="ssl-enable">Enable</label>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container>
+      <div class="form-group row">
+        <label class="col-md-4  col-form-label text-md-right"></label>
+        <div class="col-md-8">
+          <button type="button" class="btn btn-default" (click)="clickGetDeviceList()" *ngIf="currentEditModel.Manufacture !== 'SmartMedia'" [disabled]="flag.load">
+            <i *ngIf="flag.load" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+            Get Device List
+          </button>
+          <button *ngIf="currentEditModel.Manufacture === 'iSapP2P'" type="button" class="btn btn-default" (click)="clickGetAuthFile()"
+            [disabled]="!currentEditModel.ServerId || flag.load">
+            <i *ngIf="flag.load" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+            Get Auth File
+          </button>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-12">
+          <table class="table table-bordered table-lg mb-lg" *ngIf="displayDevices">
+            <thead>
+              <tr>
+                <th>
+                  <input type="checkbox" [checked]="checkAllDeviceSelected()" (change)="setAllDeviceSelected()" [disabled]="currentEditModel.Manufacture === 'SmartMedia'">
+                </th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Network Address</th>
+                <th>Live Stream</th>
+                <th>Manufacturer</th>
+                <th>Model</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of displayDevices">
+                <td>
+                  <input type="checkbox" [checked]="item.checked" (change)="item.checked = !item.checked" [disabled]="currentEditModel.Manufacture === 'SmartMedia'">
+                </td>
+                <td>{{item.device.Channel}}</td>
+                <td>
+                  {{item.device.Name}}
+                  <!-- <input class="form-control" placeholder="Device Name" type="text" [(ngModel)]="device.Name"> -->
+                </td>
+                <td>{{item.device.Config.IPAddress || 'N/A'}}</td>
+                <td>
+                  <span *ngIf="item.device.Config.Stream">{{item.device.Config.Stream.length || 1}}</span>
+                  <span *ngIf="item.device.Config.StreamConfig">{{item.device.Config.StreamConfig.length || 1}}</span>
+                </td>
+                <td>{{item.device.Config.Brand || 'N/A'}}</td>
+                <td>{{item.device.Config.Model || 'N/A'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="widget-footer">
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right"></label>
+      <div class="col-md-8">
+        <button type="button" class="btn btn-danger" (click)="clickDelete()" *ngIf="editNvr.id && editNvr.Id !== '2'" [disabled]="flag.delete || flag.save">
+          <i *ngIf="flag.delete" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+          Delete
+        </button>
+        <button type="button" class="btn btn-primary" (click)="clickSave()" [disabled]="flag.delete || flag.save">
+          <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

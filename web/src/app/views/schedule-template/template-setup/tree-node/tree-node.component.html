@@ -1,0 +1,5 @@
+<div class="tree-node-container">
+  <input id="{{treeNode.Key}}" type="checkbox" [checked]="treeNode.apply" (change)="changeSetupNode()">
+  <span [ngClass]="getListTextClasses()" (click)="treeNode.collapsed = !treeNode.collapsed">{{getNodeName()}}</span>
+  <!-- <i [ngClass]="getListArrowClasses()"></i> -->
+</div>

@@ -1,0 +1,26 @@
+<legend>Failover Setup</legend>
+<span class="help-block">This part is fake data, just for demo.</span>
+<table class="table table-bordered table-lg mb-lg">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Virtual IP</th>
+      <th>IP</th>
+      <th>Port</th>
+      <th>Failover Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let failover of failoverConfigs">
+      <td>{{failover.name}}</td>
+      <td>{{failover.virtualIP}}</td>
+      <td>{{failover.ip}}</td>
+      <td>{{failover.port}}</td>
+      <td>
+        <select class="select1 width-200" [(ngModel)]="failover.status">
+          <option *ngFor="let item of failoverStatusOptions;" value={{item}}>{{item}}</option>
+        </select>
+      </td>
+    </tr>
+  </tbody>
+</table>

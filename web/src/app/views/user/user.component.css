@@ -1,0 +1,24 @@
+/* .widget-controls .fa {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.list-group-item .fa {
+  font-size: 2rem;
+}
+
+.group-user-count {
+  border-radius: 0.25rem;
+  border: 1px solid #5d8fc2;
+  background: #5d8fc2;
+  color: white;
+  padding: 0px 6px;
+} */
+
+.btn-remove {
+  font-size: 20px;
+}
+
+.btn-remove:hover {
+  color: #ff0000;
+}

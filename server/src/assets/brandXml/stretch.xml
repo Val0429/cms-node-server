@@ -1,0 +1,34 @@
+<Devices>
+  <Device>
+    <Manufacture>Stretch</Manufacture>
+    <Model>VRC7016L</Model>
+    <Type>CaptureCard</Type>
+    <Compression>H264</Compression>
+    <TVStandard value="NTSC">
+      <ProfileMode value="1">
+        <Profile id="1">
+            <FrameRate>1,3,5,6,10,15,30</FrameRate>
+            <Resolution>720x480,352x240</Resolution>
+            <Bitrate>128K,256K,750K,1M,1.5M,2M,3M</Bitrate>
+        </Profile>
+      </ProfileMode>
+      <ProfileMode value="2">
+        <Profile id="1,2">
+            <FrameRate>1,3,5,6,10,15,30</FrameRate>
+            <Resolution>720x480,352x240</Resolution>
+            <Bitrate>128K,256K,750K,1M,1.5M,2M,3M</Bitrate>
+        </Profile>
+      </ProfileMode>
+    </TVStandard>
+    <NumberOfChannel>8</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>4</NumberOfDI>
+    <NumberOfDO>2</NumberOfDO>
+    <NumberOfMotion>4</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+</Devices>

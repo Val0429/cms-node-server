@@ -1,0 +1,22 @@
+<Devices>
+  <Device>
+    <Manufacture>iSapSolution</Manufacture>
+    <Model>Cloud Camera</Model>
+    <Type>CloudCamera</Type>
+    <ConnectionProtocol>HTTP</ConnectionProtocol>
+  </Device>
+  <Device>
+    <Manufacture>iSapSolution</Manufacture>
+    <Model>Smart Patrol Service</Model>
+    <Type>SmartPatrolService</Type>
+    <ConnectionProtocol>HTTP</ConnectionProtocol>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+  </Device>
+  <Device>
+    <Manufacture>iSapSolution</Manufacture>
+    <Model>Smart Monitor Service</Model>
+    <Type>SmartMonitorService</Type>
+    <ConnectionProtocol>HTTP</ConnectionProtocol>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+  </Device>
+</Devices>

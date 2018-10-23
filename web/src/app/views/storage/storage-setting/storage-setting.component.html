@@ -1,0 +1,58 @@
+<section class="widget">
+  <header>
+    <legend>
+      <strong>Find Record Server</strong>
+    </legend>
+    <div>
+      <input type="text" class="form-control width-200" [(ngModel)]="ipAddress" placeholder="IP Address" style="display: inline-block;">
+      <input type="number" class="form-control width-200" [(ngModel)]="port" placeholder="Port" style="display: inline-block;">
+      <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="clickDetect()">Detect</button>
+      <div class="float-right" *ngIf="this.currentRecordServer">
+        <button class="btn btn-primary mb-xs" role="button" (click)="clickSaveAsRecord()" *ngIf="this.currentRecordServer.Type === 'RecordServer' || !this.currentRecordServer.Type" [disabled]="flag.save">
+          <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+          Save As Record Server
+        </button>
+        <button class="btn btn-primary mb-xs" role="button" (click)="clickSaveAsFailover()" *ngIf="this.currentRecordServer.Type === 'RecordFailoverServer' || !this.currentRecordServer.Type" [disabled]="flag.save">
+          <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+          Save As Failover Server
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="widget-body" *ngIf="flag.load">
+    <div class="text-center">
+      <i class="fa fa-refresh fa-spin fa-fw" style="font-size: 30px;"></i>
+    </div>
+  </div>
+  <div class="widget-body" *ngIf="mediaDiskspace && !flag.load">
+    <table class="table table-bordered table-lg mb-lg">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Drive</th>
+          <th>Capacity</th>
+          <th>Free Space</th>
+          <th>Used Space</th>
+          <th>Usage %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let disk of mediaDiskspace">
+          <td>
+            <input type="checkbox" [checked]="checkDiskSelected(disk)" (change)="setDiskStorage(disk)">
+          </td>
+          <td>{{getDiskLetterCode(disk)}}</td>
+          <td>{{countBytes(disk.TotalBytes)}}</td>
+          <td>{{countBytes(disk.FreeBytes)}}</td>
+          <td>{{countUsageSpace(disk)}}</td>
+          <td>
+            {{countUsagePercent(disk)}}%
+            <div class="bg-gray-lighter progress progress-xs">
+              <div class="progress-bar progress-xs bg-bar-gray" [style.width]="countUsagePercent(disk) + '%'"></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

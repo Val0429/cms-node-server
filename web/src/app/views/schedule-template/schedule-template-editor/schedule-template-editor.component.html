@@ -1,0 +1,103 @@
+<section class="widget" *ngIf="currentTemplate">
+  <div class="widget-body" *ngIf="setupMode === 1">
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Name</label>
+      <div class="col-md-8">
+        <div class="input-group">
+          <input type="text" class="form-control" [(ngModel)]="currentTemplate.Name">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Full Record Plan</label>
+      <div class="col-md-8">
+        <select class="select1 width-200" [(ngModel)]="schedules.recordSchedule.fullRecord" (change)="getPlans()">
+          <option *ngFor="let item of weekScheduleOptions;" value= {{item.value}}>{{item.key}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Event Record Plan</label>
+      <div class="col-md-8">
+        <select class="select1 width-200" [(ngModel)]="schedules.recordSchedule.eventRecord" (change)="getPlans()">
+          <option *ngFor="let item of weekScheduleOptions;" value= {{item.value}}>{{item.key}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Pre Event Recording</label>
+      <div class="col-md-8">
+        <div class="input-group width-100">
+          <input type="number" class="form-control" [(ngModel)]="currentTemplate.EventRecord.PreRecord">
+        </div>
+        <span class="help-block">Video record seconds before event occurred.</span>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Post Event Recording</label>
+      <div class="col-md-8">
+        <div class="input-group width-100">
+          <input type="number" class="form-control" [(ngModel)]="currentTemplate.EventRecord.PostRecord">
+        </div>
+        <span class="help-block">Video record seconds after event occurred.</span>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Recorder</label>
+      <div class="col-md-8">
+        <select class="select1" (change)="onChangeRecorder($event)">
+          <option *ngFor="let recorder of recorderList;" [selected]="getRecorderSelected(recorder)" value= {{recorder.id}}>{{recorder.Name}} ({{recorder.Domain}}:{{recorder.Port}})</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Keep Days</label>
+      <div class="col-md-8">
+        <div class="input-group width-100">
+          <input type="text" class="form-control" [(ngModel)]="currentTemplate.KeepDays">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="currentPlans">
+      <div class="col-12">
+        <!-- <app-week-board [plans]="currentPlans" (checkIsOverlap)="checkIsOverlap($event)"></app-week-board> -->
+        <app-week-scheduler [plans]="currentPlans" [options]="weekSchedulerOption" (statusCheckCallback)="statusCheckCallback($event)" (customPlanCallback)="customPlanCallBack($event)"></app-week-scheduler>
+      </div>
+    </div>
+  </div>
+  <div class="widget-body" *ngIf="setupMode === 2">
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Name</label>
+      <div class="col-md-8">
+        <div class="input-group">
+          <input type="text" class="form-control" [(ngModel)]="currentTemplate.Name">
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Event Schedule Plan</label>
+      <div class="col-md-8">
+        <select class="select1 width-200" [(ngModel)]="schedules.eventSchedule" (change)="getPlans()">
+          <option *ngFor="let item of weekScheduleOptions;" value= {{item.value}}>{{item.key}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="currentPlans">
+      <div class="col-12">
+        <!-- <app-week-board [plans]="currentPlans" (checkIsOverlap)="checkIsOverlap($event)"></app-week-board> -->
+        <app-week-scheduler [plans]="currentPlans" [options]="weekSchedulerOption" (statusCheckCallback)="statusCheckCallback($event)" (customPlanCallback)="customPlanCallBack($event)"></app-week-scheduler>
+      </div>
+    </div>
+  </div>
+  <div class="editor-footer">
+    <button type="button" class="btn btn-primary" (click)="clickSave()" [disabled]="flag.delete || flag.save || flag.isOverlap || flag.onCustomMode">
+      <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+      Save
+    </button>
+    <button type="button" class="btn btn-danger" (click)="clickDelete()" *ngIf="currentTemplate.id" [disabled]="flag.delete || flag.save || flag.onCustomMode">
+      <i *ngIf="flag.delete" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+      Delete
+    </button>
+    <button type="button" class="btn btn-gray" (click)="clickClose()">Close</button>
+  </div>
+</section>

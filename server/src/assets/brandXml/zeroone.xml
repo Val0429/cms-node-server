@@ -1,0 +1,58 @@
+<Devices>
+  <Device>
+    <Manufacture>ZeroOne</Manufacture>
+    <Model>IP3393Pv2</Model>
+    <Type>MegapixelIPDome</Type>
+    <Series/>
+    <ConnectionProtocol>HTTP</ConnectionProtocol>
+    <ProfileMode value="1">
+      <Profile id="1">
+        <Compression codes="H264">
+          <Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+          <Resolution value="2592x1920">
+            <FrameRate>3,4,5,8,10,15</FrameRate>
+          </Resolution>
+          <Resolution value="2048x1536">
+            <FrameRate>1,2,3,5,8,10,15,20,25</FrameRate>
+          </Resolution>
+          <Resolution value="1920x1080,1280x1024,1280x960,1280x720,720x480,640x480,320x240,176x144">
+            <FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate>
+          </Resolution>
+        </Compression>
+        <Compression codes="MPEG4">
+          <Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+          <Resolution value="1920x1080,1280x1024,1280x960,1280x720,720x480,640x480,320x240">
+            <FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate>
+          </Resolution>
+        </Compression>
+        <Compression codes="MJPEG">
+          <Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate>
+          <Resolution value="2592x1920">
+            <FrameRate>3,4,5,8,10,15</FrameRate>
+          </Resolution>
+          <Resolution value="2048x1536">
+            <FrameRate>2,3,5,8,10,15,20,25</FrameRate>
+          </Resolution>
+          <Resolution value="1920x1080,1280x1024,1280x960">
+            <FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate>
+          </Resolution>
+        </Compression>
+      </Profile>
+    </ProfileMode>
+    <NumberOfChannel>1</NumberOfChannel>
+    <NumberOfAudioIn>1</NumberOfAudioIn>
+    <NumberOfAudioOut>1</NumberOfAudioOut>
+    <NumberOfDI>2</NumberOfDI>
+    <NumberOfDO>1</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>true</PanSupport>
+    <TiltSupport>true</TiltSupport>
+    <ZoomSupport>true</ZoomSupport>
+    <FocusSupport>true</FocusSupport>
+  </Device>
+  <!--<Device><Manufacture>ZeroOne</Manufacture><Model>IP3393Pv2</Model><Type>MegapixelIPDome</Type><Series/><ConnectionProtocol>HTTP</ConnectionProtocol><ProfileMode value="1"><Profile id="1"><Compression codes="H264"><Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate><Resolution value="2592x1920"><FrameRate>3,4,5,8,10,15</FrameRate></Resolution><Resolution value="2048x1536"><FrameRate>1,2,3,5,8,10,15,20,25</FrameRate></Resolution><Resolution value="1920x1080,1280x1024,1280x960,1280x720,720x480,640x480,320x240,176x144"><FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate></Resolution></Compression><Compression codes="MPEG4"><Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate><Resolution value="1920x1080,1280x1024,1280x960,1280x720,720x480,640x480,320x240"><FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate></Resolution></Compression><Compression codes="MJPEG"><Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate><Resolution value="2592x1920"><FrameRate>3,4,5,8,10,15</FrameRate></Resolution><Resolution value="2048x1536"><FrameRate>2,3,5,8,10,15,20,25</FrameRate></Resolution><Resolution value="1920x1080,1280x1024,1280x960"><FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate></Resolution></Compression></Profile></ProfileMode><ProfileMode value="2"><Profile id="1"><Compression codes="H264"><Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate><Resolution value="2592x1920"><FrameRate>3,4,5,8,10,15</FrameRate><Profile id="2"><Compression codes="MJPEG"><Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate><Resolution value="320x240"><FrameRate>3,4,5,8,10,15</FrameRate></Resolution></Compression></Profile></Resolution><Resolution value="2048x1536"><FrameRate>2,3,5,8,10,15,20,25</FrameRate><Profile id="2"><Compression codes="MJPEG,H264"><Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate><Resolution value="640x480,320x240,176x144"><FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate></Resolution></Compression></Profile></Resolution><Resolution value="1920x1080,1280x1024,1280x960"><FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate><Profile id="2"><Compression codes="MJPEG,H264"><Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate><Resolution value="640x480,320x240,176x144"><FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate></Resolution></Compression></Profile></Resolution><Resolution value="1280x720,720x480,640x480,320x240,176x144"><FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate><Profile id="2"><Compression codes="MJPEG,H264"><Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate><Resolution value="1280x720,720x480,640x480,320x240,176x144"><FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate></Resolution></Compression></Profile></Resolution></Compression><Compression codes="MPEG4"><Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate><Resolution value="1920x1080,1280x1024,1280x960"><FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate><Profile id="2"><Compression codes="MJPEG,MPEG4"><Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate><Resolution value="640x480,320x240"><FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate></Resolution></Compression></Profile></Resolution><Resolution value="1280x720,720x480,640x480,320x240"><FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate><Profile id="2"><Compression codes="MJPEG,MPEG4"><Bitrate>64K,128K,256K,384K,500K,750K,1M,1.5M,2M,2.5M,3M,3.5M,4M,4.5M,5M,5.5M,6M</Bitrate><Resolution value="1280x720,720x480,640x480,320x240"><FrameRate>1,2,3,5,8,10,15,20,25,30</FrameRate></Resolution></Compression></Profile></Resolution></Compression></Profile></ProfileMode><NumberOfChannel>1</NumberOfChannel><NumberOfAudioIn>1</NumberOfAudioIn><NumberOfAudioOut>1</NumberOfAudioOut><NumberOfDI>2</NumberOfDI><NumberOfDO>1</NumberOfDO><NumberOfMotion>3</NumberOfMotion><PanSupport>true</PanSupport><TiltSupport>true</TiltSupport><ZoomSupport>true</ZoomSupport><FocusSupport>true</FocusSupport></Device>-->
+  <Device>
+    <SameAs>IP3393Pv2</SameAs>
+    <Model>IP6693Pv2</Model>
+  </Device>
+</Devices>

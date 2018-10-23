@@ -1,0 +1,38 @@
+<Devices>
+  <Device>
+    <Manufacture>NEXCOM</Manufacture>
+    <Model>TW6802 PCI</Model>
+    <Type>CaptureCard</Type>
+    <Compression>H264,MPEG4</Compression>
+    <TVStandard value="NTSC">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <FrameRate>1,3,5,6,10,15,30</FrameRate>
+          <Resolution>176x120,320x240,352x240,640x480,704x480,720x480</Resolution>
+          <Bitrate>128K,256K,750K,1M,1.5M,2M,3M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+      </ProfileMode>
+    </TVStandard>
+    <TVStandard value="PAL">
+      <ProfileMode value="1">
+        <Profile id="1">
+          <FrameRate>1,3,5,8,12,25</FrameRate>
+          <Resolution>176x144,352x288,640x576,704x576,720x576</Resolution>
+          <Bitrate>128K,256K,750K,1M,1.5M,2M,3M</Bitrate>
+          <Compression>MJPEG,H264</Compression>
+        </Profile>
+      </ProfileMode>
+    </TVStandard>
+    <NumberOfChannel>32</NumberOfChannel>
+    <NumberOfAudioIn>0</NumberOfAudioIn>
+    <NumberOfAudioOut>0</NumberOfAudioOut>
+    <NumberOfDI>0</NumberOfDI>
+    <NumberOfDO>0</NumberOfDO>
+    <NumberOfMotion>3</NumberOfMotion>
+    <PanSupport>false</PanSupport>
+    <TiltSupport>false</TiltSupport>
+    <ZoomSupport>false</ZoomSupport>
+    <FocusSupport>false</FocusSupport>
+  </Device>
+</Devices>

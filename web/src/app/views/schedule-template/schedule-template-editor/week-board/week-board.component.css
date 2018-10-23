@@ -1,0 +1,89 @@
+.week-board-container {
+  position: relative;
+  background-color: white;
+  height: 600px;
+}
+
+.week-board-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 24px;
+  width: 100px;
+  text-align: center;
+}
+
+.week-board-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  padding-left: 100px;
+  border-bottom: 1px solid #eee;
+  overflow: hidden;
+}
+
+.day-bar {
+  height: 24px;
+  line-height: 24px;
+  overflow: hidden;
+  display: table;
+  width: 100%;
+}
+
+.day-bar-cell {
+  width: 80px;
+  display: table-cell;
+  text-align: center;
+}
+
+.week-board-sidebar {
+  position: absolute;
+  top: 24px;
+  bottom: 0;
+  width: 100px;
+  border-right: 1px solid #eee;
+  border-left: 1px solid #eee;
+  background-color: white;
+}
+
+.time-bar {
+  height: 24px;
+  line-height: 24px;
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.week-board-content {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  right: 0;
+  height: 576px;
+  padding-left: 100px;
+  border-bottom: 1px solid #eee;
+  overflow: hidden;
+}
+
+.week-board-content-day-bar {
+  height: 576px;
+  line-height: 576px;
+  overflow: hidden;
+  display: table;
+  width: 100%;
+}
+
+.week-board-content-day-bar-cell {
+  width: 80px;
+  display: table-cell;
+  border-right: 1px solid #eee;
+}
+
+.week-board-content-hour-block {
+  height: 12px;
+  line-height: 12;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+}
