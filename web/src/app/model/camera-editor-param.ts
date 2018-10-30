@@ -1061,7 +1061,8 @@ export class CameraEditorParam {
                 currentPowerFrequency = this.modelCap.PowerFrequency;
             }
             const arData = ArrayHelper.toArray(this.jsonHelper.findAttributeByString(currentPowerFrequency, 'AspectRatio'));
-            return getOptions(arData);
+            console.log("arData4",arData);
+            return arData ? getOptions(arData) : [];
         }
 
         return [];
