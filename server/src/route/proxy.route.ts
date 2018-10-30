@@ -36,6 +36,7 @@ export const ProxyRoute: IRouteMap = {
                 console.log('proxy path: ', path);
 
                 const requestInit = {
+                    timeout: 0, 
                     method: req.body.method || 'GET',
                     headers: req.body.headers,
                     body: typeof req.body.body === 'string'

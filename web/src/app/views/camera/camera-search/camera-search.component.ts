@@ -42,7 +42,7 @@ export class CameraSearchComponent implements OnInit {
     const search$ = this.coreService.proxyMediaServer({
       method: 'GET',
       path: this.coreService.urls.URL_MEDIA_SEARCH_CAMERA + '?vendor=' + this.searchVendor
-    }, 30000)
+    }, 60000)
       .map(result => {
         this.searchList = ArrayHelper.toArray((result && result.Camera.DATA) ? result.Camera.DATA : []);
         if (!this.searchList) {
