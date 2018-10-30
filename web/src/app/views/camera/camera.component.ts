@@ -163,12 +163,14 @@ export class CameraComponent implements OnInit {
     list.sort(function (a, b) {
       return (a.Channel > b.Channel) ? 1 : ((b.Channel > a.Channel) ? -1 : 0);
     });
-    for (let i = 1; i < list.length; i++) {
-      if (list[i].Channel - list[i - 1].Channel > 1) {
-        return list[i].Channel - 1;
-      }
-    }
-    return list.length + 1;
+    //new channel is increment of the last channel
+    return list.length > 0 ? list[list.length-1].Channel + 1 : 1;
+    // for (let i = 1; i < list.length; i++) {
+    //   if (list[i].Channel - list[i - 1].Channel > 1) {
+    //     return list[i].Channel - 1;
+    //   }
+    // }
+    // return list.length + 1;
   }
 
   /** 改變clone device下拉選單值 */
