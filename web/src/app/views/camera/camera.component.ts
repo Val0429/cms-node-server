@@ -192,13 +192,27 @@ export class CameraComponent implements OnInit {
         for (let i = 0; i < this.cloneCameraParam.quantity; i++) {
           cloneResult.push(this.cloneNewDevice({ cam: this.cloneCameraParam.device, newChannel: this.getNewChannelId(cloneResult) }));
         }
+
         return Observable.fromPromise(Parse.Object.saveAll(cloneResult))
-          .map(() => {
-            this.reloadData();
-            alert('Clone success.');
+        .map(result => {
+          
+          this.coreService.addNotifyData({
+            path: this.coreService.urls.URL_CLASS_NVR,
+            objectId: this.cloneCameraParam.device.id
           });
+
+          return this.coreService.notifyWithParseResult({
+            parseResult: cloneResult, path: this.coreService.urls.URL_CLASS_DEVICE
+          });
+
+        });
+          
       })
       .toPromise()
+      .then(()=>{
+        this.reloadData();
+        alert('Clone success.');
+      })
       .catch(alert);
   }
 }
