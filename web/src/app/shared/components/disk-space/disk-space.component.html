@@ -12,7 +12,7 @@
   <tbody>
     <tr *ngFor="let disk of mediaDiskspace">
       <td>
-        <input type="checkbox" [checked]="checkDiskSelected(disk)" (change)="setDiskStorage(disk)">
+        <input type="radio" name="tempDisk" [checked]="checkDiskSelected(disk)" (change)="setDiskStorage(disk)">
       </td>
       <td>{{getDiskLetterCode(disk)}}</td>
       <td>{{countBytes(disk.TotalBytes)}}</td>

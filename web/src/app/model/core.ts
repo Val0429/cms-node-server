@@ -93,6 +93,9 @@ export class Nvr extends Parse.Object implements INvr {
 }
 
 export class ServerInfo extends Parse.Object implements IServerInfo {
+    
+    get TempPath(): string { return super.get('TempPath'); }
+    set TempPath(value: string) { super.set('TempPath', value); }
     get objectId(): string { return super.get('objectId'); }
     set objectId(value: string) { super.set('objectId', value); }
     get Type(): string { return super.get('Type'); }

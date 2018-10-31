@@ -112,7 +112,9 @@ export class Server extends Parse.Object implements IServer {
     }
 }
 
-export class ServerInfo extends Parse.Object implements IServerInfo {
+export class ServerInfo extends Parse.Object implements IServerInfo {    
+    get TempPath(): string { return super.get('TempPath'); }
+    set TempPath(value: string) { super.set('TempPath', value); }
     get Type(): string { return super.get('Type'); }
     set Type(value: string) { super.set('Type', value); }
     get SubType(): string { return super.get('SubType'); }

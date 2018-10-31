@@ -3,8 +3,9 @@ import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { Observable } from 'rxjs/Observable';
 import { IServerStorage, IMediaDiskspace, IDBSyncDestination } from 'lib/domain/core';
-import { Server, DBSync } from 'app/model/core';
+import { Server, DBSync, ServerInfo } from 'app/model/core';
 import ArrayHelper from 'app/helper/array.helper';
+import { Query } from 'parse';
 
 @Component({
   selector: 'app-server',
@@ -13,6 +14,7 @@ import ArrayHelper from 'app/helper/array.helper';
 })
 export class ServerComponent implements OnInit {
   serverConfig: Server;
+  serverInfo:ServerInfo;
   mediaDiskspace: IMediaDiskspace[];
   dbSync: DBSync;
   portOptions = [
@@ -30,11 +32,20 @@ export class ServerComponent implements OnInit {
   ngOnInit() {
     Observable.combineLatest(
       this.reloadServerConfig(),
+      this.reloadServerInfo(),
       this.reloadMediaDiskspace(),
       this.reloadDBSync()
     ).subscribe();
   }
-
+  reloadServerInfo() {
+    return Observable.fromPromise(this.parseService.getData({
+      type: ServerInfo,
+      filter:query => query.contains("Type", "CMSManager")
+    })).map(serverInfo => {
+      this.serverInfo = serverInfo;
+      console.log("this.serverInfo", this.serverInfo);
+    });
+  }
   reloadServerConfig() {
     return Observable.fromPromise(this.parseService.getData({
       type: Server
@@ -55,8 +66,9 @@ export class ServerComponent implements OnInit {
   }
 
   /** 修改Storage屬性的事件，由storage component call back */
-  setStorage(storage: IServerStorage[]) {
-    this.serverConfig.Storage = storage;
+  setStorage(storage: IServerStorage) {
+    this.serverConfig.Storage = [storage];
+    this.serverInfo.TempPath = storage.Path;
   }
 
   clickSaveConfig() {
@@ -68,6 +80,7 @@ export class ServerComponent implements OnInit {
       .map(result => this.coreService.notifyWithParseResult({
         parseResult: [result], path: this.coreService.urls.URL_CLASS_SERVER
       }));
+
     const saveDBSync$ = Observable.fromPromise(this.dbSync.save())
       .map(data => {
         // 此主機Enable AutoSync時，將當前設定的備援Server全都改為Disable AutoSync
@@ -81,6 +94,17 @@ export class ServerComponent implements OnInit {
           });
         }
       }); // DBSync不需要通知CMSM
+
+
+    const saveServerInfo$ = Observable.fromPromise(this.serverInfo.save())
+      .map(result => this.coreService.notifyWithParseResult({
+        parseResult: [result], path: this.coreService.urls.URL_CLASS_SERVER
+      }));
+
+    saveServerInfo$
+      .switchMap(() => saveDBSync$)
+      .toPromise()
+      .catch(alert)
 
     saveServer$
       .switchMap(() => saveDBSync$)
