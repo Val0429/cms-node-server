@@ -6,7 +6,6 @@ import { HttpModule } from '@angular/http';
 import { DndModule } from 'ng2-dnd';
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
 import { Select2Module } from 'ng2-select2';
-import { ColorPickerModule } from 'ng-color-picker';
 
 import { ComponentsModule } from './components/components.module';
 import { DirectivesModule } from './directives/directives.module';
@@ -21,7 +20,6 @@ import { PipesModule } from './pipes/pipes.module';
     DndModule,
     Ng2BootstrapModule,
     Select2Module,
-    ColorPickerModule,
     PipesModule,
     ComponentsModule,
     DirectivesModule,

@@ -13,9 +13,9 @@ export class DiskSpaceComponent implements OnInit, OnChanges {
   /** 所有可選擇的硬碟 */
   @Input() mediaDiskspace: any;
   /** 返回Storage應儲存內容的call back */
-  @Output() setStorageEvent: EventEmitter<IServerStorage[]> = new EventEmitter();
+  @Output() setStorageEvent: EventEmitter<IServerStorage> = new EventEmitter();
   /** 暫存勾選storage disk物件，儲存時取代ServerConfig.Storage內容 */
-  tempSave: IServerStorage[];
+  tempSave: IServerStorage;
   constructor() { }
 
   ngOnInit() {
@@ -37,44 +37,23 @@ export class DiskSpaceComponent implements OnInit, OnChanges {
     if (!this.mediaDiskspace) {
       return;
     }
-    this.tempSave = [];
-    this.storageConfig.forEach(element => {
-      if (this.checkDiskAvailable(element)) {
-        this.tempSave.push(element);
-      }
-    });
-  }
-
-  /** 檢查已選擇的硬碟是否可用 */
-  checkDiskAvailable(storage: IServerStorage): boolean {
-    // 在可選硬碟中找不到就return false
-    if (!this.mediaDiskspace) {
-      return false;
-    }
-    const item = this.mediaDiskspace.find(x => x.Letter.indexOf(this.getStoragePathCode(storage)) >= 0);
-    return item ? true : false;
+    this.tempSave = this.storageConfig &&  this.storageConfig.length>0 ? this.storageConfig[0] : null;
+    console.log("this.tempSave",this.tempSave);
+    
   }
 
   /** 增刪已選擇的硬碟 for layout操作 */
   setDiskStorage(disk: any) {
     const letter = this.getDiskLetterCode(disk); // 硬碟代號 ex: 'C'
-    if (this.checkDiskSelected(disk)) { // 原已存在就刪除
-      // remove one disk config.
-      const item = this.tempSave.find(x => x.Path.indexOf(letter) >= 0);
-      const index = this.tempSave.indexOf(item);
-      this.tempSave.splice(index, 1);
-    } else {
+    
       // insert new disk config into currect index
-      const newObj = {
-        Keepspace: '0',
-        // Path: `${letter}:` + `\\MISRecord\\`
+      this.tempSave = {
+        Keepspace: '0',        
         Path: `${letter}:` + `\\CMSRecord\\`
       };
-      const index = this.findDiskInsertIndex(disk);
-      this.tempSave.splice(index, 0, newObj);
-    }
-    // this.storageConfig = this.tempSave;
+       
     this.setStorageEvent.emit(this.tempSave);
+    
   }
 
   /** 檢查可選的硬碟是否已被勾選 */
@@ -82,23 +61,8 @@ export class DiskSpaceComponent implements OnInit, OnChanges {
     if (!this.storageConfig || !this.tempSave) {
       return false;
     }
-    return this.tempSave.some(x => x.Path.indexOf(disk.Letter) >= 0);
-  }
-
-
-  /** 勾選新的disk時，找出應存放於serverConfig.Storage內的順序 */
-  findDiskInsertIndex(disk: any): number {
-    if (!this.tempSave) {
-      this.tempSave = [];
-    }
-    const letterCode = this.getDiskLetterCode(disk); // 取得Available硬碟代號 ex:'C'
-    for (let i = 0; i < this.tempSave.length; i++) {
-      const itemLetter = this.getStoragePathCode(this.tempSave[i]); // 取得已儲存硬碟代號
-      if (letterCode < itemLetter) { // compare alphabet
-        return i;
-      }
-    }
-    return this.tempSave.length; // return length if new letterCode is bigger than all disk config letterCode.
+    return this.tempSave.Path.indexOf(disk.Letter) >= 0;
+    
   }
 
   // 從可選擇的Disk資料中取得硬碟代號 ex:'C'

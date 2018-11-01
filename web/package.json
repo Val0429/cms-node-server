@@ -59,7 +59,6 @@
     "moment": "^2.18.1",
     "morris.js": "^0.5.0",
     "napa": "^2.3.0",
-    "ng-color-picker": "^2.0.5-mp.1",
     "ng2-datetime": "1.2.2",
     "ng2-dnd": "4.2.0",
     "ng2-select2": "1.0.0-beta.10",

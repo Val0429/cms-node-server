@@ -59,6 +59,7 @@ export interface IServerInfo {
         Enable: boolean,
         Default: number
     },
+    TempPath:string,
     Storage: {
         Name: string,
         Path: string,
