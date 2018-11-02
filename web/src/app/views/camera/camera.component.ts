@@ -19,6 +19,7 @@ export class CameraComponent implements OnInit {
   anyChecked:boolean = false;
   cameraConfigs: DeviceDisplay[] = [];
   groupList: Group[];
+  selectedSubGroup: string; 
   /** IPCamera的唯一NvrId */
   ipCameraNvrId: string;
   licenseInfo: any;
@@ -248,7 +249,10 @@ export class CameraComponent implements OnInit {
     obj.Config.Authentication.Password = this.cryptoService.encrypt4DB(obj.Config.Authentication.Password);
     obj.Capability = args.cam.Capability;
     obj.CameraSetting = args.cam.CameraSetting;
+    
     obj.Tags = args.cam.Tags;
+   
+
     return obj;
   }
 
@@ -283,14 +287,23 @@ export class CameraComponent implements OnInit {
         if (this.cloneCameraParam.quantity === 0) {
           return Observable.of(null);
         }
+        
+        this.selectedSubGroup = this.groupService.findDeviceGroup(this.groupList, { Nvr: this.cloneCameraParam.device.NvrId, Channel: this.cloneCameraParam.device.Channel });
+
         const cloneResult = [];
         for (let i = 0; i < this.cloneCameraParam.quantity; i++) {
-          cloneResult.push(this.cloneNewDevice({ cam: this.cloneCameraParam.device, newChannel: this.getNewChannelId(cloneResult) }));
+          let obj = this.cloneNewDevice({ cam: this.cloneCameraParam.device, newChannel: this.getNewChannelId(cloneResult) }); 
+          cloneResult.push(obj);
         }
 
-        return Observable.fromPromise(Parse.Object.saveAll(cloneResult))
+        return Observable.fromPromise(
+          Parse.Object.saveAll(cloneResult))               
         .map(result => {
-          
+        
+            for(let device of cloneResult){
+            this.groupService.setChannelGroup(this.groupList, { Nvr: device.NvrId, Channel: device.Channel }, this.selectedSubGroup)
+            }
+        
           this.coreService.addNotifyData({
             path: this.coreService.urls.URL_CLASS_NVR,
             objectId: this.cloneCameraParam.device.id
