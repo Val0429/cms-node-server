@@ -17,12 +17,16 @@
           <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addDevice()">
             Create
           </button>
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="deleteAll()" [disabled]="!anyChecked">
+            Delete
+          </button>
         </div>
       </header>
       <div class="widget-body">
         <table class="table table-hover table-lg mt-lg mb-0">
           <thead>
             <tr>
+              <th style="width:20px"><input type="checkbox" id="selectAll" (click)="selectAll($event.target.checked)"  [checked]="checkedAll"/></th>
               <th>ID</th>
               <th>Brand</th>
               <th>Model</th>
@@ -32,6 +36,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let cam of cameraConfigs" (click)="currentEditCamera = cam" [class.active]="cam === currentEditCamera">
+              <td><input type="checkbox" (click)="selectCam(cam, $event.target.checked)" [checked]="cam.checked"></td>
               <td>{{cam.Channel}}</td>
               <td>{{cam.Config.Brand}}</td>
               <td>{{cam.Config.Model}}</td>
