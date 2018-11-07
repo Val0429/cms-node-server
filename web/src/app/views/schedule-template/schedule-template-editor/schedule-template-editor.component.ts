@@ -154,7 +154,7 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
     if (this.setupMode === 2) {
       this.currentTemplate.Schedule = this.convertScheduleToUTC(this.schedules.eventSchedule);
     }
-
+    console.log("save currentTemplate", this.currentTemplate);
     Observable.fromPromise((this.currentTemplate as Parse.Object).save())
       .map(result => this.coreService.notifyWithParseResult({
         parseResult: [result], path: this.getNotifyPath
@@ -176,7 +176,7 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
   clickDelete() {
     if (confirm('Are you sure to delete this template?')) {
       this.flag.delete = true;
-
+      console.log("delete currentTemplate", this.currentTemplate);
       const deleteTemplate$ = Observable.fromPromise((this.currentTemplate as Parse.Object).destroy())
         .map(result => this.coreService.notifyWithParseResult({
           parseResult: [result], path: this.getNotifyPath

@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { Group, Nvr, Device, RecordSchedule, EventHandler } from 'app/model/core';
 import { Observable } from 'rxjs/Observable';
 import { subscribeOn } from 'rxjs/operator/subscribeOn';
+import { nodeValue } from '@angular/core/src/view';
 
 @Component({
   selector: 'app-template-setup',
@@ -20,8 +21,10 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   setupModes = {
     RECORD_SCHEDULE_TEMPLATE: 1,
     EVENT_TEMPLATE: 2
-  };
-  /** table RecordSchedule or EventHandler的資料 */
+  };  /** table RecordSchedule or EventHandler的資料 */
+  
+  saveList=[];
+  deleteList=[];
   setupData: any[];
   ipCameraNvr: Nvr;
   flag = {
@@ -55,6 +58,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     this.getIPCameraNvr()
       .switchMap(() => this.fetchBasicData())
       .subscribe();
+      
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -65,6 +69,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       this.currentTemplate = changes.currentTemplate.currentValue;
       this.fetchSetupData().subscribe();
     }
+    this.deleteList=[];
+    this.saveList=[];
   }
 
   getIPCameraNvr() {
@@ -337,25 +343,39 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
 
   /** 打勾或取消單一節點後，修改其child節點
    * 由treeNode callback時參數val一律undefined，進行遞迴設定時才指定參數val */
-  changeSetupNode(node: ITemplateSetupNode, val?: boolean) {
-
-    const newVal = val ? val : !node.apply;
-
+  changeSetupNode(obj:{node: ITemplateSetupNode, val: boolean}) {    
+    //console.log("old item", this.getExistSetupData(node))
+    console.log("changeSetupNode node", obj.node);
+    console.log("changeSetupNode val", obj.val);    
     // 修改目前node本身的值
-    node.apply = newVal;
-    node.partialApply = newVal;
+    obj.node.apply = obj.val;
+    obj.node.partialApply = obj.val;
+
+    
 
     // 若非最底層則找出所有child一起修改
-    if (this.getSetupNodeLevel(node.key) !== this.levelLimit) {
-      node.child.forEach(cn => {
-        this.changeSetupNode(cn, newVal);
+    if (this.getSetupNodeLevel(obj.node.key) !== this.levelLimit) {
+      obj.node.child.forEach(cn => {
+        this.changeSetupNode({node:cn, val:obj.val});
       });
+    }else{
+      if(obj.val === true){
+        this.saveList.push(obj.node);
+        let deleteIndex = this.deleteList.findIndex(x=>x.key == obj.node.key);
+        this.deleteList.splice(deleteIndex, 1);        
+      }else{
+        this.deleteList.push(obj.node);
+        let deleteIndex = this.saveList.findIndex(x=>x.key == obj.node.key);        
+        this.saveList.splice(deleteIndex, 1);
+      }
     }
 
     // 避免遞迴的過程中不斷呼叫，在此設個條件
-    if (val === undefined) {
-      this.associateApply();
-    }
+     
+     this.associateApply();
+    
+     console.log("save list",this.saveList);
+     console.log("delete list",this.deleteList);
   }
 
   clickSave() {
@@ -369,65 +389,54 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       .then(() => this.flag.save = false)
       .catch(alert);
   }
-
   /** 依照目前setupNode的狀況取得應新增, 修改, 刪除資料的task */
   saveTemplateSetup() {
     const alertMessage = [];
     const saveList = [];
     const deleteList = [];
     let lic;
-
-    this.getSetupNodeWithLevel(this.levelLimit).forEach(node => {
-      const oldItem = this.getExistSetupData(node);
-      if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {
-        lic = '00168'; // license for BackendRecord
-
-        // 有勾選但不存在 => 新增
-        if (node.apply && oldItem === undefined) {
-          const newItem = this.createNewRecordSchedule(node);
-          saveList.push(newItem);
-        }
-        // 有勾選且已存在但套用別的template => 修改
-        if (node.apply && oldItem !== undefined && oldItem.ScheduleTemplate.id !== this.currentTemplate.id) {
-          oldItem.ScheduleTemplate = this.currentTemplate;
-          saveList.push(oldItem);
-        }
-        // 沒勾選但已存在且templateId為當前template => 刪除
-        if (!node.apply && oldItem !== undefined && oldItem.ScheduleTemplate.id === this.currentTemplate.id) {
-          deleteList.push(oldItem);
-        }
-      } else if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {
-        lic = 'pass'; // 無限制license
-
-        // 有勾選但不存在 => 提示訊息: 先設定Event
-        if (node.apply && oldItem === undefined) {
+    if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {
+      lic = '00168';
+    }else if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {
+      lic = 'pass'; // 無限制license
+    }
+    
+    for(let node of this.saveList){  
+      let obj = this.createNewRecordSchedule(node);
+      let oldItem = this.getExistSetupData(node);   
+      let fixed = true;
+      if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {        
+        if (oldItem === undefined) {
           alertMessage.push(node.data.Name + ' event setup is necessary.');
-        }
-        if (oldItem !== undefined) {
-          let fixed = false;
-          // 有勾選且已存在但套用別的template => 修改
-          if (node.apply && oldItem.Schedule !== this.currentTemplate.Schedule) {
-            oldItem.Schedule = this.currentTemplate.Schedule;
-            fixed = true;
-          }
-          // 沒勾選但已存在且templateId為當前template => 清空並更新
-          if (!node.apply && oldItem.Schedule === this.currentTemplate.Schedule) {
-            oldItem.Schedule = '';
-            fixed = true;
-          }
-
-          if (fixed) {
-            saveList.push(oldItem);
+          fixed = false;
+        }else{
+          obj = oldItem;
+          if (oldItem.Schedule !== this.currentTemplate.Schedule) {
+            oldItem.Schedule = this.currentTemplate.Schedule;          
+          }else{
+            oldItem.Schedule = '';          
           }
         }
       }
-    });
+      if (fixed) {
+        saveList.push(obj);
+      }
+    }
+    for(let node of this.deleteList){
+      let oldItem = this.getExistSetupData(node);
+      console.log("deleteList oldItem, node", oldItem, node);            
+      if(oldItem !== undefined) {
+        deleteList.push(oldItem);
+      }
+    }
 
     if (alertMessage.length > 0) {
       alert(alertMessage.join('\n'));
       return Observable.of(null);
     }
-
+    console.log("saveList", saveList);
+    console.log("deleteList", deleteList);
+    
     return this.licenseService.getLicenseAvailableCount(lic)
       .switchMap(num => {
         if (num < (saveList.length - deleteList.length)) {
@@ -444,10 +453,16 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
             .map(result => this.coreService.notifyWithParseResult({
               parseResult: result, path: this.notifyPath
             }));
+        
           return save$
-            .switchMap(() => delete$)
-            .do(() => alert('Update Success.'));
+          .switchMap(() => delete$)
+          .do(() => alert('Update Success.'));        
         }
+      })      
+      .do(()=>{
+        this.saveList=[];
+        this.deleteList=[];
+        this.fetchSetupData().subscribe();
       });
   }
 
@@ -455,7 +470,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   getExistSetupData(node: ITemplateSetupNode) {
     const levelLimit = this.levelLimit;
     const seq = node.key.split('.');
-
+    console.log("seq", seq);
     if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {
       const result = this.setupData.find((x: RecordSchedule) => x.NvrId === seq[levelLimit - 3]
         && x.ChannelId.toString() === seq[levelLimit - 2] && x.StreamId.toString() === seq[levelLimit - 1]);
