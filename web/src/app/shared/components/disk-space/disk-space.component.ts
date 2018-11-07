@@ -38,7 +38,7 @@ export class DiskSpaceComponent implements OnInit, OnChanges {
       return;
     }
     this.tempSave = this.storageConfig &&  this.storageConfig.length>0 ? this.storageConfig[0] : null;
-    console.log("this.tempSave",this.tempSave);
+    console.debug("this.tempSave",this.tempSave);
     
   }
 

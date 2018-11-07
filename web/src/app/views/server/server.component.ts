@@ -43,7 +43,7 @@ export class ServerComponent implements OnInit {
       filter:query => query.contains("Type", "CMSManager")
     })).map(serverInfo => {
       this.serverInfo = serverInfo;
-      console.log("this.serverInfo", this.serverInfo);
+      console.debug("this.serverInfo", this.serverInfo);
     });
   }
   reloadServerConfig() {

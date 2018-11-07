@@ -431,7 +431,7 @@ export class CameraEditorParam {
         this.AspectRatioOptions = this.getAspectRatioOptions();
         this.StreamProfileList = this.getStreamOptions();
         this.StreamProfileParams = this.getStreamProfileParam(); // 必須放在最後
-        // console.log(this.StreamProfileParams);
+        // console.debug(this.StreamProfileParams);
 
         // 在config中產生正確數量的Stream物件
         const tempStream = [];
@@ -589,7 +589,7 @@ export class CameraEditorParam {
                 param: this.findStreamProfileParam(stream, this.StreamProfileParams)
             });
         });
-        // console.log(this.StreamCurrentMatchParam);
+        // console.debug(this.StreamCurrentMatchParam);
     }
 
     /** Stream以外的儲存值如DewarpMode等，將影響可選用的StreamParam，透過遞迴尋找符合特定stream目前狀況的param */
@@ -1061,7 +1061,7 @@ export class CameraEditorParam {
                 currentPowerFrequency = this.modelCap.PowerFrequency;
             }
             const arData = ArrayHelper.toArray(this.jsonHelper.findAttributeByString(currentPowerFrequency, 'AspectRatio'));
-            console.log("arData4",arData);
+            console.debug("arData4",arData);
             return arData ? getOptions(arData) : [];
         }
 

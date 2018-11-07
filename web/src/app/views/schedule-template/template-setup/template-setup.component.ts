@@ -344,9 +344,9 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   /** 打勾或取消單一節點後，修改其child節點
    * 由treeNode callback時參數val一律undefined，進行遞迴設定時才指定參數val */
   changeSetupNode(obj:{node: ITemplateSetupNode, val: boolean}) {    
-    //console.log("old item", this.getExistSetupData(node))
-    console.log("changeSetupNode node", obj.node);
-    console.log("changeSetupNode val", obj.val);    
+    //console.debug("old item", this.getExistSetupData(node))
+    console.debug("changeSetupNode node", obj.node);
+    console.debug("changeSetupNode val", obj.val);    
     // 修改目前node本身的值
     obj.node.apply = obj.val;
     obj.node.partialApply = obj.val;
@@ -374,8 +374,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
      
      this.associateApply();
     
-     console.log("save list",this.saveList);
-     console.log("delete list",this.deleteList);
+     console.debug("save list",this.saveList);
+     console.debug("delete list",this.deleteList);
   }
 
   clickSave() {
@@ -424,7 +424,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     }
     for(let node of this.deleteList){
       let oldItem = this.getExistSetupData(node);
-      console.log("deleteList oldItem, node", oldItem, node);            
+      console.debug("deleteList oldItem, node", oldItem, node);            
       if(oldItem !== undefined) {
         deleteList.push(oldItem);
       }
@@ -434,8 +434,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       alert(alertMessage.join('\n'));
       return Observable.of(null);
     }
-    console.log("saveList", saveList);
-    console.log("deleteList", deleteList);
+    console.debug("saveList", saveList);
+    console.debug("deleteList", deleteList);
     
     return this.licenseService.getLicenseAvailableCount(lic)
       .switchMap(num => {
@@ -470,7 +470,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   getExistSetupData(node: ITemplateSetupNode) {
     const levelLimit = this.levelLimit;
     const seq = node.key.split('.');
-    console.log("seq", seq);
+    console.debug("seq", seq);
     if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {
       const result = this.setupData.find((x: RecordSchedule) => x.NvrId === seq[levelLimit - 3]
         && x.ChannelId.toString() === seq[levelLimit - 2] && x.StreamId.toString() === seq[levelLimit - 1]);

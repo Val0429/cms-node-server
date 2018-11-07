@@ -106,11 +106,11 @@ export class CameraEditorComponent implements OnInit, OnChanges {
 
   /** 取得Model Capability */
   getCapability(brand: string) {
-    console.log("brand", brand);
+    console.debug("brand", brand);
     this.modelList = undefined;
 
     const vendor = this.brandList.find(x => x.Name === brand);
-    console.log("vendor", vendor);
+    console.debug("vendor", vendor);
     const data = {
       fileName: vendor.FileName
     };
@@ -186,26 +186,26 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       return;
     }
     this.flag.save = true;
-    //console.log("this.currentCamera", this.currentCamera);
-    //console.log("this.coreService",  this.coreService);
+    //console.debug("this.currentCamera", this.currentCamera);
+    //console.debug("this.coreService",  this.coreService);
     this.currentCamera.Name = this.coreService.stripScript(this.currentCamera.Name);
     this.currentCamera.Tags = this.tags.split(',');
     // this.currentCamera.Tags = this.tags.replace(/ /g, '').split(',');
     this.editorParam.getStreamSaveNumberBeforeSave();
     this.editorParam.getResolutionBeforeSave();
     this.editorParam.removeAttributesBeforeSave();
-    console.log("this.currentCamera.Config", this.currentCamera.Config);
+    console.debug("this.currentCamera.Config", this.currentCamera.Config);
     // 加密
     this.currentCamera.Config.Authentication.Account = this.cryptoService.encrypt4DB(this.currentCamera.Config.Authentication.Account);
     this.currentCamera.Config.Authentication.Password = this.cryptoService.encrypt4DB(this.currentCamera.Config.Authentication.Password);
-    console.log("save camera2");
+    console.debug("save camera2");
     // 將RTSPURI組合完整
     if (this.currentCamera.Config.Brand === 'Customization') {
       this.currentCamera.Config.Stream.forEach(str => {
         str.RTSPURI = `rtsp://${this.currentCamera.Config.IPAddress}:${str.Port.RTSP}/${str.RTSPURI || ''}`;
       });
     }
-console.log("this.currentCamera", this.currentCamera);
+console.debug("this.currentCamera", this.currentCamera);
     const save$ = Observable.fromPromise(this.currentCamera.save())
       .map(result => {
         this.coreService.addNotifyData({
@@ -216,7 +216,7 @@ console.log("this.currentCamera", this.currentCamera);
           parseResult: [result], path: this.coreService.urls.URL_CLASS_DEVICE
         });
       });
-      console.log("save$", save$);
+      console.debug("save$", save$);
     save$
       .switchMap(() => this.groupService.setChannelGroup(this.groupList,
         { Nvr: this.ipCameraNvr.Id, Channel: this.currentCamera.Channel }, this.selectedSubGroup))

@@ -78,7 +78,7 @@ export class EventRecoveryComponent implements OnInit {
       body: postObject
     })
       .map(result => {
-        console.log(result);
+        console.debug(result);
         alert('success');
       })
       .subscribe();

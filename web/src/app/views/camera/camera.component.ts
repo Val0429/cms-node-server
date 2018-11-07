@@ -47,7 +47,7 @@ export class CameraComponent implements OnInit {
         type: Group
       }).then(groups => {
         this.groupList = groups;
-        console.log("this.groupList",this.groupList)
+        console.debug("this.groupList",this.groupList)
       }));
       
       getGroup$      
@@ -116,11 +116,11 @@ export class CameraComponent implements OnInit {
   }
   checkSelected(){
     let checked = this.cameraConfigs.map(function(e){return e.checked});
-    //console.log("checked",checked);
+    //console.debug("checked",checked);
     this.checkedAll = checked.length > 0 && checked.indexOf(undefined) < 0 && checked.indexOf(false) < 0;
     this.anyChecked = checked.length > 0 && checked.indexOf(true) >= 0;
-    console.log("this.checkedAll",this.checkedAll);
-    console.log("this.anyChecked",this.anyChecked);
+    console.debug("this.checkedAll",this.checkedAll);
+    console.debug("this.anyChecked",this.anyChecked);
   }
   selectAll(checked:boolean){
     
@@ -130,7 +130,7 @@ export class CameraComponent implements OnInit {
     this.checkSelected();
   }
   selectCam(cam:DeviceDisplay, checked:boolean){
-    console.log("cam", cam);
+    console.debug("cam", cam);
     cam.checked=checked;
     this.checkSelected();
   }
@@ -157,7 +157,7 @@ export class CameraComponent implements OnInit {
         dev.Config.Authentication.Password = this.cryptoService.decrypt4DB(dev.Config.Authentication.Password);
         return dev as DeviceDisplay;
       });
-      console.log("this.cameraConfigs",this.cameraConfigs);
+      console.debug("this.cameraConfigs",this.cameraConfigs);
     }).do(() => this.cloneCameraParam.device = this.cameraConfigs[0]);
     return fetch$;
   }
