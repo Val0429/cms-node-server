@@ -473,7 +473,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     console.debug("seq", seq);
     if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {
       const result = this.setupData.find((x: RecordSchedule) => x.NvrId === seq[levelLimit - 3]
-        && x.ChannelId.toString() === seq[levelLimit - 2] && x.StreamId.toString() === seq[levelLimit - 1]);
+        && x.ChannelId === parseInt(seq[levelLimit - 2]) && x.StreamId === parseInt(seq[levelLimit - 1]));
       return result;
     }
     if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {
