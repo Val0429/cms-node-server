@@ -79,7 +79,7 @@ export class VideoTitleBarComponent implements OnInit, OnChanges {
   saveEditModel() {
     this.titleBarInformations.Informations = Object.assign(
       [], this.editDataModel.filter(x => x.Seq !== ''));
-    console.log(this.titleBarInformations.Informations);
+    console.debug(this.titleBarInformations.Informations);
   }
 }
 

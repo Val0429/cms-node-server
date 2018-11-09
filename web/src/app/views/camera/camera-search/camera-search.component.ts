@@ -73,7 +73,7 @@ export class CameraSearchComponent implements OnInit {
   }
 
   clickAddCamera(camera: ISearchCamera) {
-    console.log("clickAddCamera", camera);
+    console.debug("clickAddCamera", camera);
     //camera.COMPANY = this.searchVendor; // 為了讓brand紀錄的大小寫完全符合，直接從選單複製
     this.addDevice.emit(camera);
     this.closeModal.emit();

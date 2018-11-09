@@ -39,11 +39,11 @@ export class LicenseService {
                 adp.Key = ArrayHelper.toArray(adp.Key); // 所有已註冊的key
                 adp.Key.forEach(key => {
                     if (this.licenseLimit[key.$.ProductNO] === undefined) {
-                        console.log('Cant find this product no.');
+                        console.debug('Cant find this product no.');
                         return;
                     }
                     if (key.$.Expired === '1') {
-                        console.log('Key expired.');
+                        console.debug('Key expired.');
                         return;
                     }
 

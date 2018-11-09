@@ -11,9 +11,11 @@ import { ComponentsModule } from './components/components.module';
 import { DirectivesModule } from './directives/directives.module';
 import { LayoutsModule } from './layouts/layouts.module';
 import { PipesModule } from './pipes/pipes.module';
+import { ColorPickerModule } from 'ng-color-picker';
 
 @NgModule({
   exports: [
+    ColorPickerModule,
     CommonModule,
     FormsModule,
     HttpModule,

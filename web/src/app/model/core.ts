@@ -255,7 +255,9 @@ export class Device extends Parse.Object implements IDevice {
         Object.assign(this, value);
     }
 }
-
+export class DeviceDisplay extends Device{
+    public checked:boolean;
+}
 export class General extends Parse.Object implements IGeneral {
     get EnableJoystick(): string { return super.get('EnableJoystick'); }
     set EnableJoystick(value: string) { super.set('EnableJoystick', value); }
