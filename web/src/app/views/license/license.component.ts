@@ -92,14 +92,16 @@ export class LicenseComponent implements OnInit {
   initStatistics() {
     this.statistics = [];
     this.licenseProduct.forEach(type => {
-      this.statistics.push({
-        ProductNo: type.No,
-        ProductType: type.Type,
-        Description: type.Description,
-        License: [],
-        LicenseCount: 0,
-        UsageCount: 0
-      });
+      if(type.No !== "99999"){
+        this.statistics.push({
+          ProductNo: type.No,
+          ProductType: type.Type,
+          Description: type.Description,
+          License: [],
+          LicenseCount: 0,
+          UsageCount: 0
+        });
+      }
     });
   }
 
