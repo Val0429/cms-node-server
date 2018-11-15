@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { ILicenseInfo, ILicenseAdaptor } from 'lib/domain/core';
-
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-online-registration',
   templateUrl: './online-registration.component.html',
@@ -109,10 +109,14 @@ export class OnlineRegistrationComponent implements OnInit {
   /** 接收到MediaServer的訊息後做出不同反應 */
   receiveConfirmResponse(response: any) {
     this.displayProcess = this.coreService.getLicenseResponseDescription(response);
-    if (this.displayProcess.length === 0) {
-      this.initInputData();
-      this.reloadEvent.emit();
-      this.closeModalEvent.emit();
+    if (this.displayProcess.length === 0) {      
+      this.displayProcess = "Registration succeeded!";
+      if(environment.production){
+        this.initInputData();
+        this.reloadEvent.emit();
+        this.closeModalEvent.emit();
+        this.displayProcess = "";
+      }
     }
   }
 
