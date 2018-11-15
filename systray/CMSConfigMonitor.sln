@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSConfigMonitor", "CMSConfigMonitor\CMSConfigMonitor.csproj", "{81B9B817-9998-4AEE-8BAA-3C8D01347463}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CMSConfigMonitor.Setup.en-us.x86", "CMSConfigMonitor.Setup.en-us.x86\CMSConfigMonitor.Setup.en-us.x86.vdproj", "{19129323-B163-4085-B2EA-EDFDA97D10C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81B9B817-9998-4AEE-8BAA-3C8D01347463}.Debug|x64.ActiveCfg = Debug|x64
+		{81B9B817-9998-4AEE-8BAA-3C8D01347463}.Debug|x64.Build.0 = Debug|x64
+		{81B9B817-9998-4AEE-8BAA-3C8D01347463}.Debug|x86.ActiveCfg = Debug|x86
+		{81B9B817-9998-4AEE-8BAA-3C8D01347463}.Debug|x86.Build.0 = Debug|x86
+		{81B9B817-9998-4AEE-8BAA-3C8D01347463}.Release|x64.ActiveCfg = Release|x64
+		{81B9B817-9998-4AEE-8BAA-3C8D01347463}.Release|x64.Build.0 = Release|x64
+		{81B9B817-9998-4AEE-8BAA-3C8D01347463}.Release|x86.ActiveCfg = Release|x86
+		{81B9B817-9998-4AEE-8BAA-3C8D01347463}.Release|x86.Build.0 = Release|x86
+		{19129323-B163-4085-B2EA-EDFDA97D10C4}.Debug|x64.ActiveCfg = Debug
+		{19129323-B163-4085-B2EA-EDFDA97D10C4}.Debug|x86.ActiveCfg = Debug
+		{19129323-B163-4085-B2EA-EDFDA97D10C4}.Release|x64.ActiveCfg = Release
+		{19129323-B163-4085-B2EA-EDFDA97D10C4}.Release|x86.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5178912F-91F7-43F9-A398-BF9BABD233F9}
+	EndGlobalSection
+EndGlobal
