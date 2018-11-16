@@ -79,16 +79,16 @@ Section
     CreateShortCut "$SMPROGRAMS\uninstall.lnk" "$INSTDIR\uninstall.exe"
 	
 	# specify file to go in output path	
-	SetOutPath $INSTDIR\lib
-	File /r ..\lib\*
-	SetOutPath $INSTDIR\web\dist	
-	File /r ..\web\dist\*
-	SetOutPath $INSTDIR\server
-	File /r ..\server\*.json
-	SetOutPath $INSTDIR\server\src
-	File /r ..\server\src\*
+	# backend
+	File /r ..\server\dist\*
+	# node modules
 	SetOutPath $INSTDIR\server\node_modules
 	File /r ..\server\node_modules\*
+	# frontend
+	SetOutPath $INSTDIR\web\dist	
+	File /r ..\web\dist\*
+	
+	
 	
 	;Store installation folder
 	WriteRegStr HKLM "Software\${PRODUCT_NAME}" "" $INSTDIR
