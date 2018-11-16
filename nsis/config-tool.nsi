@@ -1,15 +1,22 @@
 ;Include Modern UI
 
 !include "MUI2.nsh"
+!include "FileFunc.nsh"
 
 !define PRODUCT_NAME "CMS Config Tool"
 !define PRODUCT_VERSION "3.0.0"
 !define PRODUCT_PUBLISHER "iSAP Solution"
+!define PRODUCT_URL "http://www.isapsolution.com"
+!define PATH_OUT "Release"
+!define ARP "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 
 # define name of installer
-
-OutFile "Release\config-tool-setup-v${PRODUCT_VERSION}.exe"
+!system 'md "${PATH_OUT}"'	
+OutFile "${PATH_OUT}\config-tool-setup-v${PRODUCT_VERSION}.exe"
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
+	
+
+
 
 # define installation directory
 InstallDir "$PROGRAMFILES\CMS 3.0\Config"
@@ -49,7 +56,7 @@ SectionEnd
   !insertmacro MUI_UNPAGE_CONFIRM
   !insertmacro MUI_UNPAGE_INSTFILES
   
- 
+
 
 ;--------------------------------
 ;Languages
@@ -85,9 +92,11 @@ Section
 	
 	;Store installation folder
 	WriteRegStr HKLM "Software\${PRODUCT_NAME}" "" $INSTDIR
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "DisplayName" "${PRODUCT_NAME} (remove only)"
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "UninstallString" '"$INSTDIR\uninstall.exe"'
-	
+	WriteRegStr HKLM "${ARP}" "DisplayName" "${PRODUCT_NAME} (remove only)"
+	WriteRegStr HKLM "${ARP}" "UninstallString" '"$INSTDIR\uninstall.exe"'
+	WriteRegStr HKLM "${ARP}" "Publisher" "${PRODUCT_PUBLISHER}"
+	WriteRegStr HKLM "${ARP}" "URLInfoAbout" "${PRODUCT_URL}"
+	WriteRegStr HKLM "${ARP}" "DisplayVersion" "${PRODUCT_VERSION}"
 	
 	;${If} ${SectionIsSelected} ${SEC03}	
 		
@@ -100,6 +109,10 @@ Section
 	
 	;${EndIf}
 	
+	 ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
+	 IntFmt $0 "0x%08X" $0
+	 WriteRegDWORD HKLM "${ARP}" "EstimatedSize" "$0"
+	 
 SectionEnd
 
 UninstallText "This will uninstall Test-Installer. Press next to continue."
@@ -122,6 +135,6 @@ Section "uninstall"
 	
 	# remove registry info
 	DeleteRegKey HKLM "Software\${PRODUCT_NAME}"
-	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
+	DeleteRegKey HKLM "${ARP}"
 # uninstaller section end
 SectionEnd
