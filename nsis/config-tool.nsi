@@ -14,6 +14,29 @@
 !system 'md "${PATH_OUT}"'	
 OutFile "${PATH_OUT}\config-tool-setup-v${PRODUCT_VERSION}.exe"
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
+
+!macro DoUninstall UN
+Function ${UN}DoUninstall
+	# first, delete the uninstaller
+    Delete "$INSTDIR\uninstall.exe"
+ 
+    # second, remove the link from the start menu
+    # "$SMPROGRAMS\uninstall.lnk"
+	# Delete "$SMPROGRAMS\${PRODUCT_NAME}"
+	
+	# third, remove services
+	ExecWait '"$INSTDIR\uninstall_service.bat" /silent'		
+	
+	# now delete installed files
+	RMDir /r $INSTDIR
+	
+	# remove registry info
+	DeleteRegKey HKLM "Software\${PRODUCT_NAME}"
+	DeleteRegKey HKLM "${ARP}"
+FunctionEnd
+!macroend
+!insertmacro DoUninstall "" 
+
 	
 Function .onInit
  
@@ -29,7 +52,7 @@ Function .onInit
 ;Run the uninstaller
 uninst:
   ClearErrors
-  Exec $R0
+  Call DoUninstall
  
   IfErrors no_remove_uninstaller done
     ;You can either use Delete /REBOOTOK in the uninstaller or add some code
@@ -145,25 +168,10 @@ Section
 SectionEnd
 
 UninstallText "This will uninstall ${PRODUCT_NAME}. Press uninstall to continue."
+!insertmacro DoUninstall "un."
 
 # uninstaller section start
 Section "uninstall"
-  
-    # first, delete the uninstaller
-    Delete "$INSTDIR\uninstall.exe"
- 
-    # second, remove the link from the start menu
-    # "$SMPROGRAMS\uninstall.lnk"
-	# Delete "$SMPROGRAMS\${PRODUCT_NAME}"
-	
-	# third, remove services
-	ExecWait '"$INSTDIR\uninstall_service.bat" /silent'		
-	
-	# now delete installed files
-	RMDir /r $INSTDIR
-	
-	# remove registry info
-	DeleteRegKey HKLM "Software\${PRODUCT_NAME}"
-	DeleteRegKey HKLM "${ARP}"
+  Call un.DoUninstall  
 # uninstaller section end
 SectionEnd

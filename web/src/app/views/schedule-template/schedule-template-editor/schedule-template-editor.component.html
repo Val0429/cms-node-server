@@ -58,6 +58,14 @@
         </div>
       </div>
     </div>
+    <div class="form-group row">
+      <label class="col-md-4  col-form-label text-md-right">Enable recording recovery</label>
+      <div class="col-md-8">
+        <div class="input-group width-100">
+          <input type="checkbox" class="form-control" [(ngModel)]="currentTemplate.RecordRecover">
+        </div>
+      </div>
+    </div>
     <div class="form-group row" *ngIf="currentPlans">
       <div class="col-12">
         <!-- <app-week-board [plans]="currentPlans" (checkIsOverlap)="checkIsOverlap($event)"></app-week-board> -->
