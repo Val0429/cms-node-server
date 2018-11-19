@@ -206,6 +206,7 @@ export interface IRecordScheduleTemplate {
     EventRecord: any;
     Recorder: IServerInfo;
     KeepDays: string;
+    RecordRecover:boolean;
 }
 
 export interface IRecordSchedule {
