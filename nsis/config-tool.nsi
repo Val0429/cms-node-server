@@ -66,8 +66,8 @@ Section "NodeJs v8.11.3-x64" SEC01
   ExecWait 'msiexec /i "Prerequisites\node-v8.11.3-x64.msi"'
 SectionEnd 
   
-Section "MongoDb v3.4.18" SEC02
-  ExecWait 'msiexec /i "Prerequisites\mongodb-win32-x86_64-2008plus-ssl-3.4.18-signed.msi"'
+Section "MongoDb v3.4.9" SEC02
+  ExecWait 'msiexec /i "Prerequisites\mongodb-win32-x86_64-enterprise-windows-64-3.4.9-signed.msi"'
 SectionEnd 
 
   
