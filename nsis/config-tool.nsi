@@ -70,6 +70,10 @@ Section "MongoDb v3.4.9" SEC02
   ExecWait 'msiexec /i "Prerequisites\mongodb-win32-x86_64-enterprise-windows-64-3.4.9-signed.msi"'
 SectionEnd 
 
+Section "MS Visual C++ Redist 2015 x64" SEC03
+  ExecWait Prerequisites\vc_redist.x64.exe
+SectionEnd 
+
   
 ;Section "Install Mongo Db Service" SEC03
 
