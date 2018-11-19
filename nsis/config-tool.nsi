@@ -15,7 +15,32 @@
 OutFile "${PATH_OUT}\config-tool-setup-v${PRODUCT_VERSION}.exe"
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 	
-
+Function .onInit
+ 
+  ReadRegStr $R0 HKLM "${ARP}" "UninstallString"
+  StrCmp $R0 "" done
+ 
+  MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
+  "${PRODUCT_NAME} is already installed. $\n$\nClick `OK` to remove the \
+  previous version or `Cancel` to cancel this upgrade." \
+  IDOK uninst
+  Abort
+ 
+;Run the uninstaller
+uninst:
+  ClearErrors
+  Exec $R0
+ 
+  IfErrors no_remove_uninstaller done
+    ;You can either use Delete /REBOOTOK in the uninstaller or add some code
+    ;here to remove the uninstaller. Use a registry key to check
+    ;whether the user has chosen to uninstall. If you are using an uninstaller
+    ;components page, make sure all sections are uninstalled.
+  no_remove_uninstaller:
+ 
+done:
+ 
+FunctionEnd
 
 
 # define installation directory
@@ -41,8 +66,8 @@ Section "NodeJs v8.11.3-x64" SEC01
   ExecWait 'msiexec /i "Prerequisites\node-v8.11.3-x64.msi"'
 SectionEnd 
   
-Section "MongoDb v3.4.18" SEC02
-  ExecWait 'msiexec /i "Prerequisites\mongodb-win32-x86_64-2008plus-ssl-3.4.18-signed.msi"'
+Section "MongoDb v3.4.9" SEC02
+  ExecWait 'msiexec /i "Prerequisites\mongodb-win32-x86_64-enterprise-windows-64-3.4.9-signed.msi"'
 SectionEnd 
 
   
@@ -76,19 +101,19 @@ Section
  
     # create a shortcut named "new shortcut" in the start menu programs directory
     # point the new shortcut at the program uninstaller
-    CreateShortCut "$SMPROGRAMS\uninstall.lnk" "$INSTDIR\uninstall.exe"
+    # CreateShortCut "$SMPROGRAMS\uninstall.lnk" "$INSTDIR\uninstall.exe"
 	
 	# specify file to go in output path	
-	SetOutPath $INSTDIR\lib
-	File /r ..\lib\*
-	SetOutPath $INSTDIR\web\dist	
-	File /r ..\web\dist\*
-	SetOutPath $INSTDIR\server
-	File /r ..\server\*.json
-	SetOutPath $INSTDIR\server\src
-	File /r ..\server\src\*
+	# backend
+	File /r ..\server\dist\*
+	# node modules
 	SetOutPath $INSTDIR\server\node_modules
 	File /r ..\server\node_modules\*
+	# frontend
+	SetOutPath $INSTDIR\web\dist	
+	File /r ..\web\dist\*
+	
+	
 	
 	;Store installation folder
 	WriteRegStr HKLM "Software\${PRODUCT_NAME}" "" $INSTDIR
@@ -115,7 +140,7 @@ Section
 	 
 SectionEnd
 
-UninstallText "This will uninstall Test-Installer. Press next to continue."
+UninstallText "This will uninstall ${PRODUCT_NAME}. Press uninstall to continue."
 
 # uninstaller section start
 Section "uninstall"
@@ -124,8 +149,8 @@ Section "uninstall"
     Delete "$INSTDIR\uninstall.exe"
  
     # second, remove the link from the start menu
-    Delete "$SMPROGRAMS\uninstall.lnk"
-	Delete "$SMPROGRAMS\${PRODUCT_NAME}"
+    # "$SMPROGRAMS\uninstall.lnk"
+	# Delete "$SMPROGRAMS\${PRODUCT_NAME}"
 	
 	# third, remove services
 	ExecWait '"$INSTDIR\uninstall_service.bat" /silent'		

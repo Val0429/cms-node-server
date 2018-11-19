@@ -8,11 +8,11 @@
     "start": "ts-node src/app.ts",
     "build": "tsc",
     "postbuild": "npm run copyAssets && npm run copyConfig && npm run copyMongodb && npm run copyInstallJS && npm run copyInstallBat",
-    "copyAssets": "cpx 'src/assets/**/*' dist/server/src/assets",
-    "copyConfig": "cpx 'src/config/**/*' dist/server/src/config",
-    "copyMongodb": "cpx 'src/mongodb/**/*' dist/server/src/mongodb",
-    "copyInstallJS": "cpx 'src/*.js' dist/server/src",
-    "copyInstallBat": "cpx 'src/*.bat' dist/server/src"
+    "copyAssets": "cpx src/assets/**/* dist/server/src/assets",
+    "copyConfig": "cpx src/config/**/* dist/server/src/config",
+    "copyMongodb": "cpx src/mongodb/**/* dist/server/src/mongodb",
+    "copyInstallJS": "cpx src/*.js dist/server/src",
+    "copyInstallBat": "cpx src/*.bat dist/server/src"
   },
   "author": "iSap",
   "license": "ISC",
