@@ -15,6 +15,9 @@
 OutFile "${PATH_OUT}\config-tool-setup-v${PRODUCT_VERSION}.exe"
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 
+# define installation directory
+InstallDir "$PROGRAMFILES\CMS 3.0\Config"
+
 !macro DoUninstall UN
 Function ${UN}DoUninstall
 	# first, delete the uninstaller
@@ -66,8 +69,7 @@ done:
 FunctionEnd
 
 
-# define installation directory
-InstallDir "$PROGRAMFILES\CMS 3.0\Config"
+
 
 ; request admin level
 RequestExecutionLevel admin
