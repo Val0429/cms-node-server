@@ -15,6 +15,7 @@ import { IDeviceStream } from 'lib/domain/core';
 import { Select2OptionData } from 'ng2-select2/ng2-select2';
 import { Observable } from 'rxjs/Observable';
 
+
 @Component({
   selector: 'app-camera-editor',
   templateUrl: './camera-editor.component.html',
@@ -103,7 +104,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     });
     this.getCapability(brand);
   }
-
+  
   /** 取得Model Capability */
   getCapability(brand: string) {
     console.debug("brand", brand);
@@ -137,16 +138,16 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       this.editorParam = undefined;
     }
   }
-
   setCustomizationProcess() {
     if (this.currentCamera.Config.Brand.toLowerCase() === 'customization') {
       this.ptzPresets = OptionHelper.getOptions(this.currentCamera.CameraSetting.PTZCommands);
-
+     
       // this.currentCamera.Config.Stream = [this.currentCamera.Config.Stream[0]];
       this.currentCamera.Config.Stream.forEach(str => {
         if (str.RTSPURI) {
-          const seq = str.RTSPURI.split('/');
-          str.RTSPURI = seq[seq.length - 1];
+          var parse = require('url-parse'), url = parse(str.RTSPURI, true);          
+          str.RTSPURI = url.pathname;
+          console.debug("parser", url);
         }
       });
 
@@ -202,7 +203,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     // 將RTSPURI組合完整
     if (this.currentCamera.Config.Brand === 'Customization') {
       this.currentCamera.Config.Stream.forEach(str => {
-        str.RTSPURI = `rtsp://${this.currentCamera.Config.IPAddress}:${str.Port.RTSP}/${str.RTSPURI || ''}`;
+        str.RTSPURI = `rtsp://${this.currentCamera.Config.IPAddress}:${str.Port.RTSP}${str.RTSPURI.indexOf('/') < 0 ? "/" : ""}${str.RTSPURI || ''}`;
       });
     }
 console.debug("this.currentCamera", this.currentCamera);

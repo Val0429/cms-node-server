@@ -324,7 +324,7 @@
             <div class="input-group width-200">
               <input type="text" class="form-control" [(ngModel)]="stream.RTSPURI">
             </div>
-            <span class="help-block">rtsp://{{currentCamera.Config.IPAddress}}:{{stream.Port.RTSP}}/{{stream.RTSPURI}}</span>
+            <span class="help-block">rtsp://{{currentCamera.Config.IPAddress}}:{{stream.Port.RTSP}}{{stream.RTSPURI.indexOf('/') < 0 ? "/" : ""}}{{stream.RTSPURI}}</span>
           </div>
         </div>
       </ng-container>
