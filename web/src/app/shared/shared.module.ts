@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { DndModule } from 'ng2-dnd';
@@ -17,6 +17,7 @@ import { ColorPickerModule } from 'ng-color-picker';
   exports: [
     ColorPickerModule,
     CommonModule,
+    ReactiveFormsModule,
     FormsModule,
     HttpModule,
     DndModule,
