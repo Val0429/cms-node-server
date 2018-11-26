@@ -10,7 +10,7 @@
       <label class="col-md-4 col-form-label text-md-right">Brand</label>
       <div class="col-md-8">
         <select class="select1 width-200" [(ngModel)]="currentCamera.Config.Brand" #brand (change)="onChangeBrand(brand.value)">
-          <option *ngFor="let item of brandList;" value= {{item.Name}}>{{item.Name}}</option>
+          <option *ngFor="let item of brandList;" value= {{item.Key}}>{{item.Name}}</option>
         </select>
       </div>
     </div>

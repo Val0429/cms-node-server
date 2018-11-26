@@ -97,6 +97,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
 
   /** 改變Brand的流程 */
   onChangeBrand(brand: string) {
+    console.debug("this.editorParam", this.editorParam);
     // 將已存在的stream rtsp port依照brand改為預設值
     const defaultRTSPPort = this.editorParam.getDefaultRTSPPort();
     this.currentCamera.Config.Stream.forEach(str => {
@@ -110,8 +111,10 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     console.debug("brand", brand);
     this.modelList = undefined;
 
-    const vendor = this.brandList.find(x => x.Name === brand);
+    const vendor = this.brandList.find(x => x.Key === brand);
+    console.debug("this.brandList", this.brandList);
     console.debug("vendor", vendor);
+    console.debug("currentCamera", this.currentCamera);
     const data = {
       fileName: vendor.FileName
     };
