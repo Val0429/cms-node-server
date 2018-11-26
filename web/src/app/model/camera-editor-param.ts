@@ -141,6 +141,9 @@ export class CameraEditorParam {
         if (this.jsonHelper.hasAttribute(this.modelCap, 'ConnectionProtocol')) {
             String(this.modelCap.ConnectionProtocol).split(',').forEach(element => {
                 switch (element.toLowerCase()) {
+                    case 'rtsp':
+                        this.ProtocolOptions.push('RTSP');
+                        break;
                     case 'rtsp over udp':
                         this.ProtocolOptions.push('RTSP');
                         break;
@@ -868,9 +871,10 @@ export class CameraEditorParam {
 
     /** 取得Mode可用選項 */
     getModeOptions(): any[] {
+        console.debug("this.modelCap", this.modelCap);
         const result = [];
         // Special case for brand:Customization(RTSP)
-        if (this.modelCap.Manufacture.toLowerCase() === 'customization') {
+        if (this.modelCap.Manufacture && this.modelCap.Manufacture.toLowerCase() === 'customization') {
             for (let i = 1; i <= 4; i++) {
                 const item = ProfileModes.find(x => x.value === i.toString());
                 if (item) {
