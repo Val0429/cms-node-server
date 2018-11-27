@@ -1,8 +1,8 @@
 <div class="form-group row">
-  <div class="col-md-9">
-    <select class="select1" (change)="setVendor($event)">
-      <option *ngFor="let item of vendorOptions;" value= {{item}}>{{item}}</option>
-    </select>
+  <div class="col-md-9">    
+    <div *ngFor="let item of vendorOptions;" class="device-vendor">
+      <input [disabled]="flag.load" type="checkbox" (change)="setVendors($event.target.checked, item)" id="{{item}}"/><label for="{{item}}">{{item}}</label>
+    </div>
   </div>
   <div class="col-md-3">
     <button type="button" class="btn btn-default" (click)="clickSearch()" [disabled]="flag.load">
