@@ -8,3 +8,7 @@
 .table-hover tr td {
     border-top: 0px;
 }
+.device-vendor{
+    display:inline-block;
+    width:120px;
+}
