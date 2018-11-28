@@ -220,7 +220,7 @@ console.debug("this.currentCamera", this.currentCamera);
           parseResult: [result], path: this.coreService.urls.URL_CLASS_DEVICE
         });
       });
-      console.debug("save$", save$);
+      console.debug("this.selectedSubGroup", this.selectedSubGroup);
     save$
       .switchMap(() => this.groupService.setChannelGroup(this.groupList,
         { Nvr: this.ipCameraNvr.Id, Channel: this.currentCamera.Channel }, this.selectedSubGroup))
