@@ -236,7 +236,10 @@ export class SmartMediaComponent implements OnInit {
     // 合併執行
     destroyFRSPersonGroup$
       .concatMap(() => this.fetchDataList())
-      .toPromise()
+      .map(device => this.coreService.notifyWithParseResult({
+        parseResult: [data], path: this.coreService.urls.URL_CLASS_DEVICE
+      }))
+      .toPromise()      
       .catch(alert);
   }
 
