@@ -26,9 +26,9 @@ Function ${UN}DoUninstall
     # second, remove the link from the start menu
     # "$SMPROGRAMS\uninstall.lnk"
 	# Delete "$SMPROGRAMS\${PRODUCT_NAME}"
-	SetOutPath $INSTDIR\server\src
+	
 	# third, remove services
-	ExecWait '"uninstall.bat" /s'		
+	ExecWait '"$INSTDIR\uninstall_service.bat" /silent'		
 	
 	# now delete installed files
 	RMDir /r $INSTDIR
@@ -123,6 +123,8 @@ Section
  
     # set the installation directory as the destination for the following actions
     SetOutPath $INSTDIR
+	File install_service.bat
+	File uninstall_service.bat
     # create the uninstaller
     WriteUninstaller "$INSTDIR\uninstall.exe"
  
@@ -154,9 +156,10 @@ Section
 		
 	# just in case
 	RMDir /r $INSTDIR\server\src\daemon
-	;install services		
-	SetOutPath $INSTDIR\server\src	
-	ExecWait '"install.bat" /s'
+	;install services	
+	ExecWait '"$INSTDIR\install_service.bat" /silent'
+	
+	
 	
 	;${EndIf}
 	
