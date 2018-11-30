@@ -15,6 +15,7 @@ import { IDeviceStream } from 'lib/domain/core';
 import { Select2OptionData } from 'ng2-select2/ng2-select2';
 import { Observable } from 'rxjs/Observable';
 
+
 @Component({
   selector: 'app-camera-editor',
   templateUrl: './camera-editor.component.html',
@@ -96,6 +97,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
 
   /** 改變Brand的流程 */
   onChangeBrand(brand: string) {
+    console.debug("this.editorParam", this.editorParam);
     // 將已存在的stream rtsp port依照brand改為預設值
     const defaultRTSPPort = this.editorParam.getDefaultRTSPPort();
     this.currentCamera.Config.Stream.forEach(str => {
@@ -103,14 +105,16 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     });
     this.getCapability(brand);
   }
-
+  
   /** 取得Model Capability */
   getCapability(brand: string) {
     console.debug("brand", brand);
     this.modelList = undefined;
 
-    const vendor = this.brandList.find(x => x.Name === brand);
+    const vendor = this.brandList.find(x => x.Key === brand);
+    console.debug("this.brandList", this.brandList);
     console.debug("vendor", vendor);
+    console.debug("currentCamera", this.currentCamera);
     const data = {
       fileName: vendor.FileName
     };
@@ -137,16 +141,16 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       this.editorParam = undefined;
     }
   }
-
   setCustomizationProcess() {
     if (this.currentCamera.Config.Brand.toLowerCase() === 'customization') {
       this.ptzPresets = OptionHelper.getOptions(this.currentCamera.CameraSetting.PTZCommands);
-
+     
       // this.currentCamera.Config.Stream = [this.currentCamera.Config.Stream[0]];
       this.currentCamera.Config.Stream.forEach(str => {
         if (str.RTSPURI) {
-          const seq = str.RTSPURI.split('/');
-          str.RTSPURI = seq[seq.length - 1];
+          var parse = require('url-parse'), url = parse(str.RTSPURI, true);          
+          str.RTSPURI = url.pathname;
+          console.debug("parser", url);
         }
       });
 
@@ -202,7 +206,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     // 將RTSPURI組合完整
     if (this.currentCamera.Config.Brand === 'Customization') {
       this.currentCamera.Config.Stream.forEach(str => {
-        str.RTSPURI = `rtsp://${this.currentCamera.Config.IPAddress}:${str.Port.RTSP}/${str.RTSPURI || ''}`;
+        str.RTSPURI = `rtsp://${this.currentCamera.Config.IPAddress}:${str.Port.RTSP}${str.RTSPURI.indexOf('/') < 0 ? "/" : ""}${str.RTSPURI || ''}`;
       });
     }
 console.debug("this.currentCamera", this.currentCamera);
@@ -216,7 +220,7 @@ console.debug("this.currentCamera", this.currentCamera);
           parseResult: [result], path: this.coreService.urls.URL_CLASS_DEVICE
         });
       });
-      console.debug("save$", save$);
+      console.debug("this.selectedSubGroup", this.selectedSubGroup);
     save$
       .switchMap(() => this.groupService.setChannelGroup(this.groupList,
         { Nvr: this.ipCameraNvr.Id, Channel: this.currentCamera.Channel }, this.selectedSubGroup))

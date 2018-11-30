@@ -38,7 +38,7 @@
             <tr *ngFor="let cam of cameraConfigs" (click)="currentEditCamera = cam" [class.active]="cam === currentEditCamera">
               <td><input type="checkbox" (click)="selectCam(cam, $event.target.checked)" [checked]="cam.checked"></td>
               <td>{{cam.Channel}}</td>
-              <td>{{cam.Config.Brand}}</td>
+              <td>{{cam.brandDisplay}}</td>
               <td>{{cam.Config.Model}}</td>
               <td>{{cam.Name}}</td>
               <td><span *ngIf="cam.Config.IPAddress !== ''">{{cam.Config.IPAddress}}:{{cam.Config.Http}}</span></td>
@@ -54,7 +54,7 @@
 </div>
 <div bsModal #searchWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header flex-column">
         <button (click)="searchWindow.hide()" aria-label="Close" class="close ml-auto" type="button">

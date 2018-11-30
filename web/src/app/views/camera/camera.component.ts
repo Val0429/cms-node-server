@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { ISearchCamera } from 'lib/domain/core';
 import { Device, Nvr, DeviceDisplay, RecordSchedule, EventHandler, Group } from 'app/model/core';
 import { GroupService } from 'app/service/group.service';
+import { DeviceVendor } from 'app/config/device-vendor.config';
 
 @Component({
   selector: 'app-camera',
@@ -15,6 +16,7 @@ import { GroupService } from 'app/service/group.service';
 })
 
 export class CameraComponent implements OnInit {
+  brandList = DeviceVendor;
   checkedAll :boolean = false;
   anyChecked:boolean = false;
   cameraConfigs: DeviceDisplay[] = [];
@@ -155,7 +157,10 @@ export class CameraComponent implements OnInit {
       this.cameraConfigs = devices.map(dev => {
         dev.Config.Authentication.Account = this.cryptoService.decrypt4DB(dev.Config.Authentication.Account);
         dev.Config.Authentication.Password = this.cryptoService.decrypt4DB(dev.Config.Authentication.Password);
-        return dev as DeviceDisplay;
+        let device = dev as DeviceDisplay;
+        let brand = this.brandList.find(x=>x.Key == device.Config.Brand);
+        device.brandDisplay = brand ? brand.Name : device.Config.Brand;
+        return device;
       });
       console.debug("this.cameraConfigs",this.cameraConfigs);
     }).do(() => this.cloneCameraParam.device = this.cameraConfigs[0]);

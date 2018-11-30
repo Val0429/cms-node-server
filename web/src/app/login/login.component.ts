@@ -2,8 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { CoreService } from 'app/service/core.service';
 import { UserService } from 'app/service/user.service';
-import { RoleType } from 'app/model/core';
-
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,19 +10,33 @@ import { RoleType } from 'app/model/core';
   encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit {
-  model: {
-    username?: string,
-    password?: string
-  } = {};
+  myform: FormGroup;
+  username: FormControl;
+  password: FormControl;
 
   constructor(
     private router: Router,
     private coreService: CoreService,
     private userService: UserService
-  ) { }
-
+  ) { 
+    this.createForm();
+  }
+createForm() {
+    this.username = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(32)
+    ]);
+    this.password = new FormControl('', [
+      Validators.required,
+      Validators.maxLength(32)
+    ]);
+    this.myform = new FormGroup({
+      username: this.username,
+      password: this.password,      
+    });
+  }
   ngOnInit() {
-    this.model.username = this.userService.storage['username'];
+    this.username.setValue(this.userService.storage['username']);
     this.waitForParseInit();
   }
 
@@ -53,19 +66,23 @@ export class LoginComponent implements OnInit {
         }
       });
   }
-
+  regexUsername = new RegExp(/[a-zA-Z_-\d]/);
+  filterInput(event){
+    var test = this.regexUsername.test(event.key);
+    console.debug(event);
+    console.debug(test);
+    if(!test) event.preventDefault();    
+  }
+  doLogin(event) {
+    if (event.keyCode !== 13 || !this.myform.valid) return;
+    this.login();
+  }
   login() {
-    if (this.model.username && this.model.username.length > 128) {
-      this.model.username = this.model.username.substr(0, 128);
-    }
-
-    if (this.model.password && this.model.password.length > 128) {
-      this.model.password = this.model.password.substr(0, 128);
-    }
+    
 
     this.userService.logIn({
-      username: this.model.username,
-      password: this.model.password
+      username: this.username.value,
+      password: this.password.value
     }).then(result => {
       if (!result) {
         return;

@@ -10,7 +10,7 @@
       <label class="col-md-4 col-form-label text-md-right">Brand</label>
       <div class="col-md-8">
         <select class="select1 width-200" [(ngModel)]="currentCamera.Config.Brand" #brand (change)="onChangeBrand(brand.value)">
-          <option *ngFor="let item of brandList;" value= {{item.Name}}>{{item.Name}}</option>
+          <option *ngFor="let item of brandList;" value= {{item.Key}}>{{item.Name}}</option>
         </select>
       </div>
     </div>
@@ -29,6 +29,7 @@
       <label class="col-md-4 col-form-label text-md-right" for="grouped-select">Group</label>
       <div class="col-md-8">
         <select class="select1 width-200" [(ngModel)]="selectedSubGroup">
+            <option value="">No Group</option>
           <optgroup *ngFor="let group of groupOptions" label= {{group.text}}>
             <option *ngFor="let item of group.children" value= {{item.id}}>{{item.text}}</option>
           </optgroup>
@@ -324,7 +325,7 @@
             <div class="input-group width-200">
               <input type="text" class="form-control" [(ngModel)]="stream.RTSPURI">
             </div>
-            <span class="help-block">rtsp://{{currentCamera.Config.IPAddress}}:{{stream.Port.RTSP}}/{{stream.RTSPURI}}</span>
+            <span class="help-block">rtsp://{{currentCamera.Config.IPAddress}}:{{stream.Port.RTSP}}{{stream.RTSPURI.indexOf('/') < 0 ? "/" : ""}}{{stream.RTSPURI}}</span>
           </div>
         </div>
       </ng-container>

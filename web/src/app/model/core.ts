@@ -566,6 +566,7 @@ export class Device extends Parse.Object implements IDevice {
 }
 export class DeviceDisplay extends Device {
   public checked: boolean;
+  public brandDisplay:string;
 }
 export class General extends Parse.Object implements IGeneral {
   get EnableJoystick(): string {
