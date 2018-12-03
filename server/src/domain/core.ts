@@ -113,6 +113,9 @@ export class Server extends Parse.Object implements IServer {
 }
 
 export class ServerInfo extends Parse.Object implements IServerInfo {    
+    get SSLPort(): number { return super.get('SSLPort'); }
+    set SSLPort(value: number) { super.set('SSLPort', value); }
+
     get TempPath(): string { return super.get('TempPath'); }
     set TempPath(value: string) { super.set('TempPath', value); }
     get Type(): string { return super.get('Type'); }
