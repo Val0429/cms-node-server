@@ -37,7 +37,7 @@
                       <div class="form-group row">
                         <label class="col-md-4  col-form-label text-md-right">Device</label>
                         <div class="col-md-8">
-                          <select class="select1" (change)="setDeviceId($event, action)" [disabled]="getDeviceOptions(action).length === 0">
+                          <select class="select1" [(ngModel)]="action.DeviceId" [disabled]="getDeviceOptions(action).length === 0">
                             <option *ngFor="let item of getDeviceOptions(action);" [value]="item.value">{{item.key}}</option>
                           </select>
                         </div>
