@@ -10,7 +10,8 @@ export class EventService {
 
   getDefaultEventHandling(device: any) {
     this.availableEventType = [];
-    const modelManufacture = device.Config.Brand.toLowerCase();
+    console.debug("device.Config", device.Config);
+    const modelManufacture = device.Config.Brand ? device.Config.Brand.toLowerCase() : "";
     const modelType = device.Capability.CapabilityType;
 
     if (modelManufacture === 'isapsolution' && modelType === 'smartmonitorservice') {

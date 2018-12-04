@@ -49,6 +49,7 @@ export interface IServer {
 }
 
 export interface IServerInfo {
+    SSLPort: number,
     Type: string,
     SubType: string,
     Domain: string,

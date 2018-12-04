@@ -59,6 +59,8 @@ export class EventTypeListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.debug("changes", changes);
+
     if (changes.currentDevice) {
       this.currentDevice = changes.currentDevice.currentValue;
     }
@@ -271,11 +273,7 @@ export class EventTypeListComponent implements OnInit, OnChanges {
     });
     this.currentEventHandler.EventHandler = tempEventHandler;
   }
-
-  /** 設定DeviceId時, 將選項轉換為數字再放入action */
-  setDeviceId($event: any, action: any) {
-    action.DeviceId = Number($event.target.value);
-  }
+   
 
   /** 點擊新增EventHaneler */
   clickAddAction(handler: any) {
@@ -284,6 +282,7 @@ export class EventTypeListComponent implements OnInit, OnChanges {
   }
 
   checkAddAction(option: string) {
+    console.debug("option", option);
     const index = this.selectedAddAction.indexOf(option);
     if (index >= 0) {
       this.selectedAddAction.splice(index, 1);
@@ -300,6 +299,7 @@ export class EventTypeListComponent implements OnInit, OnChanges {
     this.addActionOptions.forEach(element => {
       if (this.selectedAddAction.indexOf(element.value) >= 0) {
         const newAction = this.getNewAction(element.value);
+        console.debug("newAction", newAction);
         if (newAction) {
           this.addNewAction(newAction);
         }
@@ -392,7 +392,7 @@ export class EventTypeListComponent implements OnInit, OnChanges {
         i++;
       }
     }
-
+    console.debug("this.currentEventHandler",this.currentEventHandler);
     let task = Observable.of(null);
     if (this.currentEventHandler.EventHandler.length > 0) { // EventHandler有資料時儲存
       task = Observable.fromPromise(this.currentEventHandler.save());

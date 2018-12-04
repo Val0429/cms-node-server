@@ -212,6 +212,12 @@ export class Nvr extends Parse.Object implements INvr {
 }
 
 export class ServerInfo extends Parse.Object implements IServerInfo {
+  get SSLPort(): number {
+    return super.get('SSLPort');
+  }
+  set SSLPort(value: number) {
+    super.set('SSLPort', value);
+  }
   get TempPath(): string {
     return super.get('TempPath');
   }

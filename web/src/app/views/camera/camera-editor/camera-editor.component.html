@@ -138,14 +138,14 @@
           </select>
         </div>
       </div>
-      <div class="form-group row" *ngIf="editorParam.StreamProfileList.length > 1">
+      <!-- <div class="form-group row" *ngIf="editorParam.StreamProfileList.length > 1">
         <label class="col-md-4 col-form-label text-md-right">Recording Stream</label>
         <div class="col-md-8">
           <select class="select1 width-200" [(ngModel)]="currentCamera.CameraSetting.RecordStream">
             <option *ngFor="let item of editorParam.StreamProfileList;" value= {{item.value}}>{{item.key}}</option>
           </select>
         </div>
-      </div>
+      </div> -->
       <div class="form-group row" *ngIf="editorParam.TVStandardOptions.length > 1">
         <label class="col-md-4 col-form-label text-md-right">TV Standard</label>
         <div class="col-md-8">

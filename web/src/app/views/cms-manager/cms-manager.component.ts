@@ -30,7 +30,10 @@ export class CmsManagerComponent implements OnInit {
     const get$ = Observable.fromPromise(this.parseService.getData({
       type: ServerInfo,
       filter: query => query.equalTo('Type', 'CMSManager')
-    })).map(serverInfo => this.cmsManager = serverInfo);
+    })).map(serverInfo => { 
+      if(!serverInfo.SSLPort)serverInfo.SSLPort=7443;
+      this.cmsManager = serverInfo;
+    });
     return get$;
   }
 

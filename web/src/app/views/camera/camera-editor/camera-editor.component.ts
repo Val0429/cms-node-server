@@ -14,6 +14,7 @@ import { Device, Group, Nvr, RecordSchedule, EventHandler } from 'app/model/core
 import { IDeviceStream } from 'lib/domain/core';
 import { Select2OptionData } from 'ng2-select2/ng2-select2';
 import { Observable } from 'rxjs/Observable';
+import { ITemplateSetupNode } from 'app/views/schedule-template/template-setup/template-setup.component';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
   brandList = DeviceVendor; // 固定list
   modelList: string[];
+  setupData: RecordSchedule[];
   editorParam: CameraEditorParam;
   /** 當前畫面展開的PTZ Command類型 */
   ptzDisplayType: string;
@@ -78,6 +80,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       }
       this.tags = this.currentCamera.Tags ? this.currentCamera.Tags.join(',') : '';
       this.setDefaultBrand();
+      
     }
   }
 
@@ -221,9 +224,12 @@ console.debug("this.currentCamera", this.currentCamera);
         });
       });
       console.debug("this.selectedSubGroup", this.selectedSubGroup);
+      
     save$
-      .switchMap(() => this.groupService.setChannelGroup(this.groupList,
-        { Nvr: this.ipCameraNvr.Id, Channel: this.currentCamera.Channel }, this.selectedSubGroup))
+      .switchMap(() => this.groupService.setChannelGroup(this.groupList, { Nvr: this.ipCameraNvr.Id, Channel: this.currentCamera.Channel }, this.selectedSubGroup))
+      //fetch camera schedule
+      .switchMap(()=>this.fetchSetupData())
+      .switchMap(()=> this.updateSchedule())
       .map(() => {
         alert('Update Success');
         this.reloadDataEvent.emit();
@@ -232,7 +238,21 @@ console.debug("this.currentCamera", this.currentCamera);
       .catch(alert)
       .then(() => this.flag.save = false);
   }
+  updateSchedule(){
+    if(!this.currentCamera.Config.Stream && this.currentCamera.Config.Stream.length==0)return;
 
+    let schedule = this.getExistSetupData();
+    console.debug("schedule", schedule);
+    console.debug("this.currentCamera.Config.Stream", this.currentCamera.Config.Stream);
+    let deletedStream = [];
+    for(let stream of schedule){
+      let find = this.currentCamera.Config.Stream.find(x=>x.Id == stream.StreamId)
+      if(!find) deletedStream.push(stream);      
+    }
+    console.debug("deleted stream", deletedStream);
+    return Observable.fromPromise(Parse.Object.destroyAll(deletedStream));
+  }
+  
   clickDelete() {
     if (confirm('Are you sure to delete this Camera?')) {
       this.flag.delete = true;
@@ -284,7 +304,33 @@ console.debug("this.currentCamera", this.currentCamera);
       return;
     }
   }
+  fetchSetupData():Observable<RecordSchedule[]> {
+    this.setupData = undefined;
+    console.debug("fetch setupData", this.currentCamera.NvrId, this.currentCamera.Channel);
+    let fetch$ = Observable.fromPromise(this.parseService.fetchData({
+      type: RecordSchedule,
+      filter: query => query
+        // .include('ScheduleTemplate')
+        .equalTo('NvrId', this.currentCamera.NvrId)
+        .equalTo('ChannelId', this.currentCamera.Channel)
+        .limit(30000)
+    }));
+        
 
+    if (!fetch$) {
+      return Observable.of(null);
+    }
+
+    return fetch$
+      .map(result => this.setupData = result);
+  }
+  getExistSetupData():RecordSchedule[] {
+    console.debug("setup data", this.setupData);
+    if(!this.setupData)return [];
+
+      const result = this.setupData.filter(x => x.NvrId === this.currentCamera.NvrId && x.ChannelId === this.currentCamera.Channel);
+      return result;      
+  }
   checkDisplayAuthentication() {
     let result = true;
     const brand = this.currentCamera.Config.Brand.toLowerCase();
