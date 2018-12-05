@@ -8,5 +8,5 @@ if not exist "C:/Program Files/MongoDB/data" (
     call "mongo_install.bat"
 )
 cd ..
-"c:\Program Files\nodejs\node.exe" windows-service-installer.js -i
+node windows-service-installer.js -i
 net start "cms30configserver.exe"
