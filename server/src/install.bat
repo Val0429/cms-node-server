@@ -9,4 +9,5 @@ if not exist "C:/Program Files/MongoDB/data" (
 )
 cd ..
 node windows-service-installer.js -i
-net start "cms30configserver.exe"
+REM net start "cms30configserver.exe"
+REM pause

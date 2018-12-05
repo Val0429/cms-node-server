@@ -10,6 +10,7 @@
 !define PATH_OUT "Release"
 !define ARP "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define CMS_MONITOR "CMSConfigMonitor"
+!define CMS_SERVICE "cms30configserver.exe"
 
 # define name of installer
 !system 'md "${PATH_OUT}"'	
@@ -24,19 +25,29 @@ Function ${UN}DoUninstall
 	# first, delete the uninstaller
     Delete "$INSTDIR\uninstall.exe"
  
-    # second, remove the link from the start menu
-    ;Delete "$SMSTARTUP\${CMS_MONITOR}.lnk"
-	
+   
 	# third, remove services
-	ExecWait '"net stop" "cms30configserver.exe" /s'
-	ExecWait '"node" "$INSTDIR\server\src\windows-service-installer.js" -u /s'
+	ExecWait '"net" stop "${CMS_SERVICE}"'
+	ExecWait '"sc" delete "${CMS_SERVICE}"'
+	
+	#second check whether previous installation checked cmsmonitor
+	ClearErrors
+	ReadRegStr $0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "${CMS_MONITOR}" 
+	${If} ${Errors}
+	;do nothing
+	${else}
+	# wait until config monitor stopped	
+	Sleep 1000
+	Delete "$INSTDIR\${CMS_MONITOR}.exe"
+	DeleteRegValue HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "${CMS_MONITOR}" 
+	${EndIf}
+
 	
 	# now delete installed files
 	RMDir /r $INSTDIR
 	
 	# remove registry info
-	DeleteRegKey HKLM "Software\${PRODUCT_NAME}"
-	DeleteRegValue HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "${CMS_MONITOR}" 
+	DeleteRegKey HKLM "Software\${PRODUCT_NAME}"	
 	DeleteRegKey HKLM "${ARP}"
 FunctionEnd
 !macroend
@@ -102,10 +113,10 @@ Section "MS Visual C++ Redist 2015 x64" SEC03
 SectionEnd 
 
 SectionGroup "Additional Application" SEC04
-	Section "CMS Config Tray" SEC05
+	Section /o "CMS Config Tray" SEC05
 		
 	SectionEnd 
-	Section ".NET Framework 4.5.2" SEC06
+	Section /o ".NET Framework 4.5.2" SEC06
 		ExecWait Prerequisites\NDP452-KB2901907-x86-x64-AllOS-ENU.exe
 	SectionEnd	
 SectionGroupEnd 
@@ -165,11 +176,11 @@ Section
 	;refresh path to enable node
 	Call RefreshProcessEnvironmentPath
 	
-	ExecWait '"install.bat" '
-	
+	ExecWait '"install.bat" /s'
+	; wait till finish installing service
+	Sleep 1000
 	#install config monitor
-	${If} ${SectionIsSelected} ${SEC05}	
-		
+	${If} ${SectionIsSelected} ${SEC05}			
 		SetOutPath $INSTDIR
 		File "..\systray\CMSConfigMonitor\bin\x86\Release\${CMS_MONITOR}.exe"
 		; monitor service
@@ -183,6 +194,9 @@ Section
 	 IntFmt $0 "0x%08X" $0
 	 WriteRegDWORD HKLM "${ARP}" "EstimatedSize" "$0"
 	 
+	 ;start service
+	 ExecWait '"net" start "${CMS_SERVICE}"'
+	 Sleep 1000
 SectionEnd
 
 UninstallText "This will uninstall ${PRODUCT_NAME}. Press uninstall to continue."
