@@ -9,6 +9,7 @@
 !define PRODUCT_URL "http://www.isapsolution.com"
 !define PATH_OUT "Release"
 !define ARP "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
+!define CMS_MONITOR "CMSConfigMonitor"
 
 # define name of installer
 !system 'md "${PATH_OUT}"'	
@@ -24,8 +25,7 @@ Function ${UN}DoUninstall
     Delete "$INSTDIR\uninstall.exe"
  
     # second, remove the link from the start menu
-    # "$SMPROGRAMS\uninstall.lnk"
-	# Delete "$SMPROGRAMS\${PRODUCT_NAME}"
+    ;Delete "$SMSTARTUP\${CMS_MONITOR}.lnk"
 	
 	# third, remove services
 	ExecWait '"net stop" "cms30configserver.exe" /s'
@@ -36,6 +36,7 @@ Function ${UN}DoUninstall
 	
 	# remove registry info
 	DeleteRegKey HKLM "Software\${PRODUCT_NAME}"
+	DeleteRegValue HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "${CMS_MONITOR}" 
 	DeleteRegKey HKLM "${ARP}"
 FunctionEnd
 !macroend
@@ -100,6 +101,14 @@ Section "MS Visual C++ Redist 2015 x64" SEC03
   ExecWait Prerequisites\vc_redist.x64.exe
 SectionEnd 
 
+SectionGroup "Additional Application" SEC04
+	Section "CMS Config Tray" SEC05
+		
+	SectionEnd 
+	Section ".NET Framework 4.5.2" SEC06
+		ExecWait Prerequisites\NDP452-KB2901907-x86-x64-AllOS-ENU.exe
+	SectionEnd	
+SectionGroupEnd 
   
 ;Section "Install Mongo Db Service" SEC03
 
@@ -127,11 +136,7 @@ Section
 	
     # create the uninstaller
     WriteUninstaller "$INSTDIR\uninstall.exe"
- 
-    # create a shortcut named "new shortcut" in the start menu programs directory
-    # point the new shortcut at the program uninstaller
-    # CreateShortCut "$SMPROGRAMS\uninstall.lnk" "$INSTDIR\uninstall.exe"
-	
+     
 	# specify file to go in output path	
 	# backend
 	File /r ..\server\dist\*
@@ -141,8 +146,6 @@ Section
 	# frontend
 	SetOutPath $INSTDIR\web\dist	
 	File /r ..\web\dist\*
-	
-	
 	
 	;Store installation folder
 	WriteRegStr HKLM "Software\${PRODUCT_NAME}" "" $INSTDIR
@@ -162,7 +165,18 @@ Section
 	;refresh path to enable node
 	Call RefreshProcessEnvironmentPath
 	
-	ExecWait '"install.bat" /s'
+	ExecWait '"install.bat" '
+	
+	#install config monitor
+	${If} ${SectionIsSelected} ${SEC05}	
+		
+		SetOutPath $INSTDIR
+		File "..\systray\CMSConfigMonitor\bin\x86\Release\${CMS_MONITOR}.exe"
+		; monitor service
+		WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "${CMS_MONITOR}" "$\"$INSTDIR\${CMS_MONITOR}.exe$\""
+		;CreateShortCut "$SMSTARTUP\${CMS_MONITOR}.lnk" "$INSTDIR\${CMS_MONITOR}.exe"
+		Exec "${CMS_MONITOR}.exe"
+	${EndIf}
 	
 	
 	 ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
