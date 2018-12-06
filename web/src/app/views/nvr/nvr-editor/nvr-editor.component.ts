@@ -173,11 +173,15 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     });
   }
   ipRegex=new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/);
+  
   domainRegex = new RegExp(/^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|([a-zA-Z0-9][a-zA-Z0-9-_]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,6}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})$/);
   clickSave() {
     console.debug("ip valid", this.ipRegex.test(this.currentEditModel.Domain));
     console.debug("domain valid", this.domainRegex.test(this.currentEditModel.Domain));
-    let testDomain = this.domainRegex.test(this.currentEditModel.Domain) || this.ipRegex.test(this.currentEditModel.Domain);
+    let testDomain =  this.domainRegex.test(this.currentEditModel.Domain) ||
+                      this.ipRegex.test(this.currentEditModel.Domain) || 
+                      this.currentEditModel.Domain=="localhost";
+
     console.debug(this.currentEditModel.Domain);
     if(!testDomain){
       alert('invalid domain!')
