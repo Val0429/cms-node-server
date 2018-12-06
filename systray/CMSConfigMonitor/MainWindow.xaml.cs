@@ -18,9 +18,16 @@ namespace CMSConfigMonitor
         private ContextMenu ctxMenu;
         private const string ServiceName = "cms30configserver.exe";
         private const int TimeoutMilliseconds = 30000;
+        private readonly Timer MonitorService;
         public MainWindow()
         {
             InitializeComponent();
+            MonitorService = new Timer
+            {
+                Interval = 1000
+            };
+            MonitorService.Tick += MonitorService_Tick;
+            MonitorService.Start();
             Title = "CMS Config Tool Service Monitor";
             InitNotifyIcon();
             Hide();
@@ -32,7 +39,25 @@ namespace CMSConfigMonitor
             Show();
 #endif
         }
-        
+
+        private void MonitorService_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                //in case of config tool uninstallation 
+                var status = WindowsServiceHelpers.GetServiceStatus(ServiceName);
+                Console.WriteLine(status.ToString());                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                MonitorService.Stop();
+                //kill application;
+                cancelExit = false;
+                Close();
+            }
+        }
+
         private void InitNotifyIcon()
         {
             nIcon.Visible = true;

@@ -17,6 +17,7 @@
       <label class="col-md-4 col-form-label text-md-right" for="grouped-select">Group</label>
       <div class="col-md-8">
         <select class="select1 width-200" [(ngModel)]="currentEditModel.Group">
+            <option value="">No Group</option>
           <optgroup *ngFor="let group of groupOptions" label= {{group.text}}>
             <option *ngFor="let item of group.children" value= {{item.id}}>{{item.text}}</option>
           </optgroup>

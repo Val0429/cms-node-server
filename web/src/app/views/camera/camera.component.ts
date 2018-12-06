@@ -56,7 +56,7 @@ export class CameraComponent implements OnInit {
       .toPromise()
       .catch(alert);
   }
-  deleteCam(cam : Device){
+  async deleteCam(cam : Device): Promise<void>{
 
       const delete$ = Observable.fromPromise(cam.destroy())
         .map(result => {
@@ -92,24 +92,27 @@ export class CameraComponent implements OnInit {
           parseResult: results, path: this.coreService.urls.URL_CLASS_EVENTHANDLER
         }));
 
-      delete$
+      return delete$
         .switchMap(() => removeRecordSchedule$)
         .switchMap(() => removeEventHandler$)  
         .switchMap(() => this.groupService.setChannelGroup(
           this.groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, undefined))     
-        .toPromise()
-        .catch(alert)
-        .then(()=>{
-          this.reloadData();
-        });
+        .toPromise();
   }
-  deleteAll(){
+  async deleteAll(){
     if (!confirm('Are you sure to delete these Camera(s)?')) return;
-
+    let success = true;
     for(let cam of this.cameraConfigs){
       if(cam.checked !== true) continue;
-      this.deleteCam(cam as Device);        
+      await this.deleteCam(cam as Device).catch((err)=>{
+        alert(err);
+        success=false;
+      }); 
     }    
+    if(success){
+      alert('Delete Success');  
+      this.reloadData();              
+    }
   }
   reloadData() {
     this.currentEditCamera = undefined;

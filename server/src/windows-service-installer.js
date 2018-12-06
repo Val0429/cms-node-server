@@ -18,9 +18,9 @@ program
 if (program.install) {
     console.log('Start to install CMS3 Service.');
     svc.on('install', function () {
-        console.log('Install complete, executing service...');
-        svc.start();
-        console.log('CMS3 Service is running now.');
+        console.log('Install complete');
+        //svc.start();
+        //console.log('CMS3 Service is running now.');
     });
 
     svc.install();
