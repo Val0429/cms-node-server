@@ -62,7 +62,7 @@ export class CameraComponent implements OnInit {
         .map(result => {
           this.coreService.addNotifyData({
             path: this.coreService.urls.URL_CLASS_NVR,
-            objectId: cam.id
+            objectId: this.ipCameraNvr.id
           });
           this.coreService.addNotifyData({
             path: this.coreService.urls.URL_CLASS_DEVICE,
