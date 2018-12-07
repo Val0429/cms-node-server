@@ -16,7 +16,7 @@ Section
 	;deploy inside temp folder
 	
 	SetOutPath $INSTDIR\Prerequisites
-	File /r Prerequisites\*
+	File /r /x NDP452-KB2901907-x86-x64-AllOS-ENU.exe Prerequisites\*
 	
 	SetOutPath $INSTDIR	
 	File "config-tool-setup-v${PRODUCT_VERSION}.exe"
