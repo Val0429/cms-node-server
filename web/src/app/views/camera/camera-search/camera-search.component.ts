@@ -23,7 +23,10 @@ export class CameraSearchComponent implements OnInit {
   };
 
   constructor(private coreService: CoreService) { }
-
+  getCompaneName(companyKey:string):string{
+    let company = this.deviceVendors.find(x=>x.Key == companyKey);
+    return company ? company.Name : "undefined";
+  }
   ngOnInit() {    
     
   }

@@ -13,9 +13,11 @@
 </div>
 <table class="table table-hover table-lg mb-0" *ngIf="searchList">
   <tbody *ngIf="searchList.length > 0">
-    <tr *ngFor="let cam of searchList" (click)="clickAddCamera(cam)">
-      <td width="45%" class="text-primary">{{cam.PRODUCTIONID}}</td>
-      <td width="55%">{{cam.WANIP}}:{{cam.HTTPPORT}}</td>
+    <tr *ngFor="let cam of searchList" (click)="clickAddCamera(cam)">      
+      <td width="20%" class="text-primary">{{cam.PRODUCTIONID}}</td>
+      <td width="25%">{{getCompaneName(cam.COMPANY)}}</td>
+      <td width="25%">{{cam.WANIP}}:{{cam.HTTPPORT}}</td>
+      <td>{{cam.WANIP}}:{{cam.HTTPPORT}}</td>
     </tr>
   </tbody>
   <tbody *ngIf="searchList.length === 0">
