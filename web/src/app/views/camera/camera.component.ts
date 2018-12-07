@@ -23,7 +23,7 @@ export class CameraComponent implements OnInit {
   groupList: Group[];
   selectedSubGroup: string; 
   /** IPCamera的唯一NvrId */
-  ipCameraNvrId: string;
+  ipCameraNvr: Nvr;
   licenseInfo: any;
   currentEditCamera: Device;
   /** 目前想複製的Camera */
@@ -144,7 +144,7 @@ export class CameraComponent implements OnInit {
     const get$ = Observable.fromPromise(this.parseService.getData({
       type: Nvr,
       filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
-    })).do(nvr => this.ipCameraNvrId = nvr.Id);
+    })).do(nvr => this.ipCameraNvr = nvr);
     return get$;
   }
 
@@ -153,7 +153,7 @@ export class CameraComponent implements OnInit {
     this.cameraConfigs =[];
     const fetch$ = Observable.fromPromise(this.parseService.fetchData({
       type: Device,
-      filter: query => query.equalTo('NvrId', this.ipCameraNvrId)
+      filter: query => query.equalTo('NvrId', this.ipCameraNvr.Id)
         .ascending('Channel')
         .limit(30000)
     })).do(devices => {
@@ -180,7 +180,7 @@ export class CameraComponent implements OnInit {
           return;
         }
 
-        const newObj = this.getNewDevice({ nvrId: this.ipCameraNvrId, channel: this.getNewChannelId(), searchCamera: $camera });
+        const newObj = this.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: this.getNewChannelId(), searchCamera: $camera });
         const confirmText = $camera ? 'Add this device?' : 'Create new device manually?';
         if (confirm(confirmText)) {
           this.currentEditCamera = newObj;
@@ -314,7 +314,7 @@ export class CameraComponent implements OnInit {
         
           this.coreService.addNotifyData({
             path: this.coreService.urls.URL_CLASS_NVR,
-            objectId: this.cloneCameraParam.device.id
+            objectId: this.ipCameraNvr.id
           });
 
           return this.coreService.notifyWithParseResult({
