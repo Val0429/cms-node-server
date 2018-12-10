@@ -82,7 +82,7 @@
   </div>
 </ng-template>
 -->
-<div bsModal #modalWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div bsModal #modalWindow="bs-modal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header flex-column">
@@ -92,9 +92,12 @@
         <h4 class="modal-title text-center fw-bold">Search NVR</h4>
       </div>
       <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
-        <app-nvr-search (addNVR)="addNVR($event)"></app-nvr-search>
+        <app-nvr-search #searchComponent (reloadDataEvent)="reloadData()" (closeModal)="modalWindow.hide();"></app-nvr-search>
       </div>
       <div class="modal-footer">
+          <button class="btn btn-gray" type="button" (click)="searchComponent.saveAll()" [disabled]="!searchComponent.anyChecked || searchComponent.flag.load===true">
+              Save 
+            </button>
         <button type="button" class="btn btn-gray" (click)="modalWindow.hide();">Close</button>
       </div>
     </div>
