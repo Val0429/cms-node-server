@@ -49,16 +49,24 @@ export class CameraComponent implements OnInit {
       .switchMap(() => this.fetchDevice())
       .subscribe();
 
+      
+      const getAvailableLicense$ = Observable.fromPromise(this.licenseService.getLicenseAvailableCount('00171').toPromise()
+        .then(num => {
+          this.availableLicense = num;
+          console.debug("num 00171", this.availableLicense)
+        }));
+
       const getGroup$ = Observable.fromPromise(this.parseService.fetchData({
         type: Group
       }).then(groups => {
         this.groupList = groups;
-        console.debug("this.groupList",this.groupList)
+        console.debug("this.groupList", this.groupList);
       }));
       
-      getGroup$      
-      .toPromise()
-      .catch(alert);
+      getGroup$     
+        .switchMap(() => getAvailableLicense$)
+        .toPromise()
+        .catch(alert);
   }
   async deleteAll(){
     if (!confirm('Are you sure to delete these Camera(s)?')) return;
@@ -153,14 +161,17 @@ export class CameraComponent implements OnInit {
   setCloneDevice($event: any) {
     this.cloneCameraParam.device = this.cameraConfigs.find(x => x.device.id === $event.target.value).device;
   }
-
+  availableLicense:number=0;
   /** 點擊clone */
   clickClone() {
     const availableLicense$ = this.licenseService.getLicenseAvailableCount('00171');
 
     availableLicense$
       .switchMap(num => {
-        if (this.cloneCameraParam.quantity === 0) {
+        this.availableLicense = num;
+        console.debug("num 00171", this.availableLicense);
+
+        if (this.cloneCameraParam.quantity === 0 || this.cloneCameraParam.quantity > num) {
           return Observable.of(null);
         }
         
