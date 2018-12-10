@@ -166,7 +166,7 @@
                   <span *ngIf="item.device.Config.Stream">{{item.device.Config.Stream.length || 1}}</span>
                   <span *ngIf="item.device.Config.StreamConfig">{{item.device.Config.StreamConfig.length || 1}}</span>
                 </td>
-                <td>{{item.device.Config.Brand || 'N/A'}}</td>
+                <td>{{getCompaneName(item.device.Config.Brand || 'N/A') }}</td>
                 <td>{{item.device.Config.Model || 'N/A'}}</td>
               </tr>
             </tbody>

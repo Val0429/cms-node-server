@@ -13,6 +13,7 @@ import { ModalEditorModeEnum } from 'app/shared/enum/modalEditorModeEnum';
 import { NvrManufacturer } from 'app/config/nvr-manufacturer.config';
 import ArrayHelper from 'app/helper/array.helper';
 import JsonHelper from 'app/helper/json.helper';
+import { CameraService } from 'app/service/camera.service';
 
 @Component({
   selector: 'app-nvr-editor',
@@ -51,7 +52,8 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     private parseService: ParseService,
     private groupService: GroupService,
     private cryptoService: CryptoService,
-    private licenseService: LicenseService
+    private licenseService: LicenseService,
+    private cameraService:CameraService
   ) { }
 
   ngOnInit() {
@@ -172,6 +174,10 @@ export class NvrEditorComponent implements OnInit, OnChanges {
       item.checked = newValue;
     });
   }
+  getCompaneName(companyKey:string):string{
+    return this.cameraService.getBrandDisplay(companyKey);
+  }
+
   ipRegex=new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/);
   
   domainRegex = new RegExp(/^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|([a-zA-Z0-9][a-zA-Z0-9-_]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,6}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})$/);

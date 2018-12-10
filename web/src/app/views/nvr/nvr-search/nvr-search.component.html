@@ -13,9 +13,10 @@
 </div>
 <table class="table table-hover table-lg mb-0" *ngIf="searchList">
   <tbody *ngIf="searchList.length > 0">
-    <tr *ngFor="let nvr of searchList" (click)="clickAddNVR(nvr)">
-      <td width="45%" class="text-primary">{{nvr.$.DeviceName}}</td>
-      <td width="55%">{{nvr.$.IP}}:{{nvr.$.Port}}</td>
+    <tr *ngFor="let nvr of searchList" (click)="clickAddNVR(nvr)">      
+      <td width="25%" class="text-primary">{{nvr.$.DeviceName}}</td>
+      <td width="25%">{{nvr.$.Driver}}</td>
+      <td>{{nvr.$.IP}}:{{nvr.$.Port}}</td>
     </tr>
   </tbody>
   <tbody *ngIf="searchList.length === 0">
