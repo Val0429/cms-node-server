@@ -570,10 +570,7 @@ export class Device extends Parse.Object implements IDevice {
     Object.assign(this, value);
   }
 }
-export class DeviceDisplay extends Device {
-  public checked: boolean;
-  public brandDisplay:string;
-}
+
 export class NvrDisplay extends Nvr {
   public checked: boolean;  
 }

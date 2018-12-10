@@ -12,17 +12,25 @@
   </div>
 </div>
 <table class="table table-hover table-lg mb-0" *ngIf="searchList">
-  <tbody *ngIf="searchList.length > 0">
-    <tr *ngFor="let cam of searchList" (click)="clickAddCamera(cam)">      
-      <td width="20%" class="text-primary">{{cam.PRODUCTIONID}}</td>
-      <td width="25%">{{getCompaneName(cam.COMPANY)}}</td>
-      <td width="25%">{{cam.WANIP}}:{{cam.HTTPPORT}}</td>
-      <td>{{cam.WANIP}}:{{cam.HTTPPORT}}</td>
+  <thead>
+    <tr>
+      <th style="width:20px"><input type="checkbox" id="selectAll" (click)="selectAll($event.target.checked)"  [checked]="checkedAll"/></th>
+      <th style="width:20%">Product Id</th>
+      <th style="width:20%">Manufacturer</th>
+      <th>Address</th>      
+    </tr>
+  </thead>
+  <tbody *ngIf="searchList.length > 0">      
+      <tr *ngFor="let cam of searchList">      
+        <td><input type="checkbox" (click)="selectCam(cam, $event.target.checked)" [checked]="cam.checked"></td>
+        <td class="text-primary">{{cam.device.PRODUCTIONID}}</td>
+        <td>{{getCompaneName(cam.device.COMPANY)}}</td>
+        <td>{{cam.device.WANIP}}:{{cam.device.HTTPPORT}}</td>      
     </tr>
   </tbody>
   <tbody *ngIf="searchList.length === 0">
     <tr>
-      <td width="100%">No Camera available.</td>
+      <td colspan="4">No Camera available.</td>
     </tr>
   </tbody>
 </table>
