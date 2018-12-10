@@ -198,13 +198,21 @@ export class CameraService {
       obj.Name = args.cam.Name,
       obj.Channel = args.newChannel;
       
-    obj.Config = args.cam.Config;
+    obj.Config = Object.assign({}, args.cam.Config);
+    obj.Config.Authentication = Object.assign({}, args.cam.Config.Authentication);
+    obj.Config.PTZSupport = Object.assign({}, args.cam.Config.PTZSupport);
+    obj.Config["Multi-Stream"] = Object.assign({}, args.cam.Config["Multi-Stream"]);
+    obj.Config.Stream=Object.assign([], args.cam.Config.Stream);
+    
+    console.debug("args.cam.Config.Authentication", args.cam.Config.Authentication);
+
     obj.Config.Authentication.Account = this.cryptoService.encrypt4DB(obj.Config.Authentication.Account);
     obj.Config.Authentication.Password = this.cryptoService.encrypt4DB(obj.Config.Authentication.Password);
-    obj.Capability = args.cam.Capability;
-    obj.CameraSetting = args.cam.CameraSetting;
-    
-    obj.Tags = args.cam.Tags;
+
+    obj.Capability = Object.assign({}, args.cam.Capability);
+    obj.CameraSetting = Object.assign({}, args.cam.CameraSetting);
+    obj.CameraSetting.IOPort = Object.assign([], args.cam.CameraSetting.IOPort);
+    obj.Tags = Object.assign([], args.cam.Tags);
    
 
     return obj;
