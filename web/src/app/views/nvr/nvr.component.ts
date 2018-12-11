@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ParseService } from 'app/service/parse.service';
-import { Nvr, Device, NvrDisplay } from 'app/model/core';
+import { Nvr, Device } from 'app/model/core';
 import { NvrEditorComponent } from './nvr-editor/nvr-editor.component';
 import { NvrService } from 'app/service/nvr.service';
 import { NvrSearchComponent } from './nvr-search/nvr-search.component';
@@ -14,7 +14,7 @@ import { NvrSearchComponent } from './nvr-search/nvr-search.component';
 export class NvrComponent implements OnInit {
   @ViewChild('editor') editorComponent: NvrEditorComponent;
   @ViewChild('searchComponent') searchComponent:NvrSearchComponent;
-  nvrList: NvrDisplay[];
+  nvrList: {device:Nvr,checked:boolean}[];
   deviceList: Device[];
   licenseInfo: any;
   currentEditNVR: Nvr;
@@ -57,9 +57,12 @@ export class NvrComponent implements OnInit {
       type: Nvr,
       filter: query => query.limit(30000)
     }).then(nvrs => {
-      this.nvrList = nvrs as NvrDisplay[];
+      this.nvrList = [];
+
+      for (let nvr of nvrs) this.nvrList.push({device:nvr,checked:false});
+      
       this.nvrList.sort(function (a, b) {
-        return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
+        return (Number(a.device.Id) > Number(b.device.Id)) ? 1 : ((Number(b.device.Id) > Number(a.device.Id)) ? -1 : 0);
       });
     }));
     return get$;
@@ -76,7 +79,7 @@ export class NvrComponent implements OnInit {
     return get$;
   }
   checkSelected(){
-    let checked = this.nvrList.filter(x=>x.Id !== "1" && x.Id !== "2").map(function(e){return e.checked});
+    let checked = this.nvrList.filter(x=>x.device.Id !== "1" && x.device.Id !== "2").map(function(e){return e.checked});
     //console.debug("checked",checked);
     this.checkedAll = checked.length > 0 && checked.indexOf(undefined) < 0 && checked.indexOf(false) < 0;
     this.anyChecked = checked.length > 0 && checked.indexOf(true) >= 0;
@@ -84,12 +87,12 @@ export class NvrComponent implements OnInit {
     console.debug("this.anyChecked",this.anyChecked);
   }
   selectAll(checked:boolean){    
-    for(let nvr of this.nvrList.filter(x=>x.Id !== "1" && x.Id !== "2")){
+    for(let nvr of this.nvrList.filter(x=>x.device.Id !== "1" && x.device.Id !== "2")){
       nvr.checked=checked;
     }
     this.checkSelected();
   }
-  selectNvr(nvr:NvrDisplay, checked:boolean){
+  selectNvr(nvr:{device:Nvr,checked:boolean}, checked:boolean){
     console.debug("nvr", nvr);
     nvr.checked=checked;
     this.checkSelected();
@@ -97,20 +100,17 @@ export class NvrComponent implements OnInit {
 
   async deleteAll(){
     if (!confirm('Are you sure to delete these NVR(s)?')) return;
-    let success = true;
-    for(let nvr of this.nvrList){      
-      if(nvr.checked !== true || nvr.Id ==="1" || nvr.Id === "2") continue;
-        await this.nvrService.deleteNvr(nvr as Nvr).catch((err)=>{
-          success = false;          
-          alert(err);
-        });
-    }    
-    if(success){
+    try{    
+      for(let nvr of this.nvrList.filter(x=> x.checked === true && x.device.Id !=="1" && x.device.Id !== "2")){          
+          await this.nvrService.deleteNvr(nvr.device);
+      }
       alert('Delete Success'); 
       this.reloadData();
-    } 
+    }catch(err) {
+      console.error(err);
+      alert(err);
+    }
   }
-  
   // 取得指定分類的License管制目標當前數量
   // readLicenseInfo() {
   //   const getDeviceCount$ = this.licenseService.getCurrentUsageCountByLicense('00166')

@@ -46,15 +46,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let nvr of nvrList" (click)="clickEditNVR(nvr)" [class.active]="nvr == currentEditNVR">
-              <td><input *ngIf="nvr.Id!=='1' && nvr.Id!=='2'" type="checkbox" (click)="selectNvr(nvr, $event.target.checked)" [checked]="nvr.checked"></td>
-              <td>{{nvr.Id}}</td>
-              <td>{{nvr.Name}}</td>
-              <td>{{nvr.Domain}}</td>
-              <td>{{nvr.IsListenEvent}}</td>
-              <td>{{nvr.IsPatrolInclude}}</td>
-              <td>{{nvr.Port}}</td>
-              <td>{{getDeviceQuantity(nvr)}}</td>
+            <tr *ngFor="let nvr of nvrList" (click)="clickEditNVR(nvr.device)" [class.active]="nvr.device == currentEditNVR">
+              <td><input *ngIf="nvr.device.Id!=='1' && nvr.device.Id!=='2'" type="checkbox" (click)="selectNvr(nvr, $event.target.checked)" [checked]="nvr.checked"></td>
+              <td>{{nvr.device.Id}}</td>
+              <td>{{nvr.device.Name}}</td>
+              <td>{{nvr.device.Domain}}</td>
+              <td>{{nvr.device.IsListenEvent}}</td>
+              <td>{{nvr.device.IsPatrolInclude}}</td>
+              <td>{{nvr.device.Port}}</td>
+              <td>{{getDeviceQuantity(nvr.device)}}</td>
             </tr>
           </tbody>
         </table>

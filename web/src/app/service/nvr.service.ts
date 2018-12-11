@@ -154,8 +154,8 @@ setEditModel(editNvr:Nvr, groupList:Group[], iSapP2PServerList:ServerInfo[]) {
             .switchMap(data => Observable.fromPromise(Parse.Object.destroyAll(data)))
             .map(result => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_EVENTHANDLER, dataArr: result }));
     
-            let selectedDevices = [];
-           const getDevice$ = this.parseService.fetchData({
+            
+           const deleteDvices = this.parseService.fetchData({
               type: Device,
               filter: query => query
                 .equalTo('NvrId', nvr.Id)
@@ -163,11 +163,12 @@ setEditModel(editNvr:Nvr, groupList:Group[], iSapP2PServerList:ServerInfo[]) {
                 .limit(30000)
             }).then(devices => {
               console.debug("selectedDevices", devices);
-              selectedDevices = devices;
+              Observable.fromPromise(Parse.Object.destroyAll(devices)).map(result => {
+                console.debug("delete result", result);
+                this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_DEVICE, dataArr: result })
+              }).toPromise();
             });
-    
-          const deleteDevice$ = Observable.fromPromise(Parse.Object.destroyAll(selectedDevices))
-            .map(result => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_DEVICE, dataArr: result }));
+              
     
           const deleteNvr$ = Observable.fromPromise(nvr.destroy())
             .map(result => this.coreService.notifyWithParseResult({
@@ -178,8 +179,7 @@ setEditModel(editNvr:Nvr, groupList:Group[], iSapP2PServerList:ServerInfo[]) {
     
           return deleteSchedule$
             .switchMap(() => deleteEventHandler$)
-            .switchMap(() => getDevice$)
-            .switchMap(() => deleteDevice$)
+            .switchMap(() => deleteDvices)    
             .switchMap(() => deleteNvr$)
             .switchMap(() => deleteGroupNvr$)        
             .toPromise()

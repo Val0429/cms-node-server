@@ -571,9 +571,6 @@ export class Device extends Parse.Object implements IDevice {
   }
 }
 
-export class NvrDisplay extends Nvr {
-  public checked: boolean;  
-}
 export class General extends Parse.Object implements IGeneral {
   get EnableJoystick(): string {
     return super.get('EnableJoystick');
