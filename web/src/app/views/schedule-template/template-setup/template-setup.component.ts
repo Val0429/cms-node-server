@@ -5,8 +5,7 @@ import { LicenseService } from 'app/service/license.service';
 import * as _ from 'lodash';
 import { Group, Nvr, Device, RecordSchedule, EventHandler } from 'app/model/core';
 import { Observable } from 'rxjs/Observable';
-import { subscribeOn } from 'rxjs/operator/subscribeOn';
-import { nodeValue } from '@angular/core/src/view';
+import { IRecordScheduleTemplate, IEventScheduleTemplate } from 'lib/domain/core';
 
 @Component({
   selector: 'app-template-setup',
@@ -16,16 +15,14 @@ import { nodeValue } from '@angular/core/src/view';
 export class TemplateSetupComponent implements OnInit, OnChanges {
   @Input() setupMode: number;
   /** RecordScheduleTemplate or EventScheduleTemplate */
-  @Input() currentTemplate: any;
+  @Input() currentTemplate: IRecordScheduleTemplate | IEventScheduleTemplate ;
   setupNode: ITemplateSetupNode[]; // 階層資料集合
   setupModes = {
     RECORD_SCHEDULE_TEMPLATE: 1,
     EVENT_TEMPLATE: 2
   };  /** table RecordSchedule or EventHandler的資料 */
   
-  saveList=[];
-  deleteList=[];
-  setupData: any[];
+  setupData: RecordSchedule[] | EventHandler[];
   ipCameraNvr: Nvr;
   flag = {
     load: false,
@@ -69,8 +66,6 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       this.currentTemplate = changes.currentTemplate.currentValue;
       this.fetchSetupData().subscribe();
     }
-    this.deleteList=[];
-    this.saveList=[];
   }
 
   getIPCameraNvr() {
@@ -138,7 +133,10 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     }
 
     return fetch$
-      .map(result => this.setupData = result)
+      .map(result => {
+        this.setupData = result;
+        console.debug("this.setupData", this.setupData);
+      })
       .do(() => this.initApplyValue());
   }
 
@@ -157,8 +155,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
 
     if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {
       // this.setupData.filter((x: RecordSchedule) => x.ScheduleTemplate.id === this.currentTemplate.id)
-      this.setupData
-        .forEach((x: RecordSchedule) => {
+      
+        (this.setupData as RecordSchedule[]).forEach(x=> {
           const key = x.NvrId + '.' + x.ChannelId + '.' + x.StreamId;
           const data = targetData.find(node => node.key.indexOf('.' + key) >= 0); // key前加上點避免錯誤
           if (data) {
@@ -169,8 +167,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     }
 
     if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {
-      this.setupData.filter((x: EventHandler) => x.Schedule === this.currentTemplate.Schedule)
-        .forEach((x: EventHandler) => {
+      (this.setupData as EventHandler[]).filter(x => x.Schedule === (this.currentTemplate as IEventScheduleTemplate).Schedule)
+        .forEach(x => {
           const key = x.NvrId + '.' + x.DeviceId;
           const data = targetData.find(node => node.key.indexOf('.' + key) >= 0); // key前加上點避免錯誤
           if (data) {
@@ -358,24 +356,31 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       obj.node.child.forEach(cn => {
         this.changeSetupNode({node:cn, val:obj.val});
       });
-    }else{
-      if(obj.val === true){
-        this.saveList.push(obj.node);
-        let deleteIndex = this.deleteList.findIndex(x=>x.key == obj.node.key);
-        this.deleteList.splice(deleteIndex, 1);        
-      }else{
-        this.deleteList.push(obj.node);
-        let deleteIndex = this.saveList.findIndex(x=>x.key == obj.node.key);        
-        this.saveList.splice(deleteIndex, 1);
-      }
     }
-
-    // 避免遞迴的過程中不斷呼叫，在此設個條件
      
      this.associateApply();
     
-     console.debug("save list",this.saveList);
-     console.debug("delete list",this.deleteList);
+  }
+  
+  getCheckedSetupData() :ITemplateSetupNode[]{ 
+    let result: ITemplateSetupNode []  =[];
+    for(let mgNode of this.setupNode){
+    for(let sgNode of mgNode.child){
+    for(let nvrNode of sgNode.child){
+        for(let devNode of nvrNode.child){
+          //event template
+          if(this.setupMode == this.setupModes.EVENT_TEMPLATE && devNode.apply === true){               
+            result.push(devNode);
+          }
+          else if(this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE){
+            //record template
+            for(let strNode of devNode.child){
+              if (strNode.apply === true) result.push(strNode);
+            }
+          }
+        }
+    }}}
+    return result;
   }
 
   clickSave() {
@@ -392,8 +397,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   /** 依照目前setupNode的狀況取得應新增, 修改, 刪除資料的task */
   saveTemplateSetup() {
     const alertMessage = [];
-    const saveList = [];
-    const deleteList = [];
+
     let lic;
     if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {
       lic = '00168';
@@ -401,67 +405,65 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       lic = 'pass'; // 無限制license
     }
     
-    for(let node of this.saveList){  
-      let obj = this.createNewRecordSchedule(node);
-      let oldItem = this.getExistSetupData(node);   
-      let fixed = true;
-      if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {        
+    
+    let savedSchedule = [];
+    let checkedSetupData = this.getCheckedSetupData();
+    console.debug("checkedSetupData", checkedSetupData);
+    for(let node of checkedSetupData){  
+      if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {                
+        let oldItem = this.getExistSetupData(node);   
         if (oldItem === undefined) {
-          alertMessage.push(node.data.Name + ' event setup is necessary.');
-          fixed = false;
+          alertMessage.push(node.data.Name + ' event setup is necessary.');          
         }else{
-          obj = oldItem;
-          if (oldItem.Schedule !== this.currentTemplate.Schedule) {
-            oldItem.Schedule = this.currentTemplate.Schedule;          
-          }else{
-            oldItem.Schedule = '';          
-          }
+          //assign attributes
+          let currentTemplate = this.currentTemplate as IEventScheduleTemplate;          
+          let oldEventHandler = oldItem as EventHandler;     
+          oldEventHandler.Schedule = currentTemplate.Schedule;
+          console.debug("currentTemplate", currentTemplate);
+          console.debug("oldEventHandler", oldEventHandler);
+          savedSchedule.push(oldEventHandler);
         }
-      }
-      if (fixed) {
-        saveList.push(obj);
-      }
-    }
-    for(let node of this.deleteList){
-      let oldItem = this.getExistSetupData(node);
-      console.debug("deleteList oldItem, node", oldItem, node);            
-      if(oldItem !== undefined) {
-        deleteList.push(oldItem);
+        
+      }else{
+        let newSchedule = this.createNewRecordSchedule(node);
+        savedSchedule.push(newSchedule);
       }
     }
-
+    
     if (alertMessage.length > 0) {
       alert(alertMessage.join('\n'));
       return Observable.of(null);
     }
-    console.debug("saveList", saveList);
-    console.debug("deleteList", deleteList);
-    
+
     return this.licenseService.getLicenseAvailableCount(lic)
       .switchMap(num => {
-        if (num < (saveList.length - deleteList.length)) {
+        if (num < (savedSchedule.length - this.setupData.length)) {
           alert('License available count is not enough, did not save template setup.');
           return Observable.of(null);
         } else {
-          const save$ = Observable.fromPromise(Parse.Object.saveAll(saveList))
+          
+            //save checked schedules
+            const save$ = Observable.fromPromise(Parse.Object.saveAll(savedSchedule))
             .map(result => {
               this.coreService.notifyWithParseResult({
                 parseResult: result, path: this.notifyPath
               });
             });
-          const delete$ = Observable.fromPromise(Parse.Object.destroyAll(deleteList))
-            .map(result => this.coreService.notifyWithParseResult({
-              parseResult: result, path: this.notifyPath
-            }));
-        
-          return save$
-          .switchMap(() => delete$)
-          .do(() => alert('Update Success.'));        
+
+          if(this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE){
+            //destroy all existing schedules
+            const delete$ = Observable.fromPromise(Parse.Object.destroyAll(this.setupData as any[]))
+              .map(result => this.coreService.notifyWithParseResult({
+                parseResult: result, path: this.notifyPath
+              }));
+              return delete$
+              .switchMap(() => save$);
+          }
+          return save$;        
         }
       })      
       .do(()=>{
-        this.saveList=[];
-        this.deleteList=[];
+        alert('Update Success.');
         this.fetchSetupData().subscribe();
       });
   }
@@ -472,12 +474,12 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     const seq = node.key.split('.');
     console.debug("seq", seq);
     if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {
-      const result = this.setupData.find((x: RecordSchedule) => x.NvrId === seq[levelLimit - 3]
+      const result = (this.setupData as RecordSchedule[]).find(x => x.NvrId === seq[levelLimit - 3]
         && x.ChannelId === parseInt(seq[levelLimit - 2]) && x.StreamId === parseInt(seq[levelLimit - 1]));
       return result;
     }
     if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {
-      const result = this.setupData.find((x: EventHandler) => x.NvrId === seq[levelLimit - 2]
+      const result = (this.setupData as EventHandler[]).find(x => x.NvrId === seq[levelLimit - 2]
         && x.DeviceId === Number(seq[levelLimit - 1]));
       return result;
     }
@@ -491,7 +493,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       NvrId: seq[indexStart],
       ChannelId: Number(seq[indexStart + 1]),
       StreamId: Number(seq[indexStart + 2]),
-      ScheduleTemplate: this.currentTemplate
+      ScheduleTemplate: this.currentTemplate as IRecordScheduleTemplate
     });
     return newObj;
   }
