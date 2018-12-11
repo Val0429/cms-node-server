@@ -70,17 +70,15 @@ export class CameraComponent implements OnInit {
   }
   async deleteAll(){
     if (!confirm('Are you sure to delete these Camera(s)?')) return;
-    let success = true;
-    for(let cam of this.cameraConfigs){
-      if(cam.checked !== true) continue;
-        await this.cameraService.deleteCam(cam.device, this.ipCameraNvr, this.groupList).catch((err)=>{
-        alert(err);
-        success=false;
-      }); 
-    }    
-    if(success){
+    try{
+      for(let cam of this.cameraConfigs.filter(x=>x.checked===true)){      
+          await this.cameraService.deleteCam(cam.device, this.ipCameraNvr, this.groupList); 
+      }        
       alert('Delete Success');  
       this.reloadData();              
+    }catch(err){
+      console.error(err);
+      alert(err);      
     }
   }
   reloadData() {
@@ -126,15 +124,17 @@ export class CameraComponent implements OnInit {
         .ascending('Channel')
         .limit(30000)
     })).do(devices => {
-      this.cameraConfigs = devices.map(dev => {
+      this.cameraConfigs = devices && devices.length>0 ? 
+      devices.map(dev => {
         dev.Config.Authentication.Account = this.cryptoService.decrypt4DB(dev.Config.Authentication.Account);
         dev.Config.Authentication.Password = this.cryptoService.decrypt4DB(dev.Config.Authentication.Password);
         let deviceDisplay:{device:Device,checked:boolean,brandDisplay:string} = {device:dev,checked:false,brandDisplay:""};        
         deviceDisplay.brandDisplay = this.cameraService.getBrandDisplay(deviceDisplay.device.Config.Brand);
-        return deviceDisplay;
-      });
+        return deviceDisplay;}):
+        [];
       console.debug("this.cameraConfigs",this.cameraConfigs);
-    }).do(() => this.cloneCameraParam.device = this.cameraConfigs[0].device);
+    })
+    .do(() => this.cloneCameraParam.device = this.cameraConfigs.length>0 ? this.cameraConfigs[0].device : new Device());
     return fetch$;
   }
 
