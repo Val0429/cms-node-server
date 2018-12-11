@@ -33,7 +33,11 @@ export class NvrService {
               .map(result => this.coreService.notifyWithParseResult({
                 parseResult: [result], path: this.coreService.urls.URL_CLASS_NVR
               })))
-            .switchMap(() => this.groupService.setNvrGroup(editNvr.Id, currentEditModel.Group));
+            .switchMap(() => {
+              return currentEditModel.Group ? 
+                this.groupService.setNvrGroup(editNvr.Id, currentEditModel.Group):
+                this.groupService.removeNvr(editNvr.Id) 
+            });
         }
          /** 依照Manufacture決定Driver value */
   getNvrDriverByManufacture(currentEditModel:INvrEditModel) {
