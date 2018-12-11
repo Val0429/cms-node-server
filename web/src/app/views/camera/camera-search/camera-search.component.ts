@@ -69,10 +69,10 @@ export class CameraSearchComponent implements OnInit {
         this.reloadDataEvent.emit();
         this.closeModal.emit();        
       }catch(err){
-        console.debug(err);
+        console.error(err);
         alert(err);
       }finally{
-        
+        this.checkedAll=false;
         this.flag.load=false;        
         
       }
