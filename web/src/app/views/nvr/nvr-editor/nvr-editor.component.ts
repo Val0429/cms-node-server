@@ -391,7 +391,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
   //     case 'Certis':
   //     case 'Dynacolor':
   //     case 'Customization':
-  //       result = 'iSap';
+  //       result = 'iSAP';
   //       break;
   //     case 'Diviotec (Linux)':
   //       result = 'Diviotec';

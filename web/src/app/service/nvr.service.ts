@@ -42,7 +42,7 @@ export class NvrService {
          /** 依照Manufacture決定Driver value */
   getNvrDriverByManufacture(currentEditModel:INvrEditModel) {
     switch (currentEditModel.Manufacture.toLowerCase()) {
-      case 'isap failover server': return 'iSap';
+      case 'iSAP failover server': return 'iSAP';
       case 'milestone corporate 2016 r2': return 'MilestoneCorporate';
       case 'acti enterprise': return 'ACTi_E';
       case 'diviotec (linux)':
@@ -95,8 +95,8 @@ setEditModel(editNvr:Nvr, groupList:Group[], iSapP2PServerList:ServerInfo[]) {
         createNVRObject(nvr?: any): Nvr {
           const newObj = new Nvr({
             Name: nvr ? nvr.$.DeviceName : `New NVR`,
-            Driver: nvr ? nvr.$.Driver : 'iSap',
-            Manufacture: nvr ? nvr.$.Driver : 'iSap',
+            Driver: nvr ? nvr.$.Driver : 'iSAP',
+            Manufacture: nvr ? nvr.$.Driver : 'iSAP',
             Domain: nvr ? nvr.$.IP : '',
             Port: nvr ? Number(nvr.$.Port) : 80,
             ServerPort: 0,
