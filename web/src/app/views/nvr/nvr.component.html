@@ -47,7 +47,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let nvr of nvrList" (click)="clickEditNVR(nvr)" [class.active]="nvr == currentEditNVR">
-              <td><input *ngIf="nvr.Id!=='1'" type="checkbox" (click)="selectNvr(nvr, $event.target.checked)" [checked]="nvr.checked"></td>
+              <td><input *ngIf="nvr.Id!=='1' && nvr.Id!=='2'" type="checkbox" (click)="selectNvr(nvr, $event.target.checked)" [checked]="nvr.checked"></td>
               <td>{{nvr.Id}}</td>
               <td>{{nvr.Name}}</td>
               <td>{{nvr.Domain}}</td>

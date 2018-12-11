@@ -76,7 +76,7 @@ export class NvrComponent implements OnInit {
     return get$;
   }
   checkSelected(){
-    let checked = this.nvrList.filter(x=>x.Id !== "1").map(function(e){return e.checked});
+    let checked = this.nvrList.filter(x=>x.Id !== "1" && x.Id !== "2").map(function(e){return e.checked});
     //console.debug("checked",checked);
     this.checkedAll = checked.length > 0 && checked.indexOf(undefined) < 0 && checked.indexOf(false) < 0;
     this.anyChecked = checked.length > 0 && checked.indexOf(true) >= 0;
@@ -84,7 +84,7 @@ export class NvrComponent implements OnInit {
     console.debug("this.anyChecked",this.anyChecked);
   }
   selectAll(checked:boolean){    
-    for(let nvr of this.nvrList.filter(x=>x.Id !== "1")){
+    for(let nvr of this.nvrList.filter(x=>x.Id !== "1" && x.Id !== "2")){
       nvr.checked=checked;
     }
     this.checkSelected();
@@ -99,7 +99,7 @@ export class NvrComponent implements OnInit {
     if (!confirm('Are you sure to delete these NVR(s)?')) return;
     let success = true;
     for(let nvr of this.nvrList){      
-      if(nvr.checked !== true || nvr.Id ==="1") continue;
+      if(nvr.checked !== true || nvr.Id ==="1" || nvr.Id === "2") continue;
         await this.nvrService.deleteNvr(nvr as Nvr).catch((err)=>{
           success = false;          
           alert(err);
