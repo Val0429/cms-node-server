@@ -442,24 +442,39 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
           return Observable.of(null);
         } else {
           
-            //save checked schedules
-            const save$ = Observable.fromPromise(Parse.Object.saveAll(savedSchedule))
-            .map(result => {
-              this.coreService.notifyWithParseResult({
-                parseResult: result, path: this.notifyPath
-              });
+          //save checked schedules
+          const save$ = Observable.fromPromise(Parse.Object.saveAll(savedSchedule))
+          .map(result => {
+            this.coreService.notifyWithParseResult({
+              parseResult: result, path: this.notifyPath
             });
+          });
 
-          if(this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE){
-            //destroy all existing schedules
-            const delete$ = Observable.fromPromise(Parse.Object.destroyAll(this.setupData as any[]))
+          let delete$:Observable<void>;
+          
+          if(this.setupMode == this.setupModes.EVENT_TEMPLATE){
+            //reset non checked event template
+            for(let data of (this.setupData as EventHandler[]).filter(x=>x.Schedule == (this.currentTemplate as IEventScheduleTemplate).Schedule)){
+              data.Schedule = (savedSchedule as EventHandler[]).find(x=>x.id == data.id) ? data.Schedule: "";
+            }
+            //save schedule
+            delete$ = Observable.fromPromise(Parse.Object.saveAll(this.setupData as any[]))
               .map(result => this.coreService.notifyWithParseResult({
                 parseResult: result, path: this.notifyPath
               }));
-              return delete$
-              .switchMap(() => save$);
-          }
-          return save$;        
+              
+          }else if(this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE){
+            //destroy all existing schedules
+            delete$ = Observable.fromPromise(Parse.Object.destroyAll(this.setupData as any[]))
+              .map(result => this.coreService.notifyWithParseResult({
+                parseResult: result, path: this.notifyPath
+              }));
+            }
+
+        return delete$
+        .switchMap(() => save$);
+          
+          
         }
       })      
       .do(()=>{
