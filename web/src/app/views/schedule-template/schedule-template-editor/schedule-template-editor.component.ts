@@ -2,7 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output, OnChanges, SimpleChange
 import * as _ from 'lodash';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
-import { RecordScheduleTemplate, ServerInfo, RecordSchedule } from 'app/model/core';
+import { RecordScheduleTemplate, ServerInfo, RecordSchedule, EventHandler } from 'app/model/core';
 import OptionHelper from 'app/helper/option.helper';
 import { WeekScheduleOptions } from 'app/config/week-scheduler.config';
 import { Observable } from 'rxjs/Observable';
@@ -35,7 +35,10 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
     isOverlap: false,
     onCustomMode: false
   };
-
+  setupModes = {
+    RECORD_SCHEDULE_TEMPLATE: 1,
+    EVENT_TEMPLATE: 2
+  }; 
   /** 傳給WeekScheduler的參數, tooltips與colors長度必須相同 */
   get weekSchedulerOption(): IWeekSchedulerOptions {
     switch (this.setupMode) {
@@ -206,19 +209,32 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
 
   /** 要刪除目前編輯的RecordScheduleTemplate之前，先刪除套用此Template的RecordSchedule */
   deleteRecordSchedule() {
-    if (this.setupMode !== 1) {
-      return Observable.of(null);
-    }
-
-    const get$ = Observable.fromPromise(this.parseService.fetchData({
-      type: RecordSchedule,
-      filter: query => query.equalTo('ScheduleTemplate', this.currentTemplate)
-    }));
-    const delete$ = (data: RecordSchedule[]) => Observable.fromPromise(Parse.Object.destroyAll(data))
-      .map(results => this.coreService.notifyWithParseResult({
-        parseResult: results, path: this.coreService.urls.URL_CLASS_RECORDSCHEDULE
+    
+    if(this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE){
+      const get$ = Observable.fromPromise(this.parseService.fetchData({
+        type: RecordSchedule,
+        filter: query => query.equalTo('ScheduleTemplate', this.currentTemplate)
       }));
-    return get$.switchMap(data => delete$(data));
+      const delete$ = (data: RecordSchedule[]) => Observable.fromPromise(Parse.Object.destroyAll(data))
+        .map(results => this.coreService.notifyWithParseResult({
+          parseResult: results, path: this.coreService.urls.URL_CLASS_RECORDSCHEDULE
+        }));
+      return get$.switchMap(data => delete$(data));
+    }
+    else{
+      const get$ = Observable.fromPromise(this.parseService.fetchData({
+        type: EventHandler,
+        filter: query => query.equalTo('Schedule', this.currentTemplate.Schedule)
+      }));
+      const delete$ = (data: EventHandler[]) => Observable.fromPromise(Parse.Object.destroyAll(data))
+        .map(results => this.coreService.notifyWithParseResult({
+          parseResult: results, path: this.coreService.urls.URL_CLASS_EVENTHANDLER
+        }));
+      return get$.switchMap(data => {
+        console.debug("event data", data);
+        return delete$(data);
+      });
+    }
   }
 
   /** 讓week board組件檢查是否重複plan時程的事件 */

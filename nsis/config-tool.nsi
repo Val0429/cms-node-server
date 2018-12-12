@@ -29,20 +29,7 @@ Function ${UN}DoUninstall
 	# third, remove services
 	ExecWait '"net" stop "${CMS_SERVICE}"'
 	ExecWait '"sc" delete "${CMS_SERVICE}"'
-	
-	#second check whether previous installation checked cmsmonitor
-	ClearErrors
-	ReadRegStr $0 HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "${CMS_MONITOR}" 
-	${If} ${Errors}
-	;do nothing
-	${else}
-	# wait until config monitor stopped	
-	Sleep 1000
-	Delete "$INSTDIR\${CMS_MONITOR}.exe"
-	DeleteRegValue HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "${CMS_MONITOR}" 
-	${EndIf}
 
-	
 	# now delete installed files
 	RMDir /r $INSTDIR
 	
@@ -112,18 +99,8 @@ Section "MS Visual C++ Redist 2015 x64" SEC03
   ExecWait Prerequisites\vc_redist.x64.exe
 SectionEnd 
 
-SectionGroup "Additional Application" SEC04
-	Section /o "CMS Config Tray" SEC05
-		
-	SectionEnd 
-	Section /o ".NET Framework 4.5.2" SEC06
-		ExecWait Prerequisites\NDP452-KB2901907-x86-x64-AllOS-ENU.exe
-	SectionEnd	
-SectionGroupEnd 
-  
-;Section "Install Mongo Db Service" SEC03
-
-;SectionEnd 
+;--------------------------------
+;macros
   
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
@@ -179,15 +156,6 @@ Section
 	ExecWait '"install.bat" /s'
 	; wait till finish installing service
 	Sleep 1000
-	#install config monitor
-	${If} ${SectionIsSelected} ${SEC05}			
-		SetOutPath $INSTDIR
-		File "..\systray\CMSConfigMonitor\bin\x86\Release\${CMS_MONITOR}.exe"
-		; monitor service
-		WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "${CMS_MONITOR}" "$\"$INSTDIR\${CMS_MONITOR}.exe$\""
-		;CreateShortCut "$SMSTARTUP\${CMS_MONITOR}.lnk" "$INSTDIR\${CMS_MONITOR}.exe"
-		Exec "${CMS_MONITOR}.exe"
-	${EndIf}
 	
 	
 	 ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2

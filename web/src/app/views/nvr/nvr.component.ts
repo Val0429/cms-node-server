@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
-import { Nvr, Device, NvrDisplay, RecordSchedule, EventHandler } from 'app/model/core';
-import { GroupService } from 'app/service/group.service';
+import { Nvr, Device } from 'app/model/core';
 import { NvrEditorComponent } from './nvr-editor/nvr-editor.component';
+import { NvrService } from 'app/service/nvr.service';
+import { NvrSearchComponent } from './nvr-search/nvr-search.component';
 
 @Component({
   selector: 'app-nvr',
@@ -13,7 +13,8 @@ import { NvrEditorComponent } from './nvr-editor/nvr-editor.component';
 })
 export class NvrComponent implements OnInit {
   @ViewChild('editor') editorComponent: NvrEditorComponent;
-  nvrList: NvrDisplay[];
+  @ViewChild('searchComponent') searchComponent:NvrSearchComponent;
+  nvrList: {device:Nvr,checked:boolean}[];
   deviceList: Device[];
   licenseInfo: any;
   currentEditNVR: Nvr;
@@ -30,10 +31,9 @@ export class NvrComponent implements OnInit {
   //     thirdNvr: 0
   //   };
   constructor(
-    private coreService: CoreService,
-    private parseService: ParseService,
-    private groupService: GroupService
-  ) { }
+    private parseService: ParseService ,
+    private nvrService:NvrService
+    ) { }
 
   ngOnInit() {
     this.reloadData();
@@ -57,9 +57,12 @@ export class NvrComponent implements OnInit {
       type: Nvr,
       filter: query => query.limit(30000)
     }).then(nvrs => {
-      this.nvrList = nvrs as NvrDisplay[];
+      this.nvrList = [];
+
+      for (let nvr of nvrs) this.nvrList.push({device:nvr,checked:false});
+      
       this.nvrList.sort(function (a, b) {
-        return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
+        return (Number(a.device.Id) > Number(b.device.Id)) ? 1 : ((Number(b.device.Id) > Number(a.device.Id)) ? -1 : 0);
       });
     }));
     return get$;
@@ -76,7 +79,7 @@ export class NvrComponent implements OnInit {
     return get$;
   }
   checkSelected(){
-    let checked = this.nvrList.filter(x=>x.Id !== "1").map(function(e){return e.checked});
+    let checked = this.nvrList.filter(x=>x.device.Id !== "1" && x.device.Id !== "2").map(function(e){return e.checked});
     //console.debug("checked",checked);
     this.checkedAll = checked.length > 0 && checked.indexOf(undefined) < 0 && checked.indexOf(false) < 0;
     this.anyChecked = checked.length > 0 && checked.indexOf(true) >= 0;
@@ -84,79 +87,29 @@ export class NvrComponent implements OnInit {
     console.debug("this.anyChecked",this.anyChecked);
   }
   selectAll(checked:boolean){    
-    for(let nvr of this.nvrList.filter(x=>x.Id !== "1")){
+    for(let nvr of this.nvrList.filter(x=>x.device.Id !== "1" && x.device.Id !== "2")){
       nvr.checked=checked;
     }
     this.checkSelected();
   }
-  async deleteNvr(nvr:Nvr):Promise<void> {
-      console.debug("delete nvr", nvr);
-
-      const deleteSchedule$ = Observable.fromPromise(this.parseService.fetchData({
-        type: RecordSchedule,
-        filter: query => query.equalTo('NvrId', nvr.Id)
-      }))
-        .switchMap(data => Observable.fromPromise(Parse.Object.destroyAll(data)))
-        .map(result => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_RECORDSCHEDULE, dataArr: result }));
-
-      const deleteEventHandler$ = Observable.fromPromise(this.parseService.fetchData({
-        type: EventHandler,
-        filter: query => query.equalTo('NvrId', nvr.Id)
-      }))
-        .switchMap(data => Observable.fromPromise(Parse.Object.destroyAll(data)))
-        .map(result => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_EVENTHANDLER, dataArr: result }));
-
-        let selectedDevices = [];
-       const getDevice$ = this.parseService.fetchData({
-          type: Device,
-          filter: query => query
-            .equalTo('NvrId', nvr.Id)
-            .ascending('Channel')
-            .limit(30000)
-        }).then(devices => {
-          console.debug("selectedDevices", devices);
-          selectedDevices = devices;
-        });
-
-      const deleteDevice$ = Observable.fromPromise(Parse.Object.destroyAll(selectedDevices))
-        .map(result => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_DEVICE, dataArr: result }));
-
-      const deleteNvr$ = Observable.fromPromise(nvr.destroy())
-        .map(result => this.coreService.notifyWithParseResult({
-          parseResult: [result], path: this.coreService.urls.URL_CLASS_NVR
-        }));
-
-      const deleteGroupNvr$ = this.groupService.removeNvr(nvr.Id);
-
-      return deleteSchedule$
-        .switchMap(() => deleteEventHandler$)
-        .switchMap(() => getDevice$)
-        .switchMap(() => deleteDevice$)
-        .switchMap(() => deleteNvr$)
-        .switchMap(() => deleteGroupNvr$)        
-        .toPromise()
-        
+  selectNvr(nvr:{device:Nvr,checked:boolean}, checked:boolean){
+    console.debug("nvr", nvr);
+    nvr.checked=checked;
+    this.checkSelected();
   }
 
   async deleteAll(){
     if (!confirm('Are you sure to delete these NVR(s)?')) return;
-    let success = true;
-    for(let nvr of this.nvrList){      
-      if(nvr.checked !== true || nvr.Id ==="1") continue;
-        await this.deleteNvr(nvr as Nvr).catch((err)=>{
-          success = false;          
-          alert(err);
-        });
-    }    
-    if(success){
+    try{    
+      for(let nvr of this.nvrList.filter(x=> x.checked === true && x.device.Id !=="1" && x.device.Id !== "2")){          
+          await this.nvrService.deleteNvr(nvr.device);
+      }
       alert('Delete Success'); 
       this.reloadData();
-    } 
-  }
-  selectNvr(nvr:NvrDisplay, checked:boolean){
-    console.debug("nvr", nvr);
-    nvr.checked=checked;
-    this.checkSelected();
+    }catch(err) {
+      console.error(err);
+      alert(err);
+    }
   }
   // 取得指定分類的License管制目標當前數量
   // readLicenseInfo() {
@@ -182,31 +135,12 @@ export class NvrComponent implements OnInit {
 
   // 取得子模組回傳新的NVR物件並新增
   addNVR($event?) {
-    const newObj = $event ? this.createNVRObject($event.nvr) : this.createNVRObject();
+    const newObj = $event ? this.nvrService.createNVRObject($event.nvr) : this.nvrService.createNVRObject();
     const confirmText = $event ? 'Add this NVR?' : 'Create new NVR?';
     if (confirm(confirmText)) {
       this.currentEditNVR = newObj;
     }
   }
 
-  /** 建立新Nvr物件 */
-  createNVRObject(nvr?: any): any {
-    const newObj = new Nvr({
-      Name: nvr ? nvr.$.DeviceName : `New NVR`,
-      Driver: nvr ? nvr.$.Driver : 'iSap',
-      Manufacture: nvr ? nvr.$.Driver : 'iSap',
-      Domain: nvr ? nvr.$.IP : '',
-      Port: nvr ? Number(nvr.$.Port) : 80,
-      ServerPort: 0,
-      ServerStatusCheckInterval: 600,
-      Account: '',
-      Password: '',
-      SSLEnable: false,
-      IsListenEvent: true,
-      IsPatrolInclude: true,
-      BandwidthBitrate: 0,
-      BandwidthStream: 1
-    });
-    return newObj;
-  }
+  
 }

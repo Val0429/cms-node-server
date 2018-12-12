@@ -10,11 +10,10 @@ import { CameraService } from 'app/service/camera.service';
 import { GroupService } from 'app/service/group.service';
 import { CameraEditorParam } from 'app/model/camera-editor-param';
 import { StringHelper } from 'app/helper/string.helper';
-import { Device, Group, Nvr, RecordSchedule, EventHandler } from 'app/model/core';
+import { Device, Group, Nvr, RecordSchedule } from 'app/model/core';
 import { IDeviceStream } from 'lib/domain/core';
 import { Select2OptionData } from 'ng2-select2/ng2-select2';
 import { Observable } from 'rxjs/Observable';
-import { ITemplateSetupNode } from 'app/views/schedule-template/template-setup/template-setup.component';
 
 
 @Component({
@@ -26,8 +25,8 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   @Input() currentCamera: Device;
   @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
   brandList = DeviceVendor; // 固定list
-  modelList: string[];
-  setupData: RecordSchedule[];
+  modelList: string[]=[];
+  
   editorParam: CameraEditorParam;
   /** 當前畫面展開的PTZ Command類型 */
   ptzDisplayType: string;
@@ -106,33 +105,15 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     this.currentCamera.Config.Stream.forEach(str => {
       str.Port.RTSP = defaultRTSPPort;
     });
+    
     this.getCapability(brand);
   }
   
   /** 取得Model Capability */
-  getCapability(brand: string) {
-    console.debug("brand", brand);
-    this.modelList = undefined;
-
-    const vendor = this.brandList.find(x => x.Key === brand);
-    console.debug("this.brandList", this.brandList);
-    console.debug("vendor", vendor);
-    console.debug("currentCamera", this.currentCamera);
-    const data = {
-      fileName: vendor.FileName
-    };
-    this.coreService.postConfig({ path: this.coreService.urls.URL_BRAND_CAPABILITY, data: data })
-      .map(result => this.cameraService.currentBrandCapability = result)
-      .map(() => {
-        this.modelList = this.cameraService.getModelList();
-        // If no value or not on list, set value to first option
-        if (StringHelper.isNullOrEmpty(this.currentCamera.Config.Model)
-          || this.modelList.indexOf(this.currentCamera.Config.Model) < 0) {
-          this.currentCamera.Config.Model = this.modelList[0];
-        }
-        this.onChangeModel(this.currentCamera.Config.Model);
-      })
-      .subscribe();
+  async getCapability(brand: string) {
+    this.modelList=[];
+    await this.cameraService.getCapability(this.currentCamera,brand,this.modelList).toPromise();
+    this.onChangeModel(this.currentCamera.Config.Model); 
   }
 
   onChangeModel(model: string) {
@@ -187,150 +168,40 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   }
 
   /** 儲存Camera */
-  saveCamera() {
+  async saveCamera() {
     if(!this.currentCamera.Name){
       alert("Brand name is required");
       return;
-    }
-    this.flag.save = true;
-    //console.debug("this.currentCamera", this.currentCamera);
-    //console.debug("this.coreService",  this.coreService);
-    this.currentCamera.Name = this.coreService.stripScript(this.currentCamera.Name);
-    this.currentCamera.Tags = this.tags.split(',');
-    // this.currentCamera.Tags = this.tags.replace(/ /g, '').split(',');
-    this.editorParam.getStreamSaveNumberBeforeSave();
-    this.editorParam.getResolutionBeforeSave();
-    this.editorParam.removeAttributesBeforeSave();
-    console.debug("this.currentCamera.Config", this.currentCamera.Config);
-    // 加密
-    this.currentCamera.Config.Authentication.Account = this.cryptoService.encrypt4DB(this.currentCamera.Config.Authentication.Account);
-    this.currentCamera.Config.Authentication.Password = this.cryptoService.encrypt4DB(this.currentCamera.Config.Authentication.Password);
-    console.debug("save camera2");
-    // 將RTSPURI組合完整
-    if (this.currentCamera.Config.Brand === 'Customization') {
-      this.currentCamera.Config.Stream.forEach(str => {
-        str.RTSPURI = `rtsp://${this.currentCamera.Config.IPAddress}:${str.Port.RTSP}${str.RTSPURI.indexOf('/') < 0 ? "/" : ""}${str.RTSPURI || ''}`;
-      });
-    }
-console.debug("this.currentCamera", this.currentCamera);
-    const save$ = Observable.fromPromise(this.currentCamera.save())
-      .map(result => {
-        this.coreService.addNotifyData({
-          path: this.coreService.urls.URL_CLASS_NVR,
-          objectId: this.ipCameraNvr.id
-        });
-        return this.coreService.notifyWithParseResult({
-          parseResult: [result], path: this.coreService.urls.URL_CLASS_DEVICE
-        });
-      });
-      console.debug("this.selectedSubGroup", this.selectedSubGroup);
+    }    
+    try{
+      this.flag.save = true;
+      await this.cameraService.saveCamera(this.currentCamera, this.ipCameraNvr, this.groupList, this.selectedSubGroup, this.editorParam, this.tags);
       
-    save$
-      .switchMap(() => this.groupService.setChannelGroup(this.groupList, { Nvr: this.ipCameraNvr.Id, Channel: this.currentCamera.Channel }, this.selectedSubGroup))
-      //fetch camera schedule
-      .switchMap(()=>this.fetchSetupData())
-      .switchMap(()=> this.updateSchedule())
-      .map(() => {
-        alert('Update Success');
-        this.reloadDataEvent.emit();
-      })
-      .toPromise()
-      .catch(alert)
-      .then(() => this.flag.save = false);
-  }
-  updateSchedule(){
-    if(!this.currentCamera.Config.Stream && this.currentCamera.Config.Stream.length==0)return;
-
-    let schedule = this.getExistSetupData();
-    console.debug("schedule", schedule);
-    console.debug("this.currentCamera.Config.Stream", this.currentCamera.Config.Stream);
-    let deletedStream = [];
-    for(let stream of schedule){
-      let find = this.currentCamera.Config.Stream.find(x=>x.Id == stream.StreamId)
-      if(!find) deletedStream.push(stream);      
+      alert('Update Success');
+      this.reloadDataEvent.emit();
+    }catch(err){
+      alert(err);
     }
-    console.debug("deleted stream", deletedStream);
-    return Observable.fromPromise(Parse.Object.destroyAll(deletedStream));
+    finally{
+      this.flag.save = false;
+    }
   }
   
-  clickDelete() {
+  
+  async clickDelete() {
     if (confirm('Are you sure to delete this Camera?')) {
       this.flag.delete = true;
-
-      const delete$ = Observable.fromPromise(this.currentCamera.destroy())
-        .map(result => {
-          this.coreService.addNotifyData({
-            path: this.coreService.urls.URL_CLASS_NVR,
-            objectId: this.ipCameraNvr.id
-          });
-          this.coreService.addNotifyData({
-            path: this.coreService.urls.URL_CLASS_DEVICE,
-            objectId: this.currentCamera.id
-          });
-        });
-
-      // 刪除與此Camera相關的RecordSchedule
-      const removeRecordSchedule$ = Observable.fromPromise(this.parseService.fetchData({
-        type: RecordSchedule,
-        filter: query => query
-          .equalTo('NvrId', this.currentCamera.NvrId)
-          .equalTo('ChannelId', this.currentCamera.Channel)
-      }))
-        .switchMap(schedules => Observable.fromPromise(Parse.Object.destroyAll(schedules)))
-        .map(results => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_RECORDSCHEDULE, dataArr: results }));
-
-      // 刪除與此Camera相關的EventHandler
-      const removeEventHandler$ = Observable.fromPromise(this.parseService.fetchData({
-        type: EventHandler,
-        filter: query => query
-          .equalTo('NvrId', this.ipCameraNvr.Id)
-          .equalTo('DeviceId', this.currentCamera.Channel)
-      }))
-        .switchMap(handler => Observable.fromPromise(Parse.Object.destroyAll(handler)))
-        .map(results => this.coreService.notifyWithParseResult({
-          parseResult: results, path: this.coreService.urls.URL_CLASS_EVENTHANDLER
-        }));
-
-      delete$
-        .switchMap(() => removeRecordSchedule$)
-        .switchMap(() => removeEventHandler$)
-        .switchMap(() => this.groupService.setChannelGroup(
-          this.groupList, { Nvr: this.ipCameraNvr.Id, Channel: this.currentCamera.Channel }, undefined))
-        .map(() => this.reloadDataEvent.emit())
-        .toPromise()
+      await this.cameraService.deleteCam(this.currentCamera, this.ipCameraNvr, this.groupList)
         .catch(alert)
-        .then(() => this.flag.delete = false);
+        .then(() => { 
+          this.flag.delete = false;
+          this.reloadDataEvent.emit();
+        });
     } else {
       return;
     }
   }
-  fetchSetupData():Observable<RecordSchedule[]> {
-    this.setupData = undefined;
-    console.debug("fetch setupData", this.currentCamera.NvrId, this.currentCamera.Channel);
-    let fetch$ = Observable.fromPromise(this.parseService.fetchData({
-      type: RecordSchedule,
-      filter: query => query
-        // .include('ScheduleTemplate')
-        .equalTo('NvrId', this.currentCamera.NvrId)
-        .equalTo('ChannelId', this.currentCamera.Channel)
-        .limit(30000)
-    }));
-        
-
-    if (!fetch$) {
-      return Observable.of(null);
-    }
-
-    return fetch$
-      .map(result => this.setupData = result);
-  }
-  getExistSetupData():RecordSchedule[] {
-    console.debug("setup data", this.setupData);
-    if(!this.setupData)return [];
-
-      const result = this.setupData.filter(x => x.NvrId === this.currentCamera.NvrId && x.ChannelId === this.currentCamera.Channel);
-      return result;      
-  }
+  
   checkDisplayAuthentication() {
     let result = true;
     const brand = this.currentCamera.Config.Brand.toLowerCase();

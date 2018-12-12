@@ -46,15 +46,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let nvr of nvrList" (click)="clickEditNVR(nvr)" [class.active]="nvr == currentEditNVR">
-              <td><input *ngIf="nvr.Id!=='1'" type="checkbox" (click)="selectNvr(nvr, $event.target.checked)" [checked]="nvr.checked"></td>
-              <td>{{nvr.Id}}</td>
-              <td>{{nvr.Name}}</td>
-              <td>{{nvr.Domain}}</td>
-              <td>{{nvr.IsListenEvent}}</td>
-              <td>{{nvr.IsPatrolInclude}}</td>
-              <td>{{nvr.Port}}</td>
-              <td>{{getDeviceQuantity(nvr)}}</td>
+            <tr *ngFor="let nvr of nvrList" (click)="clickEditNVR(nvr.device)" [class.active]="nvr.device == currentEditNVR">
+              <td><input *ngIf="nvr.device.Id!=='1' && nvr.device.Id!=='2'" type="checkbox" (click)="selectNvr(nvr, $event.target.checked)" [checked]="nvr.checked"></td>
+              <td>{{nvr.device.Id}}</td>
+              <td>{{nvr.device.Name}}</td>
+              <td>{{nvr.device.Domain}}</td>
+              <td>{{nvr.device.IsListenEvent}}</td>
+              <td>{{nvr.device.IsPatrolInclude}}</td>
+              <td>{{nvr.device.Port}}</td>
+              <td>{{getDeviceQuantity(nvr.device)}}</td>
             </tr>
           </tbody>
         </table>
@@ -82,7 +82,7 @@
   </div>
 </ng-template>
 -->
-<div bsModal #modalWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div bsModal #modalWindow="bs-modal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header flex-column">
@@ -92,9 +92,12 @@
         <h4 class="modal-title text-center fw-bold">Search NVR</h4>
       </div>
       <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
-        <app-nvr-search (addNVR)="addNVR($event)"></app-nvr-search>
+        <app-nvr-search #searchComponent (reloadDataEvent)="reloadData()" (closeModal)="modalWindow.hide();"></app-nvr-search>
       </div>
       <div class="modal-footer">
+          <button class="btn btn-gray" type="button" (click)="searchComponent.saveAll()" [disabled]="!searchComponent.anyChecked || searchComponent.flag.load===true">
+              Save 
+            </button>
         <button type="button" class="btn btn-gray" (click)="modalWindow.hide();">Close</button>
       </div>
     </div>

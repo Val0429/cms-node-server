@@ -13,6 +13,7 @@ import { UserService } from 'app/service/user.service';
 import { ParseService } from 'app/service/parse.service';
 import { LicenseService } from 'app/service/license.service';
 import { CSVService } from 'app/service/csv.service';
+import { NvrService } from './nvr.service';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { CSVService } from 'app/service/csv.service';
     RouterModule
   ],
   declarations: [],
-  providers: [CoreService, IsapSidebarService, EventService, CameraService,
+  providers: [CoreService, IsapSidebarService, EventService, CameraService, NvrService,
     GroupService, CryptoService, UserService, ParseService, LicenseService,
     CSVService]
 })

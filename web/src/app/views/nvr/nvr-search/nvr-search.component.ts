@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { NvrManufacturer } from 'app/config/nvr-manufacturer.config';
-import { Observable } from 'rxjs/Observable';
 import JsonHelper from 'app/helper/json.helper';
 import ArrayHelper from 'app/helper/array.helper';
+import { NvrService } from 'app/service/nvr.service';
+import { Group, ServerInfo } from 'app/model/core';
+import { ParseService } from 'app/service/parse.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-nvr-search',
@@ -11,18 +14,63 @@ import ArrayHelper from 'app/helper/array.helper';
   styleUrls: ['./nvr-search.component.css']
 })
 export class NvrSearchComponent implements OnInit {
-  @Output() addNVR: EventEmitter<any> = new EventEmitter();
-  searchList: any;
+  
+  @Output() closeModal: EventEmitter<any> = new EventEmitter();
+  @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
+  
+  iSapP2PServerList: ServerInfo[];
+
+  searchList: {device:any, checked:boolean}[];
   
   vendorOptions = NvrManufacturer.SearchList;
   jsonHelper = JsonHelper.instance;
   flag = {
     load: false
   };
-  constructor(private coreService: CoreService) { }
+  checkedAll: boolean;
+  anyChecked: boolean;
+  constructor(
+    private coreService: CoreService,
+    private nvrService:NvrService,
+    private parseService:ParseService
+    ) { }
 
   ngOnInit() {
+    const getServerInfo$ = Observable.fromPromise(this.parseService.fetchData({
+      type: ServerInfo,
+      filter: query => query.matches('Type', new RegExp('SmartMedia'), 'i')
+    }).then(serverInfos => this.iSapP2PServerList = serverInfos));
+
     
+    getServerInfo$
+      .subscribe();
+  }
+  async saveAll(){    
+    if (!confirm("Add selected NVR(s)?")) return;
+    try{
+      this.flag.load=true;
+        
+      let nvrs = this.searchList.filter(x=>x.checked===true);
+      console.debug("saved nvrs", nvrs);
+
+      for(let nvr of nvrs)  {
+        let newNvr = this.nvrService.createNVRObject(nvr.device);         
+        let editNvr = this.nvrService.setEditModel(newNvr,[],this.iSapP2PServerList);
+        await this.nvrService.saveNvr(newNvr, editNvr).toPromise();
+      }
+      
+      alert("Save NVR(s) sucess");
+      this.searchList=[];
+      this.reloadDataEvent.emit();
+      this.closeModal.emit();        
+    }catch(err){
+      console.error(err);
+      alert(err);
+    }finally{
+      this.checkedAll=false;
+      this.flag.load=false;        
+      
+    }
   }
 
   async clickSearch() {
@@ -44,7 +92,10 @@ export class NvrSearchComponent implements OnInit {
         console.debug("nvr search result", result);
         let allNvr = this.jsonHelper.findAttributeByString(result, 'AllNVR.NVR');
         let resultArray = ArrayHelper.toArray( allNvr ? allNvr : []);
-        this.searchList.push(...resultArray);
+        for(let nvr of resultArray){
+          this.searchList.push({device:nvr, checked:false});
+        }
+        
       });
 
       await search$.toPromise();
@@ -63,11 +114,23 @@ export class NvrSearchComponent implements OnInit {
     
     console.debug("this.selectedVendors", checked, this.selectedVendors);
   }
-
-  // 將搜尋到的NVR回傳給父組件新增
-  clickAddNVR(nvr: any) {
+  checkSelected(){
+    let checked = this.searchList.map(function(e){return e.checked});
+    //console.debug("checked",checked);
+    this.checkedAll = checked.length > 0 && checked.indexOf(undefined) < 0 && checked.indexOf(false) < 0;
+    this.anyChecked = checked.length > 0 && checked.indexOf(true) >= 0;
+    console.debug("this.checkedAll",this.checkedAll);
+    console.debug("this.anyChecked",this.anyChecked);
+  }
+  selectAll(checked:boolean){    
+    for(let nvr of this.searchList){
+      nvr.checked=checked;
+    }
+    this.checkSelected();
+  }
+  selectNvr(nvr:{device:any, checked:boolean}, checked:boolean){
     console.debug("nvr", nvr);
-    //nvr.$.Driver = this.searchVendor;
-    this.addNVR.emit({ nvr: nvr });
+    nvr.checked=checked;
+    this.checkSelected();
   }
 }
