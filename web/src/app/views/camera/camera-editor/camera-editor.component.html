@@ -403,7 +403,7 @@
           <label class="col-md-4 col-form-label text-md-right">I/O Port {{item.Id}}</label>
           <div class="col-md-8">
             <select class="select1 width-200" [(ngModel)]="item.Mode" [disabled]="!editorParam.IOPortConfigurable">
-              <option *ngFor="let item of editorParam.IOPortOptions;" value= {{item}}>{{item}}</option>
+              <option *ngFor="let itemPort of editorParam.IOPortOptions;" value= {{itemPort}}>{{itemPort}}</option>
             </select>
           </div>
         </div>
