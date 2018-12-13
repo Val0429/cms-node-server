@@ -60,16 +60,15 @@ export class NvrSearchComponent implements OnInit {
       }
       
       alert("Save NVR(s) sucess");
+      this.checkedAll=false;
       this.searchList=[];
       this.reloadDataEvent.emit();
       this.closeModal.emit();        
     }catch(err){
       console.error(err);
       alert(err);
-    }finally{
-      this.checkedAll=false;
-      this.flag.load=false;        
-      
+    }finally{      
+      this.flag.load=false;      
     }
   }
 
