@@ -262,7 +262,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group row" *ngIf="editorParam.getBitrateOptionsByStreamId(i+1).length > 0">
+          <div class="form-group row" *ngIf="editorParam.getBitrateOptionsByStreamId(i+1).length > 0 && stream.Video.Encode !=='MJPEG'">
             <label class="col-md-4 col-form-label text-md-right">Bitrate</label>
             <div class="col-md-8">
               <select class="select1 width-200" [(ngModel)]="stream.Video.Bitrate" (change)="onChangeDynamicOptions()">
@@ -287,7 +287,7 @@
             </div>
           </div>
         </div>
-        <div class="form-group row" *ngIf="editorParam.QualityOptions.length > 0">
+        <div class="form-group row" *ngIf="editorParam.QualityOptions.length > 0 && stream.Video.Encode=='MJPEG'">
           <label class="col-md-4 col-form-label text-md-right">Quality</label>
           <div class="col-md-8">
             <select class="select1 width-200" [(ngModel)]="stream.Video.Quality">
