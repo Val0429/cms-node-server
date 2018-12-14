@@ -22,7 +22,7 @@ export class UserComponent implements OnInit {
   userList: Parse.User[] = [];
   groupList: UserGroup[];
   nvrList: Nvr[];
-
+  regexUsername = new RegExp(/[a-zA-Z_-\d]/);
   currentEditUser: Parse.User;
 
   /** User可編輯項目 */
@@ -44,7 +44,13 @@ export class UserComponent implements OnInit {
   flag = {
     save: false
   };
-
+  
+  filterInput(event){
+    var test = this.regexUsername.test(event.key);
+    console.debug(event);
+    console.debug(test);
+    if(!test) event.preventDefault();    
+  }
   /** 在Group=Admin及SuperUser時回傳true */
   get getNvrPermissionDisabled() {
     return this.editUserModel.group === RoleType.ADMINISTRATOR || this.editUserModel.group === RoleType.SUPERUSER;
