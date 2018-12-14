@@ -16,6 +16,7 @@ import { IStatusCallback, IWeekSchedulerOptions } from './week-scheduler/week-sc
 export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
   @Input() setupMode: number;
   @Input() currentTemplate: any;
+  @Input() originalSchedule:string;
   @Output() updateTemplateEvent: EventEmitter<any> = new EventEmitter(); // 更新template資料後callback更新template清單
   @Output() modalHide: EventEmitter<any> = new EventEmitter();
   weekScheduleOptions: { key: string, value: string }[]; // plan選項
@@ -132,11 +133,11 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (this.setupMode === 1) {
+    if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {
       this.currentPlans.push(this.convertScheduleToArray(this.schedules.recordSchedule.fullRecord));
       this.currentPlans.push(this.convertScheduleToArray(this.schedules.recordSchedule.eventRecord));
     }
-    if (this.setupMode === 2) {
+    if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {
       this.currentPlans.push(this.convertScheduleToArray(this.schedules.eventSchedule));
     }
   }
@@ -150,18 +151,38 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
     this.flag.save = true;
 
     // 存為UTC時間下的結果
-    if (this.setupMode === 1) {
+    if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {
       this.currentTemplate.FullRecord.Schedule = this.convertScheduleToUTC(this.schedules.recordSchedule.fullRecord);
       this.currentTemplate.EventRecord.Schedule = this.convertScheduleToUTC(this.schedules.recordSchedule.eventRecord);
     }
-    if (this.setupMode === 2) {
+    let updateChildRecords:Observable<void> = Observable.of(null);
+    if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {
       this.currentTemplate.Schedule = this.convertScheduleToUTC(this.schedules.eventSchedule);
+      console.log("this.currentTemplate.Schedule", this.currentTemplate.Schedule);
+      console.log("this.originalSchedule", this.originalSchedule);
+      
+      const getEventHandlers$ = Observable.fromPromise(this.parseService.fetchData({
+        type: EventHandler,
+        filter: query => query.equalTo('Schedule', this.originalSchedule)
+      }));
+      
+      updateChildRecords = getEventHandlers$.switchMap(eventHandlers=>{
+        for(let event of eventHandlers){
+          event.Schedule = this.currentTemplate.Schedule;
+        }
+        return Observable.fromPromise(Parse.Object.saveAll(eventHandlers)).map(result => {
+          this.coreService.notifyWithParseResult({
+            parseResult: result, path: this.coreService.urls.URL_CLASS_EVENTHANDLER
+          });
+        });
+      });
     }
     console.debug("save currentTemplate", this.currentTemplate);
     Observable.fromPromise((this.currentTemplate as Parse.Object).save())
       .map(result => this.coreService.notifyWithParseResult({
         parseResult: [result], path: this.getNotifyPath
       }))
+      .switchMap(()=>updateChildRecords)
       .do(() => {
         alert('Update Success');
         if (this.updateTemplateEvent) {
