@@ -5,9 +5,10 @@ import { ModalEditorModeEnum } from 'app/shared/enum/modalEditorModeEnum';
 import { LicenseProduct } from 'app/config/license-product.config';
 import { Observable } from 'rxjs/Observable';
 import { ILicenseInfo, ILicenseStatistics } from 'lib/domain/core';
-import { Nvr, Device } from 'app/model/core';
+import { Nvr, Device, ServerInfo } from 'app/model/core';
 import ArrayHelper from 'app/helper/array.helper';
-import { ClassField } from '@angular/compiler/src/output/output_ast';
+import { ParseService } from 'app/service/parse.service';
+import { OnlineRegistrationComponent } from './online-registration/online-registration.component';
 
 @Component({
   selector: 'app-license',
@@ -16,34 +17,51 @@ import { ClassField } from '@angular/compiler/src/output/output_ast';
 })
 export class LicenseComponent implements OnInit {
   /** MediaServer回傳license資料 */
+  @ViewChild('onlineRegistration') onlineRegistration:OnlineRegistrationComponent;
   licenseInfo: ILicenseInfo;
   statistics: ILicenseStatistics[];
   currentEditorMode: ModalEditorModeEnum = ModalEditorModeEnum.NONE;
   licenseProduct = LicenseProduct;
   nvrConfigs: Nvr[];
   deviceConfigs: Device[];
-
-  constructor(private coreService: CoreService, private licenseService: LicenseService) { }
+  servers:ServerInfo[];
+  currentServer:ServerInfo ;
+  constructor(private coreService: CoreService, private licenseService: LicenseService, private parseService:ParseService) { }
 
   ngOnInit() {
+    this.currentServer = new ServerInfo();
+    this.currentServer.id="";
+
     Observable.combineLatest(
+      this.parseService.fetchData({type:ServerInfo}),
       this.coreService.getConfig({ path: this.coreService.urls.URL_CLASS_NVR }),
       this.coreService.getConfig({ path: this.coreService.urls.URL_CLASS_DEVICE }), // 當前已勾選Device資訊(參考用)
-      (response1, response2) => {
-        this.nvrConfigs = response1.results;
-        this.deviceConfigs = response2.results;
+      (response1,response2, response3) => {        
+        this.servers = response1;
+        this.currentServer = this.servers[0];
+        this.nvrConfigs = response2.results;
+        this.deviceConfigs = response3.results;
       }
     ).map(() => this.reloadLicenseInfo())
       .subscribe();
   }
-
+  setCurrentServer(id:string){
+    this.statistics=undefined;
+    this.licenseInfo = undefined;
+    this.currentServer = this.servers.find(x=>x.id == id);
+    console.debug("this.currentServer",this.currentServer);
+    this.reloadLicenseInfo();
+    
+  }
   reloadLicenseInfo() {
     const reload$ = this.coreService.proxyMediaServer({
       method: 'GET',
       path: this.coreService.urls.URL_MEDIA_LICENSE_INFO
-    })
-      .map(result => this.licenseInfo = result.License)
-      .map(() => this.licenseInfo.Adaptor = ArrayHelper.toArray(this.licenseInfo.Adaptor))
+    }, 5000, this.currentServer.id)
+      .map(result => {
+        this.licenseInfo = result.License;        
+      })
+      .map(() => this.licenseInfo.Adaptor = ArrayHelper.toArray(this.licenseInfo.Adaptor))      
       .map(() => this.countLicenseUsed());
 
     this.licenseService.getLicenseLimit()
@@ -107,6 +125,11 @@ export class LicenseComponent implements OnInit {
 
   clickOnlineRegistration() {
     this.currentEditorMode = ModalEditorModeEnum.ONLINE_REGISTRATION;
+    
+    if(this.onlineRegistration){
+      this.onlineRegistration.initEthernetCard();
+    }
+    
   }
 
   clickOfflineRegistration() {

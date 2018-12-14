@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output, Input } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
+import { ServerInfo } from 'app/model/core';
 
 @Component({
   selector: 'app-offline-registration',
@@ -8,10 +9,11 @@ import { CoreService } from 'app/service/core.service';
 })
 export class OfflineRegistrationComponent implements OnInit {
   @ViewChild('licenseFile') licenseFile: ElementRef;
+  @Input() currentServer:ServerInfo;
   @Output() closeModalEvent: EventEmitter<any> = new EventEmitter();
   @Output() reloadEvent: EventEmitter<any> = new EventEmitter();
   displayProcess: string;
-  uploadFileContent: string;
+  uploadFileContent: any;
   constructor(private coreService: CoreService) { }
 
   ngOnInit() {
@@ -35,7 +37,7 @@ export class OfflineRegistrationComponent implements OnInit {
       method: 'POST',
       path: this.coreService.urls.URL_MEDIA_OFFLINE_REGISTRATION,
       body: this.uploadFileContent
-    }).map(response => this.receiveConfirmResponse(response))
+    }, 5000, this.currentServer.id).map(response => this.receiveConfirmResponse(response))
       .subscribe();
   }
 

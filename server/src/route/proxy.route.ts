@@ -14,17 +14,22 @@ export const ProxyRoute: IRouteMap = {
     path: 'proxy',
     router: Router().use(bodyParser.json())
         .get('/test', (req, res) => { res.send('Proxy Test') })
-        .post('/', (req, res) => {
+        .post('/:id?', (req, res) => {
             if (!req.body || !req.body.path) {
                 res.send({});
                 return;
             }
-
+            
             // 先取得MediaServer的連線URL再轉發
             parseHelper.getData({
                 type: ServerInfo,
                 filter: query => {
-                    query.matches('Type', new RegExp('CMSManager'), 'i')
+                    //console.log("proxy/:id", req.params["id"]);
+                    if(!req.params["id"]){
+                        query.matches('Type', new RegExp('CMSManager'), 'i')
+                    }else{
+                        query.equalTo('objectId', req.params["id"]);
+                    }
                 }
             }).then(serverInfo => {
                 const mediaUrl = `http://${serverInfo.Domain}:${serverInfo.Port}`;
