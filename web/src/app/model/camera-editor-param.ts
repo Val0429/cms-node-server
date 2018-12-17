@@ -321,8 +321,8 @@ export class CameraEditorParam {
         }
 
         // Seamless Edge Recording
-        if (!this.SeamlessEdgeRecording) {
-            this.currentCameraConfig.CameraSetting.SeamlessEdgeRecording = 'false';
+        if (this.SeamlessEdgeRecording !== true ) {
+            this.currentCameraConfig.CameraSetting.SeamlessEdgeRecording = false;
         }
 
         // Produce correct quantity of IOPort   

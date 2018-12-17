@@ -186,14 +186,14 @@
           </select>
         </div>
       </div>
-      <!-- <div class="form-group row" *ngIf="editorParam.SeamlessEdgeRecording">
+      <div class="form-group row" *ngIf="editorParam.SeamlessEdgeRecording">
         <label class="col-md-4 col-form-label text-md-right">Seamless Edge Recording</label>
         <div class="col-md-8" style="padding-top: 4px;">
-          <input id="seamlessEdgeRecording" type="checkbox" [checked]="currentCamera.CameraSetting.SeamlessEdgeRecording == 'true'"
-            (change)="currentCamera.CameraSetting.SeamlessEdgeRecording = currentCamera.CameraSetting.SeamlessEdgeRecording == 'true' ? 'false' : 'true'">
+          <input id="seamlessEdgeRecording" type="checkbox" [checked]="currentCamera.CameraSetting.SeamlessEdgeRecording === true"
+            (change)="currentCamera.CameraSetting.SeamlessEdgeRecording = currentCamera.CameraSetting.SeamlessEdgeRecording === true ? false : true">
           <label for="seamlessEdgeRecording">Enabled</label>
         </div>
-      </div> -->
+      </div>
       <ng-container *ngFor="let stream of currentCamera.Config.Stream; let i = index;">
         <legend>Video Stream Profile {{i + 1}}</legend>
         <div class="form-group row" *ngIf="editorParam.ChannelIdOptions.length > 1">
