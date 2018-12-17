@@ -1,8 +1,20 @@
 <div class="col-12">
-  <button class="btn btn-secondary mb-xs" role="button" (click)="clickOnlineRegistration();modalWindow.show()">Online Registration</button>
-  <button class="btn btn-secondary mb-xs" role="button" (click)="clickOfflineRegistration();modalWindow.show()">Offline Registration</button>
-</div>
-<div class="col-12">
+    <section class="widget">
+        <header>
+          <legend>
+            <strong>Server:</strong>
+            <select (change)="setCurrentServer($event.target.value)">
+                <option *ngFor="let server of servers;let i=index;" [selected]="i==0" value="{{server.id}}">{{server.Name}} {{server.Domain}}:{{server.Port}}</option>
+              </select>
+          </legend>
+          </header>
+
+          <button class="btn btn-secondary mb-xs" role="button" (click)="clickOnlineRegistration();modalWindow.show()">Online Registration</button>
+          <button class="btn btn-secondary mb-xs" role="button" (click)="clickOfflineRegistration();modalWindow.show()">Offline Registration</button>
+          
+    </section>
+  
+
   <section class="widget">
     <header>
       <legend>
@@ -98,9 +110,9 @@
         </h4>
       </div>
       <div class="modal-body">
-        <app-online-registration [licenseInfo]="licenseInfo" (closeModalEvent)="modalWindow.hide()" (reloadEvent)="reloadLicenseInfo()"
+        <app-online-registration #onlineRegistration [licenseInfo]="licenseInfo" [currentServer]="currentServer" (closeModalEvent)="modalWindow.hide()" (reloadEvent)="reloadLicenseInfo()"
           *ngIf="currentEditorMode === 4"></app-online-registration>
-        <app-offline-registration (closeModalEvent)="modalWindow.hide()" (reloadEvent)="reloadLicenseInfo()" *ngIf="currentEditorMode === 5"></app-offline-registration>
+        <app-offline-registration (closeModalEvent)="modalWindow.hide()" [currentServer]="currentServer" (reloadEvent)="reloadLicenseInfo()" *ngIf="currentEditorMode === 5"></app-offline-registration>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { ILicenseInfo, ILicenseAdaptor } from 'lib/domain/core';
-import { environment } from '../../../../environments/environment';
+import { ServerInfo } from 'app/model/core';
 @Component({
   selector: 'app-online-registration',
   templateUrl: './online-registration.component.html',
@@ -9,6 +9,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class OnlineRegistrationComponent implements OnInit {
   @Input() licenseInfo: ILicenseInfo;
+  @Input() currentServer:ServerInfo;
   @Output() closeModalEvent: EventEmitter<any> = new EventEmitter();
   @Output() reloadEvent: EventEmitter<any> = new EventEmitter();
   @ViewChild('inputKey1') inputKey1: ElementRef;
@@ -31,6 +32,7 @@ export class OnlineRegistrationComponent implements OnInit {
 
   /** 取得當前網路卡及選項, key:網卡, value:MAC */
   initEthernetCard() {
+    console.debug("initEthernetCard", this.currentServer);
     if (this.licenseInfo) {
       this.adaptorOptions = [];
       this.licenseInfo.Adaptor.forEach(adp => {
@@ -93,7 +95,7 @@ export class OnlineRegistrationComponent implements OnInit {
       method: 'POST',
       path: this.coreService.urls.URL_MEDIA_ONLINE_REGISTRATION,
       body: body
-    }).map(response => this.receiveConfirmResponse(response))
+    }, 5000, this.currentServer.id).map(response => this.receiveConfirmResponse(response))
       .subscribe();
   }
 
@@ -111,12 +113,10 @@ export class OnlineRegistrationComponent implements OnInit {
     this.displayProcess = this.coreService.getLicenseResponseDescription(response);
     if (this.displayProcess.length === 0) {      
       this.displayProcess = "Registration succeeded!";
-      if(environment.production){
-        this.initInputData();
-        this.reloadEvent.emit();
-        this.closeModalEvent.emit();
-        this.displayProcess = "";
-      }
+      this.initInputData();
+      this.reloadEvent.emit();
+      this.closeModalEvent.emit();
+      this.displayProcess = "";      
     }
   }
 

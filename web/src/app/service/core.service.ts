@@ -96,7 +96,7 @@ export class CoreService {
       });
   }
 
-  proxyMediaServer(args: IBatchRequest, timeout?: number) {
+  proxyMediaServer(args: IBatchRequest, timeout?: number, serverId?:string) {
     const body = {
       method: args.method,
       path: args.path,
@@ -104,8 +104,9 @@ export class CoreService {
       headers: this.mediaHeaders,
       body: args.body
     };
+    //console.debug("Parse.serverURL", Parse.serverURL);
     const options = new RequestOptions({ headers: this.parseHeaders });
-    return this.http.post(Parse.serverURL + this.urls.MEDIA_PROXY_URL, body, options)
+    return this.http.post(Parse.serverURL + this.urls.MEDIA_PROXY_URL + (serverId ? `/${serverId}` : ""), body, options)
       .timeout(timeout || 10000)
       .catch(err => Observable.throw(new Error(err.message)))
       .map((response: Response) => response.json());

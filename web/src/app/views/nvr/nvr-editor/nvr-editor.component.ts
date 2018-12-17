@@ -178,7 +178,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
       alert("Delete Success");
       this.reloadAfterSave();
     } catch(err){
-      console.debug(err);
+      console.error(err);
       alert(err);
     }finally{
       this.flag.delete = false;
@@ -361,7 +361,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
   onChangeManufacture() {
     // this.editNvr.Driver = this.getNvrDriverByManufacture();
     // iSapP2P會隱藏帳號密碼改由亂數產生
-    if (this.currentEditModel.Manufacture === 'iSapP2P') {
+    if (this.currentEditModel.Manufacture === 'iSAPP2P') {
       this.currentEditModel.Account = this.coreService.randomString(12);
       this.currentEditModel.Password = this.coreService.randomString(12);
     }

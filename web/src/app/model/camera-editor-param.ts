@@ -63,7 +63,7 @@ export class CameraEditorParam {
     /** 讓layout判斷此廠牌是否需在Stream設定中設定Resolution Region */
     ResolutionRegionConfig: boolean;
 
-    constructor(cap: any, model: string, data: any) {
+    constructor(private cap: any, private model: string, private data: Device) {
         if (Array.isArray(cap.Devices.Device)) {
             this.modelCap = cap.Devices.Device.find(x => x.Model === model);
         } else {
@@ -321,13 +321,15 @@ export class CameraEditorParam {
         }
 
         // Seamless Edge Recording
-        if (!this.SeamlessEdgeRecording) {
-            this.currentCameraConfig.CameraSetting.SeamlessEdgeRecording = 'false';
+        if (this.SeamlessEdgeRecording !== true ) {
+            this.currentCameraConfig.CameraSetting.SeamlessEdgeRecording = false;
         }
 
-        // Produce correct quantity of IOPort
-        this.currentCameraConfig.CameraSetting.IOPort = [];
-        if (this.IOPortCount > 0) {
+        // Produce correct quantity of IOPort   
+        console.debug("this.currentCameraConfig.CameraSetting.IOPort", this.currentCameraConfig.CameraSetting.IOPort, "this.IOPortCount", this.IOPortCount );
+        if(!this.IOPortCount || this.IOPortCount == 0){
+            this.currentCameraConfig.CameraSetting.IOPort = [];
+        }else if (this.IOPortCount > 0 && (!this.currentCameraConfig.CameraSetting.IOPort || this.currentCameraConfig.CameraSetting.IOPort.length != this.IOPortCount)) {
             const tempIOPort = [];
             for (let i = 1; i <= this.IOPortCount; i++) {
                 const item = this.currentCameraConfig.CameraSetting.IOPort.find(x => x.Id === i.toString());

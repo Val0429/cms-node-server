@@ -86,7 +86,7 @@ export const ResolutionRegionBrand: string[] = [
     'arecontvision'
 ];
 export const QualityBrand: string[] = [
-    'bosch'
+    'bosch', 'axis'
 ];
 export const PTZAction = [
     'Up', 'Down', 'Left', 'Right', 'Top Left', 'Down Left', 'Top Right', 'Down Right',

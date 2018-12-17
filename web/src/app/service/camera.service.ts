@@ -297,7 +297,7 @@ export class CameraService {
     }
 
     /** 讀取指定model轉為CameraEditorParam物件 */
-    getCameraEditorParam(model: string, data: any):any {
+    getCameraEditorParam(model: string, data: Device):any {
         console.debug("currentBrandCapability", this.currentBrandCapability, model, data);
         if (!this.currentBrandCapability) {
             return undefined;

@@ -79,7 +79,7 @@ setEditModel(editNvr:Nvr, groupList:Group[], iSapP2PServerList:ServerInfo[]) {
     Domain: editNvr.Domain,
     Port: editNvr.Port,
     ServerPort: editNvr.ServerPort,
-    Account: this.cryptoService.decrypt4DB(editNvr.Account || "wWKXLsb1FnM="),
+    Account: this.cryptoService.decrypt4DB(editNvr.Account || "zQjDgOyQcPU="),
     Password: this.cryptoService.decrypt4DB(editNvr.Password || "JRp9eL+fp18="),
     Tags: editNvr.Tags ? editNvr.Tags.join(',') : '',
     IsListenEvent: editNvr.IsListenEvent,

@@ -64,14 +64,15 @@
               <div class="form-group row">
                 <label class="form-control-label col-md-3 col-12 text-right text-bold">User Name:</label>
                 <div class="col-md-9 col-12">
-                  <input type="text" class="form-control" id="username" name="username" placeholder="User Name" [(ngModel)]="editUserModel.username"
+                  <input type="text" class="form-control" id="username" name="username" placeholder="User Name" 
+                      [(ngModel)]="editUserModel.username" maxlength="32" required (keydown)="filterInput($event)"
                     [disabled]="currentEditUser">
                 </div>
               </div>
               <div class="form-group row">
                 <label class="form-control-label col-md-3 col-12 text-right text-bold">Password:</label>
                 <div class="col-md-9 col-12">
-                  <input type="password" class="form-control" id="password" name="password" [placeholder]="'Password'" [(ngModel)]="editUserModel.password">
+                  <input type="password" class="form-control" id="password" name="password" required [placeholder]="'Password'" maxlength="32" [(ngModel)]="editUserModel.password">
                 </div>
               </div>
               <div class="form-group row">

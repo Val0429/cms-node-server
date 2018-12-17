@@ -43,14 +43,13 @@ export class CameraSearchComponent implements OnInit {
         let cams = this.searchList.filter(x=>x.checked===true);
         console.debug("saved cams", cams);
 
-        await this.licenseService.getLicenseAvailableCount('00171')
-          .map(num => {
-            if (num < cams.length) {
-              alert('License available count is not enough, can not add new IP Camera.');
-              return;
-            }        
-          }).toPromise(); 
-        
+        let num = await this.licenseService.getLicenseAvailableCount('00171').toPromise(); 
+
+        if (num < cams.length) {
+          alert('License available count is not enough, can not add new IP Camera.');
+          return;
+        }        
+
         for(let cam of cams)  {
           const newCam = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: this.cameraService.getNewChannelId(this.cameraConfigs.map(function(e){return e.device;})), searchCamera: cam.device });            
           await this.cameraService.getCapability(newCam, cam.device.COMPANY, []).toPromise(); 
@@ -65,6 +64,7 @@ export class CameraSearchComponent implements OnInit {
         }
         
         alert("Save camera(s) sucess");
+        this.checkedAll=false;
         this.searchList=[];
         this.reloadDataEvent.emit();
         this.closeModal.emit();        
@@ -72,9 +72,7 @@ export class CameraSearchComponent implements OnInit {
         console.error(err);
         alert(err);
       }finally{
-        this.checkedAll=false;
         this.flag.load=false;        
-        
       }
     
   }

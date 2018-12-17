@@ -76,7 +76,7 @@
         </h4>
       </div>
       <div class="modal-body">
-        <app-schedule-template-editor [setupMode]="templateSetupMode" [currentTemplate]="currentEditTemplate" (updateTemplateEvent)="reloadTemplateConfig()"
+        <app-schedule-template-editor [setupMode]="templateSetupMode" [originalSchedule]="templateSetupMode == 2 ? currentEditTemplate.Schedule : ''" [currentTemplate]="currentEditTemplate" (updateTemplateEvent)="reloadTemplateConfig()"
           (modalHide)="modalWindow.hide()"></app-schedule-template-editor>
       </div>
     </div>
