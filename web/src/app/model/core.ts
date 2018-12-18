@@ -21,6 +21,8 @@ import {
   IDBSyncDestination,
   IEventRecovery,
   IEventRecoverySetting,
+  IRecordScheduleTemplateFullRecord,
+  IRecordScheduleTemplateEventRecord,
 } from 'lib/domain/core';
 // import * as parse from 'parse';
 
@@ -861,13 +863,4 @@ interface IGeneralMail {
   Server: string; // default empty
   Account: string; // default empty
   Password: string; // default empty
-}
-
-interface IRecordScheduleTemplateFullRecord {
-  Schedule: string;
-}
-interface IRecordScheduleTemplateEventRecord {
-  Schedule: string;
-  PreRecord: number;
-  PostRecord: number;
 }

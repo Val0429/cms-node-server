@@ -142,7 +142,18 @@ export interface IDeviceConfig {
     }
     Stream?: IDeviceStream[];
 }
+export interface IGroupChannel {
+    Nvr: string;
+    Channel: number;
+}
 
+export interface IBatchRequest {
+    method: string;
+    path: string;
+    body?: any;
+    domainPath?: string; // 若要連到其他網域就使用此參數
+  }
+  
 export interface IDeviceStream {
     Id: number;
     Video: {
@@ -184,6 +195,16 @@ export interface IDeviceStream {
     KeepDays?: string;
 }
 
+export interface IRecordScheduleTemplateFullRecord {
+    Schedule: string;
+  }
+
+export interface IRecordScheduleTemplateEventRecord {
+    Schedule: string;
+    PreRecord: number;
+    PostRecord: number;
+  }
+  
 export interface IGroup {
     Name: string;
     Level: string;

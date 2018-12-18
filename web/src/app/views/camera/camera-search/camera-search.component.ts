@@ -61,8 +61,7 @@ export class CameraSearchComponent implements OnInit {
           newCam.Config.Authentication = Object.assign({}, tempAuth);
           //push new cam to camera list
           this.cameraConfigs.push({checked:false, device:newCam, brandDisplay:this.cameraService.getBrandDisplay(cam.device.COMPANY)});          
-        }
-        
+        }        
         alert("Save camera(s) sucess");
         this.checkedAll=false;
         this.searchList=[];

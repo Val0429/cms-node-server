@@ -10,16 +10,20 @@ import { GroupService } from './group.service';
 import { CryptoService } from './crypto.service';
 import StringHelper from 'app/helper/string.helper';
 import { ISearchCamera } from 'lib/domain/core';
+import { Http, RequestOptions } from '@angular/http';
+import { UserService } from './user.service';
 
 @Injectable()
 export class CameraService {
     currentBrandCapability: any; // 從server取回的json格式capability
 
     constructor(
+        private httpService:Http,
         private coreService: CoreService, 
         private parseService:ParseService, 
         private groupService:GroupService,
-        private cryptoService:CryptoService
+        private cryptoService:CryptoService,
+        private userService:UserService
         ) { }
 
     brandList = DeviceVendor; // 固定list
@@ -189,7 +193,7 @@ export class CameraService {
     return await save$
       .switchMap(() =>         
           this.groupService.setChannelGroup(groupList, { Nvr: ipCameraNvr.Id, Channel: currentCamera.Channel }, selectedSubGroup ? selectedSubGroup : undefined)          
-      )      
+      )
       .switchMap(async()=>await this.updateSchedule(currentCamera))
       .toPromise();
   }
@@ -220,47 +224,12 @@ export class CameraService {
     return obj;
   }
     async deleteCam(cam : Device, ipCameraNvr:Nvr, groupList: Group[]): Promise<void>{
+      
+      let auth = btoa(`${this.userService.storage['username']}:${this.userService.storage['password']}`);
+      let result = await this.httpService.delete(this.parseService.parseServerUrl + "/cms/device", 
+        new RequestOptions({ headers:this.coreService.parseHeaders, body:{ objectId: cam.id, auth, ipCameraNvr, groupList}})).toPromise();
 
-        const delete$ = Observable.fromPromise(cam.destroy())
-          .map(result => {
-            this.coreService.addNotifyData({
-              path: this.coreService.urls.URL_CLASS_NVR,
-              objectId: ipCameraNvr.id
-            });
-            this.coreService.addNotifyData({
-              path: this.coreService.urls.URL_CLASS_DEVICE,
-              objectId: cam.id
-            });
-          });
-  
-        // 刪除與此Camera相關的RecordSchedule
-        const removeRecordSchedule$ = Observable.fromPromise(this.parseService.fetchData({
-          type: RecordSchedule,
-          filter: query => query
-            .equalTo('NvrId', cam.NvrId)
-            .equalTo('ChannelId', cam.Channel)
-        }))
-          .switchMap(schedules => Observable.fromPromise(Parse.Object.destroyAll(schedules)))
-          .map(results => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_RECORDSCHEDULE, dataArr: results }));
-  
-        // 刪除與此Camera相關的EventHandler
-        const removeEventHandler$ = Observable.fromPromise(this.parseService.fetchData({
-          type: EventHandler,
-          filter: query => query
-            .equalTo('NvrId',  cam.NvrId)
-            .equalTo('DeviceId', cam.Channel)
-        }))
-          .switchMap(handler => Observable.fromPromise(Parse.Object.destroyAll(handler)))
-          .map(results => this.coreService.notifyWithParseResult({
-            parseResult: results, path: this.coreService.urls.URL_CLASS_EVENTHANDLER
-          }));
-  
-        return await delete$
-          .switchMap(() => removeRecordSchedule$)
-          .switchMap(() => removeEventHandler$)  
-          .switchMap(() => this.groupService.setChannelGroup(
-            groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, undefined))     
-          .toPromise();
+        
     }
     /** 取得適當的新ChannelId */
   getNewChannelId(cameraConfigs:Device[], tempChannel?: Device[]): number {

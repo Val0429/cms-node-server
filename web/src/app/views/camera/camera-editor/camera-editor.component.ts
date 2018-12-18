@@ -175,8 +175,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     }    
     try{
       this.flag.save = true;
-      await this.cameraService.saveCamera(this.currentCamera, this.ipCameraNvr, this.groupList, this.selectedSubGroup, this.editorParam, this.tags);
-      
+      await this.cameraService.saveCamera(this.currentCamera, this.ipCameraNvr, this.groupList, this.selectedSubGroup, this.editorParam, this.tags);      
       alert('Update Success');
       this.reloadDataEvent.emit();
     }catch(err){
@@ -189,17 +188,18 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   
   
   async clickDelete() {
-    if (confirm('Are you sure to delete this Camera?')) {
-      this.flag.delete = true;
-      await this.cameraService.deleteCam(this.currentCamera, this.ipCameraNvr, this.groupList)
-        .catch(alert)
-        .then(() => { 
-          this.flag.delete = false;
-          this.reloadDataEvent.emit();
-        });
-    } else {
-      return;
-    }
+    if (!confirm('Are you sure to delete this Camera?')) return;
+      
+      try{
+        this.flag.delete = true;
+        await this.cameraService.deleteCam(this.currentCamera, this.ipCameraNvr, this.groupList)           
+        this.reloadDataEvent.emit();        
+      }catch(err){
+        console.error(err);
+        alert(err);
+      }finally{
+        this.flag.delete=false;
+      }    
   }
   
   checkDisplayAuthentication() {

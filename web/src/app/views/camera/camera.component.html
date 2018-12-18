@@ -11,13 +11,13 @@
           <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="searchWindow.show()">
             Search
           </button>
-          <button *ngIf="cameraConfigs.length > 0" class="btn btn-secondary width-100 mb-xs" role="button" (click)="cloneWindow.show()">
+          <button *ngIf="cameraConfigs.length > 0" class="btn btn-secondary width-100 mb-xs" role="button" (click)="cloneWindow.show()" [disabled]="flag.save || flag.delete">
             Clone
           </button>
-          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addDevice()">
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addDevice()" [disabled]="flag.save || flag.delete">
             Create
           </button>
-          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="deleteAll()" [disabled]="!anyChecked">
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="deleteAll()" [disabled]="!anyChecked || flag.save || flag.delete">
             Delete
           </button>
         </div>
@@ -104,7 +104,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="clickClone();">Clone</button>
+        <button type="button" class="btn btn-primary" (click)="clickClone();" [disabled]="flag.save || flag.delete">Clone</button>
         <button type="button" class="btn btn-gray" (click)="cloneWindow.hide();">Close</button>
       </div>
     </div>
