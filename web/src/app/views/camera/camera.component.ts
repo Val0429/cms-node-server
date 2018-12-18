@@ -18,7 +18,7 @@ import { CameraSearchComponent } from './camera-search/camera-search.component';
 })
 
 export class CameraComponent implements OnInit {
-
+  p: number = 1;
   flag = {
     save: false,
     delete: false
@@ -99,6 +99,7 @@ export class CameraComponent implements OnInit {
       .switchMap(()=>this.getAvailableLicense())
       .subscribe();
     this.checkSelected();
+    this.p=1;
   }
   checkSelected(){
     let checked = this.cameraConfigs.map(function(e){return e.checked});

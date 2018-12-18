@@ -20,7 +20,7 @@ import { NvrService, INvrEditModel } from 'app/service/nvr.service';
   styleUrls: ['./nvr-editor.component.css']
 })
 export class NvrEditorComponent implements OnInit, OnChanges {
-
+  p:number=1;
   /** 傳入ParseObject Nvr物件 */
   @Input() editNvr: Nvr;
   @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
@@ -87,7 +87,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     if (!this.editNvr) {
       return;
     }
-
+    this.p=1;
     this.currentEditModel = this.nvrService.setEditModel(this.editNvr, this.groupList, this.iSapP2PServerList);
 
     this.parseService.fetchData({

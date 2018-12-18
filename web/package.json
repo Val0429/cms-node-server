@@ -64,6 +64,7 @@
     "ng2-dnd": "4.2.0",
     "ng2-select2": "1.0.0-beta.10",
     "ngx-bootstrap": "^1.9.3",
+    "ngx-pagination": "^3.2.1",
     "node-sass": "^4.5.3",
     "nvd3": "^1.8.5",
     "pace": "https://github.com/HubSpot/pace.git#v0.7.7",
