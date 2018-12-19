@@ -103,7 +103,7 @@ export class LicenseService {
         const getNvr$ = Observable.fromPromise(this.parseService.fetchData({
             type: Nvr,
             filter: query => query
-                .notContainedIn('Driver', ['IPCamera', 'SmartMedia', 'iSAP', 'iSAP Failover Server', 'iSAPP2P', 'SmartMedia'])
+                .notContainedIn('Driver', ['IPCamera', 'SmartMedia', 'iSAP', 'iSAP Failover Server', 'iSapP2P', 'SmartMedia'])
                 .select('Id')
                 .limit(30000)
         }));
@@ -167,7 +167,7 @@ export class LicenseService {
 
     /** Nvr Editor儲存時判斷license */
     getNvrManufacturerLicenseCode(manufacturer: string) {
-        const isapList = ['iSAP', 'iSAP Failover Server', 'iSAPP2P', 'SmartMedia'];
+        const isapList = ['iSAP', 'iSAP Failover Server', 'iSapP2P', 'SmartMedia'];
         return isapList.indexOf(manufacturer) >= 0
             ? '00166' : '00167';
     }

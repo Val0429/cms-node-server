@@ -22,7 +22,7 @@ export const NvrManufacturer = {
         'Hikvision',
         'iSAP',
         'iSAP Failover Server',
-        'iSAPP2P',
+        'iSapP2P',
         'Milestone',
         'Milestone Corporate 2016 R2',
         'NetworkOptix',
