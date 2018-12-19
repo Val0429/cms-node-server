@@ -30,7 +30,29 @@ export class DeviceService {
     async delete(req:Request, res:Response){
         try{
             coreService.auth = req.body.auth;            
-            await this.deleteCam(req.body.objectId,  req.body.ipCameraNvr, req.body.groupList);
+            let nvrObjectId = req.body.nvrObjectId;
+            let groupList = req.body.groupList;
+            if(!nvrObjectId){
+                await Observable.fromPromise(parseHelper.getData({
+                    type: Nvr,
+                    filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
+                  })).do(nvr => nvrObjectId = nvr.id).toPromise();                  
+            }
+            if(!groupList){
+                await Observable.fromPromise(parseHelper.fetchData({
+                    type: Group
+                  }).then(groups => {
+                    groupList = groups;
+                  })).toPromise();
+            }
+
+            
+            for(let objectId of req.body.objectIds){
+                let cam = await parseHelper.getDataById({type:Device, objectId}); 
+                await this.deleteCam(cam, nvrObjectId);
+                //let it go without awaited .. yay...!
+                this.deleteCamRelatedData(cam, groupList);
+            }
             res.json({message:"success"});
         }
         catch(err){
@@ -41,23 +63,23 @@ export class DeviceService {
                 error: err
             });
         }
-    }
-
-    async deleteCam(objectId :string,ipCameraNvr:Nvr, groupList: Group[]){
-        let cam = await parseHelper.getDataById({type:Device, objectId});        
+    }    
+    async deleteCam(cam:Device, nvrObjectId:string){
         
         const delete$ = Observable.fromPromise(cam.destroy())
-          .map(result => {
+          .map(result => {            
             coreService.addNotifyData({
               path: coreService.urls.URL_CLASS_NVR,
-              objectId: ipCameraNvr.id
+              objectId: nvrObjectId
             });
-            coreService.addNotifyData({
+            coreService.notifyWithParseResult({
               path: coreService.urls.URL_CLASS_DEVICE,
-              objectId: cam.id
+              parseResult:[result]
             });
           });
-  
+          await delete$.toPromise();
+    }
+    async deleteCamRelatedData(cam :Device, groupList: Group[]){  
         // 刪除與此Camera相關的RecordSchedule
         const removeRecordSchedule$ = Observable.fromPromise(parseHelper.fetchData({
           type: RecordSchedule,
@@ -80,8 +102,7 @@ export class DeviceService {
             parseResult: results, path: coreService.urls.URL_CLASS_EVENTHANDLER
           }));
   
-        return await delete$
-          .switchMap(() => removeRecordSchedule$)
+        return await removeRecordSchedule$
           .switchMap(() => removeEventHandler$)  
           .switchMap(() => this.setChannelGroup(
             groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, undefined))               

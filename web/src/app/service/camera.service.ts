@@ -223,11 +223,11 @@ export class CameraService {
 
     return obj;
   }
-    async deleteCam(cam : Device, ipCameraNvr:Nvr, groupList: Group[]): Promise<void>{
+    async deleteCam(camIds : string[], nvrObjectId:string, groupList: Group[]): Promise<void>{
       
       let auth = btoa(`${this.userService.storage['username']}:${this.userService.storage['password']}`);
       let result = await this.httpService.delete(this.parseService.parseServerUrl + "/cms/device", 
-        new RequestOptions({ headers:this.coreService.parseHeaders, body:{ objectId: cam.id, auth, ipCameraNvr, groupList}})).toPromise();
+        new RequestOptions({ headers:this.coreService.parseHeaders, body:{ objectIds: camIds, auth, nvrObjectId, groupList}})).toPromise();
 
         
     }
