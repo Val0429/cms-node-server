@@ -23,6 +23,9 @@ export const CmsRoute: IRouteMap = {
         .get('/device', (req, res) => {
             deviceService.get(req, res);
         })
+        .post('/device', async (req, res) => {            
+            await deviceService.post(req, res);
+        })
         .delete('/device', async (req, res) => {
             await deviceService.delete(req, res);
         })

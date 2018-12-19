@@ -1,7 +1,7 @@
 
 import { Request, Response } from 'express';
 import { Nvr, Device, Group, EventHandler, RecordSchedule } from '../domain';
-import { ParseHelper } from '../helpers';
+import { ParseHelper, ServerHelper } from '../helpers';
 import { Observable } from 'rxjs';
 import { CoreService } from './core.service';
 import { IGroupChannel } from 'lib/domain/core';
@@ -20,6 +20,34 @@ export class DeviceService {
     constructor() {
         
     }
+    async post(req:Request, res:Response){
+        try{
+            coreService.auth = req.body.auth;     
+            let nvrObjectId = req.body.nvrObjectId;
+            let cam = req.body.cam;
+            let quantity = req.body.quantity;
+            let account = req.body.account;
+            let password = req.body.password;
+            
+            if(!nvrObjectId){
+                let nvr = await this.getDefaultNvr();
+                nvrObjectId = nvr.id;
+            }
+            
+            let groupList = await this.getGroupList();
+            
+            await this.cloneCam(cam, quantity, nvrObjectId, groupList, account, password);
+            res.json({message:"success"});
+        }
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
+    }
     get(req:Request, res:Response){
         parseHelper.fetchData({
             type: Device,
@@ -27,25 +55,27 @@ export class DeviceService {
             res.json(devices);
         })
     }
+    async getDefaultNvr():Promise<Nvr>{
+        return Observable.fromPromise(parseHelper.getData({
+            type: Nvr,
+            filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
+          })).toPromise();
+    }
+    async getGroupList():Promise<Group[]>{
+        return await Observable.fromPromise(parseHelper.fetchData({
+            type: Group
+          })).toPromise();
+    }
     async delete(req:Request, res:Response){
         try{
             coreService.auth = req.body.auth;            
             let nvrObjectId = req.body.nvrObjectId;
-            let groupList = req.body.groupList;
             if(!nvrObjectId){
-                await Observable.fromPromise(parseHelper.getData({
-                    type: Nvr,
-                    filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
-                  })).do(nvr => nvrObjectId = nvr.id).toPromise();                  
+                let nvr = await this.getDefaultNvr();
+                nvrObjectId = nvr.id;
             }
-            if(!groupList){
-                await Observable.fromPromise(parseHelper.fetchData({
-                    type: Group
-                  }).then(groups => {
-                    groupList = groups;
-                  })).toPromise();
-            }
-
+            
+            let groupList = await this.getGroupList();
             
             for(let objectId of req.body.objectIds){
                 let cam = await parseHelper.getDataById({type:Device, objectId}); 
@@ -64,6 +94,73 @@ export class DeviceService {
             });
         }
     }    
+    cloneNewDevice(args: { cam: Device, newChannel: number }, account:string, password:string) {
+        
+        let obj = new Device();
+        
+        obj.NvrId = args.cam.NvrId;
+        obj.Name = args.cam.Name;
+        obj.Channel = args.newChannel;          
+
+        obj.Config = Object.assign({}, args.cam.Config);
+        obj.Config.Authentication = Object.assign({}, args.cam.Config.Authentication);
+        obj.Config.PTZSupport = Object.assign({}, args.cam.Config.PTZSupport);
+        obj.Config["Multi-Stream"] = Object.assign({}, args.cam.Config["Multi-Stream"]);
+        obj.Config.Stream=Object.assign([], args.cam.Config.Stream);
+    
+        obj.Config.Authentication.Account = account;
+        obj.Config.Authentication.Password = password;
+    
+        obj.Capability = Object.assign({}, args.cam.Capability);
+        obj.CameraSetting = Object.assign({}, args.cam.CameraSetting);
+        obj.CameraSetting.IOPort = Object.assign([], args.cam.CameraSetting.IOPort);
+        obj.Tags = Object.assign([], args.cam.Tags);
+        
+        return obj;
+      }
+      findDeviceGroup(groupConfigs: Group[], channelData: IGroupChannel): string {        
+        
+        const tempGroup = groupConfigs.find(x => x.Level === '1' && x.Channel
+            && x.Channel.some(ch => ch.Nvr === channelData.Nvr && ch.Channel === channelData.Channel));    
+        
+        return tempGroup ? tempGroup.id : '';
+    }
+    getNewChannelId(cameraConfigs:Device[], tempChannel?: Device[]): number {
+        const list = cameraConfigs.concat(tempChannel || []);
+        list.sort(function (a, b) {
+          return (a.Channel > b.Channel) ? 1 : ((b.Channel > a.Channel) ? -1 : 0);
+        });
+        let channel = 0;
+        let found:boolean = true;
+        let listArray = list.map(function(e){return e.Channel});
+        // find empty channel
+        while(found) {
+          found = listArray.indexOf(++channel) > -1;
+        }
+        return channel;
+        
+      }
+    async cloneCam(cam:Device, quantity:number, nvrObjectId:string, groupList:Group[], account:string, password:string){
+      
+      let selectedSubGroup = this.findDeviceGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel });
+      let cameraConfigs = await Observable.fromPromise(parseHelper.fetchData({ type:Device})).toPromise();
+      let cloneResult = [];            
+      
+      
+      for (let i = 0; i < quantity; i++) {
+        coreService.addNotifyData({path: coreService.urls.URL_CLASS_NVR, objectId: nvrObjectId });
+
+        let obj = this.cloneNewDevice({ cam, newChannel: this.getNewChannelId(cameraConfigs, cloneResult) }, account, password);                           
+        await Observable.fromPromise(obj.save()).toPromise().then(result => {            
+            cloneResult.push(result);
+            coreService.addNotifyData({path: coreService.urls.URL_CLASS_DEVICE, objectId: result.id});            
+        }); 
+        await this.setChannelGroup(groupList, { Nvr: obj.NvrId, Channel: obj.Channel }, selectedSubGroup);
+        coreService.notify();
+      }            
+    }
+    
+
     async deleteCam(cam:Device, nvrObjectId:string){
         
         const delete$ = Observable.fromPromise(cam.destroy())
@@ -104,8 +201,8 @@ export class DeviceService {
   
         return await removeRecordSchedule$
           .switchMap(() => removeEventHandler$)  
-          .switchMap(() => this.setChannelGroup(
-            groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, undefined))               
+          .switchMap(async () =>  await this.setChannelGroup( groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, undefined))
+          .map(()=> coreService.notify())
           .toPromise();
     }
     findInsertIndexForGroupChannel(data: IGroupChannel[], insertData: IGroupChannel) {
@@ -119,8 +216,9 @@ export class DeviceService {
         }
         return insertIndex;
     }
-    setChannelGroup(groupConfigs: Group[], newData: IGroupChannel, newGroupId: string) {
-        const saveList = [];
+    async setChannelGroup(groupConfigs: Group[], newData: IGroupChannel, newGroupId: string) {
+        
+        const saveList:Group[] = [];
 
         groupConfigs.forEach(group => {
             if (group.Channel === undefined) {
@@ -140,9 +238,12 @@ export class DeviceService {
                 saveList.push(group);
             }
         });
-
-        return Observable.fromPromise(Parse.Object.saveAll(saveList)
-            .then(groups => coreService.notifyWithParseResult({ parseResult: groups, path: coreService.urls.URL_CLASS_GROUP })));
+        for(let group of saveList){
+            await Observable.fromPromise(group.save().then(result=>{
+                console.log("result",result);
+                coreService.addNotifyData({objectId:result.id, path: coreService.urls.URL_CLASS_GROUP })
+            })).toPromise();
+        }        
     }
 }
 

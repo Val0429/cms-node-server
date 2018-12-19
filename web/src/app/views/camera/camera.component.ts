@@ -56,18 +56,23 @@ export class CameraComponent implements OnInit {
       .switchMap(() => this.fetchDevice())
       .subscribe();
 
-      const getGroup$ = Observable.fromPromise(this.parseService.fetchData({
-        type: Group
-      }).then(groups => {
-        this.groupList = groups;
-        console.debug("this.groupList", this.groupList);
-      }));
+      const getGroup$ = this.getGroup();
       
       getGroup$     
         .switchMap(() =>  this.getAvailableLicense())
         .toPromise()
         .catch(alert);
   }
+
+  private getGroup() {
+    return Observable.fromPromise(this.parseService.fetchData({
+      type: Group
+    }).then(groups => {
+      this.groupList = groups;
+      console.debug("this.groupList", this.groupList);
+    }));
+  }
+
   private getAvailableLicense() {
     return Observable.fromPromise(this.licenseService.getLicenseAvailableCount('00171').toPromise()
       .then(num => {
@@ -82,7 +87,7 @@ export class CameraComponent implements OnInit {
       this.flag.delete=true;
 
       let camIds = this.cameraConfigs.filter(x=>x.checked===true).map(function(e){return e.device.id});
-      await this.cameraService.deleteCam(camIds, this.ipCameraNvr.id, this.groupList);                    
+      await this.cameraService.deleteCam(camIds, this.ipCameraNvr.id);                    
          
       alert('Delete Success');  
       this.reloadData();              
@@ -95,7 +100,9 @@ export class CameraComponent implements OnInit {
   }
   reloadData() {
     this.currentEditCamera = undefined;
+    const getGroup$ = this.getGroup();
     this.fetchDevice()
+      .switchMap(()=>getGroup$)
       .switchMap(()=>this.getAvailableLicense())
       .subscribe();
     this.checkSelected();
@@ -163,7 +170,9 @@ export class CameraComponent implements OnInit {
           return;
         }
 
-        const newObj = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: this.cameraService.getNewChannelId(this.cameraConfigs.map(function(e){return e.device})), searchCamera: $camera });
+        const newObj = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: 
+          this.cameraService.getNewChannelId(this.cameraConfigs.map(function(e){return e.device})),
+          searchCamera: $camera });
         const confirmText = $camera ? 'Add this device?' : 'Create new device manually?';
         if (confirm(confirmText)) {
           this.currentEditCamera = newObj;
@@ -188,28 +197,8 @@ export class CameraComponent implements OnInit {
         alert("Not enough license to add new camera");
         return;
       }
-      this.selectedSubGroup = this.groupService.findDeviceGroup(this.groupList, { Nvr: this.cloneCameraParam.device.NvrId, Channel: this.cloneCameraParam.device.Channel });
-
-      const cloneResult = [];
-      for (let i = 0; i < this.cloneCameraParam.quantity; i++) {
-        let obj = this.cameraService.cloneNewDevice({ cam: this.cloneCameraParam.device, newChannel: this.cameraService.getNewChannelId(this.cameraConfigs.map(function(e){return e.device}),cloneResult) }); 
-        cloneResult.push(obj);
-      }
-
-      await Observable.fromPromise(Parse.Object.saveAll(cloneResult)).toPromise();
       
-      for(let device of cloneResult){
-        this.groupService.setChannelGroup(this.groupList, { Nvr: device.NvrId, Channel: device.Channel }, this.selectedSubGroup)
-      }
-      
-      this.coreService.addNotifyData({
-        path: this.coreService.urls.URL_CLASS_NVR,
-        objectId: this.ipCameraNvr.id
-      });
-
-      this.coreService.notifyWithParseResult({
-        parseResult: cloneResult, path: this.coreService.urls.URL_CLASS_DEVICE
-      });
+      await this.cameraService.cloneCam(this.cloneCameraParam.device, this.cloneCameraParam.quantity, this.ipCameraNvr);
       
       this.reloadData();
       alert('Clone success.');

@@ -193,7 +193,8 @@ export class Group extends Parse.Object implements IGroup {
       }[],
     ) {
       super.set('Channel', value);
-    }    
+    } 
+    
     constructor(value?: Partial<IGroup>) {
       super('Group');
       Object.assign(this, value);

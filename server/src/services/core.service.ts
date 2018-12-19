@@ -107,13 +107,17 @@ private static _instance: CoreService;
     }
   }
   notifyWithParseResult(args: { parseResult: Parse.Object[], path: string }) {
+    this.addNotifyWithParseResult(args);
+    this.notify();
+  }
+  
+  addNotifyWithParseResult(args: { parseResult: Parse.Object[], path: string }) {
     args.parseResult.forEach(data => {
       this.addNotifyData({
         path: args.path,
         objectId: data.id
       });
-    });
-    this.notify();
+    });    
   }
 
 }

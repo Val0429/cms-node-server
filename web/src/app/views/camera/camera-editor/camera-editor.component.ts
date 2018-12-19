@@ -192,7 +192,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       
       try{
         this.flag.delete = true;
-        await this.cameraService.deleteCam([this.currentCamera.id], this.ipCameraNvr.id, this.groupList)           
+        await this.cameraService.deleteCam([this.currentCamera.id], this.ipCameraNvr.id)           
         this.reloadDataEvent.emit();        
       }catch(err){
         console.error(err);
