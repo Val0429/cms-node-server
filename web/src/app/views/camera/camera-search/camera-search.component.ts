@@ -124,6 +124,9 @@ export class CameraSearchComponent implements OnInit {
               searchDisplay.push({checked:false, device})
             }
             this.searchList.push(...searchDisplay);
+            this.searchList.sort((a:{device:ISearchCamera, checked:boolean},
+              b:{device:ISearchCamera, checked:boolean}) => 
+                (a.device.WANIP > b.device.WANIP) ? 1 : ((b.device.WANIP > a.device.WANIP) ? -1 : 0));
           });
         await search$.toPromise();
       }
