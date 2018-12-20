@@ -178,6 +178,9 @@ export class CameraService {
       });
     }
     console.debug("this.currentCamera", currentCamera);
+    if(currentCamera.Channel==0){
+      currentCamera.Channel = await this.getNewChannelId();
+    }
     const save$ = Observable.fromPromise(currentCamera.save())
       .map(result => {
         this.coreService.addNotifyData({
@@ -197,7 +200,13 @@ export class CameraService {
       .switchMap(async()=>await this.updateSchedule(currentCamera))
       .toPromise();
   }
- 
+ async getNewChannelId(){
+    let response = await this.httpService.get(this.parseService.parseServerUrl + "/cms/device/channel", 
+    new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
+    let result = response.json();
+    console.debug("result");
+    return result.newChannelId;
+ }
     async deleteCam(camIds : string[], nvrObjectId:string): Promise<void>{
       let result = await this.httpService.delete(this.parseService.parseServerUrl + "/cms/device", 
         new RequestOptions({ headers:this.coreService.parseHeaders, body:{ objectIds: camIds, auth:this.auth, nvrObjectId}})).toPromise();
@@ -221,22 +230,7 @@ export class CameraService {
       console.debug("options", options);
       let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/device", body, options).toPromise();
     }
-        /** 取得適當的新ChannelId */
-    getNewChannelId(cameraConfigs:Device[], tempChannel?: Device[]): number {
-      const list = cameraConfigs.concat(tempChannel || []);
-      list.sort(function (a, b) {
-        return (a.Channel > b.Channel) ? 1 : ((b.Channel > a.Channel) ? -1 : 0);
-      });
-      let channel = 0;
-      let found:boolean = true;
-      let listArray = list.map(function(e){return e.Channel});
-      // find empty channel
-      while(found) {
-        found = listArray.indexOf(++channel) > -1;
-      }
-      return channel;
-      
-    }
+       
     /** 取得當前Brand底下所有Model型號 */
     getModelList(): string[] {
         const result = [];

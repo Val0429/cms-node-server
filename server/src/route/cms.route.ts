@@ -20,6 +20,9 @@ export const CmsRoute: IRouteMap = {
     path: 'cms',
     router: Router().use(bodyParser.json())
         .get('/test', (req, res) => { res.send('Test Success') })
+        .get('/device/channel/:nvrId?', async (req, res) => {
+            await deviceService.getNewChannel(req, res);
+        })
         .get('/device', (req, res) => {
             deviceService.get(req, res);
         })

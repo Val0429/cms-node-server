@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { CryptoService } from 'app/service/crypto.service';
 import { LicenseService } from 'app/service/license.service';
 import { Observable } from 'rxjs/Observable';
 import { ISearchCamera } from 'lib/domain/core';
 import { Device, Nvr, Group } from 'app/model/core';
-import { GroupService } from 'app/service/group.service';
 import { DeviceVendor } from 'app/config/device-vendor.config';
 import { CameraService } from 'app/service/camera.service';
 import { CameraSearchComponent } from './camera-search/camera-search.component';
@@ -42,17 +40,15 @@ export class CameraComponent implements OnInit {
 
  @ViewChild("searchComponent") searchComponent:CameraSearchComponent;
 
-  constructor(
-    private coreService: CoreService,
+  constructor(    
     private parseService: ParseService,
     private cryptoService: CryptoService,
-    private licenseService: LicenseService,
-    private groupService: GroupService,
+    private licenseService: LicenseService,    
     private cameraService: CameraService
   ) { }
 
   ngOnInit() {
-    this.getIPCameraNvrId()
+    this.getIPCameraNvr()
       .switchMap(() => this.fetchDevice())
       .subscribe();
 
@@ -129,7 +125,7 @@ export class CameraComponent implements OnInit {
     this.checkSelected();
   }
   /** 取得IPCamera的NvrId */
-  getIPCameraNvrId() {
+  getIPCameraNvr() {
     const get$ = Observable.fromPromise(this.parseService.getData({
       type: Nvr,
       filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
@@ -170,8 +166,7 @@ export class CameraComponent implements OnInit {
           return;
         }
 
-        const newObj = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: 
-          this.cameraService.getNewChannelId(this.cameraConfigs.map(function(e){return e.device})),
+        const newObj = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel:0,
           searchCamera: $camera });
         const confirmText = $camera ? 'Add this device?' : 'Create new device manually?';
         if (confirm(confirmText)) {

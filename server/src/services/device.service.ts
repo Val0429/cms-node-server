@@ -60,6 +60,32 @@ export class DeviceService {
             res.json(devices);
         })
     }
+    async getNewChannel(req:Request, res:Response){
+        let nvrId = req.params["nvrId"];
+        if(!nvrId){
+            let nvr = await Observable.fromPromise(parseHelper.getData({
+                type: Nvr,
+                filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
+              })).toPromise();
+
+            nvrId = nvr.Id;
+        }
+        let data = await this.getAllDevice(nvrId);        
+        let newChannelId = this.getNewChannelId(data);
+        res.json({newChannelId});
+    }
+    private async getAllDevice(nvrId:string) {
+        return await Observable.fromPromise(parseHelper.fetchData({
+            type: Device,
+            filter: query =>                 
+                query
+                .equalTo('NvrId', nvrId)
+                .ascending("Channel")
+                .limit(Number.MAX_SAFE_INTEGER)
+                
+        })).toPromise();
+    }
+
     async getDefaultNvr():Promise<Nvr>{
         return Observable.fromPromise(parseHelper.getData({
             type: Nvr,
@@ -130,6 +156,7 @@ export class DeviceService {
         
         return tempGroup ? tempGroup.id : '';
     }
+    
     getNewChannelId(cameraConfigs:Device[], tempChannel?: Device[]): number {
         const list = cameraConfigs.concat(tempChannel || []);
         list.sort(function (a, b) {
@@ -148,7 +175,7 @@ export class DeviceService {
     async cloneCam(cam:Device, quantity:number, nvrObjectId:string, groupList:Group[], account:string, password:string){
       
       let selectedSubGroup = this.findDeviceGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel });
-      let cameraConfigs = await Observable.fromPromise(parseHelper.fetchData({ type:Device})).toPromise();
+      let cameraConfigs = await this.getAllDevice(cam.NvrId);
       let cloneResult = [];            
       
       

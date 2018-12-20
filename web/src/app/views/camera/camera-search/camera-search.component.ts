@@ -51,7 +51,7 @@ export class CameraSearchComponent implements OnInit {
         }        
 
         for(let cam of cams)  {
-          const newCam = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: this.cameraService.getNewChannelId(this.cameraConfigs.map(function(e){return e.device;})), searchCamera: cam.device });            
+          const newCam = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: 0, searchCamera: cam.device });            
           await this.cameraService.getCapability(newCam, cam.device.COMPANY, []).toPromise(); 
           let editorParam = this.cameraService.getCameraEditorParam(newCam.Config.Model, newCam);
           //saves it before the value gets encrypted
