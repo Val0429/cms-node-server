@@ -357,18 +357,6 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     };
   }
 
-  /** 設定Manufacturer時轉換並儲存字串到NvrConfig */
-  onChangeManufacture() {
-    // this.editNvr.Driver = this.getNvrDriverByManufacture();
-    // iSapP2P會隱藏帳號密碼改由亂數產生
-    if (this.currentEditModel.Manufacture === 'iSapP2P') {
-      this.currentEditModel.Account = this.coreService.randomString(12);
-      this.currentEditModel.Password = this.coreService.randomString(12);
-    }
-  }
-
- 
-
   /** 套用Server的Domain, Port至CurrentEditModel的同名資料 */
   onChangeServer() {
     const serverInfo = this.iSapP2PServerList.find(data => data.id === this.currentEditModel.ServerId);
