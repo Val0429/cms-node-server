@@ -71,7 +71,7 @@
         <h4 class="modal-title text-center fw-bold">Search Device</h4>
       </div>
       <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
-        <app-camera-search [cameraConfigs]="cameraConfigs" [ipCameraNvr]="ipCameraNvr" #searchComponent (closeModal)="searchWindow.hide();"></app-camera-search>
+        <app-camera-search [ipCameraNvr]="ipCameraNvr" #searchComponent (reloadDataEvent)="reloadData()" (closeModal)="searchWindow.hide();"></app-camera-search>
       </div>
       <div class="modal-footer">
         <button class="btn btn-gray" type="button" (click)="searchComponent.saveAll()" [disabled]="!searchComponent.anyChecked || searchComponent.flag.load===true">
