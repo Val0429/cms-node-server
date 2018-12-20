@@ -8,16 +8,27 @@ import * as shelljs from 'shelljs';
 import { Observable } from 'rxjs/Observable';
 import { IRouteMap, ParseHelper, ConfigHelper, LogHelper, SyncHelper } from '../helpers';
 import { Nvr, Event, SysLog, Server } from '../domain/core';
+import { DeviceService } from '../services';
 
 const parseHelper = ParseHelper.instance;
 const configHelper = ConfigHelper.instance;
 const logHelper = LogHelper.instance;
 const syncHelper = SyncHelper.instance;
+const deviceService = DeviceService.instance;
 
 export const CmsRoute: IRouteMap = {
     path: 'cms',
     router: Router().use(bodyParser.json())
         .get('/test', (req, res) => { res.send('Test Success') })
+        .get('/device', (req, res) => {
+            deviceService.get(req, res);
+        })
+        .post('/device', async (req, res) => {            
+            await deviceService.post(req, res);
+        })
+        .delete('/device', async (req, res) => {
+            await deviceService.delete(req, res);
+        })
         .get('/SetDBSyncDisable', (req, res) => {
             syncHelper.setAutoSyncDefault();
             res.send(true);

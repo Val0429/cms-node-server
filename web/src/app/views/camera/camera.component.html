@@ -11,18 +11,25 @@
           <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="searchWindow.show()">
             Search
           </button>
-          <button *ngIf="cameraConfigs.length > 0" class="btn btn-secondary width-100 mb-xs" role="button" (click)="cloneWindow.show()">
+          <button *ngIf="cameraConfigs.length > 0" class="btn btn-secondary width-100 mb-xs" role="button" (click)="cloneWindow.show()" [disabled]="flag.save || flag.delete">
             Clone
           </button>
-          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addDevice()">
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addDevice()" [disabled]="flag.save || flag.delete">
             Create
           </button>
-          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="deleteAll()" [disabled]="!anyChecked">
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="deleteAll()" [disabled]="!anyChecked || flag.save || flag.delete">
             Delete
           </button>
         </div>
       </header>
-      <div class="widget-body">
+      <div class="widget-body" *ngIf="cameraConfigs.length==0">
+          
+          <div class="text-center" >
+            <i class="fa fa-refresh fa-spin fa-fw" style="font-size: 30px;"></i>
+          </div>
+      </div>
+      <div class="widget-body" *ngIf="cameraConfigs.length>0">          
+            
         <table class="table table-hover table-lg mt-lg mb-0">
           <thead>
             <tr>
@@ -34,8 +41,8 @@
               <th>Network Address</th>
             </tr>
           </thead>
-          <tbody>
-            <tr *ngFor="let cam of cameraConfigs" (click)="currentEditCamera = cam.device" [class.active]="cam.device === currentEditCamera">
+          <tbody >
+            <tr *ngFor="let cam of cameraConfigs | paginate: { itemsPerPage: 50, currentPage: p }" (click)="currentEditCamera = cam.device" [class.active]="cam.device === currentEditCamera">
               <td><input type="checkbox" (click)="selectCam(cam, $event.target.checked)" [checked]="cam.checked"></td>
               <td>{{cam.device.Channel}}</td>
               <td>{{cam.brandDisplay}}</td>
@@ -46,6 +53,7 @@
           </tbody>
         </table>
       </div>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </section>
   </div>
   <div class="col-12">
@@ -104,7 +112,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="clickClone();">Clone</button>
+        <button type="button" class="btn btn-primary" (click)="clickClone();" [disabled]="flag.save || flag.delete">Clone</button>
         <button type="button" class="btn btn-gray" (click)="cloneWindow.hide();">Close</button>
       </div>
     </div>

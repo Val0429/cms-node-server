@@ -61,8 +61,7 @@ export class CameraSearchComponent implements OnInit {
           newCam.Config.Authentication = Object.assign({}, tempAuth);
           //push new cam to camera list
           this.cameraConfigs.push({checked:false, device:newCam, brandDisplay:this.cameraService.getBrandDisplay(cam.device.COMPANY)});          
-        }
-        
+        }        
         alert("Save camera(s) sucess");
         this.checkedAll=false;
         this.searchList=[];
@@ -125,6 +124,9 @@ export class CameraSearchComponent implements OnInit {
               searchDisplay.push({checked:false, device})
             }
             this.searchList.push(...searchDisplay);
+            this.searchList.sort((a:{device:ISearchCamera, checked:boolean},
+              b:{device:ISearchCamera, checked:boolean}) => 
+                (a.device.WANIP > b.device.WANIP) ? 1 : ((b.device.WANIP > a.device.WANIP) ? -1 : 0));
           });
         await search$.toPromise();
       }

@@ -27,6 +27,9 @@
         <td>{{getCompaneName(cam.device.COMPANY)}}</td>
         <td>{{cam.device.WANIP}}:{{cam.device.HTTPPORT}}</td>      
     </tr>
+    <tr>
+        <td colspan="4">Camera found: {{searchList.length}}</td>
+    </tr>
   </tbody>
   <tbody *ngIf="searchList.length === 0">
     <tr>

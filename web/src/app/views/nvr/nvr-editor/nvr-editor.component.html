@@ -27,7 +27,7 @@
     <div class="form-group row">
       <label class="col-md-4  col-form-label text-md-right">Manufacturer</label>
       <div class="col-md-4" *ngIf="editNvr.Id !== '2'">
-        <select class="select1 width-200" [(ngModel)]="currentEditModel.Manufacture" (change)="onChangeManufacture()">
+        <select class="select1 width-200" [(ngModel)]="currentEditModel.Manufacture">
           <option *ngFor="let item of manufactureOptions;" [value]="item">{{item}}</option>
         </select>
       </div>
@@ -35,7 +35,7 @@
         <label class="col-form-label">SmartMedia</label>
       </div>
     </div>
-    <ng-container *ngIf="currentEditModel.Manufacture !== 'iSAPP2P'">
+    <ng-container *ngIf="currentEditModel.Manufacture !== 'iSapP2P'">
       <div class="form-group row">
         <label class="col-md-4  col-form-label text-md-right">Domain</label>
         <div class="col-md-4">
@@ -79,7 +79,7 @@
         </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="currentEditModel.Manufacture === 'iSAPP2P'">
+    <ng-container *ngIf="currentEditModel.Manufacture === 'iSapP2P'">
       <div class="form-group row">
         <label class="col-md-4  col-form-label text-md-right">Server</label>
         <div class="col-md-4">
@@ -111,7 +111,7 @@
         <label for="patrol-enable">Enable</label>
       </div>
     </div>
-    <ng-container *ngIf="currentEditModel.Manufacture !== 'iSAPP2P' && currentEditModel.Manufacture !== 'SmartMedia'">
+    <ng-container *ngIf="currentEditModel.Manufacture !== 'iSapP2P' && currentEditModel.Manufacture !== 'SmartMedia'">
       <div class="form-group row">
         <label class="col-md-4  col-form-label text-md-right">SSL Connection</label>
         <div class="col-md-8" style="padding-top: 4px;">
@@ -128,7 +128,7 @@
             <i *ngIf="flag.load" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
             Get Device List
           </button>
-          <button *ngIf="currentEditModel.Manufacture === 'iSAPP2P'" type="button" class="btn btn-default" (click)="clickGetAuthFile()"
+          <button *ngIf="currentEditModel.Manufacture === 'iSapP2P'" type="button" class="btn btn-default" (click)="clickGetAuthFile()"
             [disabled]="!currentEditModel.ServerId || flag.load">
             <i *ngIf="flag.load" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
             Get Auth File
@@ -152,7 +152,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of displayDevices">
+              <tr *ngFor="let item of displayDevices | paginate: { itemsPerPage: 50, currentPage: p }">
                 <td>
                   <input type="checkbox" [checked]="item.checked" (change)="item.checked = !item.checked" [disabled]="currentEditModel.Manufacture === 'SmartMedia'">
                 </td>
@@ -171,6 +171,7 @@
               </tr>
             </tbody>
           </table>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
         </div>
       </div>
     </ng-container>

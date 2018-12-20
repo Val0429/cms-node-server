@@ -18,6 +18,12 @@ import { CameraSearchComponent } from './camera-search/camera-search.component';
 })
 
 export class CameraComponent implements OnInit {
+  p: number = 1;
+  flag = {
+    save: false,
+    delete: false
+  };
+
   brandList = DeviceVendor;
   checkedAll: boolean = false;
   anyChecked: boolean = false;
@@ -33,6 +39,7 @@ export class CameraComponent implements OnInit {
     device: undefined,
     quantity: 0
   };
+
  @ViewChild("searchComponent") searchComponent:CameraSearchComponent;
 
   constructor(
@@ -49,42 +56,57 @@ export class CameraComponent implements OnInit {
       .switchMap(() => this.fetchDevice())
       .subscribe();
 
-      
-      const getAvailableLicense$ = Observable.fromPromise(this.licenseService.getLicenseAvailableCount('00171').toPromise()
-        .then(num => {
-          this.availableLicense = num;
-          console.debug("num 00171", this.availableLicense)
-        }));
-
-      const getGroup$ = Observable.fromPromise(this.parseService.fetchData({
-        type: Group
-      }).then(groups => {
-        this.groupList = groups;
-        console.debug("this.groupList", this.groupList);
-      }));
+      const getGroup$ = this.getGroup();
       
       getGroup$     
-        .switchMap(() => getAvailableLicense$)
+        .switchMap(() =>  this.getAvailableLicense())
         .toPromise()
         .catch(alert);
   }
+
+  private getGroup() {
+    return Observable.fromPromise(this.parseService.fetchData({
+      type: Group
+    }).then(groups => {
+      this.groupList = groups;
+      console.debug("this.groupList", this.groupList);
+    }));
+  }
+
+  private getAvailableLicense() {
+    return Observable.fromPromise(this.licenseService.getLicenseAvailableCount('00171').toPromise()
+      .then(num => {
+        this.availableLicense = num;
+        console.debug("num 00171", this.availableLicense);
+      }));
+  }
+
   async deleteAll(){
     if (!confirm('Are you sure to delete these Camera(s)?')) return;
     try{
-      for(let cam of this.cameraConfigs.filter(x=>x.checked===true)){      
-          await this.cameraService.deleteCam(cam.device, this.ipCameraNvr, this.groupList); 
-      }        
+      this.flag.delete=true;
+
+      let camIds = this.cameraConfigs.filter(x=>x.checked===true).map(function(e){return e.device.id});
+      await this.cameraService.deleteCam(camIds, this.ipCameraNvr.id);                    
+         
       alert('Delete Success');  
       this.reloadData();              
     }catch(err){
       console.error(err);
       alert(err);      
+    }finally{
+      this.flag.delete=false;
     }
   }
   reloadData() {
     this.currentEditCamera = undefined;
-    this.fetchDevice().subscribe();
+    const getGroup$ = this.getGroup();
+    this.fetchDevice()
+      .switchMap(()=>getGroup$)
+      .switchMap(()=>this.getAvailableLicense())
+      .subscribe();
     this.checkSelected();
+    this.p=1;
   }
   checkSelected(){
     let checked = this.cameraConfigs.map(function(e){return e.checked});
@@ -148,7 +170,9 @@ export class CameraComponent implements OnInit {
           return;
         }
 
-        const newObj = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: this.cameraService.getNewChannelId(this.cameraConfigs.map(function(e){return e.device})), searchCamera: $camera });
+        const newObj = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: 
+          this.cameraService.getNewChannelId(this.cameraConfigs.map(function(e){return e.device})),
+          searchCamera: $camera });
         const confirmText = $camera ? 'Add this device?' : 'Create new device manually?';
         if (confirm(confirmText)) {
           this.currentEditCamera = newObj;
@@ -163,51 +187,27 @@ export class CameraComponent implements OnInit {
   }
   availableLicense:number=0;
   /** 點擊clone */
-  clickClone() {
-    const availableLicense$ = this.licenseService.getLicenseAvailableCount('00171');
+  async clickClone() {
+    try{
+      this.flag.save=true;
+      //dummy 
+      await Observable.of(null).toPromise();
 
-    availableLicense$
-      .switchMap(num => {
-        this.availableLicense = num;
-        console.debug("num 00171", this.availableLicense);
-
-        if (this.cloneCameraParam.quantity === 0 || this.cloneCameraParam.quantity > num) {
-          return Observable.of(null);
-        }
-        
-        this.selectedSubGroup = this.groupService.findDeviceGroup(this.groupList, { Nvr: this.cloneCameraParam.device.NvrId, Channel: this.cloneCameraParam.device.Channel });
-
-        const cloneResult = [];
-        for (let i = 0; i < this.cloneCameraParam.quantity; i++) {
-          let obj = this.cameraService.cloneNewDevice({ cam: this.cloneCameraParam.device, newChannel: this.cameraService.getNewChannelId(this.cameraConfigs.map(function(e){return e.device}),cloneResult) }); 
-          cloneResult.push(obj);
-        }
-
-        return Observable.fromPromise(
-          Parse.Object.saveAll(cloneResult))               
-        .map(result => {
-        
-            for(let device of cloneResult){
-            this.groupService.setChannelGroup(this.groupList, { Nvr: device.NvrId, Channel: device.Channel }, this.selectedSubGroup)
-            }
-        
-          this.coreService.addNotifyData({
-            path: this.coreService.urls.URL_CLASS_NVR,
-            objectId: this.ipCameraNvr.id
-          });
-
-          return this.coreService.notifyWithParseResult({
-            parseResult: cloneResult, path: this.coreService.urls.URL_CLASS_DEVICE
-          });
-
-        });
-          
-      })
-      .toPromise()
-      .then(()=>{
-        this.reloadData();
-        alert('Clone success.');
-      })
-      .catch(alert);
+      if (this.cloneCameraParam.quantity > this.availableLicense) {
+        alert("Not enough license to add new camera");
+        return;
+      }
+      
+      await this.cameraService.cloneCam(this.cloneCameraParam.device, this.cloneCameraParam.quantity, this.ipCameraNvr);
+      
+      this.reloadData();
+      alert('Clone success.');
+      
+    }catch(err){
+      console.error(err);
+      alert(err);
+    }finally{
+      this.flag.save=false;
+    }
   }
 }

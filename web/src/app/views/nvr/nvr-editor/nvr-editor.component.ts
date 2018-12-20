@@ -20,7 +20,7 @@ import { NvrService, INvrEditModel } from 'app/service/nvr.service';
   styleUrls: ['./nvr-editor.component.css']
 })
 export class NvrEditorComponent implements OnInit, OnChanges {
-
+  p:number=1;
   /** 傳入ParseObject Nvr物件 */
   @Input() editNvr: Nvr;
   @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
@@ -87,7 +87,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     if (!this.editNvr) {
       return;
     }
-
+    this.p=1;
     this.currentEditModel = this.nvrService.setEditModel(this.editNvr, this.groupList, this.iSapP2PServerList);
 
     this.parseService.fetchData({
@@ -356,18 +356,6 @@ export class NvrEditorComponent implements OnInit, OnChanges {
       Low: multiStream ? multiStream.LowProfile : undefined
     };
   }
-
-  /** 設定Manufacturer時轉換並儲存字串到NvrConfig */
-  onChangeManufacture() {
-    // this.editNvr.Driver = this.getNvrDriverByManufacture();
-    // iSapP2P會隱藏帳號密碼改由亂數產生
-    if (this.currentEditModel.Manufacture === 'iSAPP2P') {
-      this.currentEditModel.Account = this.coreService.randomString(12);
-      this.currentEditModel.Password = this.coreService.randomString(12);
-    }
-  }
-
- 
 
   /** 套用Server的Domain, Port至CurrentEditModel的同名資料 */
   onChangeServer() {

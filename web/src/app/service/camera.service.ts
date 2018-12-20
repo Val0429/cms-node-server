@@ -10,16 +10,20 @@ import { GroupService } from './group.service';
 import { CryptoService } from './crypto.service';
 import StringHelper from 'app/helper/string.helper';
 import { ISearchCamera } from 'lib/domain/core';
+import { Http, RequestOptions } from '@angular/http';
+import { UserService } from './user.service';
 
 @Injectable()
 export class CameraService {
     currentBrandCapability: any; // 從server取回的json格式capability
 
     constructor(
+        private httpService:Http,
         private coreService: CoreService, 
         private parseService:ParseService, 
         private groupService:GroupService,
-        private cryptoService:CryptoService
+        private cryptoService:CryptoService,
+        private userService:UserService
         ) { }
 
     brandList = DeviceVendor; // 固定list
@@ -189,95 +193,50 @@ export class CameraService {
     return await save$
       .switchMap(() =>         
           this.groupService.setChannelGroup(groupList, { Nvr: ipCameraNvr.Id, Channel: currentCamera.Channel }, selectedSubGroup ? selectedSubGroup : undefined)          
-      )      
+      )
       .switchMap(async()=>await this.updateSchedule(currentCamera))
       .toPromise();
   }
-  /** 利用指定資料clone出新的Device */
-  cloneNewDevice(args: { cam: Device, newChannel: number }) {
-    const obj = new Device();
-    obj.NvrId = '1',
-      obj.Name = args.cam.Name,
-      obj.Channel = args.newChannel;
+ 
+    async deleteCam(camIds : string[], nvrObjectId:string): Promise<void>{
+      let result = await this.httpService.delete(this.parseService.parseServerUrl + "/cms/device", 
+        new RequestOptions({ headers:this.coreService.parseHeaders, body:{ objectIds: camIds, auth:this.auth, nvrObjectId}})).toPromise();
+    }
+    get auth():string{
+      return btoa(`${this.userService.storage['username']}:${this.userService.storage['password']}`);       
+    }
+    async cloneCam(cam:Device, quantity:Number, ipCameraNvr:Nvr): Promise<void>{            
+      let account = this.cryptoService.encrypt4DB(cam.Config.Authentication.Account);
+      let password = this.cryptoService.encrypt4DB(cam.Config.Authentication.Password);
+      let auth=this.auth;
+
+      let body = { cam, 
+        quantity, 
+        auth, 
+        nvrObjectId:ipCameraNvr.id, 
+        account,
+        password
+      };
+      let options=new RequestOptions({ headers:this.coreService.parseHeaders});
+      console.debug("options", options);
+      let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/device", body, options).toPromise();
+    }
+        /** 取得適當的新ChannelId */
+    getNewChannelId(cameraConfigs:Device[], tempChannel?: Device[]): number {
+      const list = cameraConfigs.concat(tempChannel || []);
+      list.sort(function (a, b) {
+        return (a.Channel > b.Channel) ? 1 : ((b.Channel > a.Channel) ? -1 : 0);
+      });
+      let channel = 0;
+      let found:boolean = true;
+      let listArray = list.map(function(e){return e.Channel});
+      // find empty channel
+      while(found) {
+        found = listArray.indexOf(++channel) > -1;
+      }
+      return channel;
       
-    obj.Config = Object.assign({}, args.cam.Config);
-    obj.Config.Authentication = Object.assign({}, args.cam.Config.Authentication);
-    obj.Config.PTZSupport = Object.assign({}, args.cam.Config.PTZSupport);
-    obj.Config["Multi-Stream"] = Object.assign({}, args.cam.Config["Multi-Stream"]);
-    obj.Config.Stream=Object.assign([], args.cam.Config.Stream);
-    
-    console.debug("args.cam.Config.Authentication", args.cam.Config.Authentication);
-
-    obj.Config.Authentication.Account = this.cryptoService.encrypt4DB(obj.Config.Authentication.Account);
-    obj.Config.Authentication.Password = this.cryptoService.encrypt4DB(obj.Config.Authentication.Password);
-
-    obj.Capability = Object.assign({}, args.cam.Capability);
-    obj.CameraSetting = Object.assign({}, args.cam.CameraSetting);
-    obj.CameraSetting.IOPort = Object.assign([], args.cam.CameraSetting.IOPort);
-    obj.Tags = Object.assign([], args.cam.Tags);
-   
-
-    return obj;
-  }
-    async deleteCam(cam : Device, ipCameraNvr:Nvr, groupList: Group[]): Promise<void>{
-
-        const delete$ = Observable.fromPromise(cam.destroy())
-          .map(result => {
-            this.coreService.addNotifyData({
-              path: this.coreService.urls.URL_CLASS_NVR,
-              objectId: ipCameraNvr.id
-            });
-            this.coreService.addNotifyData({
-              path: this.coreService.urls.URL_CLASS_DEVICE,
-              objectId: cam.id
-            });
-          });
-  
-        // 刪除與此Camera相關的RecordSchedule
-        const removeRecordSchedule$ = Observable.fromPromise(this.parseService.fetchData({
-          type: RecordSchedule,
-          filter: query => query
-            .equalTo('NvrId', cam.NvrId)
-            .equalTo('ChannelId', cam.Channel)
-        }))
-          .switchMap(schedules => Observable.fromPromise(Parse.Object.destroyAll(schedules)))
-          .map(results => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_RECORDSCHEDULE, dataArr: results }));
-  
-        // 刪除與此Camera相關的EventHandler
-        const removeEventHandler$ = Observable.fromPromise(this.parseService.fetchData({
-          type: EventHandler,
-          filter: query => query
-            .equalTo('NvrId',  cam.NvrId)
-            .equalTo('DeviceId', cam.Channel)
-        }))
-          .switchMap(handler => Observable.fromPromise(Parse.Object.destroyAll(handler)))
-          .map(results => this.coreService.notifyWithParseResult({
-            parseResult: results, path: this.coreService.urls.URL_CLASS_EVENTHANDLER
-          }));
-  
-        return await delete$
-          .switchMap(() => removeRecordSchedule$)
-          .switchMap(() => removeEventHandler$)  
-          .switchMap(() => this.groupService.setChannelGroup(
-            groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, undefined))     
-          .toPromise();
     }
-    /** 取得適當的新ChannelId */
-  getNewChannelId(cameraConfigs:Device[], tempChannel?: Device[]): number {
-    const list = cameraConfigs.concat(tempChannel || []);
-    list.sort(function (a, b) {
-      return (a.Channel > b.Channel) ? 1 : ((b.Channel > a.Channel) ? -1 : 0);
-    });
-    let channel = 0;
-    let found:boolean = true;
-    let listArray = list.map(function(e){return e.Channel});
-    // find empty channel
-    while(found) {
-      found = listArray.indexOf(++channel) > -1;
-    }
-    return channel;
-    
-  }
     /** 取得當前Brand底下所有Model型號 */
     getModelList(): string[] {
         const result = [];

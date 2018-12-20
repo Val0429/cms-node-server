@@ -13,6 +13,7 @@ import { IRecordScheduleTemplate, IEventScheduleTemplate } from 'lib/domain/core
   styleUrls: ['./template-setup.component.css']
 })
 export class TemplateSetupComponent implements OnInit, OnChanges {
+  
   @Input() setupMode: number;
   /** RecordScheduleTemplate or EventScheduleTemplate */
   @Input() currentTemplate: IRecordScheduleTemplate | IEventScheduleTemplate ;
@@ -205,13 +206,13 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     // 從MainGroup開始層層往下新增節點
     args.groupConfigs.filter(x => x.Level === '0').forEach(mg => {
       const newMgNode: ITemplateSetupNode = {
-        key: mg.id, data: mg, apply: false, partialApply: false, collapsed: true, child: []
+        key: mg.id, data: mg, apply: false, partialApply: false, collapsed: true, child: [], page:1
       };
       this.setupNode.push(newMgNode);
       if (mg.SubGroup) {
         args.groupConfigs.filter(group => mg.SubGroup.includes(group.id)).forEach(sg => {
           const newSgNode: ITemplateSetupNode = {
-            key: `${newMgNode.key}.${sg.id}`, data: sg, apply: false, partialApply: false, collapsed: true, child: []
+            key: `${newMgNode.key}.${sg.id}`, data: sg, apply: false, partialApply: false, collapsed: true, child: [], page:1
           };
           newMgNode.child.push(newSgNode);
 
@@ -244,11 +245,11 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     const xSg = new Group({ Name: 'NonSubGroup', Level: '1', Nvr: [], Channel: [] });
 
     const newMgNode: ITemplateSetupNode = {
-      key: 'xMg', data: xMg, apply: false, partialApply: false, collapsed: true, child: []
+      key: 'xMg', data: xMg, apply: false, partialApply: false, collapsed: true, child: [], page:1
     };
     this.setupNode.push(newMgNode);
     const newSgNode: ITemplateSetupNode = {
-      key: `${newMgNode.key}.xSg`, data: xSg, apply: false, partialApply: false, collapsed: true, child: []
+      key: `${newMgNode.key}.xSg`, data: xSg, apply: false, partialApply: false, collapsed: true, child: [], page:1
     };
     newMgNode.child.push(newSgNode);
 
@@ -284,7 +285,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   buildSetupNodeForNvrDev(args: { sg: ITemplateSetupNode, deviceConfigs: Device[], nvr: Nvr, sgIpCamChannel?: number[] }) {
     // 加入一般Nvr或直連用的預設虛擬Nvr
     const newNvrNode: ITemplateSetupNode = {
-      key: `${args.sg.key}.${args.nvr.Id}`, data: args.nvr, apply: false, partialApply: false, collapsed: true, child: []
+      key: `${args.sg.key}.${args.nvr.Id}`, data: args.nvr, apply: false, partialApply: false, collapsed: true, child: [], page:1
     };
     args.sg.child.push(newNvrNode);
     // 找出屬於此Nvr的Camera
@@ -297,7 +298,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     }
     devQuery.forEach(dev => {
       const newDevNode: ITemplateSetupNode = {
-        key: `${newNvrNode.key}.${dev.Channel}`, data: dev, apply: false, partialApply: false, collapsed: true, child: []
+        key: `${newNvrNode.key}.${dev.Channel}`, data: dev, apply: false, partialApply: false, collapsed: true, child: [], page:1
       };
       newNvrNode.child.push(newDevNode);
       // 若是RecordSchedule額外多處理stream
@@ -306,7 +307,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
           return (a.Id > b.Id) ? 1 : ((b.Id > a.Id) ? -1 : 0);
         }).forEach(str => {
           const newStrNode: ITemplateSetupNode = {
-            key: `${newDevNode.key}.${str.Id}`, data: str, apply: false, partialApply: false, collapsed: true, child: []
+            key: `${newDevNode.key}.${str.Id}`, data: str, apply: false, partialApply: false, collapsed: true, child: [], page:1
           };
           newDevNode.child.push(newStrNode);
         });
@@ -557,4 +558,6 @@ export interface ITemplateSetupNode {
   collapsed: boolean;
   /** 本節點底下的child */
   child: ITemplateSetupNode[];
+  /* for pagination current page */
+  page:number;
 }

@@ -5,6 +5,7 @@ import { UserService } from './user.service';
 import { Observable } from 'rxjs/Observable';
 import { IPromise } from 'parse';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
+import { IBatchRequest } from 'lib/domain/core';
 
 @Injectable()
 export class CoreService {
@@ -176,18 +177,19 @@ export class CoreService {
     if (args) {
       this.addNotifyData(args);
     }
-    if (this.notifyList && this.notifyList.length > 0) {
-      const body = Object.assign([], this.notifyList);
-      this.notifyList = [];
-      setTimeout(() => { // 避免更新後notify速度太快導致讀到舊資料, 延遲1秒notify
-        this.proxyMediaServer({
-          method: 'POST',
-          path: this.urls.URL_MEDIA_NOTIFY,
-          body: {
-            notify: body
-          }
-        }).subscribe();
-      }, 2000);
+    if (this.notifyList && this.notifyList.length > 0) {      
+        
+        const body = Object.assign([], this.notifyList);        
+        this.notifyList = [];
+        setTimeout(() => { // 避免更新後notify速度太快導致讀到舊資料, 延遲1秒notify
+          this.proxyMediaServer({
+            method: 'POST',
+            path: this.urls.URL_MEDIA_NOTIFY,
+            body: {
+              notify: body
+            }
+          }).subscribe();
+        }, 2000);
     }
   }
 
@@ -200,6 +202,7 @@ export class CoreService {
     });
     this.notify();
   }
+  
 
   /** 返回指定長度的亂數字串 */
   randomString(len?: number): string {
@@ -304,12 +307,6 @@ export class CoreService {
   }
 }
 
-interface IBatchRequest {
-  method: string;
-  path: string;
-  body?: any;
-  domainPath?: string; // 若要連到其他網域就使用此參數
-}
 
 const urls = {
   URL_BATCH: '/batch',

@@ -16,6 +16,8 @@ import { OnlineRegistrationComponent } from './online-registration/online-regist
   styleUrls: ['./license.component.css']
 })
 export class LicenseComponent implements OnInit {
+  
+
   /** MediaServer回傳license資料 */
   @ViewChild('onlineRegistration') onlineRegistration:OnlineRegistrationComponent;
   licenseInfo: ILicenseInfo;
@@ -27,17 +29,37 @@ export class LicenseComponent implements OnInit {
   servers:ServerInfo[];
   currentServer:ServerInfo ;
   constructor(private coreService: CoreService, private licenseService: LicenseService, private parseService:ParseService) { }
-
+  ServerType:{key:string, value:number}[] = [
+    {key:"cmsmanager", value:10},
+    {key:"recordserver", value:20},
+    {key:"recordrecoveryserver", value:30},
+    {key:"recordfailoverserver", value:40},
+    {key:"smartmedia", value:50}
+  ];
+  
   ngOnInit() {
     this.currentServer = new ServerInfo();
     this.currentServer.id="";
 
     Observable.combineLatest(
-      this.parseService.fetchData({type:ServerInfo}),
+      this.parseService.fetchData({type:ServerInfo, 
+        filter: query => query
+        .notEqualTo("Type", "SmartMedia")
+        .ascending("Type")        
+        .limit(30000)
+      }),
       this.coreService.getConfig({ path: this.coreService.urls.URL_CLASS_NVR }),
       this.coreService.getConfig({ path: this.coreService.urls.URL_CLASS_DEVICE }), // 當前已勾選Device資訊(參考用)
       (response1,response2, response3) => {        
-        this.servers = response1;
+        this.servers = [];
+        for(let server of response1){
+          let found = this.servers.find(x=>x.Domain == server.Domain && x.Port ==server.Port);
+          if(found==undefined){
+            this.servers.push(server);
+          }else if(this.ServerType.find(x=>x.key == server.Type.toLowerCase()).value < this.ServerType.find(x=>x.key == found.Type.toLowerCase()).value){
+            found = Object.assign({}, server);
+          }
+        }
         this.currentServer = this.servers[0];
         this.nvrConfigs = response2.results;
         this.deviceConfigs = response3.results;

@@ -12,9 +12,11 @@ import { DirectivesModule } from './directives/directives.module';
 import { LayoutsModule } from './layouts/layouts.module';
 import { PipesModule } from './pipes/pipes.module';
 import { ColorPickerModule } from 'ng-color-picker';
+import {NgxPaginationModule} from 'ngx-pagination'; 
 
 @NgModule({
   exports: [
+    NgxPaginationModule,
     ColorPickerModule,
     CommonModule,
     ReactiveFormsModule,

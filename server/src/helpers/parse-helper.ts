@@ -1,7 +1,7 @@
 import * as Parse from 'parse/node';
 import { Subject } from 'rxjs/Rx';
 import { ConfigHelper } from './config-helper';
-import { Nvr, Event, SysLog, Server, ServerInfo, DBSync } from '../domain';
+import { Nvr, Event, SysLog, Server, ServerInfo, DBSync, Device, EventHandler, RecordSchedule, Group } from '../domain';
 
 export class ParseHelper {
 
@@ -60,6 +60,12 @@ export class ParseHelper {
         Parse.Object.registerSubclass('Server', Server);
         Parse.Object.registerSubclass('ServerInfo', ServerInfo);
         Parse.Object.registerSubclass('DBSync', DBSync);
+        Parse.Object.registerSubclass('Device', Device);
+        Parse.Object.registerSubclass('EventHandler', EventHandler);
+        Parse.Object.registerSubclass('RecordSchedule', RecordSchedule);
+        Parse.Object.registerSubclass('Group', Group);
+        Parse.Object.registerSubclass('Nvr', Nvr);
+
     }
 
     createLiveQueryWatcher<T extends Parse.Object>(args: {

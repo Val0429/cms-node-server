@@ -1,7 +1,206 @@
-import { INvr, IEvent, ISysLog, IServer, IServerInfo, IDBSync, IDBSyncDestination } from '../../../lib/domain/core';
+import { INvr, IEvent, ISysLog, IServer, IServerInfo, IDBSync, IDBSyncDestination, IDevice,IDeviceConfig, IGroup, IEventHandlerType, IEventHandler, IRecordScheduleTemplate, IRecordScheduleTemplateFullRecord, IRecordScheduleTemplateEventRecord, IRecordSchedule } from '../../../lib/domain/core';
 // import { IHost, IHostEvent, IVisitEvent, IVisitor } from 'lib/domain/core';
 import * as Parse from 'parse/node';
-
+export class Device extends Parse.Object implements IDevice {
+    get NvrId(): string {
+      return super.get('NvrId');
+    }
+    set NvrId(value: string) {
+      super.set('NvrId', value);
+    }
+    get Name(): string {
+      return super.get('Name');
+    }
+    set Name(value: string) {
+      super.set('Name', value);
+    }
+    get Channel(): number {
+      return super.get('Channel');
+    }
+    set Channel(value: number) {
+      super.set('Channel', value);
+    }
+    get Config(): IDeviceConfig {
+      return super.get('Config');
+    }
+    set Config(value: IDeviceConfig) {
+      super.set('Config', value);
+    }
+    get Capability(): any {
+      return super.get('Capability');
+    }
+    set Capability(value: any) {
+      super.set('Capability', value);
+    }
+    get CameraSetting(): any {
+      return super.get('CameraSetting');
+    }
+    set CameraSetting(value: any) {
+      super.set('CameraSetting', value);
+    }
+    get Tags(): string[] {
+      return super.get('Tags');
+    }
+    set Tags(value: string[]) {
+      super.set('Tags', value);
+    }    
+    constructor(value?: Partial<IDevice>) {
+      super('Device');
+      Object.assign(this, value);
+    }
+  }
+  
+export class RecordSchedule extends Parse.Object implements IRecordSchedule {
+    get NvrId(): string {
+      return super.get('NvrId');
+    }
+    set NvrId(value: string) {
+      super.set('NvrId', value);
+    }
+    get ChannelId(): number {
+      return super.get('ChannelId');
+    }
+    set ChannelId(value: number) {
+      super.set('ChannelId', value);
+    }
+    get StreamId(): number {
+      return super.get('StreamId');
+    }
+    set StreamId(value: number) {
+      super.set('StreamId', value);
+    }
+    get ScheduleTemplate(): RecordScheduleTemplate {
+      return super.get('ScheduleTemplate');
+    }
+    set ScheduleTemplate(value: RecordScheduleTemplate) {
+      super.set('ScheduleTemplate', value);
+    }    
+    constructor(value?: Partial<IRecordSchedule>) {
+      super('RecordSchedule');
+      Object.assign(this, value);
+    }
+  }
+  
+  export class RecordScheduleTemplate extends Parse.Object implements IRecordScheduleTemplate {
+    get RecordRecover(): boolean {
+      return super.get('RecordRecover');
+    }
+    set RecordRecover(value: boolean) {
+      super.set('RecordRecover', value);
+    }
+    get Name(): string {
+      return super.get('Name');
+    }
+    set Name(value: string) {
+      super.set('Name', value);
+    }
+    get FullRecord(): IRecordScheduleTemplateFullRecord {
+      return super.get('FullRecord');
+    }
+    set FullRecord(value: IRecordScheduleTemplateFullRecord) {
+      super.set('FullRecord', value);
+    }
+    get EventRecord(): IRecordScheduleTemplateEventRecord {
+      return super.get('EventRecord');
+    }
+    set EventRecord(value: IRecordScheduleTemplateEventRecord) {
+      super.set('EventRecord', value);
+    }
+    get Recorder(): ServerInfo {
+      return super.get('Recorder');
+    }
+    set Recorder(value: ServerInfo) {
+      super.set('Recorder', value);
+    }
+    get KeepDays(): string {
+      return super.get('KeepDays');
+    }
+    set KeepDays(value: string) {
+      super.set('KeepDays', value);
+    }    
+    constructor(value?: Partial<IRecordScheduleTemplate>) {
+      super('RecordScheduleTemplate');
+      Object.assign(this, value);
+    }
+  }
+  
+export class EventHandler extends Parse.Object implements IEventHandler {
+    get NvrId(): string {
+      return super.get('NvrId');
+    }
+    set NvrId(value: string) {
+      super.set('NvrId', value);
+    }
+    get DeviceId(): number {
+      return super.get('DeviceId');
+    }
+    set DeviceId(value: number) {
+      super.set('DeviceId', value);
+    }
+    get Schedule(): string {
+      return super.get('Schedule');
+    }
+    set Schedule(value: string) {
+      super.set('Schedule', value);
+    }
+    get EventHandler(): IEventHandlerType[] {
+      return super.get('EventHandler');
+    }
+    set EventHandler(value: IEventHandlerType[]) {
+      super.set('EventHandler', value);
+    }    
+    constructor(value?: Partial<IEventHandler>) {
+      super('EventHandler');
+      Object.assign(this, value);
+    }
+  }
+  
+export class Group extends Parse.Object implements IGroup {
+    get Name(): string {
+      return super.get('Name');
+    }
+    set Name(value: string) {
+      super.set('Name', value);
+    }
+    get Level(): string {
+      return super.get('Level');
+    }
+    set Level(value: string) {
+      super.set('Level', value);
+    }
+    get SubGroup(): string[] {
+      return super.get('SubGroup');
+    }
+    set SubGroup(value: string[]) {
+      super.set('SubGroup', value);
+    }
+    get Nvr(): string[] {
+      return super.get('Nvr');
+    }
+    set Nvr(value: string[]) {
+      super.set('Nvr', value);
+    }
+    get Channel(): {
+      Nvr: string;
+      Channel: number;
+    }[] {
+      return super.get('Channel');
+    }
+    set Channel(
+      value: {
+        Nvr: string;
+        Channel: number;
+      }[],
+    ) {
+      super.set('Channel', value);
+    } 
+    
+    constructor(value?: Partial<IGroup>) {
+      super('Group');
+      Object.assign(this, value);
+    }
+  }
+  
 export class Nvr extends Parse.Object implements INvr {
 
     get Name(): string { return super.get('Name'); }
@@ -35,8 +234,7 @@ export class Nvr extends Parse.Object implements INvr {
     get BandwidthStream(): number { return super.get('BandwidthStream'); }
     set BandwidthStream(value: number) { super.set('BandwidthStream', value); }
     get Tags(): string[] { return super.get('Tags'); }
-    set Tags(value: string[]) { super.set('Tags', value); }
-
+    set Tags(value: string[]) { super.set('Tags', value); }    
     constructor(data?: Partial<INvr>) {
         super('Nvr');
         Object.assign(this, data);

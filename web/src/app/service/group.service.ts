@@ -6,6 +6,7 @@ import { Group } from 'app/model/core';
 import { InsertHelper } from 'app/helper/insert.helper';
 import { Observable } from 'rxjs/Observable';
 import { observeOn } from 'rxjs/operator/observeOn';
+import { IGroupChannel } from 'lib/domain/core';
 
 @Injectable()
 export class GroupService {
@@ -123,7 +124,3 @@ export class GroupService {
     }
 }
 
-interface IGroupChannel {
-    Nvr: string;
-    Channel: number;
-}

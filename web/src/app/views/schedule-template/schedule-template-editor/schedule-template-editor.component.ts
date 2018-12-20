@@ -247,13 +247,16 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
         type: EventHandler,
         filter: query => query.equalTo('Schedule', this.currentTemplate.Schedule)
       }));
-      const delete$ = (data: EventHandler[]) => Observable.fromPromise(Parse.Object.destroyAll(data))
+      const reset$ = (data: EventHandler[]) =>  Observable.fromPromise(Parse.Object.saveAll(data))
         .map(results => this.coreService.notifyWithParseResult({
           parseResult: results, path: this.coreService.urls.URL_CLASS_EVENTHANDLER
         }));
       return get$.switchMap(data => {
-        console.debug("event data", data);
-        return delete$(data);
+        
+        for(let event  of data){
+          (event as EventHandler).Schedule = "";
+        }        
+        return reset$(data);
       });
     }
   }
