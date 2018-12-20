@@ -187,7 +187,9 @@ export class DeviceService {
             cloneResult.push(result);
             coreService.addNotifyData({path: coreService.urls.URL_CLASS_DEVICE, objectId: result.id});            
         }); 
-        await this.setChannelGroup(groupList, { Nvr: obj.NvrId, Channel: obj.Channel }, selectedSubGroup);
+        if(selectedSubGroup){
+            await this.setChannelGroup(groupList, { Nvr: obj.NvrId, Channel: obj.Channel }, selectedSubGroup);
+        }
         coreService.notify();
       }            
     }
