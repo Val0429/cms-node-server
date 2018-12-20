@@ -1,7 +1,8 @@
 import { IBatchRequest } from "lib/domain/core";
 import { ConfigHelper } from "../helpers";
+import { Observable } from "rxjs";
 
-var http = require('http');
+var request = require('request-promise');
 const configHelper = ConfigHelper.instance;
 
 export class CoreService {
@@ -48,7 +49,7 @@ private static _instance: CoreService;
       'Content-Type': 'text/xml'
     };
   }
-  proxyMediaServer(args: IBatchRequest, timeout?: number) {    
+  proxyMediaServer(args: IBatchRequest, timeout?: number):Observable<any> {    
     
     const body = {
       method: args.method,
@@ -65,27 +66,26 @@ private static _instance: CoreService;
       'Content-Length': Buffer.byteLength(bodyString)
     };;
 
-    let post_options = {
-      hostname: configHelper.parseConfig.HOST,
-      port: configHelper.parseConfig.IS_HTTPS ? configHelper.parseConfig.SSL_PORT : configHelper.parseConfig.PORT,
-      path: '/parse'+ this.urls.MEDIA_PROXY_URL, 
-      method:'POST',      
-      headers: parseHeaders
+    let protocol = configHelper.parseConfig.IS_HTTPS ? 'https' : 'http';
+    let hostname = configHelper.parseConfig.HOST;
+    let port = configHelper.parseConfig.IS_HTTPS ? configHelper.parseConfig.SSL_PORT : configHelper.parseConfig.PORT;
+    let path = 'parse'+ this.urls.MEDIA_PROXY_URL;    
+
+    const options = {
+      uri: `${protocol}://${hostname}:${port}/${path}`,
+      headers: parseHeaders,
+      method: 'POST',
+      body,
+      json: true
     };
-    let post_req = http.request(post_options, function (res) {
-      // console.log('STATUS: ' + res.statusCode);
-      // console.log('HEADERS: ' + JSON.stringify(res.headers));
-      // res.setEncoding('utf8');
-      // res.on('data', function (chunk) {
-      //     console.log('Response: ', chunk);
-      // });
-    });
-    post_req.on('error', function(e) {
-      console.log('problem with request: ' + e.message);
-    });
     
-    post_req.write(bodyString);
-    post_req.end();
+    return Observable.fromPromise(request(options).then(function (parsedBody) {        
+      return parsedBody;
+      })
+      .catch(function (err) {
+        console.log("error media server", err);
+        return err;
+      }));
   }
   /** Call CGI通知CMS Client */
   notify(args?: { path: string, objectId: string }) {
@@ -95,15 +95,15 @@ private static _instance: CoreService;
     if (this.notifyList && this.notifyList.length > 0) {      
         const body = Object.assign([], this.notifyList);
         this.notifyList = [];        
-        setTimeout(() => { // 避免更新後notify速度太快導致讀到舊資料, 延遲1秒notify
+        setTimeout(()=>
           this.proxyMediaServer({            
             method: 'POST',
             path: this.urls.URL_MEDIA_NOTIFY,
             body: {
               notify: body
             }
-          });
-        }, 2000);
+          }).toPromise()
+        , 2000);
     }
   }
   notifyWithParseResult(args: { parseResult: Parse.Object[], path: string }) {

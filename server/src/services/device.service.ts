@@ -29,6 +29,11 @@ export class DeviceService {
             let account = req.body.account;
             let password = req.body.password;
             
+            let availableLicense = await this.getLicenseAvailableCount("00171").toPromise();
+            if(availableLicense < quantity){
+                throw new Error("Not enough license");
+            }
+
             if(!nvrObjectId){
                 let nvr = await this.getDefaultNvr();
                 nvrObjectId = nvr.id;
@@ -240,10 +245,87 @@ export class DeviceService {
         });
         for(let group of saveList){
             await Observable.fromPromise(group.save().then(result=>{
-                console.log("result",result);
+                //console.log("result",result);
                 coreService.addNotifyData({objectId:result.id, path: coreService.urls.URL_CLASS_GROUP })
             })).toPromise();
         }        
+    }
+
+
+    /** 取得目前所有的License並計算未過期的數量
+     * 格式: key: ProductNo, value: 數量
+     */
+    getLicenseLimit() {
+        this.licenseLimit = {["00171"]:0};
+        
+        return coreService.proxyMediaServer({
+            method: 'GET',
+            path: coreService.urls.URL_MEDIA_LICENSE_INFO
+        },2000).map(result => {            
+            
+            if(!result || !result.License) return;
+
+            const temp = result.License;
+            temp.Adaptor = this.toArray(temp.Adaptor);
+            // 分類所有License Key並計算各ProductNo上限總和
+            temp.Adaptor.forEach(adp => {
+                if (!adp.Key) { return; }
+                adp.Key = this.toArray(adp.Key); // 所有已註冊的key
+                adp.Key.forEach(key => {
+                    //console.debug(key.$.ProductNO);
+                    if (this.licenseLimit[key.$.ProductNO] === undefined) {
+                        //console.debug('Cant find this product no.');
+                        return;
+                    }
+                    if (key.$.Expired === '1') {
+                        //console.debug('Key expired.');
+                        return;
+                    }
+
+                    this.licenseLimit[key.$.ProductNO] += Number(key.$.Count);
+                });
+            });
+        });
+    }
+    toArray(data: any) {
+        if (!data || Array.isArray(data)) {
+            return data;
+        } else {
+            const tmp = data;
+            const result = [];
+            result.push(tmp);
+            return result;
+        }
+    }
+    /** 各License上限, ex: '00166': 100 */
+    licenseLimit: { [key: string]: number } = {};
+    /** 取得指定license剩餘可用數量 */
+    getLicenseAvailableCount(lic: string) {
+        if (!lic) {
+            alert('No available license type.');
+            return Observable.of(0);
+        }
+        if (lic === 'pass') {
+            return Observable.of(10000);
+        }
+        const get$ = this.getLicenseUsageIPCamera()
+            .map(num => this.licenseLimit[lic] - num);
+        return this.getLicenseLimit()
+            .switchMap(() => get$);
+    }
+    getLicenseUsageIPCamera() {
+        const getNvr$ = Observable.fromPromise(parseHelper.getData({
+            type: Nvr,
+            filter: query => query.equalTo('Driver', 'IPCamera')
+        }));
+
+        const getDevice$ = (nvrId: string) => Observable.fromPromise(parseHelper.countFetch({
+            type: Device,
+            filter: query => query.equalTo('NvrId', nvrId).limit(30000)
+        }));
+
+        return getNvr$
+            .switchMap(nvr => getDevice$(nvr.Id));
     }
 }
 

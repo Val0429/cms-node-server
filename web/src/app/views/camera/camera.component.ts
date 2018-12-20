@@ -154,7 +154,7 @@ export class CameraComponent implements OnInit {
         deviceDisplay.brandDisplay = this.cameraService.getBrandDisplay(deviceDisplay.device.Config.Brand);
         return deviceDisplay;}):
         [];
-      console.debug("this.cameraConfigs",this.cameraConfigs);
+      //console.debug("this.cameraConfigs",this.cameraConfigs);
     })
     .do(() => this.cloneCameraParam.device = this.cameraConfigs.length>0 ? this.cameraConfigs[0].device : new Device());
     return fetch$;
