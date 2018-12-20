@@ -29,7 +29,7 @@
           </div>
       </div>
       <div class="widget-body" *ngIf="cameraConfigs.length>0">          
-            
+        <pagination-controls (pageChange)="changePage($event)"></pagination-controls>    
         <table class="table table-hover table-lg mt-lg mb-0">
           <thead>
             <tr>
@@ -42,7 +42,7 @@
             </tr>
           </thead>
           <tbody >
-            <tr *ngFor="let cam of cameraConfigs | paginate: { itemsPerPage: 50, currentPage: p }" (click)="currentEditCamera = cam.device" [class.active]="cam.device === currentEditCamera">
+            <tr *ngFor="let cam of cameraConfigs | paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: total }" (click)="currentEditCamera = cam.device" [class.active]="cam.device === currentEditCamera">
               <td><input type="checkbox" (click)="selectCam(cam, $event.target.checked)" [checked]="cam.checked"></td>
               <td>{{cam.device.Channel}}</td>
               <td>{{cam.brandDisplay}}</td>
@@ -53,7 +53,7 @@
           </tbody>
         </table>
       </div>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
     </section>
   </div>
   <div class="col-12">

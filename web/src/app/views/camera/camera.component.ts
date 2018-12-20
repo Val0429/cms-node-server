@@ -8,6 +8,7 @@ import { Device, Nvr, Group } from 'app/model/core';
 import { DeviceVendor } from 'app/config/device-vendor.config';
 import { CameraService } from 'app/service/camera.service';
 import { CameraSearchComponent } from './camera-search/camera-search.component';
+import { query } from '@angular/core/src/animation/dsl';
 
 @Component({
   selector: 'app-camera',
@@ -37,6 +38,8 @@ export class CameraComponent implements OnInit {
     device: undefined,
     quantity: 0
   };
+  pageSize=50;
+  total=0;
 
  @ViewChild("searchComponent") searchComponent:CameraSearchComponent;
 
@@ -49,6 +52,7 @@ export class CameraComponent implements OnInit {
 
   ngOnInit() {
     this.getIPCameraNvr()
+      .switchMap(() => this.getTotalDevice())
       .switchMap(() => this.fetchDevice())
       .subscribe();
 
@@ -97,12 +101,17 @@ export class CameraComponent implements OnInit {
   reloadData() {
     this.currentEditCamera = undefined;
     const getGroup$ = this.getGroup();
-    this.fetchDevice()
+    this.getTotalDevice()
+      .switchMap(()=>this.fetchDevice())  
       .switchMap(()=>getGroup$)
       .switchMap(()=>this.getAvailableLicense())
       .subscribe();
-    this.checkSelected();
-    this.p=1;
+    this.checkSelected();    
+  }
+
+  changePage($event:number){
+    this.p=$event;
+    this.reloadData();
   }
   checkSelected(){
     let checked = this.cameraConfigs.map(function(e){return e.checked});
@@ -132,7 +141,16 @@ export class CameraComponent implements OnInit {
     })).do(nvr => this.ipCameraNvr = nvr);
     return get$;
   }
-
+  getTotalDevice(){
+    return Observable.fromPromise(this.parseService.countFetch({type:Device, 
+      filter:query => query.equalTo('NvrId', 
+          this.ipCameraNvr.Id)
+        .limit(Number.MAX_SAFE_INTEGER)
+    })).do(num => {
+      console.debug("total", num);
+      this.total = num;
+    });
+  }
   /** 取得屬於IPCamera的Device資料 */
   fetchDevice() {
     this.cameraConfigs =[];
@@ -140,7 +158,8 @@ export class CameraComponent implements OnInit {
       type: Device,
       filter: query => query.equalTo('NvrId', this.ipCameraNvr.Id)
         .ascending('Channel')
-        .limit(30000)
+        .limit(this.pageSize)
+        .skip((this.p-1)*this.pageSize)
     })).do(devices => {
       this.cameraConfigs = devices && devices.length>0 ? 
       devices.map(dev => {
