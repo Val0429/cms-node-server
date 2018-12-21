@@ -41,8 +41,8 @@ export class TreeNodeComponent implements OnInit {
     return classes;
   }
 
-  changeSetupNode(val:boolean) {
-    this.changeSetupNodeEvent.emit({node:this.treeNode, val});
+  changeSetupNode($event:any) {
+    this.changeSetupNodeEvent.emit({node:this.treeNode, $event});
   }
 
   getNodeName() {

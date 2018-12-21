@@ -60,7 +60,7 @@ export class LicenseService {
             return Observable.of(0);
         }
         if (lic === 'pass') {
-            return Observable.of(10000);
+            return Observable.of(Number.MAX_SAFE_INTEGER);
         }
         const get$ = this.getCurrentUsageCountByLicense(lic)
             .map(num => this.licenseLimit[lic] - num);
