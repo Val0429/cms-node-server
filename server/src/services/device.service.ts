@@ -1,7 +1,7 @@
 
 import { Request, Response } from 'express';
 import { Nvr, Device, Group, EventHandler, RecordSchedule } from '../domain';
-import { ParseHelper, ServerHelper } from '../helpers';
+import { ParseHelper, ServerHelper, ParseServerHelper } from '../helpers';
 import { Observable } from 'rxjs';
 import { CoreService } from './core.service';
 import { IGroupChannel } from 'lib/domain/core';
@@ -17,8 +17,21 @@ export class DeviceService {
 
     private static _instance: DeviceService;
 
-    constructor() {
-        
+    constructor() {        
+        this.noGroupCheck();
+    }
+    //for version 3.00.25 onward
+    async noGroupCheck(){
+        //check if "No Group" is exist
+        let groups = await Observable.fromPromise(parseHelper.fetchData({type:Group, 
+            filter: query=> query.equalTo("Name", "No Group").limit(1)})).toPromise();
+        if(!groups || groups.length == 0){
+            console.log("create 'No Group' group");
+            let group = new Group();
+            group.Name="No Group";
+            group.Level = "0";
+            await Observable.fromPromise(group.save()).toPromise();
+        }
     }
     async post(req:Request, res:Response){
         try{

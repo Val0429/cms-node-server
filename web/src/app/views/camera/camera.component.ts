@@ -8,7 +8,6 @@ import { Device, Nvr, Group } from 'app/model/core';
 import { DeviceVendor } from 'app/config/device-vendor.config';
 import { CameraService } from 'app/service/camera.service';
 import { CameraSearchComponent } from './camera-search/camera-search.component';
-import { query } from '@angular/core/src/animation/dsl';
 
 @Component({
   selector: 'app-camera',
@@ -90,7 +89,7 @@ export class CameraComponent implements OnInit {
       await this.cameraService.deleteCam(camIds, this.ipCameraNvr.id);                    
          
       alert('Delete Success');  
-      this.reloadData();              
+      await this.reloadData();              
     }catch(err){
       console.error(err);
       alert(err);      
@@ -98,20 +97,20 @@ export class CameraComponent implements OnInit {
       this.flag.delete=false;
     }
   }
-  reloadData() {
+  async reloadData() {
     this.currentEditCamera = undefined;
     const getGroup$ = this.getGroup();
-    this.getTotalDevice()
+    await this.getTotalDevice()
       .switchMap(()=>this.fetchDevice())  
       .switchMap(()=>getGroup$)
       .switchMap(()=>this.getAvailableLicense())
-      .subscribe();
+      .toPromise();
     this.checkSelected();    
   }
 
-  changePage($event:number){
+  async changePage($event:number){
     this.p=$event;
-    this.reloadData();
+    await this.reloadData();
   }
   checkSelected(){
     let checked = this.cameraConfigs.map(function(e){return e.checked});
@@ -153,7 +152,7 @@ export class CameraComponent implements OnInit {
   }
   /** 取得屬於IPCamera的Device資料 */
   fetchDevice() {
-    this.cameraConfigs =[];
+    this.cameraConfigs = undefined;
     const fetch$ = Observable.fromPromise(this.parseService.fetchData({
       type: Device,
       filter: query => query.equalTo('NvrId', this.ipCameraNvr.Id)
@@ -161,6 +160,7 @@ export class CameraComponent implements OnInit {
         .limit(this.pageSize)
         .skip((this.p-1)*this.pageSize)
     })).do(devices => {
+      this.cameraConfigs=[];
       this.cameraConfigs = devices && devices.length>0 ? 
       devices.map(dev => {
         dev.Config.Authentication.Account = this.cryptoService.decrypt4DB(dev.Config.Authentication.Account);
@@ -214,7 +214,7 @@ export class CameraComponent implements OnInit {
       
       await this.cameraService.cloneCam(this.cloneCameraParam.device, this.cloneCameraParam.quantity, this.ipCameraNvr);
       
-      this.reloadData();
+      await this.reloadData();
       alert('Clone success.');
       
     }catch(err){

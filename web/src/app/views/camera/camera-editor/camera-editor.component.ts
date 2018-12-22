@@ -2,15 +2,13 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, EventEmitter, Outpu
 import * as _ from 'lodash';
 import { DeviceVendor } from 'app/config/device-vendor.config';
 import { OptionHelper } from 'app/helper/option.helper';
-import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { LicenseService } from 'app/service/license.service';
-import { CryptoService } from 'app/service/crypto.service';
 import { CameraService } from 'app/service/camera.service';
 import { GroupService } from 'app/service/group.service';
 import { CameraEditorParam } from 'app/model/camera-editor-param';
 import { StringHelper } from 'app/helper/string.helper';
-import { Device, Group, Nvr, RecordSchedule } from 'app/model/core';
+import { Device, Group, Nvr } from 'app/model/core';
 import { IDeviceStream } from 'lib/domain/core';
 import { Select2OptionData } from 'ng2-select2/ng2-select2';
 import { Observable } from 'rxjs/Observable';
@@ -30,7 +28,8 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   editorParam: CameraEditorParam;
   /** 當前畫面展開的PTZ Command類型 */
   ptzDisplayType: string;
-  ptzPresets: any[];
+  ptzPresets: any[]; 
+  noGroup:Group;   
   groupList: Group[]; // 所有group資料
   groupOptions: Select2OptionData[]; // group群組化選項物件
   selectedSubGroup: string; // Camera當前選擇的group物件
@@ -44,11 +43,9 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   };
 
   constructor(
-    private coreService: CoreService,
     private cameraService: CameraService,
     private groupService: GroupService,
     private parseService: ParseService,
-    private cryptoService: CryptoService,
     private licenseService: LicenseService
   ) { }
 
@@ -57,6 +54,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       type: Group
     }).then(groups => {
       this.groupList = groups;
+      this.noGroup = this.groupList.find(x=>x.Name == "No Group");      
       this.groupOptions = this.groupService.getGroupOptions(this.groupList);
     }));
 
@@ -73,7 +71,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.currentCamera) {
-      this.currentCamera = changes.currentCamera.currentValue;
+      this.currentCamera = changes.currentCamera.currentValue;      
       if (!this.currentCamera) {
         return;
       }
@@ -93,8 +91,10 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     }
 
     this.getCapability(this.currentCamera.Config.Brand);
-    this.selectedSubGroup = this.groupService.findDeviceGroup(this.groupList,
+    let selectedSubGroup = this.groupService.findDeviceGroup(this.groupList,
       { Nvr: this.currentCamera.NvrId, Channel: this.currentCamera.Channel });
+      //if no group found set to "No Group" group #for version 3.00.25 and above
+      this.selectedSubGroup = selectedSubGroup || this.noGroup.id;
   }
 
   /** 改變Brand的流程 */

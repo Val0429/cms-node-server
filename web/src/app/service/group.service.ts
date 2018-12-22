@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, group } from '@angular/core';
 import { CoreService } from './core.service';
 import { ParseService } from './parse.service';
 import { Select2OptionData } from 'ng2-select2/ng2-select2';
@@ -99,25 +99,27 @@ export class GroupService {
     /** 頁面: Camera, 功能: 改變Camera group設定 */
     setChannelGroup(groupConfigs: Group[], newData: IGroupChannel, newGroupId: string) {
         const saveList = [];
-
+        
+        
         groupConfigs.forEach(group => {
             if (group.Channel === undefined) {
                 group.Channel = [];
             }
-            const item = group.Channel.find(x => x.Nvr === newData.Nvr && x.Channel === newData.Channel);
+            const exists = group.Channel.find(x => x.Nvr === newData.Nvr && x.Channel === newData.Channel);
             // contains Channel but not new group id => remove it
-            if (item && group.id !== newGroupId) {
-                const index = group.Channel.indexOf(item);
+            if (exists && group.id !== newGroupId) {
+                const index = group.Channel.indexOf(exists);
                 group.Channel.splice(index, 1);
                 saveList.push(group);
             }
             // is new group id but not contains Channel => insert it
-            if (newGroupId !== undefined && group.id === newGroupId && !item) {
+            if (newGroupId && group.id === newGroupId && !exists) {
                 const insertIndex = InsertHelper.findInsertIndexForGroupChannel(group.Channel, newData);
                 group.Channel.splice(insertIndex, 0, newData);
                 saveList.push(group);
             }
         });
+        
 
         return Observable.fromPromise(Parse.Object.saveAll(saveList)
             .then(groups => this.coreService.notifyWithParseResult({ parseResult: groups, path: this.coreService.urls.URL_CLASS_GROUP })));

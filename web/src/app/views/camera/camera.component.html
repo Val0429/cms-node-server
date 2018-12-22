@@ -11,7 +11,7 @@
           <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="searchWindow.show()">
             Search
           </button>
-          <button *ngIf="cameraConfigs.length > 0" class="btn btn-secondary width-100 mb-xs" role="button" (click)="cloneWindow.show()" [disabled]="flag.save || flag.delete">
+          <button *ngIf="cameraConfigs && cameraConfigs.length > 0" class="btn btn-secondary width-100 mb-xs" role="button" (click)="cloneWindow.show()" [disabled]="flag.save || flag.delete">
             Clone
           </button>
           <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addDevice()" [disabled]="flag.save || flag.delete">
@@ -22,14 +22,15 @@
           </button>
         </div>
       </header>
-      <div class="widget-body" *ngIf="cameraConfigs.length==0">
+      <div class="widget-body" *ngIf="!cameraConfigs">
           
           <div class="text-center" >
             <i class="fa fa-refresh fa-spin fa-fw" style="font-size: 30px;"></i>
           </div>
       </div>
-      <div class="widget-body" *ngIf="cameraConfigs.length>0">          
-        <pagination-controls (pageChange)="changePage($event)"></pagination-controls>    
+      <div class="widget-body" *ngIf="cameraConfigs">          
+        <pagination-controls (pageChange)="changePage($event)"></pagination-controls>  
+        <div style="width:100%;max-height:500px;overflow-y: scroll;">  
         <table class="table table-hover table-lg mt-lg mb-0">
           <thead>
             <tr>
@@ -52,8 +53,10 @@
             </tr>
           </tbody>
         </table>
-      </div>
+       </div>
       <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+      </div>
+      
     </section>
   </div>
   <div class="col-12">
