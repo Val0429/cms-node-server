@@ -392,7 +392,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
         this.setupData.push(oldItem);
       }
       else {                
-        alert("event setup is necessary");        
+        alert("Event setup is necessary");
         obj.$event.preventDefault();
         return;
       }
@@ -579,14 +579,14 @@ export interface ITemplateSetupNode {
   /** 階層式key, format: MGID.SGID.NVRID.DEVICEID.(STREAMID) */
   key: string;
   /*
-    example of wrong value found if we try to find node by key.indexOf(): 
+    example of wrong node found if we try to find templateSetupNode by key.indexOf(): 
       1.1.2 == 1.1.21  
       1.1.21 == 1.1.211
       etc.
   */
   channelId:number;
   nvrId:string;
-  /* disable empty event, not necessary to use "Event setup is necessary" alert  */
+  /* to disable empty event  */
   enabled:boolean;
 
   /** 任意型態資料 */
