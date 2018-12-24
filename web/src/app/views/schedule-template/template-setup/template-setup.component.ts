@@ -241,9 +241,13 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
           }
 
           // 若SubGroup有Nvr, 將所有Nvr及其底下的Device資料一起處理
-          if (sg.Nvr) {
-            args.nvrConfigs.filter(x => sg.Nvr.includes(x.Id)).forEach(nvr => {
-              this.buildSetupNodeForNvrDev({ sg: newSgNode, nvr: nvr });
+          if (sg.Nvr && sg.Nvr.length > 0) {
+            args.nvrConfigs.filter(x => sg.Nvr.includes(x.Id)).forEach(async nvr => {
+              let devs = await Observable.fromPromise(this.parseService
+                .fetchData({type:Device, 
+                  filter:query => query.equalTo("NvrId", nvr.Id)
+                })).toPromise();
+              this.buildSetupNodeForNvrDev({ sg: newSgNode, nvr, sgIpCamChannel: devs.map(function(e){return e.Channel}) });
             });
           }
         });
