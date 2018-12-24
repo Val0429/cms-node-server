@@ -72,6 +72,7 @@ setEditModel(editNvr:Nvr, groupList:Group[], iSapP2PServerList:ServerInfo[]) {
 
   // 獨立屬性Group
   const group = groupList.find(data => data.Nvr && data.Nvr.indexOf(editNvr.Id) >= 0);
+  //if no group found set to "No Group" group #for version 3.00.25 and above
 
   let currentEditModel : INvrEditModel = {
     Name: editNvr.Name,
@@ -85,7 +86,7 @@ setEditModel(editNvr:Nvr, groupList:Group[], iSapP2PServerList:ServerInfo[]) {
     IsListenEvent: editNvr.IsListenEvent,
     IsPatrolInclude: editNvr.IsPatrolInclude,
     SSLEnable: editNvr.SSLEnable,
-    Group: group ? group.id : "",
+    Group: group ? group.id : groupList.find(x=>x.Name == "No Group").id,
     ServerId: serverInfo ? serverInfo.id : undefined
   };
 

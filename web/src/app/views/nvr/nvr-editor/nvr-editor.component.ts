@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Observable';
 import { Select2OptionData } from 'ng2-select2/ng2-select2';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
-import { CryptoService } from 'app/service/crypto.service';
 import { LicenseService } from 'app/service/license.service';
 import { Device, Nvr, Group, RecordSchedule, ServerInfo } from 'app/model/core';
 import { IDeviceStream } from 'lib/domain/core';
@@ -20,15 +19,18 @@ import { NvrService, INvrEditModel } from 'app/service/nvr.service';
   styleUrls: ['./nvr-editor.component.css']
 })
 export class NvrEditorComponent implements OnInit, OnChanges {
-  p:number=1;
+
   /** 傳入ParseObject Nvr物件 */
   @Input() editNvr: Nvr;
   @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
+  p:number=1;
+
   /** 目前編輯的NVR Model資料 */
   currentEditModel: INvrEditModel;
   /** Manufacture選項清單 */
   manufactureOptions = NvrManufacturer.EditorList;
   /** 所有group資料 */
+  noGroup:Group;
   groupList: Group[];
   /** group群組化選項物件 */
   groupOptions: Select2OptionData[];
@@ -50,7 +52,6 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     private coreService: CoreService,
     private parseService: ParseService,
     private groupService: GroupService,
-    private cryptoService: CryptoService,
     private licenseService: LicenseService,
     private cameraService:CameraService,
     private nvrService:NvrService
@@ -62,6 +63,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
       filter: query => query.limit(30000)
     }).then(groups => {
       this.groupList = groups;
+      this.noGroup = this.groupList.find(x=>x.Name == "No Group");  
       this.groupOptions = this.groupService.getGroupOptions(this.groupList);
       this.reloadEditData();
     }));
