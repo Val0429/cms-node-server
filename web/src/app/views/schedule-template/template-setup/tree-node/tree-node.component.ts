@@ -17,7 +17,7 @@ export class TreeNodeComponent implements OnInit {
   constructor(private parseService:ParseService) { }
 
   async ngOnInit() { 
-    const level = this.treeNode.key;
+    const level = this.treeNode.level;
     if(!this.treeNode.data && level==4){
       
       
@@ -34,6 +34,7 @@ export class TreeNodeComponent implements OnInit {
         dev = new Device();
         dev.Name = "Device not found";        
       }      
+      this.treeNode.name=`Channel: ${dev.Channel} ${dev.Name}`;
       this.treeNode.data = dev;      
       // 若是RecordSchedule額外多處理stream
       if (dev.Config.Stream && this.treeNode.setupMode === 1) {
@@ -41,7 +42,8 @@ export class TreeNodeComponent implements OnInit {
           return (a.Id > b.Id) ? 1 : ((b.Id > a.Id) ? -1 : 0);
         }).forEach(str => {          
           const newStrNode: ITemplateSetupNode = {
-            key: 5, data: str, apply: false, partialApply: false, collapsed: true, child: [], streamId:str.Id, 
+            name:`Stream: ${str.Id}`,
+            level: 5, data: str, apply: false, partialApply: false, collapsed: true, child: [], streamId:str.Id, 
             nvrId: this.treeNode.nvrId, channelId:dev.Channel, enabled:true, parent:this.treeNode, setupMode:this.treeNode.setupMode
           };
           this.treeNode.child.push(newStrNode);
@@ -81,14 +83,6 @@ export class TreeNodeComponent implements OnInit {
     this.changeSetupNodeEvent.emit({node:this.treeNode, $event});
   }
 
-  getNodeName() {
-    switch (this.treeNode.key) {
-      case 1: return `Main Group: ${this.treeNode.data.Name}`;
-      case 2: return `Sub Group: ${this.treeNode.data.Name}`;
-      case 3: return `Nvr: ${this.treeNode.data.Id} ${this.treeNode.data.Name}`;
-      case 4: return `Channel: ${this.treeNode.data.Channel} ${this.treeNode.data.Name}`;   
-      case 5: return `Stream: ${this.treeNode.data.Id}`;
-    }
-  }
+  
 
 }

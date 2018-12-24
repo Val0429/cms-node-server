@@ -208,7 +208,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   associateApply(node?: ITemplateSetupNode) {
     const loopTarget = node ? node.child : this.setupNode;
     loopTarget.forEach(childNode => {
-      if (childNode.key !== this.levelLimit) {
+      if (childNode.level !== this.levelLimit) {
         if (childNode.child.length > 0) {
           this.associateApply(childNode);
           childNode.apply = childNode.child.filter(x => x.apply).length === childNode.child.length;
@@ -229,7 +229,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     args.groupConfigs.filter(x => x.Level === '0').forEach(mg => {
 
       const newMgNode: ITemplateSetupNode = {
-        key: 1, data: mg, apply: false, partialApply: false, collapsed: true, child: [],
+        name:`Main Group: ${mg.Name}`,
+        id:mg.id, level: 1, data: mg, apply: false, partialApply: false, collapsed: true, child: [],
         enabled:true, parent:undefined, setupMode:this.setupMode
       };
       this.setupNode.push(newMgNode);
@@ -237,7 +238,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       if (mg.SubGroup) {
         args.groupConfigs.filter(group => mg.SubGroup.includes(group.id)).forEach(sg => {
           const newSgNode: ITemplateSetupNode = {
-            key: 2, data: sg, apply: false, partialApply: false, collapsed: true, child: [], 
+            name:`Sub Group: ${sg.Name}`,
+            id:sg.id, level: 2, data: sg, apply: false, partialApply: false, collapsed: true, child: [], 
             enabled:true, parent:newMgNode, setupMode:this.setupMode,
           };
           newMgNode.child.push(newSgNode);
@@ -269,7 +271,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   buildSetupNodeForNvrDev(args: { sg: ITemplateSetupNode, nvr: Nvr, sgIpCamChannel?: number[] }) {
     // 加入一般Nvr或直連用的預設虛擬Nvr
     const newNvrNode: ITemplateSetupNode = {
-      key: 3, data: args.nvr, apply: false, partialApply: false, collapsed: true, child: [], page:1, 
+      name:`Nvr: ${args.nvr.Id} ${args.nvr.Name}`,
+      id:args.nvr.id, level: 3, data: args.nvr, apply: false, partialApply: false, collapsed: true, child: [], page:1, 
         nvrId:args.nvr.Id, enabled:true, parent:args.sg, setupMode:this.setupMode
     };
     args.sg.child.push(newNvrNode);
@@ -279,7 +282,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       // set data to undefined to let tree node load the data directly from parse server
       // implement lazy load
       const newDevNode: ITemplateSetupNode = {
-        key: 4, data: undefined, apply: false, partialApply: false, collapsed: true, child: [],
+        name: `Channel: ${dev}`,
+        level: 4, data: undefined, apply: false, partialApply: false, collapsed: true, child: [],
         nvrId:args.nvr.Id, channelId:dev, enabled:true, parent:newNvrNode, setupMode:this.setupMode, checkedStreamId:[]
       };
 
@@ -354,7 +358,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
 
     let oldItem = this.getExistSetupData(obj.node);
     if(oldItem==undefined){
-      if(this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE && obj.node.key==this.levelLimit){
+      if(this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE && obj.node.level==this.levelLimit){
         oldItem = { checked, data: this.createNewRecordSchedule(obj.node), originalShedule:""};
         this.setupData.push(oldItem);
       }
@@ -373,7 +377,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     obj.node.apply = checked;
     obj.node.partialApply = checked;
     // 若非最底層則找出所有child一起修改
-    if (obj.node.key !== this.levelLimit) {
+    if (obj.node.level !== this.levelLimit) {
       obj.node.child.forEach(cn => {
         this.changeSetupNode({node:cn, $event: obj.$event});
       });
@@ -543,9 +547,9 @@ export interface ITemplateSetupNode {
   parent:ITemplateSetupNode;
   setupMode:number;
   checkedStreamId?:number[];
-  /** 階層式key, format: MGID.SGID.NVRID.DEVICEID.(STREAMID) */
+  id?:string;
   //changed to number since version 3.0.25
-  key: number;
+  level: number;
   /*
     example of wrong node found if we try to find templateSetupNode by key.indexOf(): 
       1.1.2 == 1.1.21  
@@ -571,6 +575,7 @@ export interface ITemplateSetupNode {
   child: ITemplateSetupNode[];
   /* for pagination current page */
   page?:number;
+  name:string
 
   checkChecked?();
 }
