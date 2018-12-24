@@ -36,11 +36,7 @@ export class DeviceService {
     async post(req:Request, res:Response){
         try{
             coreService.auth = req.body.auth;     
-            let nvrObjectId = req.body.nvrObjectId;
-            let cam = req.body.cam;
-            let quantity = req.body.quantity;
-            let account = req.body.account;
-            let password = req.body.password;
+            let { nvrObjectId, cam, quantity, account, password } = req.body;         
             
             let availableLicense = await this.getLicenseAvailableCount("00171").toPromise();
             if(availableLicense < quantity){

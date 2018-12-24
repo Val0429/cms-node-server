@@ -188,7 +188,7 @@ export class CoreService {
             body: {
               notify: body
             }
-          }).subscribe();
+          }).toPromise();
         }, 2000);
     }
   }
