@@ -5,7 +5,8 @@ import { ArrayHelper } from 'app/helper/array.helper';
 import { ISearchCamera } from 'lib/domain/core';
 import { LicenseService } from 'app/service/license.service';
 import { CameraService } from 'app/service/camera.service';
-import { Nvr, Device } from 'app/model/core';
+import { Nvr, Device, Group } from 'app/model/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-camera-search',
@@ -16,7 +17,8 @@ export class CameraSearchComponent implements OnInit {
   
   @Output() closeModal: EventEmitter<any> = new EventEmitter();
   @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
-  @Input() ipCameraNvr:Nvr;
+  @Input() ipCameraNvr:Nvr;  
+  @Input() groupList:Group[];
   /** 搜尋結果 */
   searchList: {device:ISearchCamera, checked:boolean}[];    
   checkedAll:boolean;
@@ -47,12 +49,13 @@ export class CameraSearchComponent implements OnInit {
           alert('License available count is not enough, can not add new IP Camera.');
           return;
         }        
-
+        let noGroup = this.groupList.find(x=>x.Name=="Non Main Group");
+        let selectedSubGroup = noGroup.SubGroup[0];
         for(let cam of cams)  {
           const newCam = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: 0, searchCamera: cam.device });            
           await this.cameraService.getCapability(newCam, cam.device.COMPANY, []).toPromise(); 
           let editorParam = this.cameraService.getCameraEditorParam(newCam.Config.Model, newCam);          
-          await this.cameraService.saveCamera(newCam, this.ipCameraNvr, [], "", editorParam, "");          
+          await this.cameraService.saveCamera(newCam, this.ipCameraNvr, this.groupList, selectedSubGroup, editorParam, "");          
         }        
         alert("Save camera(s) sucess");
         this.checkedAll=false;

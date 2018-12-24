@@ -30,7 +30,7 @@
       </div>
       <div class="widget-body" *ngIf="cameraConfigs">          
         <pagination-controls (pageChange)="changePage($event)"></pagination-controls>  
-        <div style="width:100%;max-height:500px;overflow-y: scroll;">  
+        <div style="width:100%;max-height:500px;overflow-y: scroll;">
         <table class="table table-hover table-lg mt-lg mb-0">
           <thead>
             <tr>
@@ -53,14 +53,14 @@
             </tr>
           </tbody>
         </table>
-       </div>
+      </div>
       <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
       </div>
       
     </section>
   </div>
   <div class="col-12">
-    <app-camera-editor [currentCamera]="currentEditCamera" (reloadDataEvent)="reloadData()"></app-camera-editor>
+    <app-camera-editor *ngIf="currentEditCamera" [groupList]="groupList" [currentCamera]="currentEditCamera" (reloadDataEvent)="reloadData()"></app-camera-editor>
   </div>
 </div>
 <div bsModal #searchWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -74,10 +74,10 @@
         <h4 class="modal-title text-center fw-bold">Search Device</h4>
       </div>
       <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
-        <app-camera-search [ipCameraNvr]="ipCameraNvr" #searchComponent (reloadDataEvent)="reloadData()" (closeModal)="searchWindow.hide();"></app-camera-search>
+        <app-camera-search [groupList]="groupList" [ipCameraNvr]="ipCameraNvr" #searchComponent (reloadDataEvent)="reloadData()" (closeModal)="searchWindow.hide();"></app-camera-search>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-gray" type="button" (click)="searchComponent.saveAll()" [disabled]="!searchComponent.anyChecked || searchComponent.flag.load===true">
+        <button class="btn btn-gray" type="button" (click)="searchComponent.saveAll()" [disabled]="searchComponent && (!searchComponent.anyChecked || searchComponent.flag.load===true)">
           Save 
         </button>
         <button type="button" class="btn btn-gray" (click)="searchWindow.hide();">

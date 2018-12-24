@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ParseService } from 'app/service/parse.service';
-import { Nvr, Device } from 'app/model/core';
-import { NvrEditorComponent } from './nvr-editor/nvr-editor.component';
+import { Nvr, Device, Group, ServerInfo } from 'app/model/core';
+
 import { NvrService } from 'app/service/nvr.service';
 import { NvrSearchComponent } from './nvr-search/nvr-search.component';
+
 
 @Component({
   selector: 'app-nvr',
@@ -12,31 +13,40 @@ import { NvrSearchComponent } from './nvr-search/nvr-search.component';
   styleUrls: ['./nvr.component.css']
 })
 export class NvrComponent implements OnInit {
-  @ViewChild('editor') editorComponent: NvrEditorComponent;
+  
   @ViewChild('searchComponent') searchComponent:NvrSearchComponent;
   nvrList: {device:Nvr,checked:boolean}[];
   deviceList: Device[];
   licenseInfo: any;
   currentEditNVR: Nvr;
-
-
   checkedAll :boolean = false;
   anyChecked:boolean = false;
+  groupList: Group[];
+  iSapP2PServerList: ServerInfo[];
   
-  // licenseCount: {
-  //   device: number,
-  //   thirdNvr: number,
-  // } = {
-  //     device: 0,
-  //     thirdNvr: 0
-  //   };
   constructor(
-    private parseService: ParseService ,
-    private nvrService:NvrService
+    private parseService: ParseService,
+    private nvrService:NvrService    
     ) { }
 
   ngOnInit() {
-    this.reloadData();
+    const getGroup$ = Observable.fromPromise(this.parseService.fetchData({
+      type: Group,
+      filter: query => query.limit(30000)
+    }).then(groups => {
+      this.groupList = groups;            
+      this.reloadData();  
+    }));
+    const getServerInfo$ = Observable.fromPromise(this.parseService.fetchData({
+      type: ServerInfo,
+      filter: query => query.matches('Type', new RegExp('SmartMedia'), 'i')
+    }).then(serverInfos => {
+      this.iSapP2PServerList = serverInfos;
+      console.debug("iSapP2PServerList",this.iSapP2PServerList);
+    }));
+    getGroup$
+      .switchMap(()=>getServerInfo$)
+      .toPromise();
   }
 
   reloadData() {
@@ -45,8 +55,7 @@ export class NvrComponent implements OnInit {
       .switchMap(() => this.getDevices())      
       .map(()=> {
         this.checkSelected();
-        this.currentEditNVR = undefined;        
-        this.editorComponent.currentEditModel = undefined;
+        this.currentEditNVR = undefined;                
       })
       .subscribe();
   }

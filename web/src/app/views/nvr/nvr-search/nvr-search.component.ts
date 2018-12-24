@@ -17,7 +17,7 @@ export class NvrSearchComponent implements OnInit {
   
   @Output() closeModal: EventEmitter<any> = new EventEmitter();
   @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
-  
+  @Input() groupList:Group[];
   iSapP2PServerList: ServerInfo[];
 
   searchList: {device:any, checked:boolean}[];
@@ -55,7 +55,7 @@ export class NvrSearchComponent implements OnInit {
 
       for(let nvr of nvrs)  {
         let newNvr = this.nvrService.createNVRObject(nvr.device);         
-        let editNvr = this.nvrService.setEditModel(newNvr,[],this.iSapP2PServerList);
+        let editNvr = this.nvrService.setEditModel(newNvr, this.groupList, this.iSapP2PServerList);
         await this.nvrService.saveNvr(newNvr, editNvr).toPromise();
       }
       

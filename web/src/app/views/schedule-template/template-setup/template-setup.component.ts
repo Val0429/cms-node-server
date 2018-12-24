@@ -98,20 +98,6 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
         nvrs.sort(function (a, b) {
           return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
         });
-        let noGroup = groups.find(x=>x.Name=="No Group");
-        //set it as sub group
-        noGroup.Level="1";
-
-        //create main group
-        let mg = {
-          Name:"NonMainGroup",
-          id:"NonMainGroup",        
-          SubGroup:[noGroup.id],
-          Level:"0"
-        };
-        //push to group
-        groups.push(mg as Group);
-
         this.buildSetupNodes({ groupConfigs: groups, nvrConfigs: nvrs });
       }
     );

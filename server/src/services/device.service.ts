@@ -17,22 +17,10 @@ export class DeviceService {
 
     private static _instance: DeviceService;
 
-    constructor() {        
-        this.noGroupCheck();
+    constructor() {                
+    
     }
-    //for version 3.00.25 onward
-    async noGroupCheck(){
-        //check if "No Group" is exist
-        let groups = await Observable.fromPromise(parseHelper.fetchData({type:Group, 
-            filter: query=> query.equalTo("Name", "No Group").limit(1)})).toPromise();
-        if(!groups || groups.length == 0){
-            console.log("create 'No Group' group");
-            let group = new Group();
-            group.Name="No Group";
-            group.Level = "0";
-            await Observable.fromPromise(group.save()).toPromise();
-        }
-    }
+
     async post(req:Request, res:Response){
         try{
             coreService.auth = req.body.auth;     

@@ -32,16 +32,16 @@ export class GroupService {
     findDeviceGroup(groupConfigs: Group[], channelData: IGroupChannel): string {
         const tempGroup = groupConfigs.find(x => x.Level === '1' && x.Channel
             && x.Channel.some(ch => ch.Nvr === channelData.Nvr && ch.Channel === channelData.Channel));
-        return tempGroup ? tempGroup.id : '';
+        return tempGroup.id;
     }
 
     /** 頁面: NVR, 功能: 改變NVR group設定 */
     setNvrGroup(nvrId: string, newGroupId: string) {
         const getUpdateGroups$ = Observable.fromPromise(this.parseService.fetchData({
-            type: Group,
+            type: Group,            
             filter: query => query
                 .equalTo('Level', '1')
-                .limit(30000)
+                .limit(30000)                
         })).map(result => {
             const groupConfigs = result;
             const saveList = [];

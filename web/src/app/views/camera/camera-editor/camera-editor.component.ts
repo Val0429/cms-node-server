@@ -30,7 +30,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   ptzDisplayType: string;
   ptzPresets: any[]; 
   noGroup:Group;   
-  groupList: Group[]; // 所有group資料
+  @Input() groupList: Group[]; // 所有group資料
   groupOptions: Select2OptionData[]; // group群組化選項物件
   selectedSubGroup: string; // Camera當前選擇的group物件
   /** Driver=IPCamera的Nvr.Id */
@@ -50,21 +50,16 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    const getGroup$ = Observable.fromPromise(this.parseService.fetchData({
-      type: Group
-    }).then(groups => {
-      this.groupList = groups;
-      this.noGroup = this.groupList.find(x=>x.Name == "No Group");      
-      this.groupOptions = this.groupService.getGroupOptions(this.groupList);
-    }));
+    
+    this.noGroup = this.groupList.find(x=>x.Name=="Non Main Group");
+    this.groupOptions = this.groupService.getGroupOptions(this.groupList);
 
     const getNvrId$ = Observable.from(this.parseService.getData({
       type: Nvr,
       filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
     })).map(nvr => this.ipCameraNvr = nvr);
 
-    getGroup$
-      .switchMap(() => getNvrId$)
+     getNvrId$
       .toPromise()
       .catch(alert);
   }
@@ -91,10 +86,10 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     }
 
     this.getCapability(this.currentCamera.Config.Brand);
-    let selectedSubGroup = this.groupService.findDeviceGroup(this.groupList,
-      { Nvr: this.currentCamera.NvrId, Channel: this.currentCamera.Channel });
-      //if no group found set to "No Group" group #for version 3.00.25 and above
-      this.selectedSubGroup = selectedSubGroup || this.noGroup.id;
+    let selectedSubGroup = this.groupService.findDeviceGroup(this.groupList, 
+      { Nvr: this.currentCamera.NvrId, Channel: this.currentCamera.Channel });      
+      //if no group found set to "Non Sub Group" group #for version 3.00.25 and above
+      this.selectedSubGroup = selectedSubGroup || this.noGroup.SubGroup[0];
   }
 
   /** 改變Brand的流程 */

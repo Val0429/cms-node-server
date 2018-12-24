@@ -26,8 +26,8 @@ export class CameraComponent implements OnInit {
   checkedAll: boolean = false;
   anyChecked: boolean = false;
   cameraConfigs: {device:Device, checked:boolean, brandDisplay:string}[] = [];
-  groupList: Group[];
-  selectedSubGroup: string; 
+  groupList: Group[];  
+  
   /** IPCamera的唯一NvrId */
   ipCameraNvr: Nvr;
   licenseInfo: any;
@@ -67,7 +67,7 @@ export class CameraComponent implements OnInit {
     return Observable.fromPromise(this.parseService.fetchData({
       type: Group
     }).then(groups => {
-      this.groupList = groups;
+      this.groupList = groups;      
       console.debug("this.groupList", this.groupList);
     }));
   }

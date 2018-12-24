@@ -67,12 +67,13 @@ export class NvrService {
 /** 將editNvr內容套用至編輯Model */
 setEditModel(editNvr:Nvr, groupList:Group[], iSapP2PServerList:ServerInfo[]) {
   // iSapP2P專用屬性
+  console.debug("iSapP2PServerList", iSapP2PServerList);
   const serverInfo = iSapP2PServerList.find(data =>
     data.Domain === editNvr.Domain && data.Port === editNvr.Port);
 
   // 獨立屬性Group
   const group = groupList.find(data => data.Nvr && data.Nvr.indexOf(editNvr.Id) >= 0);
-  //if no group found set to "No Group" group #for version 3.00.25 and above
+  //if no group found set to "Non Sub Group" group #for version 3.00.25 and above
 
   let currentEditModel : INvrEditModel = {
     Name: editNvr.Name,
@@ -86,7 +87,7 @@ setEditModel(editNvr:Nvr, groupList:Group[], iSapP2PServerList:ServerInfo[]) {
     IsListenEvent: editNvr.IsListenEvent,
     IsPatrolInclude: editNvr.IsPatrolInclude,
     SSLEnable: editNvr.SSLEnable,
-    Group: group ? group.id : groupList.find(x=>x.Name == "No Group").id,
+    Group: group ? group.id : groupList.find(x=>x.Name == "Non Sub Group").id,
     ServerId: serverInfo ? serverInfo.id : undefined
   };
 

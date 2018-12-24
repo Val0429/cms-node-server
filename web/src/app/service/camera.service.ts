@@ -195,7 +195,7 @@ export class CameraService {
       
     return await save$
       .switchMap(() =>         
-          this.groupService.setChannelGroup(groupList, { Nvr: ipCameraNvr.Id, Channel: currentCamera.Channel }, selectedSubGroup ? selectedSubGroup : undefined)          
+          this.groupService.setChannelGroup(groupList, { Nvr: ipCameraNvr.Id, Channel: currentCamera.Channel }, selectedSubGroup)          
       )
       .switchMap(async()=>await this.updateSchedule(currentCamera))
       .toPromise();

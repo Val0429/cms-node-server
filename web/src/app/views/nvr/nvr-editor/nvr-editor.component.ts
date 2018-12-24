@@ -31,7 +31,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
   manufactureOptions = NvrManufacturer.EditorList;
   /** 所有group資料 */
   noGroup:Group;
-  groupList: Group[];
+  @Input() groupList: Group[];
   /** group群組化選項物件 */
   groupOptions: Select2OptionData[];
   displayDevices: { device: Device, checked: boolean }[]; // 顯示用的Device列表
@@ -41,7 +41,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
   /** 顯示Get Device狀態的文字 */
   devicesStatusString = '';
 
-  iSapP2PServerList: ServerInfo[];
+  @Input() iSapP2PServerList: ServerInfo[];
   flag = {
     save: false,
     delete: false,
@@ -57,25 +57,11 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     private nvrService:NvrService
   ) { }
 
-  ngOnInit() {
-    const getGroup$ = Observable.fromPromise(this.parseService.fetchData({
-      type: Group,
-      filter: query => query.limit(30000)
-    }).then(groups => {
-      this.groupList = groups;
-      this.noGroup = this.groupList.find(x=>x.Name == "No Group");  
-      this.groupOptions = this.groupService.getGroupOptions(this.groupList);
-      this.reloadEditData();
-    }));
-
-    const getServerInfo$ = Observable.fromPromise(this.parseService.fetchData({
-      type: ServerInfo,
-      filter: query => query.matches('Type', new RegExp('SmartMedia'), 'i')
-    }).then(serverInfos => this.iSapP2PServerList = serverInfos));
-
-    getGroup$
-      .switchMap(() => getServerInfo$)
-      .subscribe();
+  async ngOnInit() {
+    
+    this.noGroup = this.groupList.find(x=>x.Name=="Non Main Group");
+    this.groupOptions = this.groupService.getGroupOptions(this.groupList);
+    
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.editNvr) {
@@ -187,11 +173,11 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     }
   }
 
-  reloadAfterSave() {
-    this.reloadDataEvent.emit();
+  reloadAfterSave() {    
     this.editNvr = undefined;
     this.currentEditModel = undefined;
     this.tempDevices = undefined;
+    this.reloadDataEvent.emit();
   }
 
   /** 增修刪Device */
