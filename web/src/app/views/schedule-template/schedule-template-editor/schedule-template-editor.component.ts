@@ -2,7 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output, OnChanges, SimpleChange
 import * as _ from 'lodash';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
-import { RecordScheduleTemplate, ServerInfo, RecordSchedule, EventHandler } from 'app/model/core';
+import { ServerInfo, RecordSchedule, EventHandler } from 'app/model/core';
 import OptionHelper from 'app/helper/option.helper';
 import { WeekScheduleOptions } from 'app/config/week-scheduler.config';
 import { Observable } from 'rxjs/Observable';

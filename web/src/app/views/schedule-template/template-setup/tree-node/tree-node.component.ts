@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ITemplateSetupNode } from '../template-setup.component';
+import { ParseService } from 'app/service/parse.service';
+import { Observable } from 'rxjs';
+import { Device } from 'app/model/core';
 
 @Component({
   selector: 'app-tree-node',
@@ -11,9 +14,42 @@ export class TreeNodeComponent implements OnInit {
   @Input() hasChild: boolean;
   @Output() changeSetupNodeEvent: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private parseService:ParseService) { }
 
-  ngOnInit() { }
+  async ngOnInit() { 
+    const level = this.treeNode.key;
+    if(!this.treeNode.data && level==4){
+      
+      
+      let devices: Device[] = await Observable.fromPromise(this.parseService.fetchData({
+      type: Device, filter: query => query.equalTo("NvrId", this.treeNode.nvrId)
+        .equalTo("Channel", this.treeNode.channelId)
+        .limit(1)
+      })).toPromise();
+
+      let dev :Device;
+      if(devices && devices.length >0){
+        dev =  devices[0];
+      }else{
+        dev = new Device();
+        dev.Name = "Device not found";        
+      }      
+      this.treeNode.data = dev;      
+      // 若是RecordSchedule額外多處理stream
+      if (dev.Config.Stream && this.treeNode.setupMode === 1) {
+        dev.Config.Stream.filter(x => x.Id < 3).sort(function (a, b) {
+          return (a.Id > b.Id) ? 1 : ((b.Id > a.Id) ? -1 : 0);
+        }).forEach(str => {          
+          const newStrNode: ITemplateSetupNode = {
+            key: 5, data: str, apply: false, partialApply: false, collapsed: true, child: [], streamId:str.Id, 
+            nvrId: this.treeNode.nvrId, channelId:dev.Channel, enabled:true, parent:this.treeNode, setupMode:this.treeNode.setupMode
+          };
+          this.treeNode.child.push(newStrNode);
+          this.treeNode.checkChecked();
+        });
+      }
+    }
+  }
 
   getListArrowClasses(): string[] {
     const classes = ['tree-node-fa', 'fa'];
@@ -46,12 +82,11 @@ export class TreeNodeComponent implements OnInit {
   }
 
   getNodeName() {
-    const level = this.treeNode.key.split('.').length;
-    switch (level) {
+    switch (this.treeNode.key) {
       case 1: return `Main Group: ${this.treeNode.data.Name}`;
       case 2: return `Sub Group: ${this.treeNode.data.Name}`;
       case 3: return `Nvr: ${this.treeNode.data.Id} ${this.treeNode.data.Name}`;
-      case 4: return `Channel: ${this.treeNode.data.Channel} ${this.treeNode.data.Name}`;
+      case 4: return `Channel: ${this.treeNode.data.Channel} ${this.treeNode.data.Name}`;   
       case 5: return `Stream: ${this.treeNode.data.Id}`;
     }
   }

@@ -36,7 +36,7 @@
                 </ul>
                 <pagination-controls 
                   id="{{sgNode.key+nvrNode.key}}"
-                  (pageChange)="pageChange(nvrNode, $event)" 
+                  (pageChange)="nvrNode.page = $event" 
                   *ngIf="nvrNode.child.length > 0">
                 </pagination-controls>
               </li>
