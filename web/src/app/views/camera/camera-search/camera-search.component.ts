@@ -107,10 +107,14 @@ export class CameraSearchComponent implements OnInit {
       this.searchList = [];
       this.flag.load = true;
       for(let vendor of this.selectedVendors){
+        let lowerVendor = vendor.toLowerCase()
+        if(lowerVendor=="a-mtk"){
+          lowerVendor = "amtk";
+        }
         //push observerable item
         const search$ = this.coreService.proxyMediaServer({
           method: 'GET',
-          path: this.coreService.urls.URL_MEDIA_SEARCH_CAMERA + '?vendor=' + vendor.toLowerCase()
+          path: this.coreService.urls.URL_MEDIA_SEARCH_CAMERA + '?vendor=' + lowerVendor
         }, 30000)
           .map(result => {
             let resultArray = ArrayHelper.toArray((result && result.Camera.DATA) ? result.Camera.DATA : []);
