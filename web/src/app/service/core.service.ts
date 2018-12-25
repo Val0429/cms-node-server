@@ -182,6 +182,7 @@ export class CoreService {
         const body = Object.assign([], this.notifyList);        
         this.notifyList = [];
         setTimeout(() => { // 避免更新後notify速度太快導致讀到舊資料, 延遲1秒notify
+          try{
           this.proxyMediaServer({
             method: 'POST',
             path: this.urls.URL_MEDIA_NOTIFY,
@@ -189,6 +190,9 @@ export class CoreService {
               notify: body
             }
           }).toPromise();
+        }catch(err){
+          console.error("error from notification", err);
+        }
         }, 2000);
     }
   }
