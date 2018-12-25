@@ -99,7 +99,7 @@ export class CameraComponent implements OnInit {
           //reset trial count
           trial=0;          
           //update progress
-          this.progress = 100 - Math.abs(current - finish) / total * 100;          
+          this.progress = 100 - Math.round(Math.abs(current - finish) / total * 100);          
         }
         else{ 
           //no progress
