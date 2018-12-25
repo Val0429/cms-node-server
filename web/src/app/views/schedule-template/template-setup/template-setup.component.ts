@@ -32,6 +32,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     load: false,
     save: false
   };
+  pageSize:number=20;
 
   /** 依照當前setupMode取得相對應config url */
   get notifyPath() {
@@ -84,7 +85,9 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   fetchBasicData() {
     const fetchGroup$ = Observable.fromPromise(this.parseService.fetchData({
       type: Group,
-      filter: query => query.limit(30000)
+      filter: query => query
+      .descending("createdAt")
+      .limit(30000)
     }));
     const fetchNvr$ = Observable.fromPromise(this.parseService.fetchData({
       type: Nvr,

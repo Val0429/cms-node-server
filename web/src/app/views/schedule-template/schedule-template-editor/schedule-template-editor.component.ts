@@ -158,8 +158,8 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
     let updateChildRecords:Observable<void> = Observable.of(null);
     if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {
       this.currentTemplate.Schedule = this.convertScheduleToUTC(this.schedules.eventSchedule);
-      console.log("this.currentTemplate.Schedule", this.currentTemplate.Schedule);
-      console.log("this.originalSchedule", this.originalSchedule);
+      console.debug("this.currentTemplate.Schedule", this.currentTemplate.Schedule);
+      console.debug("this.originalSchedule", this.originalSchedule);
       
       const getEventHandlers$ = Observable.fromPromise(this.parseService.fetchData({
         type: EventHandler,

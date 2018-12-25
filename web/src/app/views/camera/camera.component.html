@@ -58,7 +58,7 @@
           </tbody>
         </table>
       </div>
-      <pagination-controls (pageChange)="changePage($event)"></pagination-controls>
+      <pagination-controls (pageChange)="changePage($event)" *ngIf="cameraConfigs.length>pageSize"></pagination-controls>
       </div>
       
     </section>

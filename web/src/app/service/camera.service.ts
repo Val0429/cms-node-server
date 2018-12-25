@@ -60,7 +60,24 @@ export class CameraService {
                 }  
             });
     }
-
+    async getDeviceByNvrId(nvrId:string, page:number, pageSize:number) {
+      return Observable.fromPromise(this.parseService.fetchData({
+        type: Device,
+        filter: query => query
+        .equalTo("NvrId", nvrId)
+        .ascending('Channel')
+        .skip((page-1)*pageSize)
+        .limit(pageSize)
+      })).toPromise();
+    }
+    async getCountDeviceByNvrId(nvrId:string) {
+      return Observable.fromPromise(this.parseService.countFetch({
+        type: Device,
+        filter: query => query
+        .equalTo("NvrId", nvrId)        
+        .limit(Number.MAX_SAFE_INTEGER)
+      })).toPromise();
+    }
     /** 建立新Device */
     getNewDevice(args: { nvrId: string, searchCamera: ISearchCamera, channel: number }) {
     const obj = new Device();

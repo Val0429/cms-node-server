@@ -13,16 +13,18 @@
       </header>
       <div class="widget-body no-padding">
         <div class="list-group list-group-lg">
-          <a class="list-group-item" *ngFor="let mg of mainGroups" (click)="selectedMainGroup = mg" [class.active]="selectedMainGroup === mg">
-            <span class="thumb-sm mr" (click)="setEditData(mg);modalWindow.show();">
-              <i class="fa fa-pencil-square-o text-success" placement="top" tooltip="Edit"></i>
-            </span>
-            <i class="fa fa-angle-right flex-last ml-auto"></i>
-            <div>
-              <h6 class="no-margin text-primary">{{mg.Name}}</h6>
-              <small class="text-muted">Quantity: SubGroup {{mg?.SubGroup?.length || '0'}}</small>
-            </div>
-          </a>
+          <ng-container *ngFor="let mg of mainGroups" >
+            <a *ngIf="mg.Name != 'Non Main Group'" class="list-group-item" (click)="selectedMainGroup = mg" [class.active]="selectedMainGroup === mg">
+              <span class="thumb-sm mr" (click)="setEditData(mg);modalWindow.show();">
+                <i class="fa fa-pencil-square-o text-success" placement="top" tooltip="Edit"></i>
+              </span>
+              <i class="fa fa-angle-right flex-last ml-auto"></i>
+              <div>
+                <h6 class="no-margin text-primary">{{mg.Name}}</h6>
+                <small class="text-muted">Quantity: SubGroup {{mg?.SubGroup?.length || '0'}}</small>
+              </div>
+            </a>
+        </ng-container>
         </div>
       </div>
     </section>

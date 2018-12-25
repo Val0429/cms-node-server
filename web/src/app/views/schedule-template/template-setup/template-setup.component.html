@@ -25,7 +25,7 @@
               <li *ngFor="let nvrNode of sgNode.child">
                 <app-tree-node [treeNode]="nvrNode" [hasChild]="nvrNode.child.length > 0" (changeSetupNodeEvent)="changeSetupNode($event)"></app-tree-node>
                 <ul [ngClass]="getULCollapseClasses(nvrNode.collapsed)">
-                  <li *ngFor="let devNode of nvrNode.child | paginate: { id: sgNode.id+nvrNode.id, itemsPerPage: 20, currentPage: nvrNode.page }">
+                  <li *ngFor="let devNode of nvrNode.child | paginate: { id: sgNode.id+nvrNode.id, itemsPerPage: pageSize, currentPage: nvrNode.page }">
                     <app-tree-node [treeNode]="devNode" [hasChild]="devNode.child.length > 0" (changeSetupNodeEvent)="changeSetupNode($event)"></app-tree-node>
                     <ul *ngIf="setupMode === 1" [ngClass]="getULCollapseClasses(devNode.collapsed)">
                       <li *ngFor="let strNode of devNode.child">
@@ -37,7 +37,7 @@
                 <pagination-controls 
                   id="{{sgNode.id+nvrNode.id}}"
                   (pageChange)="nvrNode.page = $event" 
-                  *ngIf="nvrNode.child.length > 0">
+                  *ngIf="nvrNode.child.length > pageSize && nvrNode.collapsed !==true">
                 </pagination-controls>
               </li>
             </ul>

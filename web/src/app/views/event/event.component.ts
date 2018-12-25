@@ -3,6 +3,7 @@ import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { Nvr, Device, EventHandler } from 'app/model/core';
 import { Observable } from 'rxjs/Observable';
+import { CameraService } from 'app/service/camera.service';
 
 @Component({
   selector: 'app-event',
@@ -13,48 +14,65 @@ export class EventComponent implements OnInit {
   selectorNvrList: ISelectorNvrModel[];
   currentDevice: Device;
   currentEventHandler: EventHandler; // 欲編輯的EventHandler
-  constructor(private coreService: CoreService, private parseService: ParseService) { }
+  eventHandlers:EventHandler[];
+  pageSize:number=20;
+  constructor(private parseService: ParseService, private cameraService:CameraService) { }
 
-  ngOnInit() {
-    this.fetchNvrAndDevice();
+  async ngOnInit() {
+    this.selectorNvrList = [];
+    await this.fetchNvrAndDevice();
   }
 
   /** 取得左邊Selector列表 */
-  fetchNvrAndDevice() {
-    const fetchNvr$ = Observable.fromPromise(this.parseService.fetchData({
+  async fetchNvrAndDevice() {
+    this.selectorNvrList = [];
+
+    let nvrs = await Observable.fromPromise(this.parseService.fetchData({
       type: Nvr,
       filter: query => query.ascending('Id').limit(30000)
-    }));
-    const fetchDevice$ = Observable.fromPromise(this.parseService.fetchData({
-      type: Device,
-      filter: query => query.ascending('Channel').limit(30000)
-    }));
-    const fetchEventHandler$ = Observable.fromPromise(this.parseService.fetchData({
+    })).toPromise();
+    
+    this.eventHandlers = await Observable.fromPromise(this.parseService.fetchData({
       type: EventHandler,
       filter: query => query.limit(30000)
-    }));
+    })).toPromise();
 
-    this.selectorNvrList = [];
-    Observable.combineLatest(
-      fetchNvr$, fetchDevice$, fetchEventHandler$,
-      (response1, response2, response3) => {
-        response1.sort(function (a, b) {
-          return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
-        });
-        response1.forEach(nvr => {
-          const newObj: ISelectorNvrModel = {
-            Data: nvr, Devices: [], isCollapsed: true
-          };
-          const devices = response2.filter(dev => dev.NvrId === nvr.Id);
-          devices.forEach(device => {
-            const handler = response3.find(x => x.NvrId === nvr.Id && x.DeviceId === device.Channel);
-            newObj.Devices.push({ Data: device, EventHandler: handler });
-          });
-          this.selectorNvrList.push(newObj);
-        });
-      }
-    ).subscribe();
+    
+    nvrs.sort(function (a, b) {
+      return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
+    });
+        
+    for(let nvr of nvrs){
+      
+      
+
+      const devices = await this.cameraService.getDeviceByNvrId(nvr.Id, 1, this.pageSize);
+      let total = await this.cameraService.getCountDeviceByNvrId(nvr.Id);
+
+      const newObj: ISelectorNvrModel = {
+        Data: nvr, Devices: [], isCollapsed: true, page:1, total:total
+      };
+
+      devices.forEach(device => {
+        const handler = this.eventHandlers.find(x => x.NvrId === nvr.Id && x.DeviceId === device.Channel);
+        newObj.Devices.push({ Data: device, EventHandler: handler });
+      });
+
+      this.selectorNvrList.push(newObj);
+    };
+      
+    console.debug("this.selectorNvrList", this.selectorNvrList);
   }
+  async pageChange(target:ISelectorNvrModel, event:number){
+    target.page = event;
+    target.Devices=[];
+    let devices = await this.cameraService.getDeviceByNvrId(target.Data.Id, target.page, this.pageSize);
+    devices.forEach(device => {
+      const handler = this.eventHandlers.find(x => x.NvrId === target.Data.Id && x.DeviceId === device.Channel);
+      target.Devices.push({ Data: device, EventHandler: handler });
+    });
+  }
+  
 
   /** 利用參數Device找出相應EventHandler資料 */
   clickDevice(device: ISelectorDeviceModel) {
@@ -97,12 +115,14 @@ export class EventComponent implements OnInit {
 }
 
 interface ISelectorNvrModel {
-  Data: Nvr;
-  Devices: ISelectorDeviceModel[];
-  isCollapsed: boolean;
+  Data: Nvr,
+  Devices: ISelectorDeviceModel[],
+  isCollapsed: boolean,
+  page:number,
+  total:number
 }
 
 interface ISelectorDeviceModel {
-  Data: Device;
-  EventHandler: EventHandler;
+  Data: Device,
+  EventHandler: EventHandler
 }
