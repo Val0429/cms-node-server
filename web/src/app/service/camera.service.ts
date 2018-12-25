@@ -207,14 +207,20 @@ export class CameraService {
     console.debug("result");
     return result.newChannelId;
  }
-    async deleteCam(camIds : string[], nvrObjectId:string): Promise<void>{
+ async getStatus(): Promise<any>{
+  let result = await this.httpService.get(this.parseService.parseServerUrl + "/cms/device/status", 
+    new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
+    return result.json();
+}
+    async deleteCam(camIds : string[], nvrObjectId:string): Promise<any>{
       let result = await this.httpService.delete(this.parseService.parseServerUrl + "/cms/device", 
         new RequestOptions({ headers:this.coreService.parseHeaders, body:{ objectIds: camIds, auth:this.auth, nvrObjectId}})).toPromise();
+        return result.json();
     }
     get auth():string{
       return btoa(`${this.userService.storage['username']}:${this.userService.storage['password']}`);       
     }
-    async cloneCam(cam:Device, quantity:Number, ipCameraNvr:Nvr): Promise<void>{            
+    async cloneCam(cam:Device, quantity:Number, ipCameraNvr:Nvr): Promise<any>{            
       let account = this.cryptoService.encrypt4DB(cam.Config.Authentication.Account);
       let password = this.cryptoService.encrypt4DB(cam.Config.Authentication.Password);
       let auth=this.auth;
@@ -229,6 +235,7 @@ export class CameraService {
       let options=new RequestOptions({ headers:this.coreService.parseHeaders});
       console.debug("options", options);
       let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/device", body, options).toPromise();
+      return result.json();
     }
        
     /** 取得當前Brand底下所有Model型號 */

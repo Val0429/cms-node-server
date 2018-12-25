@@ -21,7 +21,7 @@ export class CameraComponent implements OnInit {
     save: false,
     delete: false
   };
-
+  options=[20, 50, 100, 500, 1000];
   brandList = DeviceVendor;
   checkedAll: boolean = false;
   anyChecked: boolean = false;
@@ -37,9 +37,9 @@ export class CameraComponent implements OnInit {
     device: undefined,
     quantity: 0
   };
-  pageSize=50;
-  total=0;
-
+  pageSize:number=50;
+  total:number=0;
+  progress:number=100;
  @ViewChild("searchComponent") searchComponent:CameraSearchComponent;
 
   constructor(    
@@ -49,7 +49,12 @@ export class CameraComponent implements OnInit {
     private cameraService: CameraService
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    let result:ServerDeviceStatus = await this.cameraService.getStatus();
+    console.debug("serverStatus", result);
+    this.flag.delete = result.busy;
+    this.flag.save = result.busy;
+
     this.getIPCameraNvr()
       .switchMap(() => this.getTotalDevice())
       .switchMap(() => this.fetchDevice())
@@ -62,7 +67,9 @@ export class CameraComponent implements OnInit {
         .toPromise()
         .catch(alert);
   }
-
+  optionChange(option:number){    
+    this.changePage(1);
+  }
   private getGroup() {
     return Observable.fromPromise(this.parseService.fetchData({
       type: Group
@@ -79,22 +86,61 @@ export class CameraComponent implements OnInit {
         console.debug("num 00171", this.availableLicense);
       }));
   }
+  checkServerStatus(total:number, finish:number, message:string){
+    let current=0;
+    let trial=0;
+    let timer = setInterval(async ()=>{
+      try{
+        let result:ServerDeviceStatus = await this.cameraService.getStatus();
+        console.debug("serverStatus", result);        
+        if(current != result.deviceCount){
+          //there's progress
+          current = result.deviceCount;          
+          //reset trial count
+          trial=0;          
+          //update progress
+          this.progress = 100 - Math.abs(current - finish) / total * 100;          
+        }
+        else{ 
+          //no progress
+          trial++;
+        }
+        //target match or trial more than 5 times or server is not busy
+        if(current == finish || trial > 5 || result.busy !== true){
+          clearInterval(timer);
+          alert(message);
+          await this.finish();          
+        }
+      }catch(err){
+        clearInterval(timer);
+        alert(err);
+        await this.finish();
+      }
+    }, 5000);
+  }
+
+  private async finish() {
+    this.flag.delete = false;
+    this.flag.save = false;
+    this.progress=100;
+    this.checkSelected();
+    await this.reloadData();
+  }
 
   async deleteAll(){
     if (!confirm('Are you sure to delete these Camera(s)?')) return;
-    try{
+    try{      
       this.flag.delete=true;
-
+      this.progress=0;
       let camIds = this.cameraConfigs.filter(x=>x.checked===true).map(function(e){return e.device.id});
-      await this.cameraService.deleteCam(camIds, this.ipCameraNvr.id);                    
-         
-      alert('Delete Success');  
-      await this.reloadData();              
+      let result = await this.cameraService.deleteCam(camIds, this.ipCameraNvr.id);     
+      console.debug("result.target", result.target);
+      this.checkServerStatus(camIds.length, result.target, 'Delete Success');
     }catch(err){
       console.error(err);
       alert(err);      
-    }finally{
       this.flag.delete=false;
+      this.progress=100;
     }
   }
   async reloadData() {
@@ -204,24 +250,24 @@ export class CameraComponent implements OnInit {
   async clickClone() {
     try{
       this.flag.save=true;
+      this.progress=0;
       //dummy 
       await Observable.of(null).toPromise();
 
       if (this.cloneCameraParam.quantity > this.availableLicense) {
-        alert("Not enough license to add new camera");
-        return;
-      }
-      
-      await this.cameraService.cloneCam(this.cloneCameraParam.device, this.cloneCameraParam.quantity, this.ipCameraNvr);
-      
-      await this.reloadData();
-      alert('Clone success.');
-      
+        throw new Error("Not enough license to add new camera");        
+      }      
+      let result = await this.cameraService.cloneCam(this.cloneCameraParam.device, this.cloneCameraParam.quantity, this.ipCameraNvr);                  
+      console.debug("result.target", result.target);
+      this.checkServerStatus(this.cloneCameraParam.quantity, result.target, "Clone Success");
     }catch(err){
       console.error(err);
-      alert(err);
-    }finally{
       this.flag.save=false;
+      this.progress=100;
+      alert(err);
     }
   }
+}
+export interface ServerDeviceStatus{
+  busy:boolean, deviceCount:number
 }

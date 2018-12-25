@@ -6,11 +6,12 @@ import { Observable } from 'rxjs';
 import { CoreService } from './core.service';
 import { IGroupChannel } from 'lib/domain/core';
 
-const parseHelper = ParseHelper.instance;
+const parseService = ParseHelper.instance;
 const coreService = CoreService.instance;
 
 export class DeviceService {
-
+    busy:boolean;
+    deviceCount:number;
     static get instance() {
         return this._instance || (this._instance = new this());
     }
@@ -18,11 +19,19 @@ export class DeviceService {
     private static _instance: DeviceService;
 
     constructor() {                
-    
+        this.busy = false;
     }
-
+    async getDeviceStatus(req:Request, res:Response){
+        //let deviceCount = await this.getDeviceCount();
+        res.json({busy:this.busy, deviceCount:this.deviceCount});
+    }
     async post(req:Request, res:Response){
         try{
+            if(this.busy===true){
+                res.status(429);
+                res.json({message:"server is busy"});
+                return;
+            }
             coreService.auth = req.body.auth;     
             let { nvrObjectId, cam, quantity, account, password } = req.body;         
             
@@ -37,9 +46,11 @@ export class DeviceService {
             }
             
             let groupList = await this.getGroupList();
-            
-            await this.cloneCam(cam, quantity, nvrObjectId, groupList, account, password);
-            res.json({message:"success"});
+            this.deviceCount = await this.getDeviceCount();            
+            let target = this.deviceCount + quantity;
+            //we don't wait clone        
+            this.cloneCam(cam, quantity, nvrObjectId, groupList, account, password);
+            res.json({message:"success", target});
         }
         catch(err){
             console.error(err);
@@ -49,9 +60,17 @@ export class DeviceService {
                 error: err
             });
         }
+        
+    }
+    private async getDeviceCount():Promise<number>{
+        return await Observable.fromPromise(parseService
+            .countFetch({type:Device, 
+                filter:query=>query
+                .limit(Number.MAX_SAFE_INTEGER)}))
+            .toPromise();
     }
     get(req:Request, res:Response){
-        parseHelper.fetchData({
+        parseService.fetchData({
             type: Device,
         }).then(devices => {
             res.json(devices);
@@ -60,7 +79,7 @@ export class DeviceService {
     async getNewChannel(req:Request, res:Response){
         let nvrId = req.params["nvrId"];
         if(!nvrId){
-            let nvr = await Observable.fromPromise(parseHelper.getData({
+            let nvr = await Observable.fromPromise(parseService.getData({
                 type: Nvr,
                 filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
               })).toPromise();
@@ -72,7 +91,7 @@ export class DeviceService {
         res.json({newChannelId});
     }
     private async getAllDevice(nvrId:string) {
-        return await Observable.fromPromise(parseHelper.fetchData({
+        return await Observable.fromPromise(parseService.fetchData({
             type: Device,
             filter: query =>                 
                 query
@@ -84,34 +103,38 @@ export class DeviceService {
     }
 
     async getDefaultNvr():Promise<Nvr>{
-        return Observable.fromPromise(parseHelper.getData({
+        return Observable.fromPromise(parseService.getData({
             type: Nvr,
             filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
           })).toPromise();
     }
     async getGroupList():Promise<Group[]>{
-        return await Observable.fromPromise(parseHelper.fetchData({
+        return await Observable.fromPromise(parseService.fetchData({
             type: Group
           })).toPromise();
     }
     async delete(req:Request, res:Response){
         try{
+            
+            if(this.busy===true){
+                res.status(429);
+                res.json({message:"server is busy"});
+                return;
+            }
+
             coreService.auth = req.body.auth;            
-            let nvrObjectId = req.body.nvrObjectId;
+            let {nvrObjectId, objectIds} = req.body;
+
             if(!nvrObjectId){
                 let nvr = await this.getDefaultNvr();
                 nvrObjectId = nvr.id;
             }
-            
-            let groupList = await this.getGroupList();
-            
-            for(let objectId of req.body.objectIds){
-                let cam = await parseHelper.getDataById({type:Device, objectId}); 
-                await this.deleteCam(cam, nvrObjectId);
-                //let it go without awaited .. yay...!
-                this.deleteCamRelatedData(cam, groupList);
-            }
-            res.json({message:"success"});
+            this.deviceCount = await this.getDeviceCount();            
+            let target = this.deviceCount - objectIds.length;
+            let groupList = await this.getGroupList();            
+            //let it go without awaited .. yay...!
+            this.deleteCamAsync(objectIds, nvrObjectId, groupList);
+            res.json({message:"success", target});
         }
         catch(err){
             console.error(err);
@@ -121,7 +144,28 @@ export class DeviceService {
                 error: err
             });
         }
+        
     }    
+    private async deleteCamAsync(objectIds:string[], nvrObjectId: any, groupList: Group[]) {
+        try{
+            this.busy = true;
+            for (let objectId of objectIds) {
+                let cam = await parseService.getDataById({ type: Device, objectId });
+                await this.deleteCam(cam, nvrObjectId);                
+                await this.deleteCamRelatedData(cam, groupList);
+                this.deviceCount--;
+            }
+          }
+          catch(err){
+            console.error(err);            
+          }
+          finally{
+            this.busy = false;
+            this.deviceCount = await this.getDeviceCount(); 
+          }
+        
+    }
+
     cloneNewDevice(args: { cam: Device, newChannel: number }, account:string, password:string) {
         
         let obj = new Device();
@@ -170,25 +214,35 @@ export class DeviceService {
         
       }
     async cloneCam(cam:Device, quantity:number, nvrObjectId:string, groupList:Group[], account:string, password:string){
-      
-      let selectedSubGroup = this.findDeviceGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel });
-      let cameraConfigs = await this.getAllDevice(cam.NvrId);
-      let cloneResult = [];            
-      
-      
-      for (let i = 0; i < quantity; i++) {
-        coreService.addNotifyData({path: coreService.urls.URL_CLASS_NVR, objectId: nvrObjectId });
+      try{
+        this.busy = true;
+        let selectedSubGroup = this.findDeviceGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel });
+        let cameraConfigs = await this.getAllDevice(cam.NvrId);
+        let cloneResult = [];   
+        
+        for (let i = 0; i < quantity; i++) {
+            coreService.addNotifyData({path: coreService.urls.URL_CLASS_NVR, objectId: nvrObjectId });
 
-        let obj = this.cloneNewDevice({ cam, newChannel: this.getNewChannelId(cameraConfigs, cloneResult) }, account, password);                           
-        await Observable.fromPromise(obj.save()).toPromise().then(result => {            
-            cloneResult.push(result);
-            coreService.addNotifyData({path: coreService.urls.URL_CLASS_DEVICE, objectId: result.id});            
-        }); 
-        if(selectedSubGroup){
-            await this.setChannelGroup(groupList, { Nvr: obj.NvrId, Channel: obj.Channel }, selectedSubGroup);
-        }
-        coreService.notify();
-      }            
+            let obj = this.cloneNewDevice({ cam, newChannel: this.getNewChannelId(cameraConfigs, cloneResult) }, account, password);                           
+            await Observable.fromPromise(obj.save()).toPromise().then(result => {            
+                cloneResult.push(result);
+                coreService.addNotifyData({path: coreService.urls.URL_CLASS_DEVICE, objectId: result.id});            
+            }); 
+            if(selectedSubGroup){
+                await this.setChannelGroup(groupList, { Nvr: obj.NvrId, Channel: obj.Channel }, selectedSubGroup);
+            }
+            coreService.notify();
+            this.deviceCount++;
+        }            
+      }
+      catch(err){
+        console.error(err);         
+      }
+      finally{
+        this.busy = false;
+        this.deviceCount = await this.getDeviceCount();
+      }
+      
     }
     
 
@@ -209,7 +263,7 @@ export class DeviceService {
     }
     async deleteCamRelatedData(cam :Device, groupList: Group[]){  
         // 刪除與此Camera相關的RecordSchedule
-        const removeRecordSchedule$ = Observable.fromPromise(parseHelper.fetchData({
+        const removeRecordSchedule$ = Observable.fromPromise(parseService.fetchData({
           type: RecordSchedule,
           filter: query => query
             .equalTo('NvrId', cam.NvrId)
@@ -219,7 +273,7 @@ export class DeviceService {
           .map(results => coreService.addNotifyData({ path: coreService.urls.URL_CLASS_RECORDSCHEDULE, dataArr: results }));
   
         // 刪除與此Camera相關的EventHandler
-        const removeEventHandler$ = Observable.fromPromise(parseHelper.fetchData({
+        const removeEventHandler$ = Observable.fromPromise(parseService.fetchData({
           type: EventHandler,
           filter: query => query
             .equalTo('NvrId',  cam.NvrId)
@@ -340,12 +394,12 @@ export class DeviceService {
             .switchMap(() => get$);
     }
     getLicenseUsageIPCamera() {
-        const getNvr$ = Observable.fromPromise(parseHelper.getData({
+        const getNvr$ = Observable.fromPromise(parseService.getData({
             type: Nvr,
             filter: query => query.equalTo('Driver', 'IPCamera')
         }));
 
-        const getDevice$ = (nvrId: string) => Observable.fromPromise(parseHelper.countFetch({
+        const getDevice$ = (nvrId: string) => Observable.fromPromise(parseService.countFetch({
             type: Device,
             filter: query => query.equalTo('NvrId', nvrId).limit(30000)
         }));
