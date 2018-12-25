@@ -23,6 +23,9 @@ export const CmsRoute: IRouteMap = {
         .get('/device/channel/:nvrId?', async (req, res) => {
             await deviceService.getNewChannel(req, res);
         })
+        .get('/externalconfig', (req, res) => {
+            res.json(configHelper.externalConfig);
+        })
         .get('/device', (req, res) => {
             deviceService.get(req, res);
         })
