@@ -156,6 +156,7 @@ export class CameraService {
     console.debug("this.currentCamera", currentCamera);
     if(currentCamera.Channel==0){
       currentCamera.Channel = await this.getNewChannelId(ipCameraNvr.Id);
+      if(currentCamera.Name == "New Camera 0")currentCamera.Name = `New Camera ${currentCamera.Channel}`;
     }
     
     let auth=this.auth;
