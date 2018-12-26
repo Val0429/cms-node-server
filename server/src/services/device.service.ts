@@ -87,20 +87,15 @@ export class DeviceService {
         
         let nvrId = req.query["nvrId"];
         let page = parseInt(req.query["page"]);
-        let pageSize = parseInt(req.query["pageSize"]);        
+        let pageSize = parseInt(req.query["pageSize"]);                
         
-        let query = new Parse.Query(Device);
-        let devices = await query.equalTo("NvrId", nvrId)
-            .limit(pageSize)
-            .skip((page-1)*pageSize)
-            .find();
-        // parseService.fetchData({
-        //     type: Device,
-        //     filter: query=>query
-        //         .equalTo("NvrId", nvrId)
-        //         .limit(pageSize)
-        //         .skip((page-1)*pageSize)
-        // });
+        let devices = await parseService.fetchData({
+            type: Device,
+            filter: query=>query
+                .equalTo("NvrId", nvrId)
+                .limit(pageSize)
+                .skip((page-1)*pageSize)
+        });
         
         res.json(devices);
     }

@@ -46,8 +46,8 @@ export class EventComponent implements OnInit {
       
       
 
-      const devices = await this.cameraService.getDeviceByNvrId(nvr.Id, 1, this.pageSize);
-      let total = await this.cameraService.getCountDeviceByNvrId(nvr.Id);
+      const devices = await this.cameraService.getDevice(nvr.Id, 1, this.pageSize);
+      let total = await this.cameraService.getDeviceCount(nvr.Id);
 
       const newObj: ISelectorNvrModel = {
         Data: nvr, Devices: [], isCollapsed: true, page:1, total:total
@@ -66,7 +66,7 @@ export class EventComponent implements OnInit {
   async pageChange(target:ISelectorNvrModel, event:number){
     target.page = event;
     target.Devices=[];
-    let devices = await this.cameraService.getDeviceByNvrId(target.Data.Id, target.page, this.pageSize);
+    let devices = await this.cameraService.getDevice(target.Data.Id, target.page, this.pageSize);
     devices.forEach(device => {
       const handler = this.eventHandlers.find(x => x.NvrId === target.Data.Id && x.DeviceId === device.Channel);
       target.Devices.push({ Data: device, EventHandler: handler });

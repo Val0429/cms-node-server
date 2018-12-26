@@ -134,7 +134,7 @@ export class CameraComponent implements OnInit {
     try{      
       this.flag.delete=true;
       this.progress=0;
-      let camIds = this.cameraConfigs.filter(x=>x.checked===true).map(function(e){return e.device.objectId});
+      let camIds = this.cameraConfigs.filter(x=>x.checked===true).map(function(e){return e.device.id});
       let result = await this.cameraService.deleteCam(camIds, this.ipCameraNvr.id);     
       console.debug("result.target", result.target);
       this.checkServerStatus(camIds.length, result.target, 'Delete Success');

@@ -60,24 +60,7 @@ export class CameraService {
                 }  
             });
     }
-    async getDeviceByNvrId(nvrId:string, page:number, pageSize:number) {
-      return Observable.fromPromise(this.parseService.fetchData({
-        type: Device,
-        filter: query => query
-        .equalTo("NvrId", nvrId)
-        .ascending('Channel')
-        .skip((page-1)*pageSize)
-        .limit(pageSize)
-      })).toPromise();
-    }
-    async getCountDeviceByNvrId(nvrId:string) {
-      return Observable.fromPromise(this.parseService.countFetch({
-        type: Device,
-        filter: query => query
-        .equalTo("NvrId", nvrId)        
-        .limit(Number.MAX_SAFE_INTEGER)
-      })).toPromise();
-    }
+    
     /** 建立新Device */
     getNewDevice(args: { nvrId: string, searchCamera: ISearchCamera, channel: number }) {
     const obj = new Device();
@@ -134,9 +117,20 @@ export class CameraService {
     return obj;
   }
   async getDevice(nvrId:string, page:number, pageSize:number):Promise<Device[]>{
-    let options=new RequestOptions({ headers:this.coreService.parseHeaders});
-    let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device?nvrId=${nvrId}&page=${page}&pageSize=${pageSize}`, options ).toPromise();
-    return response.json();
+    // REST server performance is too slow, will fix it later
+    // let options=new RequestOptions({ headers:this.coreService.parseHeaders});
+    // let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device?nvrId=${nvrId}&page=${page}&pageSize=${pageSize}`, options ).toPromise();
+    // return response.json();
+
+    let devices = await this.parseService.fetchData({
+      type: Device,
+      filter: query=>query
+          .equalTo("NvrId", nvrId)
+          .ascending('Channel')
+          .limit(pageSize)
+          .skip((page-1)*pageSize)
+    });
+    return devices;
   }
   async saveCamera(currentCamera:Device, ipCameraNvr:Nvr, selectedSubGroup:string, editorParam: CameraEditorParam, tags:string):Promise<Device>{
 
@@ -161,9 +155,8 @@ export class CameraService {
     }
     console.debug("this.currentCamera", currentCamera);
     if(currentCamera.Channel==0){
-      currentCamera.Channel = await this.getNewChannelId();
+      currentCamera.Channel = await this.getNewChannelId(ipCameraNvr.Id);
     }
-
     
     let auth=this.auth;
 
@@ -180,19 +173,22 @@ export class CameraService {
     return result.json();
 
   }
- async getNewChannelId():Promise<number>{
-    let response = await this.httpService.get(this.parseService.parseServerUrl + "/cms/device/channel", 
+ async getNewChannelId(nvrId?:string):Promise<number>{
+    let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/channel/${nvrId}`, 
     new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
     let result = response.json();
     console.debug("result");
     return result.newChannelId;
  }
- async getDeviceCount(nvrId?:string):Promise<number>{
-  let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/count/${nvrId}`, 
-  new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
-  let result = response.json();
-  console.debug("result");
-  return result.count;
+ async getDeviceCount(nvrId:string):Promise<number>{
+  // REST server performance is too slow, will fix it later
+  // let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/count/${nvrId}`, 
+  // new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
+  // let result = response.json();
+  // return result.count
+
+  let result = await this.parseService.countFetch({type:Device, filter:query=>query.equalTo("NvrId", nvrId)});  
+  return result;
 }
  async getStatus(): Promise<any>{
   let result = await this.httpService.get(this.parseService.parseServerUrl + "/cms/device/status", 
