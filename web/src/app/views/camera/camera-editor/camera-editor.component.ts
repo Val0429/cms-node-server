@@ -81,7 +81,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (StringHelper.isNullOrEmpty(this.currentCamera.Config.Brand)) {
+    if (!this.currentCamera.Config.Brand) {
       this.currentCamera.Config.Brand = this.brandList[0].Name;
     }
 
@@ -170,7 +170,8 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     }    
     try{
       this.flag.save = true;
-      await this.cameraService.saveCamera(this.currentCamera, this.ipCameraNvr, this.groupList, this.selectedSubGroup, this.editorParam, this.tags);      
+      let result = await this.cameraService.saveCamera(this.currentCamera, this.ipCameraNvr, this.selectedSubGroup, this.editorParam, this.tags);
+      console.debug("save result", result);
       alert('Update Success');
       this.reloadDataEvent.emit();
     }catch(err){

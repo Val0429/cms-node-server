@@ -1,9 +1,10 @@
 import { IBatchRequest } from "lib/domain/core";
-import { ConfigHelper } from "../helpers";
+import { ConfigHelper, LogHelper } from "../helpers";
 import { Observable } from "rxjs";
 
 var request = require('request-promise');
 const configHelper = ConfigHelper.instance;
+const logHelper=LogHelper.instance;
 
 export class CoreService {
   static get instance() {
@@ -49,7 +50,7 @@ private static _instance: CoreService;
       'Content-Type': 'text/xml'
     };
   }
-  proxyMediaServer(args: IBatchRequest, timeout?: number):Observable<any> {    
+  async proxyMediaServer(args: IBatchRequest):Promise<any> {    
     
     const body = {
       method: args.method,
@@ -79,13 +80,14 @@ private static _instance: CoreService;
       json: true
     };
     
-    return Observable.fromPromise(request(options).then(function (parsedBody) {        
-      return parsedBody;
+    return await Observable.fromPromise(
+      request(options)
+      .then(function (parsedBody) {        
+        return parsedBody;
+      }).catch(err=>{
+        console.error("error from proxy server");
       })
-      .catch(function (err) {
-        console.log("error media server", err);
-        return err;
-      }));
+    ).toPromise();
   }
   /** Call CGI通知CMS Client */
   notify(args?: { path: string, objectId: string }) {
@@ -95,15 +97,15 @@ private static _instance: CoreService;
     if (this.notifyList && this.notifyList.length > 0) {      
         const body = Object.assign([], this.notifyList);
         this.notifyList = [];        
-        setTimeout(async ()=> {
+        setTimeout(()=> {
         try{
-          await this.proxyMediaServer({            
+          this.proxyMediaServer({            
             method: 'POST',
             path: this.urls.URL_MEDIA_NOTIFY,
             body: {
               notify: body
             }
-          }).toPromise();
+          });
         }catch(err){
           console.error("error from notification:", err);
         }

@@ -19,24 +19,30 @@ const deviceService = DeviceService.instance;
 export const CmsRoute: IRouteMap = {
     path: 'cms',
     router: Router().use(bodyParser.json())
-        .get('/test', (req, res) => { res.send('Test Success') })
-        .get('/device/channel/:nvrId?', async (req, res) => {
-            await deviceService.getNewChannel(req, res);
-        })
+        .get('/test', (req, res) => { res.send('Test Success') })        
         .get('/externalconfig', (req, res) => {
             res.json(configHelper.externalConfig);
         })
-        .get('/device', (req, res) => {
-            deviceService.get(req, res);
+        .get('/device/channel/:nvrId?', async (req, res) => {
+            await deviceService.getNewChannel(req, res);
         })
-        .get('/device/status', async (req, res) => {            
-            await deviceService.getDeviceStatus(req, res);
+        .get('/device/count/:nvrId?', async (req, res) => {
+            await deviceService.getDeviceCountByNvrId(req, res);
         })
-        .post('/device', async (req, res) => {            
-            await deviceService.post(req, res);
+        .get('/device', async (req, res) => {
+            await deviceService.get(req, res);
         })
         .delete('/device', async (req, res) => {
             await deviceService.delete(req, res);
+        })
+        .get('/device/status', (req, res) => {            
+            deviceService.getDeviceStatus(res);
+        })
+        .post('/device/clone', async (req, res) => {            
+            await deviceService.cloneDevice(req, res);
+        })
+        .post('/device', async (req, res) => {            
+            await deviceService.post(req, res);
         })
         .get('/SetDBSyncDisable', (req, res) => {
             syncHelper.setAutoSyncDefault();

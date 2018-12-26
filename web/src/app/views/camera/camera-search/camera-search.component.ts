@@ -55,7 +55,7 @@ export class CameraSearchComponent implements OnInit {
           const newCam = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: 0, searchCamera: cam.device });            
           await this.cameraService.getCapability(newCam, cam.device.COMPANY, []).toPromise(); 
           let editorParam = this.cameraService.getCameraEditorParam(newCam.Config.Model, newCam);          
-          await this.cameraService.saveCamera(newCam, this.ipCameraNvr, this.groupList, selectedSubGroup, editorParam, "");          
+          await this.cameraService.saveCamera(newCam, this.ipCameraNvr, selectedSubGroup, editorParam, "");          
         }        
         alert("Save camera(s) sucess");
         this.checkedAll=false;

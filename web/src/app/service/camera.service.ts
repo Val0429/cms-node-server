@@ -133,47 +133,12 @@ export class CameraService {
     };
     return obj;
   }
-
-  private async updateSchedule(currentCamera:Device):Promise<void>{
-    if(!currentCamera.Config.Stream || currentCamera.Config.Stream.length==0)return;
-
-    let schedule = await this.getExistSetupData(currentCamera);
-    console.debug("schedule", schedule);
-    console.debug("this.currentCamera.Config.Stream", currentCamera.Config.Stream);
-    let deletedStream = [];
-    for(let stream of schedule){
-      let find = currentCamera.Config.Stream.find(x=>x.Id == stream.StreamId)
-      if(!find) deletedStream.push(stream);      
-    }
-    console.debug("deleted stream", deletedStream);
-    await Observable.fromPromise(Parse.Object.destroyAll(deletedStream)).toPromise();
+  async getDevice(nvrId:string, page:number, pageSize:number):Promise<Device[]>{
+    let options=new RequestOptions({ headers:this.coreService.parseHeaders});
+    let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device?nvrId=${nvrId}&page=${page}&pageSize=${pageSize}`, options ).toPromise();
+    return response.json();
   }
-  
-  private async fetchSetupData(currentCamera:Device):Promise<RecordSchedule[]> {
-    let setupData:RecordSchedule[] = undefined;
-    console.debug("fetch setupData", currentCamera.NvrId, currentCamera.Channel);
-    let fetch$ = Observable.fromPromise(this.parseService.fetchData({
-      type: RecordSchedule,
-      filter: query => query
-        // .include('ScheduleTemplate')
-        .equalTo('NvrId', currentCamera.NvrId)
-        .equalTo('ChannelId', currentCamera.Channel)
-        .limit(30000)
-    }));
-
-    await fetch$.map(result => setupData = result).toPromise();
-    return setupData;
-  }
-  private async getExistSetupData(currentCamera:Device):Promise<RecordSchedule[]> {
-        let setupData = await this.fetchSetupData(currentCamera);
-        console.debug("setup data", setupData);
-        
-        if(!setupData)return [];
-
-        const result = setupData.filter(x => x.NvrId === currentCamera.NvrId && x.ChannelId === currentCamera.Channel);
-        return result;      
-  }
-  async saveCamera(currentCamera:Device, ipCameraNvr:Nvr, groupList:Group[], selectedSubGroup:string, editorParam: CameraEditorParam, tags:string):Promise<void>{
+  async saveCamera(currentCamera:Device, ipCameraNvr:Nvr, selectedSubGroup:string, editorParam: CameraEditorParam, tags:string):Promise<Device>{
 
     currentCamera.Name = this.coreService.stripScript(currentCamera.Name);
     currentCamera.Tags = tags.split(',');
@@ -198,32 +163,37 @@ export class CameraService {
     if(currentCamera.Channel==0){
       currentCamera.Channel = await this.getNewChannelId();
     }
-    const save$ = Observable.fromPromise(currentCamera.save())
-      .map(result => {
-        this.coreService.addNotifyData({
-          path: this.coreService.urls.URL_CLASS_NVR,
-          objectId: ipCameraNvr.id
-        });
-        return this.coreService.notifyWithParseResult({
-          parseResult: [result], path: this.coreService.urls.URL_CLASS_DEVICE
-        });
-      });
-    console.debug("this.selectedSubGroup", selectedSubGroup);
-      
-    return await save$
-      .switchMap(() =>         
-          this.groupService.setChannelGroup(groupList, { Nvr: ipCameraNvr.Id, Channel: currentCamera.Channel }, selectedSubGroup)          
-      )
-      .switchMap(async()=>await this.updateSchedule(currentCamera))
-      .toPromise();
+
+    
+    let auth=this.auth;
+
+    let body = { 
+      cam : currentCamera, 
+      selectedSubGroup,      
+      auth, 
+      nvrObjectId:ipCameraNvr.id,
+      nvrId:ipCameraNvr.Id
+    };
+    let options=new RequestOptions({ headers:this.coreService.parseHeaders});
+    
+    let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/device", body, options).toPromise();
+    return result.json();
+
   }
- async getNewChannelId(){
+ async getNewChannelId():Promise<number>{
     let response = await this.httpService.get(this.parseService.parseServerUrl + "/cms/device/channel", 
     new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
     let result = response.json();
     console.debug("result");
     return result.newChannelId;
  }
+ async getDeviceCount(nvrId?:string):Promise<number>{
+  let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/count/${nvrId}`, 
+  new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
+  let result = response.json();
+  console.debug("result");
+  return result.count;
+}
  async getStatus(): Promise<any>{
   let result = await this.httpService.get(this.parseService.parseServerUrl + "/cms/device/status", 
     new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
@@ -251,7 +221,7 @@ export class CameraService {
       };
       let options=new RequestOptions({ headers:this.coreService.parseHeaders});
       console.debug("options", options);
-      let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/device", body, options).toPromise();
+      let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/device/clone", body, options).toPromise();
       return result.json();
     }
        

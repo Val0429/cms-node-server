@@ -52,7 +52,11 @@ export const ProxyRoute: IRouteMap = {
                 fetch(path, requestInit)
                     .then(data => data.text())
                     .then(data => convertToJsonRes(data, res))
-                    .catch(err => logHelper.writeLog({ type: 'Proxy', msg: err.message }));
+                    .catch(err => {
+                        logHelper.writeLog({ type: 'Proxy', msg: err.message });
+                        res.status(500);
+                        res.json({ type: 'Proxy', msg: err.message });
+                    });
             })
         }),
     children: []

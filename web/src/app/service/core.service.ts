@@ -109,7 +109,7 @@ export class CoreService {
     const options = new RequestOptions({ headers: this.parseHeaders });
     return this.http.post(Parse.serverURL + this.urls.MEDIA_PROXY_URL + (serverId ? `/${serverId}` : ""), body, options)
       .timeout(timeout || 10000)
-      .catch(err => Observable.throw(new Error(err.message)))
+      //.catch(err => Observable.throw(new Error(err.message)))
       .map((response: Response) => response.json());
   }
 

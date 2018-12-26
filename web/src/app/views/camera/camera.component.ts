@@ -27,7 +27,7 @@ export class CameraComponent implements OnInit {
   anyChecked: boolean = false;
   cameraConfigs: {device:Device, checked:boolean, brandDisplay:string}[] = [];
   groupList: Group[];  
-  
+  availableLicense:number=0;
   /** IPCamera的唯一NvrId */
   ipCameraNvr: Nvr;
   licenseInfo: any;
@@ -55,36 +55,38 @@ export class CameraComponent implements OnInit {
     this.flag.delete = result.busy;
     this.flag.save = result.busy;
 
-    this.getIPCameraNvr()
-      .switchMap(() => this.getTotalDevice())
-      .switchMap(() => this.fetchDevice())
-      .subscribe();
+    this.ipCameraNvr = await this.getIPCameraNvr();
+    this.total = await this.cameraService.getDeviceCount(this.ipCameraNvr.Id);
+    await this.fetchDevice();      
 
-      const getGroup$ = this.getGroup();
+    this.groupList = await this.getGroup();
+
+    console.debug("this.groupList", this.groupList);
       
-      getGroup$     
-        .switchMap(() =>  this.getAvailableLicense())
-        .toPromise()
-        .catch(alert);
+    //let it unwaited
+    this.getAvailableLicense();
+      
   }
   optionChange(option:number){    
     this.changePage(1);
   }
-  private getGroup() {
-    return Observable.fromPromise(this.parseService.fetchData({
+  private async getGroup() {
+    return await Observable.fromPromise(this.parseService.fetchData({
       type: Group
-    }).then(groups => {
-      this.groupList = groups;      
-      console.debug("this.groupList", this.groupList);
-    }));
+    })).toPromise();
   }
 
-  private getAvailableLicense() {
-    return Observable.fromPromise(this.licenseService.getLicenseAvailableCount('00171').toPromise()
+  private async getAvailableLicense() {
+    try{
+      await Observable.fromPromise(this.licenseService.getLicenseAvailableCount('00171').toPromise()
       .then(num => {
         this.availableLicense = num;
         console.debug("num 00171", this.availableLicense);
-      }));
+      })).toPromise();
+    }catch(err){
+      console.error("unable to get license", err); 
+      this.availableLicense=0;       
+    }    
   }
   checkServerStatus(total:number, finish:number, message:string){
     let current=0;
@@ -108,13 +110,14 @@ export class CameraComponent implements OnInit {
         //target match or trial more than 5 times or server is not busy
         if(current == finish || trial > 5 || result.busy !== true){
           clearInterval(timer);
-          alert(message);
-          await this.finish();          
+          await this.finish();
+          alert(message);                    
         }
       }catch(err){
         clearInterval(timer);
-        alert(err);
         await this.finish();
+        alert(err);
+        
       }
     }, 5000);
   }
@@ -122,8 +125,7 @@ export class CameraComponent implements OnInit {
   private async finish() {
     this.flag.delete = false;
     this.flag.save = false;
-    this.progress=100;
-    this.checkSelected();
+    this.progress=100;    
     await this.reloadData();
   }
 
@@ -132,7 +134,7 @@ export class CameraComponent implements OnInit {
     try{      
       this.flag.delete=true;
       this.progress=0;
-      let camIds = this.cameraConfigs.filter(x=>x.checked===true).map(function(e){return e.device.id});
+      let camIds = this.cameraConfigs.filter(x=>x.checked===true).map(function(e){return e.device.objectId});
       let result = await this.cameraService.deleteCam(camIds, this.ipCameraNvr.id);     
       console.debug("result.target", result.target);
       this.checkServerStatus(camIds.length, result.target, 'Delete Success');
@@ -145,18 +147,19 @@ export class CameraComponent implements OnInit {
   }
   async reloadData() {
     this.currentEditCamera = undefined;
-    const getGroup$ = this.getGroup();
-    await this.getTotalDevice()
-      .switchMap(()=>this.fetchDevice())  
-      .switchMap(()=>getGroup$)
-      .switchMap(()=>this.getAvailableLicense())
-      .toPromise();
+    this.groupList = await this.getGroup();
+    this.total = await this.cameraService.getDeviceCount(this.ipCameraNvr.Id);
+    await this.fetchDevice();
+    
+    this.getAvailableLicense();
     this.checkSelected();    
   }
 
   async changePage($event:number){
     this.p=$event;
-    await this.reloadData();
+    this.currentEditCamera = undefined;
+    await this.fetchDevice();
+    this.checkSelected();    
   }
   checkSelected(){
     let checked = this.cameraConfigs.map(function(e){return e.checked});
@@ -179,73 +182,55 @@ export class CameraComponent implements OnInit {
     this.checkSelected();
   }
   /** 取得IPCamera的NvrId */
-  getIPCameraNvr() {
-    const get$ = Observable.fromPromise(this.parseService.getData({
+  async getIPCameraNvr() {
+    return await Observable.fromPromise(this.parseService.getData({
       type: Nvr,
       filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
-    })).do(nvr => this.ipCameraNvr = nvr);
-    return get$;
+    })).toPromise();
   }
-  getTotalDevice(){
-    return Observable.fromPromise(this.parseService.countFetch({type:Device, 
-      filter:query => query.equalTo('NvrId', 
-          this.ipCameraNvr.Id)
-        .limit(Number.MAX_SAFE_INTEGER)
-    })).do(num => {
-      console.debug("total", num);
-      this.total = num;
-    });
-  }
+  
   /** 取得屬於IPCamera的Device資料 */
-  fetchDevice() {
-    this.cameraConfigs = undefined;
-    const fetch$ = Observable.fromPromise(this.parseService.fetchData({
-      type: Device,
-      filter: query => query.equalTo('NvrId', this.ipCameraNvr.Id)
-        .ascending('Channel')
-        .limit(this.pageSize)
-        .skip((this.p-1)*this.pageSize)
-    })).do(devices => {
-      this.cameraConfigs=[];
-      this.cameraConfigs = devices && devices.length>0 ? 
-      devices.map(dev => {
-        dev.Config.Authentication.Account = this.cryptoService.decrypt4DB(dev.Config.Authentication.Account);
-        dev.Config.Authentication.Password = this.cryptoService.decrypt4DB(dev.Config.Authentication.Password);
-        let deviceDisplay:{device:Device,checked:boolean,brandDisplay:string} = {device:dev,checked:false,brandDisplay:""};        
-        deviceDisplay.brandDisplay = this.cameraService.getBrandDisplay(deviceDisplay.device.Config.Brand);
-        return deviceDisplay;}):
-        [];
-      //console.debug("this.cameraConfigs",this.cameraConfigs);
-    })
-    .do(() => this.cloneCameraParam.device = this.cameraConfigs.length>0 ? this.cameraConfigs[0].device : new Device());
-    return fetch$;
+  async fetchDevice() {    
+    this.cameraConfigs=[];
+    
+    let devices = await this.cameraService.getDevice(this.ipCameraNvr.Id, this.p, this.pageSize);         
+    
+    this.cameraConfigs = devices && devices.length > 0 ? 
+    devices.map(dev => {
+      dev.Config.Authentication.Account = this.cryptoService.decrypt4DB(dev.Config.Authentication.Account);
+      dev.Config.Authentication.Password = this.cryptoService.decrypt4DB(dev.Config.Authentication.Password);
+      let deviceDisplay:{device:Device,checked:boolean,brandDisplay:string} = {device:dev,checked:false,brandDisplay:""};        
+      deviceDisplay.brandDisplay = this.cameraService.getBrandDisplay(deviceDisplay.device.Config.Brand);
+      return deviceDisplay;
+    }): [];
+    
+    console.debug("this.cameraConfigs", this.cameraConfigs);    
+    this.cloneCameraParam.device = this.cameraConfigs.length>0 ? this.cameraConfigs[0].device : new Device();
+    
   }
 
   /** 點擊新增 */
-  addDevice($camera?: ISearchCamera) {
+  addDevice() {
     // 檢查是否可新增
-    this.licenseService.getLicenseAvailableCount('00171')
-      .map(num => {
-        if (num < 1) {
-          alert('License available count is not enough, can not add new IP Camera.');
-          return;
-        }
+    
+    if (this.availableLicense < 1) {
+      alert('License available count is not enough, can not add new IP Camera.');
+      return;
+    } 
 
-        const newObj = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel:0,
-          searchCamera: $camera });
-        const confirmText = $camera ? 'Add this device?' : 'Create new device manually?';
-        if (confirm(confirmText)) {
-          this.currentEditCamera = newObj;
-        }
-      })
-      .subscribe();
+    const newObj = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel:0, searchCamera: undefined });
+    
+    if (confirm('Create new device manually?')) {
+      this.currentEditCamera = newObj;
+    }
+      
   }
 
   /** 改變clone device下拉選單值 */
   setCloneDevice($event: any) {
     this.cloneCameraParam.device = this.cameraConfigs.find(x => x.device.id === $event.target.value).device;
   }
-  availableLicense:number=0;
+
   /** 點擊clone */
   async clickClone() {
     try{

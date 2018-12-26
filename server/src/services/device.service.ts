@@ -1,8 +1,7 @@
 
 import { Request, Response } from 'express';
 import { Nvr, Device, Group, EventHandler, RecordSchedule } from '../domain';
-import { ParseHelper, ServerHelper, ParseServerHelper } from '../helpers';
-import { Observable } from 'rxjs';
+import { ParseHelper } from '../helpers';
 import { CoreService } from './core.service';
 import { IGroupChannel } from 'lib/domain/core';
 
@@ -21,11 +20,11 @@ export class DeviceService {
     constructor() {                
         this.busy = false;
     }
-    async getDeviceStatus(req:Request, res:Response){
+    getDeviceStatus(res:Response){
         //let deviceCount = await this.getDeviceCount();
         res.json({busy:this.busy, deviceCount:this.deviceCount});
     }
-    async post(req:Request, res:Response){
+    async cloneDevice(req:Request, res:Response){
         try{
             if(this.busy===true){
                 res.status(429);
@@ -35,14 +34,14 @@ export class DeviceService {
             coreService.auth = req.body.auth;     
             let { nvrObjectId, cam, quantity, account, password } = req.body;         
             
-            let availableLicense = await this.getLicenseAvailableCount("00171").toPromise();
+            let availableLicense = await this.getLicenseAvailableCount("00171");
             if(availableLicense < quantity){
                 throw new Error("Not enough license");
             }
 
             if(!nvrObjectId){
                 let nvr = await this.getDefaultNvr();
-                nvrObjectId = nvr.id;
+                nvrObjectId= nvr.id;
             }
             
             let groupList = await this.getGroupList();
@@ -62,27 +61,56 @@ export class DeviceService {
         }
         
     }
-    private async getDeviceCount():Promise<number>{
-        return await Observable.fromPromise(parseService
+    private async getDeviceCount(nvrId?:string):Promise<number>{
+        
+        if(nvrId){
+            return await parseService
+                .countFetch({type:Device, 
+                    filter:query=>query
+                    .equalTo("NvrId", nvrId)
+                    .limit(Number.MAX_SAFE_INTEGER)})
+        }
+        else{
+            return await parseService
             .countFetch({type:Device, 
                 filter:query=>query
-                .limit(Number.MAX_SAFE_INTEGER)}))
-            .toPromise();
+                .limit(Number.MAX_SAFE_INTEGER)})
+            
+        }
     }
-    get(req:Request, res:Response){
-        parseService.fetchData({
-            type: Device,
-        }).then(devices => {
-            res.json(devices);
-        })
+    async getDeviceCountByNvrId(req:Request, res:Response){
+        let nvrId = req.params["nvrId"];        
+        let count = await this.getDeviceCount(nvrId);
+        res.json({count});
+    }
+    async get(req:Request, res:Response){
+        
+        let nvrId = req.query["nvrId"];
+        let page = parseInt(req.query["page"]);
+        let pageSize = parseInt(req.query["pageSize"]);        
+        
+        let query = new Parse.Query(Device);
+        let devices = await query.equalTo("NvrId", nvrId)
+            .limit(pageSize)
+            .skip((page-1)*pageSize)
+            .find();
+        // parseService.fetchData({
+        //     type: Device,
+        //     filter: query=>query
+        //         .equalTo("NvrId", nvrId)
+        //         .limit(pageSize)
+        //         .skip((page-1)*pageSize)
+        // });
+        
+        res.json(devices);
     }
     async getNewChannel(req:Request, res:Response){
         let nvrId = req.params["nvrId"];
         if(!nvrId){
-            let nvr = await Observable.fromPromise(parseService.getData({
+            let nvr = await parseService.getData({
                 type: Nvr,
                 filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
-              })).toPromise();
+              });
 
             nvrId = nvr.Id;
         }
@@ -91,7 +119,7 @@ export class DeviceService {
         res.json({newChannelId});
     }
     private async getAllDevice(nvrId:string) {
-        return await Observable.fromPromise(parseService.fetchData({
+        return await parseService.fetchData({
             type: Device,
             filter: query =>                 
                 query
@@ -99,19 +127,100 @@ export class DeviceService {
                 .ascending("Channel")
                 .limit(Number.MAX_SAFE_INTEGER)
                 
-        })).toPromise();
+        });
     }
 
     async getDefaultNvr():Promise<Nvr>{
-        return Observable.fromPromise(parseService.getData({
+        return parseService.getData({
             type: Nvr,
             filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
-          })).toPromise();
+          });
     }
+
+    async post(req:Request, res:Response){
+        try{
+            let {cam, selectedSubGroup, auth, nvrObjectId} = req.body;
+            coreService.auth = auth;
+            cam.className = "Device";
+            
+            let dev:Device;
+            if(cam.objectId){
+                dev = await parseService.getDataById({type:Device, objectId:cam.objectId});
+            }else{
+                dev = new Device();
+            }
+
+            this.assignDeviceProperties(dev, cam);
+
+            let groupList = await this.getGroupList();
+            let result = await this.saveCamera(dev, nvrObjectId, groupList, selectedSubGroup);
+            res.json(result);
+        }
+        catch(err){
+            console.error("error saving camera", err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }finally{
+
+        }
+    }
+    
+    private assignDeviceProperties(dev: Device, cam: any) {
+        dev.Config = Object.assign({}, cam.Config);
+        dev.Capability = Object.assign({}, cam.Capability);
+        dev.CameraSetting = Object.assign({}, cam.CameraSetting);
+        dev.Tags = Object.assign([], cam.Tags);
+        dev.Name = cam.Name;
+        dev.NvrId = cam.NvrId;
+        dev.Channel = cam.Channel;
+    }
+
+    async saveCamera(cam:Device, nvrObjectId:string, groupList:Group[], selectedSubGroup:string):Promise<Device>{
+
+        let result = await cam.save();
+          
+        coreService.addNotifyData({path: coreService.urls.URL_CLASS_NVR, objectId: nvrObjectId});
+
+        coreService.notifyWithParseResult({parseResult: [result], path: coreService.urls.URL_CLASS_DEVICE});       
+          
+        await this.setChannelGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, selectedSubGroup);
+          
+        await this.updateRecordScheduleByDevice(cam);
+
+        return cam;
+      }
+
+    private async getRecorScheduleByDevice(currentCamera:Device):Promise<RecordSchedule[]> {        
+        return await parseService.fetchData({
+            type: RecordSchedule,
+            filter: query => query        
+              .equalTo('NvrId', currentCamera.NvrId)
+              .equalTo('ChannelId', currentCamera.Channel)
+              .limit(30000)
+          });
+    }
+      
+    private async updateRecordScheduleByDevice(currentCamera:Device):Promise<void>{
+        if(!currentCamera.Config.Stream || currentCamera.Config.Stream.length==0)return;
+    
+        let schedules = await this.getRecorScheduleByDevice(currentCamera);
+        
+        let deletedScheduleStream = [];
+        for(let stream of schedules){
+          let find = currentCamera.Config.Stream.find(x=>x.Id == stream.StreamId)
+          if(!find) deletedScheduleStream.push(stream);      
+        }
+        
+        await Parse.Object.destroyAll(deletedScheduleStream);
+    }
+
     async getGroupList():Promise<Group[]>{
-        return await Observable.fromPromise(parseService.fetchData({
+        return await parseService.fetchData({
             type: Group
-          })).toPromise();
+          });
     }
     async delete(req:Request, res:Response){
         try{
@@ -224,7 +333,7 @@ export class DeviceService {
             coreService.addNotifyData({path: coreService.urls.URL_CLASS_NVR, objectId: nvrObjectId });
 
             let obj = this.cloneNewDevice({ cam, newChannel: this.getNewChannelId(cameraConfigs, cloneResult) }, account, password);                           
-            await Observable.fromPromise(obj.save()).toPromise().then(result => {            
+            await obj.save().then(result => {            
                 cloneResult.push(result);
                 coreService.addNotifyData({path: coreService.urls.URL_CLASS_DEVICE, objectId: result.id});            
             }); 
@@ -248,47 +357,45 @@ export class DeviceService {
 
     async deleteCam(cam:Device, nvrObjectId:string){
         
-        const delete$ = Observable.fromPromise(cam.destroy())
-          .map(result => {            
-            coreService.addNotifyData({
-              path: coreService.urls.URL_CLASS_NVR,
-              objectId: nvrObjectId
-            });
-            coreService.notifyWithParseResult({
-              path: coreService.urls.URL_CLASS_DEVICE,
-              parseResult:[result]
-            });
-          });
-          await delete$.toPromise();
+        let result = await cam.destroy();
+                     
+        coreService.addNotifyData({
+            path: coreService.urls.URL_CLASS_NVR,
+            objectId: nvrObjectId
+        });
+
+        coreService.notifyWithParseResult({
+            path: coreService.urls.URL_CLASS_DEVICE,
+            parseResult:[result]
+        });
+          
     }
     async deleteCamRelatedData(cam :Device, groupList: Group[]){  
         // 刪除與此Camera相關的RecordSchedule
-        const removeRecordSchedule$ = Observable.fromPromise(parseService.fetchData({
+        let schedules = await parseService.fetchData({
           type: RecordSchedule,
           filter: query => query
             .equalTo('NvrId', cam.NvrId)
             .equalTo('ChannelId', cam.Channel)
-        }))
-          .switchMap(schedules => Observable.fromPromise(Parse.Object.destroyAll(schedules)))
-          .map(results => coreService.addNotifyData({ path: coreService.urls.URL_CLASS_RECORDSCHEDULE, dataArr: results }));
+        });
+
+        let scheduleNotifications = await Parse.Object.destroyAll(schedules);
+        coreService.addNotifyData({ path: coreService.urls.URL_CLASS_RECORDSCHEDULE, dataArr: scheduleNotifications });
   
         // 刪除與此Camera相關的EventHandler
-        const removeEventHandler$ = Observable.fromPromise(parseService.fetchData({
+        let handlers = await parseService.fetchData({
           type: EventHandler,
           filter: query => query
             .equalTo('NvrId',  cam.NvrId)
             .equalTo('DeviceId', cam.Channel)
-        }))
-          .switchMap(handler => Observable.fromPromise(Parse.Object.destroyAll(handler)))
-          .map(results => coreService.notifyWithParseResult({
-            parseResult: results, path: coreService.urls.URL_CLASS_EVENTHANDLER
-          }));
+        });
+
+        let eventNotifications = await Parse.Object.destroyAll(handlers);
+        coreService.notifyWithParseResult({ parseResult: eventNotifications, path: coreService.urls.URL_CLASS_EVENTHANDLER });
   
-        return await removeRecordSchedule$
-          .switchMap(() => removeEventHandler$)  
-          .switchMap(async () =>  await this.setChannelGroup( groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, undefined))
-          .map(()=> coreService.notify())
-          .toPromise();
+        await this.setChannelGroup( groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, undefined);
+
+        coreService.notify();
     }
     findInsertIndexForGroupChannel(data: IGroupChannel[], insertData: IGroupChannel) {
         let insertIndex = 0;
@@ -324,10 +431,10 @@ export class DeviceService {
             }
         });
         for(let group of saveList){
-            await Observable.fromPromise(group.save().then(result=>{
+            await group.save().then(result=>{
                 //console.log("result",result);
                 coreService.addNotifyData({objectId:result.id, path: coreService.urls.URL_CLASS_GROUP })
-            })).toPromise();
+            });
         }        
     }
 
@@ -335,37 +442,38 @@ export class DeviceService {
     /** 取得目前所有的License並計算未過期的數量
      * 格式: key: ProductNo, value: 數量
      */
-    getLicenseLimit() {
+    async getLicenseLimit(lic) {
         this.licenseLimit = {["00171"]:0};
         
-        return coreService.proxyMediaServer({
+        let result = await coreService.proxyMediaServer({
             method: 'GET',
             path: coreService.urls.URL_MEDIA_LICENSE_INFO
-        },2000).map(result => {            
+        });
+        
             
-            if(!result || !result.License) return;
+        if(!result || !result.License) return 0;
 
-            const temp = result.License;
-            temp.Adaptor = this.toArray(temp.Adaptor);
-            // 分類所有License Key並計算各ProductNo上限總和
-            temp.Adaptor.forEach(adp => {
-                if (!adp.Key) { return; }
-                adp.Key = this.toArray(adp.Key); // 所有已註冊的key
-                adp.Key.forEach(key => {
-                    //console.debug(key.$.ProductNO);
-                    if (this.licenseLimit[key.$.ProductNO] === undefined) {
-                        //console.debug('Cant find this product no.');
-                        return;
-                    }
-                    if (key.$.Expired === '1') {
-                        //console.debug('Key expired.');
-                        return;
-                    }
+        const temp = result.License;
+        temp.Adaptor = this.toArray(temp.Adaptor);
+        // 分類所有License Key並計算各ProductNo上限總和
+        temp.Adaptor.forEach(adp => {
+            if (!adp.Key) { return; }
+            adp.Key = this.toArray(adp.Key); // 所有已註冊的key
+            adp.Key.forEach(key => {
+                //console.debug(key.$.ProductNO);
+                if (this.licenseLimit[key.$.ProductNO] === undefined) {
+                    //console.debug('Cant find this product no.');
+                    return;
+                }
+                if (key.$.Expired === '1') {
+                    //console.debug('Key expired.');
+                    return;
+                }
 
-                    this.licenseLimit[key.$.ProductNO] += Number(key.$.Count);
-                });
+                this.licenseLimit[key.$.ProductNO] += Number(key.$.Count);
             });
         });
+        return this.licenseLimit[lic];
     }
     toArray(data: any) {
         if (!data || Array.isArray(data)) {
@@ -380,32 +488,30 @@ export class DeviceService {
     /** 各License上限, ex: '00166': 100 */
     licenseLimit: { [key: string]: number } = {};
     /** 取得指定license剩餘可用數量 */
-    getLicenseAvailableCount(lic: string) {
+    async getLicenseAvailableCount(lic: string) {
         if (!lic) {
             alert('No available license type.');
-            return Observable.of(0);
+            return 0;
         }
         if (lic === 'pass') {
-            return Observable.of(10000);
+            return Number.MAX_SAFE_INTEGER;
         }
-        const get$ = this.getLicenseUsageIPCamera()
-            .map(num => this.licenseLimit[lic] - num);
-        return this.getLicenseLimit()
-            .switchMap(() => get$);
+        let usage = await this.getLicenseUsageIPCamera();
+        let limit = await this.getLicenseLimit(lic);
+        
+        return limit - usage;
     }
-    getLicenseUsageIPCamera() {
-        const getNvr$ = Observable.fromPromise(parseService.getData({
-            type: Nvr,
+    async getLicenseUsageIPCamera() {
+        let nvr = await parseService.getData({ type: Nvr, 
             filter: query => query.equalTo('Driver', 'IPCamera')
-        }));
+        });
 
-        const getDevice$ = (nvrId: string) => Observable.fromPromise(parseService.countFetch({
+        let usage = await parseService.countFetch({
             type: Device,
-            filter: query => query.equalTo('NvrId', nvrId).limit(30000)
-        }));
+            filter: query => query.equalTo('NvrId', nvr.Id).limit(Number.MAX_SAFE_INTEGER)
+        });
 
-        return getNvr$
-            .switchMap(nvr => getDevice$(nvr.Id));
+        return usage;
     }
 }
 
