@@ -95,15 +95,19 @@ private static _instance: CoreService;
     if (this.notifyList && this.notifyList.length > 0) {      
         const body = Object.assign([], this.notifyList);
         this.notifyList = [];        
-        setTimeout(()=>
-          this.proxyMediaServer({            
+        setTimeout(async ()=> {
+        try{
+          await this.proxyMediaServer({            
             method: 'POST',
             path: this.urls.URL_MEDIA_NOTIFY,
             body: {
               notify: body
             }
-          }).toPromise()
-        , 2000);
+          }).toPromise();
+        }catch(err){
+          console.error("error from notification:", err);
+        }
+      }, 2000);
     }
   }
   notifyWithParseResult(args: { parseResult: Parse.Object[], path: string }) {
