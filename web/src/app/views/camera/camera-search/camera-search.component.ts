@@ -3,10 +3,10 @@ import { CoreService } from 'app/service/core.service';
 import { DeviceVendor } from 'app/config/device-vendor.config';
 import { ArrayHelper } from 'app/helper/array.helper';
 import { ISearchCamera } from 'lib/domain/core';
-import { LicenseService } from 'app/service/license.service';
 import { CameraService } from 'app/service/camera.service';
 import { Nvr, Group, Device } from 'app/model/core';
 import StringHelper from 'app/helper/string.helper';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-camera-search',
@@ -39,24 +39,17 @@ export class CameraSearchComponent implements OnInit {
       try{
         this.flag.busy=true;
           
-        let cams = this.searchList.filter(x=>x.checked===true);
+        let cams = this.searchList.filter(x=>x.checked===true).map(x=> x.device);
         console.debug("saved cams", cams);
 
         if (this.availableLicense < cams.length) {
           alert('License available count is not enough, can not add new IP Camera.');
           return;
         }
-        //get new channels
-        let newChannelIds = await this.cameraService.getNewChannelId(this.ipCameraNvr.Id, cams.length);
-        console.debug("newChannels", newChannelIds);        
+
         let noGroup = this.groupList.find(x=>x.Name=="Non Main Group");
-        let selectedSubGroup = noGroup.SubGroup[0];
-        for(let i=0; i<cams.length ; i++)  {
-          let cam = cams[i];          
-          cam.device.Channel = newChannelIds[i];
-          await this.cameraService.saveCamera(cam.device, this.ipCameraNvr, selectedSubGroup, "");
-          cam.saved = true;
-        }        
+        let selectedSubGroup = noGroup.SubGroup[0];        
+        await this.cameraService.saveCamera(cams, this.ipCameraNvr, selectedSubGroup, "");
         alert("Save camera(s) sucess");
         this.checkedAll=false;
         this.searchList=[];
@@ -104,6 +97,7 @@ export class CameraSearchComponent implements OnInit {
     }
 
     try{      
+      let promises=[];
       this.searchList = [];
       this.flag.busy = true;
       for(let vendor of this.selectedVendors){
@@ -111,15 +105,14 @@ export class CameraSearchComponent implements OnInit {
         if(lowerVendor=="a-mtk"){
           lowerVendor = "amtk";
         }
-        let modelList=[];
-        //get brand capability
-        await this.cameraService.getCapability(vendor, modelList).toPromise(); 
+       
+        
         //push observerable item
-        const search$ = this.coreService.proxyMediaServer({
+        const search$ = (modelList:any[], capability:any) => this.coreService.proxyMediaServer({
           method: 'GET',
           path: this.coreService.urls.URL_MEDIA_SEARCH_CAMERA + '?vendor=' + lowerVendor
         }, 30000)
-          .map(async result => {
+          .map(result => {
             let resultArray = ArrayHelper.toArray((result && result.Camera.DATA) ? result.Camera.DATA : []);
             let searchDisplay:SearchCameraResult[]=[];
             for(let searchResult of resultArray){
@@ -129,7 +122,7 @@ export class CameraSearchComponent implements OnInit {
               if (StringHelper.isNullOrEmpty(device.Config.Model) || modelList.indexOf(device.Config.Model) < 0) {
                 device.Config.Model = modelList[0];
               }  
-              let editorParam = this.cameraService.getCameraEditorParam(device.Config.Model, device);  
+              let editorParam = this.cameraService.getCameraEditorParam(device.Config.Model, device, capability);  
               if(editorParam){
                 editorParam.getStreamSaveNumberBeforeSave();
                 editorParam.getResolutionBeforeSave();
@@ -143,8 +136,14 @@ export class CameraSearchComponent implements OnInit {
               b:SearchCameraResult) => 
                 (a.searchResult.WANIP > b.searchResult.WANIP) ? 1 : ((b.searchResult.WANIP > a.searchResult.WANIP) ? -1 : 0));
           });
-        await search$.toPromise();
+          //get brand capability
+          const singleSearch = this.cameraService.getCapability(vendor).then(async capability=>{
+            let modelList= this.cameraService.getModelList(capability);
+            await search$(modelList, capability).toPromise();
+          }); 
+          promises.push(singleSearch);
       }
+      await Observable.forkJoin(promises).toPromise();
     }catch(err){
       alert(err);
     }finally{

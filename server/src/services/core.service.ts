@@ -15,11 +15,7 @@ private static _instance: CoreService;
 
   auth:string;
   urls = urls; 
-  /** 通知CGI的內容清單 */
-  notifyList: {
-    objectId: string;
-    path: string;
-  }[] = [];
+
   
   
 
@@ -28,22 +24,7 @@ private static _instance: CoreService;
 
   
   /** 新增資料至notifyList */
-  addNotifyData(args: { path: string, objectId?: string, dataArr?: any[] }) {
-    if (args.objectId) {
-      this.notifyList.push({
-        objectId: args.objectId,
-        path: args.path
-      });
-    }
-    if (args.dataArr) {
-      args.dataArr.forEach(data => {
-        this.notifyList.push({
-          objectId: data.id,
-          path: args.path
-        });
-      });
-    }
-  }
+  
   mediaHeaders(auth:string) {
     return {
       'Authorization': `Basic ${auth}`,
@@ -90,44 +71,26 @@ private static _instance: CoreService;
     ).toPromise();
   }
   /** Call CGI通知CMS Client */
-  notify(args?: { path: string, objectId: string }) {
-    if (args) {
-      this.addNotifyData(args);
-    }
-    if (this.notifyList && this.notifyList.length > 0) {      
-        const body = Object.assign([], this.notifyList);
-        this.notifyList = [];        
-        setTimeout(()=> {
-        try{
-          this.proxyMediaServer({            
-            method: 'POST',
-            path: this.urls.URL_MEDIA_NOTIFY,
-            body: {
-              notify: body
-            }
-          });
-        }catch(err){
-          console.error("error from notification:", err);
+  async notify(body:NotificationBody[]) {
+    if(!body || body.length<=0) return;
+    try{
+      await this.proxyMediaServer({            
+        method: 'POST',
+        path: this.urls.URL_MEDIA_NOTIFY,
+        body: {
+          notify: body
         }
-      }, 2000);
-    }
-  }
-  notifyWithParseResult(args: { parseResult: Parse.Object[], path: string }) {
-    this.addNotifyWithParseResult(args);
-    this.notify();
-  }
-  
-  addNotifyWithParseResult(args: { parseResult: Parse.Object[], path: string }) {
-    args.parseResult.forEach(data => {
-      this.addNotifyData({
-        path: args.path,
-        objectId: data.id
       });
-    });    
+    }catch(err){
+      console.error("error from notification:", err);
+    }      
+    
   }
+ 
 
 }
 
+export interface NotificationBody{path: string, objectId: string };
 
 const urls = {
   URL_BATCH: '/batch',

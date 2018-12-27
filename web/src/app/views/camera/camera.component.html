@@ -8,8 +8,7 @@
           </strong>
         </legend>
         <div class="float-right">
-          <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
-          <span *ngIf="progress < 100">{{progress+"%"}}</span>
+          <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>          
           <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="searchWindow.show()" [disabled]="flag.busy">
             Search
           </button>
@@ -40,7 +39,7 @@
         <table class="table table-hover table-lg mt-lg mb-0">
           <thead>
             <tr>
-              <th style="width:20px"><input type="checkbox" id="selectAll" (click)="selectAll($event.target.checked)"  [checked]="checkedAll"/></th>
+              <th style="width:20px"><input type="checkbox" id="selectAll" (click)="selectAll($event.target.checked)"  [checked]="checkedAll" [disabled]="flag.busy"/></th>
               <th>ID</th>
               <th>Brand</th>
               <th>Model</th>
@@ -50,7 +49,7 @@
           </thead>
           <tbody >
             <tr *ngFor="let cam of cameraConfigs | paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: total }" (click)="currentEditCamera = cam.device" [class.active]="cam.device === currentEditCamera">
-              <td><input type="checkbox" (click)="selectCam(cam, $event.target.checked)" [checked]="cam.checked"></td>
+              <td><input type="checkbox" (click)="selectCam(cam, $event.target.checked)" [checked]="cam.checked" [disabled]="flag.busy"></td>
               <td>{{cam.device.Channel}}</td>
               <td>{{cam.brandDisplay}}</td>
               <td>{{cam.device.Config.Model}}</td>
@@ -120,8 +119,7 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <span *ngIf="progress < 100">{{progress+"%"}}</span>
+      <div class="modal-footer">        
         <button type="button" class="btn btn-primary" (click)="clickClone();" [disabled]="flag.busy">Clone</button>
         <button type="button" class="btn btn-gray" (click)="cloneWindow.hide();">Close</button>
       </div>

@@ -38,7 +38,7 @@ export class CameraComponent implements OnInit {
   };
   pageSize:number=50;
   total:number=0;
-  progress:number=100;
+  
  @ViewChild("searchComponent") searchComponent:CameraSearchComponent;
 
   constructor(    
@@ -49,22 +49,17 @@ export class CameraComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    let result:ServerDeviceStatus = await this.cameraService.getStatus();
-    console.debug("serverStatus", result);
-    
-    this.flag.busy = result.busy;
-
-    this.ipCameraNvr = await this.getIPCameraNvr();
-    this.total = await this.cameraService.getDeviceCount(this.ipCameraNvr.Id);
-    await this.fetchDevice();      
-
-    this.groupList = await this.getGroup();
-
-    console.debug("this.groupList", this.groupList);
-      
-    //let it unwaited
-    this.getAvailableLicense();
-      
+    await Observable.forkJoin([
+      this.getIPCameraNvr().then(async nvr=>{
+        this.ipCameraNvr = nvr;
+        await Observable.forkJoin([
+          this.cameraService.getDeviceCount(this.ipCameraNvr.Id).then(total=>this.total=total),
+          this.fetchDevice()
+        ]).toPromise();
+      }),
+      this.getGroup().then(groupList=>this.groupList=groupList),
+      this.getAvailableLicense()
+    ]).toPromise();
   }
   optionChange(option:number){    
     this.changePage(1);
@@ -87,44 +82,11 @@ export class CameraComponent implements OnInit {
       this.availableLicense=0;       
     }    
   }
-  checkServerStatus(total:number, finish:number, message:string){
-    let current=0;
-    let trial=0;
-    let timer = setInterval(async ()=>{
-      try{
-        let result:ServerDeviceStatus = await this.cameraService.getStatus();
-        console.debug("serverStatus", result);        
-        if(current != result.deviceCount){
-          //there's progress
-          current = result.deviceCount;          
-          //reset trial count
-          trial=0;          
-          //update progress
-          this.progress = 100 - Math.round(Math.abs(current - finish) / total * 100);          
-        }
-        else{ 
-          //no progress
-          trial++;
-        }
-        //target match or trial more than 5 times or server is not busy
-        if(current == finish || trial > 5 || result.busy !== true){
-          clearInterval(timer);
-          await this.finish();
-          alert(message);                    
-        }
-      }catch(err){
-        clearInterval(timer);
-        await this.finish();
-        alert(err);
-        
-      }
-    }, 5000);
-  }
-
+  
   private async finish() {
     
     this.flag.busy = false;
-    this.progress=100;    
+    
     await this.reloadData();
   }
 
@@ -132,25 +94,26 @@ export class CameraComponent implements OnInit {
     if (!confirm('Are you sure to delete these Camera(s)?')) return;
     try{      
       this.flag.busy=true;
-      this.progress=0;
+    
       let camIds = this.cameraConfigs.filter(x=>x.checked===true).map(function(e){return e.device.id});
       let result = await this.cameraService.deleteCam(camIds, this.ipCameraNvr.id);     
       console.debug("result.target", result.target);
-      this.checkServerStatus(camIds.length, result.target, 'Delete Success');
+      alert('Delete Success');
     }catch(err){
       console.error(err);
-      alert(err);      
-      this.flag.busy=false;
-      this.progress=100;
+      alert(err);            
+    }finally{
+      await this.finish();
     }
   }
   async reloadData() {
     this.currentEditCamera = undefined;
-    this.groupList = await this.getGroup();
-    this.total = await this.cameraService.getDeviceCount(this.ipCameraNvr.Id);
-    await this.fetchDevice();
-    
-    this.getAvailableLicense();
+    await Observable.forkJoin([
+      this.getGroup().then(groupList=>this.groupList = groupList),
+      this.cameraService.getDeviceCount(this.ipCameraNvr.Id).then(total=>this.total = total),
+      this.fetchDevice(),  
+      this.getAvailableLicense(),
+    ]).toPromise();    
     this.checkSelected();    
   }
 
@@ -233,8 +196,7 @@ export class CameraComponent implements OnInit {
   /** 點擊clone */
   async clickClone() {
     try{
-      this.flag.busy=true;
-      this.progress=0;
+      this.flag.busy=true;      
       //dummy 
       await Observable.of(null).toPromise();
 
@@ -243,12 +205,12 @@ export class CameraComponent implements OnInit {
       }      
       let result = await this.cameraService.cloneCam(this.cloneCameraParam.device, this.cloneCameraParam.quantity, this.ipCameraNvr);                  
       console.debug("result.target", result.target);
-      this.checkServerStatus(this.cloneCameraParam.quantity, result.target, "Clone Success");
+      alert("Clone Success");
     }catch(err){
       console.error(err);
-      this.flag.busy=false;
-      this.progress=100;
       alert(err);
+    }finally{
+      await this.finish();
     }
   }
 }

@@ -1,27 +1,23 @@
 import { Injectable } from '@angular/core';
 import { CoreService } from './core.service';
-import { IDeviceVendor, DeviceVendor } from '../config/device-vendor.config';
+import { DeviceVendor } from '../config/device-vendor.config';
 import { CameraEditorParam } from '../model/camera-editor-param';
 import { ArrayHelper } from '../helper/array.helper';
-import { Nvr, Device, RecordSchedule, EventHandler, Group } from 'app/model/core';
-import { Observable } from 'rxjs';
+import { Nvr, Device } from 'app/model/core';
 import { ParseService } from './parse.service';
-import { GroupService } from './group.service';
 import { CryptoService } from './crypto.service';
-import StringHelper from 'app/helper/string.helper';
 import { ISearchCamera } from 'lib/domain/core';
 import { Http, RequestOptions } from '@angular/http';
 import { UserService } from './user.service';
 
 @Injectable()
 export class CameraService {
-    currentBrandCapability: any; // 從server取回的json格式capability
+    
 
     constructor(
         private httpService:Http,
         private coreService: CoreService, 
         private parseService:ParseService, 
-        private groupService:GroupService,
         private cryptoService:CryptoService,
         private userService:UserService
         ) { }
@@ -33,7 +29,7 @@ export class CameraService {
         return brand ? brand.Name : key;
     }
     /** 取得Model Capability */
-    getCapability(brand: string,  modelList: string[]):Observable<any> {
+    async getCapability(brand: string):Promise<any> {
         console.debug("brand", brand);
         
         const vendor = this.brandList.find(x => x.Key === brand);
@@ -42,15 +38,7 @@ export class CameraService {
         const data = {
         fileName: vendor.FileName
         };
-        return this.coreService.postConfig({ path: this.coreService.urls.URL_BRAND_CAPABILITY, data: data })
-        .map(result => {
-                console.debug("this.currentBrandCapability", result);
-                this.currentBrandCapability = result;
-                
-                for(let model of this.getModelList()){
-                    modelList.push(model);
-                }                
-            });
+        return await this.coreService.postConfig({ path: this.coreService.urls.URL_BRAND_CAPABILITY, data: data }).toPromise();        
     }
     
     /** 建立新Device */
@@ -124,27 +112,28 @@ export class CameraService {
     });
     return devices;
   }
-  async saveCamera(currentCamera:Device, ipCameraNvr:Nvr, selectedSubGroup:string, tags:string):Promise<Device>{
-
-    currentCamera.Name = this.coreService.stripScript(currentCamera.Name);
-    currentCamera.Tags = tags.split(',');    
-    
-    // 加密
-    currentCamera.Config.Authentication.Account = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Account);
-    currentCamera.Config.Authentication.Password = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Password);
-    
-    // 將RTSPURI組合完整
-    if (currentCamera.Config.Brand === 'Customization') {
-      currentCamera.Config.Stream.forEach(str => {
-        str.RTSPURI = `rtsp://${currentCamera.Config.IPAddress}:${str.Port.RTSP}${str.RTSPURI.indexOf('/') < 0 ? "/" : ""}${str.RTSPURI || ''}`;
-      });
-    }
-    console.debug("this.currentCamera", currentCamera);
+  async saveCamera(cams:Device[], ipCameraNvr:Nvr, selectedSubGroup:string, tags:string):Promise<Device>{
+    cams.forEach(currentCamera=>{
+      currentCamera.Name = this.coreService.stripScript(currentCamera.Name);
+      currentCamera.Tags = tags.split(',');    
+      
+      // 加密
+      currentCamera.Config.Authentication.Account = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Account);
+      currentCamera.Config.Authentication.Password = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Password);
+      
+      // 將RTSPURI組合完整
+      if (currentCamera.Config.Brand === 'Customization') {
+        currentCamera.Config.Stream.forEach(str => {
+          str.RTSPURI = `rtsp://${currentCamera.Config.IPAddress}:${str.Port.RTSP}${str.RTSPURI.indexOf('/') < 0 ? "/" : ""}${str.RTSPURI || ''}`;
+        });
+      }
+      console.debug("this.currentCamera", currentCamera);
+    });    
 
     let auth=this.auth;
 
     let body = { 
-      cam : currentCamera, 
+      cams, 
       selectedSubGroup,      
       auth, 
       nvrObjectId:ipCameraNvr.id,
@@ -205,29 +194,29 @@ export class CameraService {
     }
        
     /** 取得當前Brand底下所有Model型號 */
-    getModelList(): string[] {
+    getModelList(currentBrandCapability:any): string[] {
         const result = [];
-        if (!this.currentBrandCapability) {
+        if (!currentBrandCapability) {
             return result;
         } else {
-            if (Array.isArray(this.currentBrandCapability.Devices.Device)) {
-                this.currentBrandCapability.Devices.Device.forEach(element => {
+            if (Array.isArray(currentBrandCapability.Devices.Device)) {
+                currentBrandCapability.Devices.Device.forEach(element => {
                     result.push(element.Model);
                 });
                 ArrayHelper.sortString(result);
             } else {
-                result.push(this.currentBrandCapability.Devices.Device.Model);
+                result.push(currentBrandCapability.Devices.Device.Model);
             }
             return result;
         }
     }
 
     /** 讀取指定model轉為CameraEditorParam物件 */
-    getCameraEditorParam(model: string, data: Device):any {
-        console.debug("currentBrandCapability", this.currentBrandCapability, model, data);
-        if (!this.currentBrandCapability) {
+    getCameraEditorParam(model: string, data: Device, currentBrandCapability):any {
+        console.debug("currentBrandCapability", currentBrandCapability, model, data);
+        if (!currentBrandCapability) {
             return undefined;
         }
-        return new CameraEditorParam(this.currentBrandCapability, model, data);
+        return new CameraEditorParam(currentBrandCapability, model, data);
     }
 }

@@ -38,6 +38,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   /** currentCamera的Tags陣列在編輯畫面上的string */
   tags: string;
   @Input() flag:any;
+  capability: any;
 
   constructor(
     private cameraService: CameraService,
@@ -93,9 +94,9 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   }
   
   /** 取得Model Capability */
-  async getCapability(brand: string) {
-    this.modelList=[];
-    await this.cameraService.getCapability(brand,this.modelList).toPromise();    
+  async getCapability(brand: string) {    
+    this.capability = await this.cameraService.getCapability(brand);    
+    this.modelList = this.cameraService.getModelList(this.capability);
     // If no value or not on list, set value to first option
     if (StringHelper.isNullOrEmpty(this.currentCamera.Config.Model) || this.modelList.indexOf(this.currentCamera.Config.Model) < 0) {
       this.currentCamera.Config.Model = this.modelList[0];
@@ -105,7 +106,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
 
   onChangeModel(model: string) {
     if (model) {
-      this.editorParam = this.cameraService.getCameraEditorParam(model, this.currentCamera);
+      this.editorParam = this.cameraService.getCameraEditorParam(model, this.currentCamera, this.capability);
       this.onChangeDynamicOptions();
       this.setCustomizationProcess();
     } else {
@@ -158,7 +159,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       this.editorParam.getStreamSaveNumberBeforeSave();
       this.editorParam.getResolutionBeforeSave();
       this.editorParam.removeAttributesBeforeSave();    
-      let result = await this.cameraService.saveCamera(this.currentCamera, this.ipCameraNvr, this.selectedSubGroup, this.tags);
+      let result = await this.cameraService.saveCamera([this.currentCamera], this.ipCameraNvr, this.selectedSubGroup, this.tags);
 
       console.debug("save result", result);
       alert('Update Success');
