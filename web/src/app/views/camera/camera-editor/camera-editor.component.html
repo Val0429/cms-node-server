@@ -62,7 +62,7 @@
         </select>
       </div>
     </div>
-    <ng-container *ngIf="checkDisplayAuthentication()">
+    <ng-container *ngIf="currentCamera && currentCamera.Config && currentCamera.Config.Brand && currentCamera.Config.Model && checkDisplayAuthentication()">
       <legend>Authentication</legend>
       <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right">Account</label>
