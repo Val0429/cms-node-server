@@ -18,8 +18,7 @@ import { CameraSearchComponent } from './camera-search/camera-search.component';
 export class CameraComponent implements OnInit {
   p: number = 1;
   flag = {
-    save: false,
-    delete: false
+    busy: false
   };
   options=[20, 50, 100, 500, 1000];
   brandList = DeviceVendor;
@@ -52,8 +51,8 @@ export class CameraComponent implements OnInit {
   async ngOnInit() {
     let result:ServerDeviceStatus = await this.cameraService.getStatus();
     console.debug("serverStatus", result);
-    this.flag.delete = result.busy;
-    this.flag.save = result.busy;
+    
+    this.flag.busy = result.busy;
 
     this.ipCameraNvr = await this.getIPCameraNvr();
     this.total = await this.cameraService.getDeviceCount(this.ipCameraNvr.Id);
@@ -123,8 +122,8 @@ export class CameraComponent implements OnInit {
   }
 
   private async finish() {
-    this.flag.delete = false;
-    this.flag.save = false;
+    
+    this.flag.busy = false;
     this.progress=100;    
     await this.reloadData();
   }
@@ -132,7 +131,7 @@ export class CameraComponent implements OnInit {
   async deleteAll(){
     if (!confirm('Are you sure to delete these Camera(s)?')) return;
     try{      
-      this.flag.delete=true;
+      this.flag.busy=true;
       this.progress=0;
       let camIds = this.cameraConfigs.filter(x=>x.checked===true).map(function(e){return e.device.id});
       let result = await this.cameraService.deleteCam(camIds, this.ipCameraNvr.id);     
@@ -141,7 +140,7 @@ export class CameraComponent implements OnInit {
     }catch(err){
       console.error(err);
       alert(err);      
-      this.flag.delete=false;
+      this.flag.busy=false;
       this.progress=100;
     }
   }
@@ -234,7 +233,7 @@ export class CameraComponent implements OnInit {
   /** 點擊clone */
   async clickClone() {
     try{
-      this.flag.save=true;
+      this.flag.busy=true;
       this.progress=0;
       //dummy 
       await Observable.of(null).toPromise();
@@ -247,7 +246,7 @@ export class CameraComponent implements OnInit {
       this.checkServerStatus(this.cloneCameraParam.quantity, result.target, "Clone Success");
     }catch(err){
       console.error(err);
-      this.flag.save=false;
+      this.flag.busy=false;
       this.progress=100;
       alert(err);
     }

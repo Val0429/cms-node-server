@@ -5,8 +5,8 @@ import { ArrayHelper } from 'app/helper/array.helper';
 import { ISearchCamera } from 'lib/domain/core';
 import { LicenseService } from 'app/service/license.service';
 import { CameraService } from 'app/service/camera.service';
-import { Nvr, Device, Group } from 'app/model/core';
-import { Observable } from 'rxjs';
+import { Nvr, Group, Device } from 'app/model/core';
+import StringHelper from 'app/helper/string.helper';
 
 @Component({
   selector: 'app-camera-search',
@@ -19,43 +19,43 @@ export class CameraSearchComponent implements OnInit {
   @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
   @Input() ipCameraNvr:Nvr;  
   @Input() groupList:Group[];
+  @Input() availableLicense:number;
   /** 搜尋結果 */
-  searchList: {device:ISearchCamera, checked:boolean}[];    
+  searchList: SearchCameraResult[];    
   checkedAll:boolean;
   anyChecked:boolean;
   /** Flag:表示loading */
   /** 廠牌選單 */
   deviceVendors= DeviceVendor;
-  flag = {
-    load: false
-  };
+  @Input() flag:any;
+
   constructor(
     private coreService: CoreService, 
-    private cameraService: CameraService, 
-    private licenseService:LicenseService) { }
+    private cameraService: CameraService) { }
 
    async saveAll(){    
       if (!confirm("Add selected camera(s)?")) return;
 
       try{
-        this.flag.load=true;
+        this.flag.busy=true;
           
         let cams = this.searchList.filter(x=>x.checked===true);
         console.debug("saved cams", cams);
 
-        let num = await this.licenseService.getLicenseAvailableCount('00171').toPromise(); 
-
-        if (num < cams.length) {
+        if (this.availableLicense < cams.length) {
           alert('License available count is not enough, can not add new IP Camera.');
           return;
-        }        
+        }
+        //get new channels
+        let newChannelIds = await this.cameraService.getNewChannelId(this.ipCameraNvr.Id, cams.length);
+        console.debug("newChannels", newChannelIds);        
         let noGroup = this.groupList.find(x=>x.Name=="Non Main Group");
         let selectedSubGroup = noGroup.SubGroup[0];
-        for(let cam of cams)  {
-          const newCam = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: 0, searchCamera: cam.device });            
-          await this.cameraService.getCapability(newCam, cam.device.COMPANY, []).toPromise(); 
-          let editorParam = this.cameraService.getCameraEditorParam(newCam.Config.Model, newCam);          
-          await this.cameraService.saveCamera(newCam, this.ipCameraNvr, selectedSubGroup, editorParam, "");          
+        for(let i=0; i<cams.length ; i++)  {
+          let cam = cams[i];          
+          cam.device.Channel = newChannelIds[i];
+          await this.cameraService.saveCamera(cam.device, this.ipCameraNvr, selectedSubGroup, "");
+          cam.saved = true;
         }        
         alert("Save camera(s) sucess");
         this.checkedAll=false;
@@ -66,7 +66,7 @@ export class CameraSearchComponent implements OnInit {
         console.error(err);
         alert(err);
       }finally{
-        this.flag.load=false;        
+        this.flag.busy=false;        
       }
     
   }
@@ -105,34 +105,50 @@ export class CameraSearchComponent implements OnInit {
 
     try{      
       this.searchList = [];
-      this.flag.load = true;
+      this.flag.busy = true;
       for(let vendor of this.selectedVendors){
         let lowerVendor = vendor.toLowerCase()
         if(lowerVendor=="a-mtk"){
           lowerVendor = "amtk";
         }
+        let modelList=[];
+        //get brand capability
+        await this.cameraService.getCapability(vendor, modelList).toPromise(); 
         //push observerable item
         const search$ = this.coreService.proxyMediaServer({
           method: 'GET',
           path: this.coreService.urls.URL_MEDIA_SEARCH_CAMERA + '?vendor=' + lowerVendor
         }, 30000)
-          .map(result => {
+          .map(async result => {
             let resultArray = ArrayHelper.toArray((result && result.Camera.DATA) ? result.Camera.DATA : []);
-            let searchDisplay:{device:ISearchCamera, checked:boolean}[]=[];
-            for(let device of resultArray){
-              searchDisplay.push({checked:false, device})
+            let searchDisplay:SearchCameraResult[]=[];
+            for(let searchResult of resultArray){
+
+              const device = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: 0, searchCamera: searchResult });
+              // If no value or not on list, set value to first option
+              if (StringHelper.isNullOrEmpty(device.Config.Model) || modelList.indexOf(device.Config.Model) < 0) {
+                device.Config.Model = modelList[0];
+              }  
+              let editorParam = this.cameraService.getCameraEditorParam(device.Config.Model, device);  
+              if(editorParam){
+                editorParam.getStreamSaveNumberBeforeSave();
+                editorParam.getResolutionBeforeSave();
+                editorParam.removeAttributesBeforeSave();
+              }
+
+              searchDisplay.push({checked:false, searchResult, device, saved:false})
             }
             this.searchList.push(...searchDisplay);
-            this.searchList.sort((a:{device:ISearchCamera, checked:boolean},
-              b:{device:ISearchCamera, checked:boolean}) => 
-                (a.device.WANIP > b.device.WANIP) ? 1 : ((b.device.WANIP > a.device.WANIP) ? -1 : 0));
+            this.searchList.sort((a:SearchCameraResult,
+              b:SearchCameraResult) => 
+                (a.searchResult.WANIP > b.searchResult.WANIP) ? 1 : ((b.searchResult.WANIP > a.searchResult.WANIP) ? -1 : 0));
           });
         await search$.toPromise();
       }
     }catch(err){
       alert(err);
     }finally{
-      this.flag.load = false;
+      this.flag.busy = false;
     }
   }
   selectedVendors:string[]=[];
@@ -143,4 +159,10 @@ export class CameraSearchComponent implements OnInit {
     console.debug("this.selectedVendors", checked, this.selectedVendors);
   }
 
+}
+export interface SearchCameraResult{
+  searchResult:ISearchCamera,   
+  checked:boolean,
+  device:Device,
+  saved:boolean
 }

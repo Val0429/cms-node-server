@@ -33,14 +33,12 @@ export class CameraService {
         return brand ? brand.Name : key;
     }
     /** 取得Model Capability */
-    getCapability(currentCamera:Device, brand: string,  modelList: string[]):Observable<any> {
+    getCapability(brand: string,  modelList: string[]):Observable<any> {
         console.debug("brand", brand);
         
         const vendor = this.brandList.find(x => x.Key === brand);
         console.debug("this.brandList", this.brandList);
         console.debug("vendor", vendor);
-        console.debug("currentCamera", currentCamera);
-        
         const data = {
         fileName: vendor.FileName
         };
@@ -51,13 +49,7 @@ export class CameraService {
                 
                 for(let model of this.getModelList()){
                     modelList.push(model);
-                }
-                
-                // If no value or not on list, set value to first option
-                if (StringHelper.isNullOrEmpty(currentCamera.Config.Model)
-                || modelList.indexOf(currentCamera.Config.Model) < 0) {
-                    currentCamera.Config.Model = modelList[0];
-                }  
+                }                
             });
     }
     
@@ -132,17 +124,11 @@ export class CameraService {
     });
     return devices;
   }
-  async saveCamera(currentCamera:Device, ipCameraNvr:Nvr, selectedSubGroup:string, editorParam: CameraEditorParam, tags:string):Promise<Device>{
+  async saveCamera(currentCamera:Device, ipCameraNvr:Nvr, selectedSubGroup:string, tags:string):Promise<Device>{
 
     currentCamera.Name = this.coreService.stripScript(currentCamera.Name);
-    currentCamera.Tags = tags.split(',');
-    // this.currentCamera.Tags = this.tags.replace(/ /g, '').split(',');
-    if(editorParam){
-        editorParam.getStreamSaveNumberBeforeSave();
-        editorParam.getResolutionBeforeSave();
-        editorParam.removeAttributesBeforeSave();
-    }
-    console.debug("this.currentCamera.Config", currentCamera.Config);
+    currentCamera.Tags = tags.split(',');    
+    
     // 加密
     currentCamera.Config.Authentication.Account = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Account);
     currentCamera.Config.Authentication.Password = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Password);
@@ -170,8 +156,8 @@ export class CameraService {
     return result.json();
 
   }
- async getNewChannelId(count?:number, nvrId?:string):Promise<number[]>{
-    let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/channel/${count}/${nvrId}`, 
+ async getNewChannelId(nvrId:string, count:number):Promise<number[]>{
+    let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/channel/${nvrId}/${count}`, 
     new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
     let result = response.json();
     console.debug("result", result);

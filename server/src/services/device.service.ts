@@ -120,14 +120,11 @@ export class DeviceService {
         let data = await this.getAllDevice(nvrId);
         let occupiedChannels = data.map(e => e.Channel);        
         let channel = 0;        
-        while (result.length < count) {
-            let found=undefined;
+        while (result.length < count) {            
+            channel++;
             // find empty channel
-            do{
-                channel++;
-                found = occupiedChannels.find(Channel => Channel == channel);	                
-            }
-            while(found)
+            let found = occupiedChannels.find(Channel => Channel == channel);            
+            if(found) continue;
             result.push(channel);
         }
         return result;
@@ -206,11 +203,13 @@ export class DeviceService {
           
         coreService.addNotifyData({path: coreService.urls.URL_CLASS_NVR, objectId: nvrObjectId});
 
-        coreService.notifyWithParseResult({parseResult: [result], path: coreService.urls.URL_CLASS_DEVICE});       
-          
-        await this.setChannelGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, selectedSubGroup);
-          
-        await this.updateRecordScheduleByDevice(cam);
+        coreService.addNotifyData({path: coreService.urls.URL_CLASS_DEVICE, objectId: result.id});
+                
+        await this.setChannelGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, selectedSubGroup);          
+
+        coreService.notify();
+        // let it unawaited
+        this.updateRecordScheduleByDevice(cam);
 
         return cam;
       }
@@ -283,7 +282,8 @@ export class DeviceService {
             for (let objectId of objectIds) {
                 let cam = await parseService.getDataById({ type: Device, objectId });
                 await this.deleteCam(cam, nvrObjectId);                
-                await this.deleteCamRelatedData(cam, groupList);
+                //let it unawaited
+                this.deleteCamRelatedData(cam, groupList);
                 this.deviceCount--;
             }
           }
@@ -321,12 +321,12 @@ export class DeviceService {
         
         return obj;
       }
-      findDeviceGroup(groupConfigs: Group[], channelData: IGroupChannel): string {        
+      findDeviceGroup(groupConfigs: Group[], channelData: IGroupChannel): Group {        
         
         const tempGroup = groupConfigs.find(x => x.Level === '1' && x.Channel
             && x.Channel.some(ch => ch.Nvr === channelData.Nvr && ch.Channel === channelData.Channel));    
         
-        return tempGroup ? tempGroup.id : '';
+        return tempGroup;
     }
     
   
@@ -334,7 +334,17 @@ export class DeviceService {
     async cloneCam(cam:Device, quantity:number, nvrObjectId:string, groupList:Group[], account:string, password:string){
       try{
         this.busy = true;
+        
         let selectedSubGroup = this.findDeviceGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel });        
+        
+        if(!selectedSubGroup){
+            let groups = await parseService.fetchData({
+                type:Group, 
+                filter:query=>query.equalTo("Name", "Non Main Group").limit(1)
+            });
+            selectedSubGroup = groups[0];
+        }
+
         let cloneResult = [];   
         let newChannels = await this.getNewChannelArray(cam.NvrId, quantity);
         for (let i = 0; i < quantity; i++) {
@@ -345,9 +355,8 @@ export class DeviceService {
                 cloneResult.push(result);
                 coreService.addNotifyData({path: coreService.urls.URL_CLASS_DEVICE, objectId: result.id});            
             }); 
-            if(selectedSubGroup){
-                await this.setChannelGroup(groupList, { Nvr: obj.NvrId, Channel: obj.Channel }, selectedSubGroup);
-            }
+            
+            await this.setChannelGroup(groupList, { Nvr: obj.NvrId, Channel: obj.Channel }, selectedSubGroup.id);
             coreService.notify();
             this.deviceCount++;
         }            
@@ -399,7 +408,7 @@ export class DeviceService {
         });
 
         let eventNotifications = await Parse.Object.destroyAll(handlers);
-        coreService.notifyWithParseResult({ parseResult: eventNotifications, path: coreService.urls.URL_CLASS_EVENTHANDLER });
+        coreService.addNotifyWithParseResult({ parseResult: eventNotifications, path: coreService.urls.URL_CLASS_EVENTHANDLER });
   
         await this.setChannelGroup( groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, undefined);
 

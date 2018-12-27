@@ -37,10 +37,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   @Input() ipCameraNvr: Nvr;
   /** currentCamera的Tags陣列在編輯畫面上的string */
   tags: string;
-  flag = {
-    save: false,
-    delete: false
-  };
+  @Input() flag:any;
 
   constructor(
     private cameraService: CameraService,
@@ -98,7 +95,11 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   /** 取得Model Capability */
   async getCapability(brand: string) {
     this.modelList=[];
-    await this.cameraService.getCapability(this.currentCamera,brand,this.modelList).toPromise();
+    await this.cameraService.getCapability(brand,this.modelList).toPromise();    
+    // If no value or not on list, set value to first option
+    if (StringHelper.isNullOrEmpty(this.currentCamera.Config.Model) || this.modelList.indexOf(this.currentCamera.Config.Model) < 0) {
+      this.currentCamera.Config.Model = this.modelList[0];
+    }  
     this.onChangeModel(this.currentCamera.Config.Model); 
   }
 
@@ -152,8 +153,13 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       return;
     }    
     try{
-      this.flag.save = true;
-      let result = await this.cameraService.saveCamera(this.currentCamera, this.ipCameraNvr, this.selectedSubGroup, this.editorParam, this.tags);
+      this.flag.busy = true;
+
+      this.editorParam.getStreamSaveNumberBeforeSave();
+      this.editorParam.getResolutionBeforeSave();
+      this.editorParam.removeAttributesBeforeSave();    
+      let result = await this.cameraService.saveCamera(this.currentCamera, this.ipCameraNvr, this.selectedSubGroup, this.tags);
+
       console.debug("save result", result);
       alert('Update Success');
       this.reloadDataEvent.emit();
@@ -161,7 +167,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       alert(err);
     }
     finally{
-      this.flag.save = false;
+      this.flag.busy = false;
     }
   }
   
@@ -170,14 +176,14 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     if (!confirm('Are you sure to delete this Camera?')) return;
       
       try{
-        this.flag.delete = true;
+        this.flag.busy = true;
         await this.cameraService.deleteCam([this.currentCamera.id], this.ipCameraNvr.id)           
         this.reloadDataEvent.emit();        
       }catch(err){
         console.error(err);
         alert(err);
       }finally{
-        this.flag.delete=false;
+        this.flag.busy=false;
       }    
   }
   

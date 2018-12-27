@@ -1,12 +1,12 @@
 <div class="form-group row">
   <div class="col-md-9">        
       <div *ngFor="let item of deviceVendors;" class="device-vendor">
-          <input [disabled]="flag.load" type="checkbox" (change)="setVendors($event.target.checked, item.Key)" id="{{item.Key}}"/><label for="{{item.Key}}">{{item.Name}}</label>
+          <input [disabled]="flag.busy" type="checkbox" (change)="setVendors($event.target.checked, item.Key)" id="{{item.Key}}"/><label for="{{item.Key}}">{{item.Name}}</label>
       </div>
   </div>
   <div class="col-md-3">
-    <button type="button" class="btn btn-default" (click)="clickSearch()" [disabled]="flag.load">
-      <i *ngIf="flag.load" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+    <button type="button" class="btn btn-default" (click)="clickSearch()" [disabled]="flag.busy">
+      <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
       Search
     </button>
   </div>
@@ -14,19 +14,21 @@
 <table class="table table-hover table-lg mb-0" *ngIf="searchList">
   <thead>
     <tr>
-      <th style="width:20px"><input type="checkbox" id="selectAll" (click)="selectAll($event.target.checked)"  [checked]="checkedAll"/></th>
+      <th style="width:20px"><input type="checkbox" id="selectAll" (click)="selectAll($event.target.checked)" [disabled]="flag.busy" [checked]="checkedAll"/></th>
       <th style="width:20%">Product Id</th>
       <th style="width:20%">Manufacturer</th>
       <th>Address</th>      
     </tr>
   </thead>
-  <tbody *ngIf="searchList.length > 0">      
-      <tr *ngFor="let cam of searchList">      
-        <td><input type="checkbox" (click)="selectCam(cam, $event.target.checked)" [checked]="cam.checked"></td>
-        <td class="text-primary">{{cam.device.PRODUCTIONID}}</td>
-        <td>{{getCompaneName(cam.device.COMPANY)}}</td>
-        <td>{{cam.device.WANIP}}:{{cam.device.HTTPPORT}}</td>      
-    </tr>
+  <tbody *ngIf="searchList.length > 0">  
+    <ng-container *ngFor="let cam of searchList">
+      <tr *ngIf="cam.saved !== true">
+        <td><input type="checkbox" (click)="selectCam(cam, $event.target.checked)" [checked]="cam.checked" [disabled]="flag.busy"></td>
+        <td class="text-primary">{{cam.searchResult.PRODUCTIONID}}</td>
+        <td>{{getCompaneName(cam.searchResult.COMPANY)}}</td>
+        <td>{{cam.searchResult.WANIP}}:{{cam.searchResult.HTTPPORT}}</td>      
+      </tr>
+    </ng-container>    
     <tr>
         <td colspan="4">Camera found: {{searchList.length}}</td>
     </tr>

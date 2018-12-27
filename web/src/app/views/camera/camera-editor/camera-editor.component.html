@@ -443,12 +443,12 @@
     <div class="form-group row">
       <label class="col-md-4  col-form-label text-md-right"></label>
       <div class="col-md-8">
-        <button type="button" class="btn btn-danger" (click)="clickDelete()" *ngIf="currentCamera.id" [disabled]="flag.delete || flag.save">
-          <i *ngIf="flag.delete" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+        <button type="button" class="btn btn-danger" (click)="clickDelete()" *ngIf="currentCamera.id" [disabled]="flag.busy">
+          <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
           Delete
         </button>
-        <button type="button" class="btn btn-primary" (click)="clickSave()" [disabled]="flag.delete || flag.save">
-          <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+        <button type="button" class="btn btn-primary" (click)="clickSave()" [disabled]="flag.busy">
+          <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
           Save
         </button>
       </div>
