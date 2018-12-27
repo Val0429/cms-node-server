@@ -101,6 +101,7 @@ export class DeviceService {
     }
     async getNewChannel(req:Request, res:Response){
         let nvrId = req.params["nvrId"];
+        let count = parseInt(req.params["count"] || "1");
         if(!nvrId){
             let nvr = await parseService.getData({
                 type: Nvr,
@@ -109,10 +110,29 @@ export class DeviceService {
 
             nvrId = nvr.Id;
         }
-        let data = await this.getAllDevice(nvrId);        
-        let newChannelId = this.getNewChannelId(data);
-        res.json({newChannelId});
+        let result = await this.getNewChannelArray(nvrId, count);
+        
+        res.json(result);
     }
+    private async getNewChannelArray(nvrId: any, count: number) {
+        
+        let result = [];        
+        let data = await this.getAllDevice(nvrId);
+        let occupiedChannels = data.map(e => e.Channel);        
+        let channel = 0;        
+        while (result.length < count) {
+            let found=undefined;
+            // find empty channel
+            do{
+                channel++;
+                found = occupiedChannels.find(Channel => Channel == channel);	                
+            }
+            while(found)
+            result.push(channel);
+        }
+        return result;
+    }
+
     private async getAllDevice(nvrId:string) {
         return await parseService.fetchData({
             type: Device,
@@ -135,8 +155,7 @@ export class DeviceService {
     async post(req:Request, res:Response){
         try{
             let {cam, selectedSubGroup, auth, nvrObjectId} = req.body;
-            coreService.auth = auth;
-            cam.className = "Device";
+            coreService.auth = auth;            
             
             let dev:Device;
             if(cam.objectId){
@@ -148,6 +167,12 @@ export class DeviceService {
             this.assignDeviceProperties(dev, cam);
 
             let groupList = await this.getGroupList();
+
+            if(dev.Channel==0){
+                dev.Channel = this.getNewChannelArray(dev.NvrId, 1)[0];
+                if(dev.Name == "New Camera 0")dev.Name = `New Camera ${dev.Channel}`;
+            }
+
             let result = await this.saveCamera(dev, nvrObjectId, groupList, selectedSubGroup);
             res.json(result);
         }
@@ -302,32 +327,18 @@ export class DeviceService {
         return tempGroup ? tempGroup.id : '';
     }
     
-    getNewChannelId(cameraConfigs:Device[], tempChannel?: Device[]): number {
-        const list = cameraConfigs.concat(tempChannel || []);
-        list.sort(function (a, b) {
-          return (a.Channel > b.Channel) ? 1 : ((b.Channel > a.Channel) ? -1 : 0);
-        });
-        let channel = 0;
-        let found:boolean = true;
-        let listArray = list.map(function(e){return e.Channel});
-        // find empty channel
-        while(found) {
-          found = listArray.indexOf(++channel) > -1;
-        }
-        return channel;
-        
-      }
+  
+  
     async cloneCam(cam:Device, quantity:number, nvrObjectId:string, groupList:Group[], account:string, password:string){
       try{
         this.busy = true;
-        let selectedSubGroup = this.findDeviceGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel });
-        let cameraConfigs = await this.getAllDevice(cam.NvrId);
+        let selectedSubGroup = this.findDeviceGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel });        
         let cloneResult = [];   
-        
+        let newChannels = await this.getNewChannelArray(cam.NvrId, quantity);
         for (let i = 0; i < quantity; i++) {
             coreService.addNotifyData({path: coreService.urls.URL_CLASS_NVR, objectId: nvrObjectId });
 
-            let obj = this.cloneNewDevice({ cam, newChannel: this.getNewChannelId(cameraConfigs, cloneResult) }, account, password);                           
+            let obj = this.cloneNewDevice({ cam, newChannel: newChannels[i] }, account, password);
             await obj.save().then(result => {            
                 cloneResult.push(result);
                 coreService.addNotifyData({path: coreService.urls.URL_CLASS_DEVICE, objectId: result.id});            

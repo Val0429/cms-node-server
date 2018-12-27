@@ -146,7 +146,7 @@ export class CameraService {
     // 加密
     currentCamera.Config.Authentication.Account = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Account);
     currentCamera.Config.Authentication.Password = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Password);
-    console.debug("save camera2");
+    
     // 將RTSPURI組合完整
     if (currentCamera.Config.Brand === 'Customization') {
       currentCamera.Config.Stream.forEach(str => {
@@ -154,11 +154,7 @@ export class CameraService {
       });
     }
     console.debug("this.currentCamera", currentCamera);
-    if(currentCamera.Channel==0){
-      currentCamera.Channel = await this.getNewChannelId(ipCameraNvr.Id);
-      if(currentCamera.Name == "New Camera 0")currentCamera.Name = `New Camera ${currentCamera.Channel}`;
-    }
-    
+
     let auth=this.auth;
 
     let body = { 
@@ -174,12 +170,12 @@ export class CameraService {
     return result.json();
 
   }
- async getNewChannelId(nvrId?:string):Promise<number>{
-    let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/channel/${nvrId}`, 
+ async getNewChannelId(count?:number, nvrId?:string):Promise<number[]>{
+    let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/channel/${count}/${nvrId}`, 
     new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
     let result = response.json();
-    console.debug("result");
-    return result.newChannelId;
+    console.debug("result", result);
+    return result;
  }
  async getDeviceCount(nvrId:string):Promise<number>{
   // REST server performance is too slow, will fix it later
