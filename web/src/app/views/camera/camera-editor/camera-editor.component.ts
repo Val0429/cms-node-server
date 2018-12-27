@@ -34,7 +34,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   groupOptions: Select2OptionData[]; // group群組化選項物件
   selectedSubGroup: string; // Camera當前選擇的group物件
   /** Driver=IPCamera的Nvr.Id */
-  ipCameraNvr: Nvr;
+  @Input() ipCameraNvr: Nvr;
   /** currentCamera的Tags陣列在編輯畫面上的string */
   tags: string;
   flag = {
@@ -44,24 +44,11 @@ export class CameraEditorComponent implements OnInit, OnChanges {
 
   constructor(
     private cameraService: CameraService,
-    private groupService: GroupService,
-    private parseService: ParseService,
-    private licenseService: LicenseService
+    private groupService: GroupService
   ) { }
 
   ngOnInit() {
     
-    this.noGroup = this.groupList.find(x=>x.Name=="Non Main Group");
-    this.groupOptions = this.groupService.getGroupOptions(this.groupList);
-
-    const getNvrId$ = Observable.from(this.parseService.getData({
-      type: Nvr,
-      filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
-    })).map(nvr => this.ipCameraNvr = nvr);
-
-     getNvrId$
-      .toPromise()
-      .catch(alert);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -70,6 +57,10 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       if (!this.currentCamera) {
         return;
       }
+      
+      this.noGroup = this.groupList.find(x=>x.Name=="Non Main Group");
+      this.groupOptions = this.groupService.getGroupOptions(this.groupList);
+
       this.tags = this.currentCamera.Tags ? this.currentCamera.Tags.join(',') : '';
       this.setDefaultBrand();
       
@@ -89,7 +80,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     let selectedSubGroup = this.groupService.findDeviceGroup(this.groupList, 
       { Nvr: this.currentCamera.NvrId, Channel: this.currentCamera.Channel });      
       //if no group found set to "Non Sub Group" group #for version 3.00.25 and above
-      this.selectedSubGroup = selectedSubGroup || this.noGroup.SubGroup[0];
+      this.selectedSubGroup = selectedSubGroup ? selectedSubGroup.id : this.noGroup.SubGroup[0];
   }
 
   /** 改變Brand的流程 */
@@ -150,16 +141,8 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   }
 
   /** 點擊save(新增/修改) */
-  clickSave() {
-    this.licenseService.getLicenseAvailableCount('00171')
-      .map(num => {
-        if (num < 0) {
-          alert('License available count is not enough, can not save data.');
-          return;
-        }
-        this.saveCamera();
-      })
-      .subscribe();
+  async clickSave() {    
+    await this.saveCamera();    
   }
 
   /** 儲存Camera */

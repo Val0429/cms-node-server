@@ -158,6 +158,7 @@ export class DeviceService {
             coreService.auth = auth;            
             
             let dev:Device;
+
             if(cam.objectId){
                 dev = await parseService.getDataById({type:Device, objectId:cam.objectId});
             }else{
@@ -167,9 +168,10 @@ export class DeviceService {
             this.assignDeviceProperties(dev, cam);
 
             let groupList = await this.getGroupList();
-
-            if(dev.Channel==0){
-                dev.Channel = this.getNewChannelArray(dev.NvrId, 1)[0];
+            
+            if(dev.Channel==0){                
+                let channels = await this.getNewChannelArray(dev.NvrId, 1);                               
+                dev.Channel = channels[0];                
                 if(dev.Name == "New Camera 0")dev.Name = `New Camera ${dev.Channel}`;
             }
 

@@ -221,7 +221,7 @@ export class CameraComponent implements OnInit {
     const newObj = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel:0, searchCamera: undefined });
     
     if (confirm('Create new device manually?')) {
-      this.currentEditCamera = newObj;
+      this.currentEditCamera = newObj;      
     }
       
   }

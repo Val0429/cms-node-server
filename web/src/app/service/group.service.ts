@@ -29,10 +29,10 @@ export class GroupService {
     }
 
     /** 頁面: Camera, 功能: 找出Camera當前Group objectId */
-    findDeviceGroup(groupConfigs: Group[], channelData: IGroupChannel): string {
+    findDeviceGroup(groupConfigs: Group[], channelData: IGroupChannel): Group {
         const tempGroup = groupConfigs.find(x => x.Level === '1' && x.Channel
             && x.Channel.some(ch => ch.Nvr === channelData.Nvr && ch.Channel === channelData.Channel));
-        return tempGroup.id;
+        return tempGroup;
     }
 
     /** 頁面: NVR, 功能: 改變NVR group設定 */

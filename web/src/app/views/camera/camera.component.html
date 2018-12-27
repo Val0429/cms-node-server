@@ -65,7 +65,7 @@
     </section>
   </div>
   <div class="col-12">
-    <app-camera-editor *ngIf="currentEditCamera" [groupList]="groupList" [currentCamera]="currentEditCamera" (reloadDataEvent)="reloadData()"></app-camera-editor>
+    <app-camera-editor *ngIf="currentEditCamera" [ipCameraNvr]="ipCameraNvr" [groupList]="groupList" [currentCamera]="currentEditCamera" (reloadDataEvent)="reloadData()"></app-camera-editor>
   </div>
 </div>
 <div bsModal #searchWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
