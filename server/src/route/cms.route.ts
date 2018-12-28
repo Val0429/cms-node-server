@@ -44,6 +44,9 @@ export const CmsRoute: IRouteMap = {
         .post('/device', async (req, res) => {            
             await deviceService.post(req, res);
         })
+        .delete('/nvr', async (req, res) => {            
+            await deviceService.delNvr(req, res);
+        })
         .get('/SetDBSyncDisable', (req, res) => {
             syncHelper.setAutoSyncDefault();
             res.send(true);

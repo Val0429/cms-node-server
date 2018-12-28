@@ -4,19 +4,25 @@ import { ParseService } from './parse.service';
 import { GroupService } from './group.service';
 import { CryptoService } from './crypto.service';
 import { Observable } from 'rxjs';
-import { Nvr, RecordSchedule, EventHandler, Device, Group, ServerInfo } from 'app/model/core';
+import { Nvr, Group, ServerInfo } from 'app/model/core';
+import { RequestOptions, Http } from '@angular/http';
+import { UserService } from './user.service';
 
 
 
   
 @Injectable()
 export class NvrService {
-  
+  get auth():string{
+    return btoa(`${this.userService.storage['username']}:${this.userService.storage['password']}`);       
+  }
     constructor(
         private coreService: CoreService, 
         private parseService:ParseService, 
         private groupService:GroupService,
-        private cryptoService:CryptoService
+        private cryptoService:CryptoService,
+        private httpService:Http,
+        private userService:UserService
         ) { }
         saveNvr(editNvr:Nvr, currentEditModel:INvrEditModel):Observable<void> {
     
@@ -34,9 +40,9 @@ export class NvrService {
                 parseResult: [result], path: this.coreService.urls.URL_CLASS_NVR
               })))
             .switchMap(() => {
-              return currentEditModel.Group ? 
-                this.groupService.setNvrGroup(editNvr.Id, currentEditModel.Group):
-                this.groupService.removeNvr(editNvr.Id) 
+              //return currentEditModel.Group ? 
+                return this.groupService.setNvrGroup(editNvr.Id, currentEditModel.Group)//:
+                //this.groupService.removeNvr(editNvr.Id) 
             });
         }
          /** 依照Manufacture決定Driver value */
@@ -139,54 +145,11 @@ setEditModel(editNvr:Nvr, groupList:Group[], iSapP2PServerList:ServerInfo[]) {
     });
     return get$;
   }
-        async deleteNvr(nvr:Nvr):Promise<void> {
-          console.debug("delete nvr", nvr);
-    
-          const deleteSchedule$ = Observable.fromPromise(this.parseService.fetchData({
-            type: RecordSchedule,
-            filter: query => query.equalTo('NvrId', nvr.Id)
-          }))
-            .switchMap(data => Observable.fromPromise(Parse.Object.destroyAll(data)))
-            .map(result => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_RECORDSCHEDULE, dataArr: result }));
-    
-          const deleteEventHandler$ = Observable.fromPromise(this.parseService.fetchData({
-            type: EventHandler,
-            filter: query => query.equalTo('NvrId', nvr.Id)
-          }))
-            .switchMap(data => Observable.fromPromise(Parse.Object.destroyAll(data)))
-            .map(result => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_EVENTHANDLER, dataArr: result }));
-    
-            
-           const deleteDvices = this.parseService.fetchData({
-              type: Device,
-              filter: query => query
-                .equalTo('NvrId', nvr.Id)
-                .ascending('Channel')
-                .limit(30000)
-            }).then(devices => {
-              console.debug("selectedDevices", devices);
-              Observable.fromPromise(Parse.Object.destroyAll(devices)).map(result => {
-                console.debug("delete result", result);
-                this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_DEVICE, dataArr: result })
-              }).toPromise();
-            });
-              
-    
-          const deleteNvr$ = Observable.fromPromise(nvr.destroy())
-            .map(result => this.coreService.notifyWithParseResult({
-              parseResult: [result], path: this.coreService.urls.URL_CLASS_NVR
-            }));
-    
-          const deleteGroupNvr$ = this.groupService.removeNvr(nvr.Id);
-    
-          return deleteSchedule$
-            .switchMap(() => deleteEventHandler$)
-            .switchMap(() => deleteDvices)    
-            .switchMap(() => deleteNvr$)
-            .switchMap(() => deleteGroupNvr$)        
-            .toPromise()
-            
-      }
+  async deleteNvr(nvrIds:string[]):Promise<any> {
+    let result = await this.httpService.delete(this.parseService.parseServerUrl + "/cms/nvr", 
+    new RequestOptions({ headers:this.coreService.parseHeaders, body:{ objectIds: nvrIds, auth:this.auth}})).toPromise();
+    return result.json();        
+  }
     
 }
 

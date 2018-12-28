@@ -24,8 +24,8 @@ export class NvrSearchComponent implements OnInit {
   
   vendorOptions = NvrManufacturer.SearchList;
   jsonHelper = JsonHelper.instance;
-  flag = {
-    load: false
+  @Input() flag :{
+    busy: boolean
   };
   checkedAll: boolean;
   anyChecked: boolean;
@@ -48,7 +48,7 @@ export class NvrSearchComponent implements OnInit {
   async saveAll(){    
     if (!confirm("Add selected NVR(s)?")) return;
     try{
-      this.flag.load=true;
+      this.flag.busy=true;
         
       let nvrs = this.searchList.filter(x=>x.checked===true);
       console.debug("saved nvrs", nvrs);
@@ -68,7 +68,7 @@ export class NvrSearchComponent implements OnInit {
       console.error(err);
       alert(err);
     }finally{      
-      this.flag.load=false;      
+      this.flag.busy=false;      
     }
   }
 
@@ -78,7 +78,7 @@ export class NvrSearchComponent implements OnInit {
       return;
     }
     try{
-    this.flag.load = true;
+    this.flag.busy = true;
     this.searchList = [];
       for(let vendor of this.selectedVendors){
     const search$ = this.coreService.proxyMediaServer({
@@ -102,7 +102,7 @@ export class NvrSearchComponent implements OnInit {
     }catch(error){
       alert(error);
     }
-      finally{ this.flag.load = false;
+      finally{ this.flag.busy = false;
       }
   }
 

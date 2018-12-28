@@ -5,6 +5,7 @@ import { Nvr, Device, Group, ServerInfo } from 'app/model/core';
 
 import { NvrService } from 'app/service/nvr.service';
 import { NvrSearchComponent } from './nvr-search/nvr-search.component';
+import { CameraService } from 'app/service/camera.service';
 
 
 @Component({
@@ -15,78 +16,73 @@ import { NvrSearchComponent } from './nvr-search/nvr-search.component';
 export class NvrComponent implements OnInit {
   
   @ViewChild('searchComponent') searchComponent:NvrSearchComponent;
-  nvrList: {device:Nvr,checked:boolean}[];
-  deviceList: Device[];
+  nvrList: NvrList[];
+  
   licenseInfo: any;
   currentEditNVR: Nvr;
   checkedAll :boolean = false;
   anyChecked:boolean = false;
   groupList: Group[];
   iSapP2PServerList: ServerInfo[];
-  
+  flag:{
+    busy:boolean;
+  }
   constructor(
     private parseService: ParseService,
-    private nvrService:NvrService    
-    ) { }
+    private nvrService:NvrService,
+    private cameraService:CameraService    
+    ) { 
+      this.flag = {busy: false};   
+    }
 
-  ngOnInit() {
-    const getGroup$ = Observable.fromPromise(this.parseService.fetchData({
+  async ngOnInit() {
+    const getGroup$ = this.parseService.fetchData({
       type: Group,
       filter: query => query.limit(30000)
     }).then(groups => {
-      this.groupList = groups;            
-      this.reloadData();  
-    }));
-    const getServerInfo$ = Observable.fromPromise(this.parseService.fetchData({
+      this.groupList = groups;       
+    });
+    const getServerInfo$ = this.parseService.fetchData({
       type: ServerInfo,
       filter: query => query.matches('Type', new RegExp('SmartMedia'), 'i')
     }).then(serverInfos => {
       this.iSapP2PServerList = serverInfos;
       console.debug("iSapP2PServerList",this.iSapP2PServerList);
-    }));
-    getGroup$
-      .switchMap(()=>getServerInfo$)
-      .toPromise();
+    });
+
+    await Observable.forkJoin([getGroup$, getServerInfo$, this.reloadData()]).toPromise();
+    
   }
 
-  reloadData() {
+  async reloadData() {
     
-    this.getNvrs()
-      .switchMap(() => this.getDevices())      
-      .map(()=> {
+    await this.getNvrs()      
+      .then(async ()=> {
         this.checkSelected();
-        this.currentEditNVR = undefined;                
-      })
-      .subscribe();
+        this.currentEditNVR = undefined;
+        let promises=[];
+        this.nvrList.forEach(nvr=>{
+          promises.push(this.cameraService.getDeviceCount(nvr.device.Id).then(num=>nvr.quantity = num));
+        });          
+        await Observable.forkJoin(promises).toPromise();
+      });
   }
 
   /** 取得所有Nvr */
   getNvrs() {
-    const get$ = Observable.fromPromise(this.parseService.fetchData({
-      type: Nvr,
-      filter: query => query.limit(30000)
+    const get$ = this.parseService.fetchData({
+      type: Nvr,      
+      filter: query => query.limit(30000).ascending("Id")
     }).then(nvrs => {
       this.nvrList = [];
-
-      for (let nvr of nvrs) this.nvrList.push({device:nvr,checked:false});
-      
-      this.nvrList.sort(function (a, b) {
-        return (Number(a.device.Id) > Number(b.device.Id)) ? 1 : ((Number(b.device.Id) > Number(a.device.Id)) ? -1 : 0);
+      nvrs.forEach(nvr=>{
+        this.nvrList.push({device:nvr, checked:false, quantity:0});
       });
-    }));
+    });
     return get$;
   }
 
-  /** 取得所有Devices */
-  getDevices() {
-    const get$ = Observable.fromPromise(this.parseService.fetchData({
-      type: Device,
-      filter: query => query.ascending('Channel').limit(30000)
-    }).then(devices => {
-      this.deviceList = devices;
-    }));
-    return get$;
-  }
+  
   checkSelected(){
     let checked = this.nvrList.filter(x=>x.device.Id !== "1" && x.device.Id !== "2").map(function(e){return e.checked});
     //console.debug("checked",checked);
@@ -109,30 +105,19 @@ export class NvrComponent implements OnInit {
 
   async deleteAll(){
     if (!confirm('Are you sure to delete these NVR(s)?')) return;
-    try{    
-      for(let nvr of this.nvrList.filter(x=> x.checked === true && x.device.Id !=="1" && x.device.Id !== "2")){          
-          await this.nvrService.deleteNvr(nvr.device);
-      }
+    try{   
+      this.flag.busy=true;       
+      await this.nvrService.deleteNvr(this.nvrList.filter(x=> x.checked === true && x.device.Id !=="1" && x.device.Id !== "2").map(x=>x.device.id));      
       alert('Delete Success'); 
-      this.reloadData();
+      await this.reloadData();
     }catch(err) {
       console.error(err);
       alert(err);
+    }finally{
+      this.flag.busy=false;
     }
   }
-  // 取得指定分類的License管制目標當前數量
-  // readLicenseInfo() {
-  //   const getDeviceCount$ = this.licenseService.getCurrentUsageCountByLicense('00166')
-  //     .map(num => this.licenseCount.device = num);
-  //   const getThirdNvrCount$ = this.licenseService.getCurrentUsageCountByLicense('00167')
-  //     .map(num => this.licenseCount.thirdNvr = num);
-  //   return getDeviceCount$.switchMap(() => getThirdNvrCount$);
-  // }
-
-  getDeviceQuantity(nvr: Nvr) {
-    return this.deviceList ? this.deviceList.filter(x => x.NvrId === nvr.Id).length : 0;
-  }
-
+  
   clickEditNVR(data: Nvr) {
     const list = ['ipcamera'];
     if (list.indexOf(data.Driver.toLowerCase()) >= 0) {
@@ -153,3 +138,4 @@ export class NvrComponent implements OnInit {
 
   
 }
+export interface NvrList{device:Nvr,checked:boolean, quantity:number}

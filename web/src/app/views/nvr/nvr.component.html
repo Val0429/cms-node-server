@@ -35,7 +35,7 @@
         <table class="table table-hover table-lg mt-lg mb-0">
           <thead>
             <tr>
-              <th style="width:20px"><input type="checkbox" id="selectAll" (click)="selectAll($event.target.checked)"  [checked]="checkedAll"/></th>
+              <th style="width:20px"><input type="checkbox" id="selectAll" (click)="selectAll($event.target.checked)"  [checked]="checkedAll" [disabled]="flag.busy"/></th>
               <th>ID</th>
               <th>Name</th>
               <th>Domain</th>
@@ -47,14 +47,14 @@
           </thead>
           <tbody>
             <tr *ngFor="let nvr of nvrList" (click)="clickEditNVR(nvr.device)" [class.active]="nvr.device == currentEditNVR">
-              <td><input *ngIf="nvr.device.Id!=='1' && nvr.device.Id!=='2'" type="checkbox" (click)="selectNvr(nvr, $event.target.checked)" [checked]="nvr.checked"></td>
+              <td><input *ngIf="nvr.device.Id!=='1' && nvr.device.Id!=='2'" type="checkbox" (click)="selectNvr(nvr, $event.target.checked)" [checked]="nvr.checked" [disabled]="flag.busy"></td>
               <td>{{nvr.device.Id}}</td>
               <td>{{nvr.device.Name}}</td>
               <td>{{nvr.device.Domain}}</td>
               <td>{{nvr.device.IsListenEvent}}</td>
               <td>{{nvr.device.IsPatrolInclude}}</td>
               <td>{{nvr.device.Port}}</td>
-              <td>{{getDeviceQuantity(nvr.device)}}</td>
+              <td>{{nvr.quantity}}</td>
             </tr>
           </tbody>
         </table>
@@ -62,7 +62,7 @@
     </section>
   </div>
   <div class="col-12">
-    <app-nvr-editor *ngIf="currentEditNVR" [iSapP2PServerList]="iSapP2PServerList" [groupList]="groupList" #editor [editNvr]="currentEditNVR" (reloadDataEvent)="reloadData()"></app-nvr-editor>
+    <app-nvr-editor *ngIf="currentEditNVR" [flag]="flag" [iSapP2PServerList]="iSapP2PServerList" [groupList]="groupList" #editor [editNvr]="currentEditNVR" (reloadDataEvent)="reloadData()"></app-nvr-editor>
   </div>
 </div>
 
@@ -92,10 +92,10 @@
         <h4 class="modal-title text-center fw-bold">Search NVR</h4>
       </div>
       <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
-        <app-nvr-search [groupList]="groupList" #searchComponent (reloadDataEvent)="reloadData()" (closeModal)="modalWindow.hide();"></app-nvr-search>
+        <app-nvr-search [flag]="flag" [groupList]="groupList" #searchComponent (reloadDataEvent)="reloadData()" (closeModal)="modalWindow.hide();"></app-nvr-search>
       </div>
       <div class="modal-footer">
-          <button class="btn btn-gray" type="button" (click)="searchComponent.saveAll()" [disabled]="searchComponent && (!searchComponent.anyChecked || searchComponent.flag.load===true)">
+          <button class="btn btn-gray" type="button" (click)="searchComponent.saveAll()" [disabled]="searchComponent && (!searchComponent.anyChecked || searchComponent.flag.busy===true)">
               Save 
             </button>
         <button type="button" class="btn btn-gray" (click)="modalWindow.hide();">Close</button>

@@ -126,13 +126,13 @@
       <div class="form-group row">
         <label class="col-md-4  col-form-label text-md-right"></label>
         <div class="col-md-8">
-          <button type="button" class="btn btn-default" (click)="clickGetDeviceList()" *ngIf="currentEditModel.Manufacture !== 'SmartMedia'" [disabled]="flag.load">
-            <i *ngIf="flag.load" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+          <button type="button" class="btn btn-default" (click)="clickGetDeviceList()" *ngIf="currentEditModel.Manufacture !== 'SmartMedia'" [disabled]="flag.busy">
+            <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
             Get Device List
           </button>
           <button *ngIf="currentEditModel.Manufacture === 'iSapP2P'" type="button" class="btn btn-default" (click)="clickGetAuthFile()"
-            [disabled]="!currentEditModel.ServerId || flag.load">
-            <i *ngIf="flag.load" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+            [disabled]="!currentEditModel.ServerId || flag.busy">
+            <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
             Get Auth File
           </button>
         </div>
@@ -182,12 +182,12 @@
     <div class="form-group row">
       <label class="col-md-4  col-form-label text-md-right"></label>
       <div class="col-md-8">
-        <button type="button" class="btn btn-danger" (click)="clickDelete()" *ngIf="editNvr.id && editNvr.Id !== '2'" [disabled]="flag.delete || flag.save">
-          <i *ngIf="flag.delete" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+        <button type="button" class="btn btn-danger" (click)="clickDelete()" *ngIf="editNvr.id && editNvr.Id !== '2'" [disabled]="flag.busy">
+          <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
           Delete
         </button>
-        <button type="button" class="btn btn-primary" (click)="clickSave()" [disabled]="flag.delete || flag.save">
-          <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+        <button type="button" class="btn btn-primary" (click)="clickSave()" [disabled]="flag.busy">
+          <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
           Save
         </button>
       </div>

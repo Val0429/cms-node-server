@@ -75,54 +75,6 @@ export class GroupService {
             .switchMap(saveList => save$(saveList));
     }
 
-    /** 頁面: NVR, 功能: 移除Group內所設定的Nvr資料 */
-    removeNvr(nvrId: string) {
-        const deleteNvr$ = Observable.fromPromise(this.parseService.getData({
-            type: Group,
-            filter: query => query.contains('Nvr', nvrId)
-        })).switchMap(group => {
-            if (!group) {
-                return Observable.of(null);
-            }
-            const index = group.Nvr.indexOf(nvrId);
-            group.Nvr.splice(index, 1);
-            return Observable.fromPromise(group.save());
-        }).do(group => {
-            if (group) {
-                this.coreService.notifyWithParseResult({ parseResult: [group], path: this.coreService.urls.URL_CLASS_GROUP });
-            }
-        });
-
-        return deleteNvr$;
-    }
-
-    /** 頁面: Camera, 功能: 改變Camera group設定 */
-    setChannelGroup(groupConfigs: Group[], newData: IGroupChannel, newGroupId: string) {
-        const saveList = [];
-        
-        
-        groupConfigs.forEach(group => {
-            if (group.Channel === undefined) {
-                group.Channel = [];
-            }
-            const exists = group.Channel.find(x => x.Nvr === newData.Nvr && x.Channel === newData.Channel);
-            // contains Channel but not new group id => remove it
-            if (exists && group.id !== newGroupId) {
-                const index = group.Channel.indexOf(exists);
-                group.Channel.splice(index, 1);
-                saveList.push(group);
-            }
-            // is new group id but not contains Channel => insert it
-            if (newGroupId && group.id === newGroupId && !exists) {
-                const insertIndex = InsertHelper.findInsertIndexForGroupChannel(group.Channel, newData);
-                group.Channel.splice(insertIndex, 0, newData);
-                saveList.push(group);
-            }
-        });
-        
-
-        return Observable.fromPromise(Parse.Object.saveAll(saveList)
-            .then(groups => this.coreService.notifyWithParseResult({ parseResult: groups, path: this.coreService.urls.URL_CLASS_GROUP })));
-    }
+    
 }
 

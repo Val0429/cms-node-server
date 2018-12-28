@@ -234,8 +234,7 @@ export class DeviceService {
                 {path: coreService.urls.URL_CLASS_DEVICE, objectId: result.id}]);
         });
         await Promise.all([saveCam,                        
-            this.updateRecordScheduleByDevice(cam)]
-            );
+            this.updateRecordScheduleByDevice(cam)]);
         return cam;
       }
 
@@ -266,8 +265,10 @@ export class DeviceService {
     }
 
     async getGroupList():Promise<Group[]>{
+        
         return await parseService.fetchData({
-            type: Group
+            type: Group,
+            filter:query=>query.limit(Number.MAX_SAFE_INTEGER)
           });
     }
     async delete(req:Request, res:Response){
@@ -354,16 +355,14 @@ export class DeviceService {
         let promises=[];        
         let newChannels = await this.getNewChannelArray(cam.NvrId, quantity);
         for (let i = 0; i < quantity; i++) {
-
-            let notifications:NotificationBody[]=[];
             let obj = this.cloneNewDevice({ cam, newChannel: newChannels[i] }, account, password);
-            const saveCam = obj.save().then(result => {            
+            const saveCam = obj.save().then(async result => {         
+                let notifications=[];   
                 notifications.push({path: coreService.urls.URL_CLASS_NVR, objectId: nvrObjectId });
-                notifications.push({path: coreService.urls.URL_CLASS_DEVICE, objectId: result.id});                
-                promises.push(coreService.notify(notifications));
+                notifications.push({path: coreService.urls.URL_CLASS_DEVICE, objectId: result.id});                                
+                await coreService.notify(notifications);
             }); 
             const setGroup = this.setChannelGroup(groupList, { Nvr: obj.NvrId, Channel: obj.Channel }, selectedSubGroup.id);
-            
             promises.push(saveCam);
             promises.push(setGroup);
         }       
@@ -386,9 +385,8 @@ export class DeviceService {
             let promises=[]
             console.log("delete start", new Date());
             for (let objectId of objectIds) {                
-                let delCam = parseService.getDataById({ type: Device, objectId }).then(cam=>{
-                    promises.push(this.deleteCam(cam, nvrObjectId, groupList));
-                    promises.push(this.deleteCamRelatedData(cam));                
+                let delCam = parseService.getDataById({ type: Device, objectId }).then(async cam=>{
+                    await Promise.all([this.deleteCam(cam, nvrObjectId, groupList, true), this.deleteCamRelatedData(cam)]);
                 });
                 promises.push(delCam);
             }
@@ -405,12 +403,14 @@ export class DeviceService {
           }
         
     }
-    async deleteCam(cam:Device, nvrObjectId:string, groupList: Group[]){   
-        let notifications:NotificationBody[]=[];
-        notifications.push({
-            path: coreService.urls.URL_CLASS_NVR,
-            objectId: nvrObjectId
-        });
+    async deleteCam(cam:Device, nvrObjectId:string, groupList: Group[], notifyNvr:boolean){   
+        let notifications=[];
+        if(notifyNvr === true){
+            notifications.push({
+                path: coreService.urls.URL_CLASS_NVR,
+                objectId: nvrObjectId
+            });
+        }
         notifications.push({
             path: coreService.urls.URL_CLASS_DEVICE,
             objectId:cam.id
@@ -571,6 +571,74 @@ export class DeviceService {
         });
 
         return usage;
+    }
+
+    async delNvr(req:Request, res:Response){
+        try{            
+            this.busy = true;
+            let {objectIds, auth}=req.body;
+            coreService.auth = auth;  
+            let groupList = await this.getGroupList();
+            let promises=[];
+            console.log("delete start", new Date());
+            for(let id of objectIds){
+               promises.push(parseService.getDataById({type:Nvr, objectId:id}).then(async nvr =>{
+                    await Promise.all([this.deleteNvr(nvr), this.removeNvrGroup(nvr.Id, groupList)]);
+                }));
+            }
+            //we put save group at the last process to prevent overwritten by concurrent processes            
+            await Promise.all(promises);
+            await this.saveGroupList(groupList);
+            console.log("delete end", new Date());
+            res.json({message:"success"});
+        }
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
+        finally{
+            this.busy = false;            
+        }
+          
+    }
+
+    async deleteNvr(nvr:Nvr) {
+        
+        const deleteDevices$ = parseService.fetchData({
+        type: Device,
+        filter: query => query
+            .equalTo('NvrId', nvr.Id)
+            .ascending('Channel')
+            .limit(Number.MAX_SAFE_INTEGER)
+        }).then(async devices => {
+            let promises=[];
+            devices.forEach(cam=>{
+                promises.push(this.deleteCam(cam, nvr.id, [], false));
+                promises.push(this.deleteCamRelatedData(cam));
+            });
+            await Promise.all(promises);
+        });
+
+        const deleteNvr$ = nvr.destroy().then(async result=>{
+           await coreService.notify([{path:coreService.urls.URL_CLASS_NVR, objectId:result.id}]);
+        });
+          
+        await Promise.all([deleteNvr$, deleteDevices$]);
+          
+    }
+    async removeNvrGroup(nvrId: string, groupList:Group[]) {
+        let promises = [];
+        for (let group of groupList.filter(x=>x.Nvr && x.Nvr.length>0)){            
+            const index = group.Nvr.indexOf(nvrId);
+            if(index<0)continue;
+            group.Nvr.splice(index, 1);            
+            promises.push(coreService.notify([{objectId:group.id, path:coreService.urls.URL_CLASS_GROUP}]));
+        }
+        return await Promise.all(promises);
     }
 }
 

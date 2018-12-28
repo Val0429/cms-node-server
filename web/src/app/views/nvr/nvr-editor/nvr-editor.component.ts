@@ -42,10 +42,8 @@ export class NvrEditorComponent implements OnInit, OnChanges {
   devicesStatusString = '';
 
   @Input() iSapP2PServerList: ServerInfo[];
-  flag = {
-    save: false,
-    delete: false,
-    load: false
+  @Input() flag :{
+    busy: boolean
   };
 
   constructor(
@@ -77,7 +75,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     }
     this.p=1;
     this.currentEditModel = this.nvrService.setEditModel(this.editNvr, this.groupList, this.iSapP2PServerList);
-
+    
     this.parseService.fetchData({
       type: Device,
       filter: query => query
@@ -143,7 +141,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.flag.save = true;
+    this.flag.busy = true;
 
     this.nvrService.saveNvr(this.editNvr, this.currentEditModel)
       .switchMap(() => this.saveDevices())
@@ -154,22 +152,22 @@ export class NvrEditorComponent implements OnInit, OnChanges {
       })
       .toPromise()
       .catch(alert)
-      .then(() => this.flag.save = false);
+      .then(() => this.flag.busy = false);
   }
 
   async clickDelete() {
     if (!confirm('Are you sure to delete this NVR?')) return;
 
     try{
-      this.flag.delete = true;
-      await this.nvrService.deleteNvr(this.editNvr);
+      this.flag.busy = true;
+      await this.nvrService.deleteNvr([this.editNvr.id]);
       alert("Delete Success");
       this.reloadAfterSave();
     } catch(err){
       console.error(err);
       alert(err);
     }finally{
-      this.flag.delete = false;
+      this.flag.busy = false;
     }
   }
 
@@ -259,7 +257,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
       this.tempDevices = [];
     }
 
-    this.flag.load = true;
+    this.flag.busy = true;
 
     const get$ = this.coreService.proxyMediaServer({
       method: 'GET',
@@ -275,7 +273,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     get$
       .toPromise()
       .catch(alert)
-      .then(() => this.flag.load = false);
+      .then(() => this.flag.busy = false);
   }
 
   /** 將media server來的tempDevice轉為CMS儲存格式 */
@@ -378,7 +376,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
 
   /** 先儲存Nvr再取得PPAuth檔案 */
   clickGetAuthFile() {
-    this.flag.load = true;
+    this.flag.busy = true;
     this.nvrService.saveNvr(this.editNvr, this.currentEditModel)
       .map(() => {
         this.reloadEditData();
@@ -389,7 +387,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
       })
       .toPromise()
       .catch(alert)
-      .then(() => this.flag.load = false);
+      .then(() => this.flag.busy = false);
   }
 }
 
