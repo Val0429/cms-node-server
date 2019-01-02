@@ -583,7 +583,8 @@ export class DeviceService {
             console.log("delete start", new Date());
             for(let id of objectIds){
                promises.push(parseService.getDataById({type:Nvr, objectId:id}).then(async nvr =>{
-                    await Promise.all([this.deleteNvr(nvr), this.removeNvrGroup(nvr.Id, groupList)]);
+                    await this.removeNvrGroup(nvr.Id, groupList);
+                    await this.deleteNvr(nvr);                    
                 }));
             }
             //we put save group at the last process to prevent overwritten by concurrent processes            
@@ -608,26 +609,27 @@ export class DeviceService {
 
     async deleteNvr(nvr:Nvr) {
         
-        const deleteDevices$ = parseService.fetchData({
+        const delDevices = parseService.fetchData({
         type: Device,
         filter: query => query
             .equalTo('NvrId', nvr.Id)
             .ascending('Channel')
             .limit(Number.MAX_SAFE_INTEGER)
-        }).then(async devices => {
+        }).then(async devices => {            
             let promises=[];
             devices.forEach(cam=>{
                 promises.push(this.deleteCam(cam, nvr.id, [], false));
                 promises.push(this.deleteCamRelatedData(cam));
-            });
-            await Promise.all(promises);
+            });            
+            await Promise.all(promises);            
         });
 
         const deleteNvr$ = nvr.destroy().then(async result=>{
-           await coreService.notify([{path:coreService.urls.URL_CLASS_NVR, objectId:result.id}]);
+           await coreService.notify([{path:coreService.urls.URL_CLASS_NVR, objectId:result.id}]);            
+           await delDevices;           
         });
           
-        await Promise.all([deleteNvr$, deleteDevices$]);
+        await deleteNvr$;
           
     }
     async removeNvrGroup(nvrId: string, groupList:Group[]) {
@@ -636,7 +638,7 @@ export class DeviceService {
             const index = group.Nvr.indexOf(nvrId);
             if(index<0)continue;
             group.Nvr.splice(index, 1);            
-            promises.push(coreService.notify([{objectId:group.id, path:coreService.urls.URL_CLASS_GROUP}]));
+            promises.push(coreService.notify([{path:coreService.urls.URL_CLASS_GROUP, objectId:group.id}]));
         }
         return await Promise.all(promises);
     }
