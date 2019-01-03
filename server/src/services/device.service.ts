@@ -4,6 +4,7 @@ import { Nvr, Device, Group, EventHandler, RecordSchedule } from '../domain';
 import { ParseHelper } from '../helpers';
 import { CoreService, NotificationBody } from './core.service';
 import { IGroupChannel } from 'lib/domain/core';
+import { save } from 'nconf';
 
 const parseService = ParseHelper.instance;
 const coreService = CoreService.instance;
@@ -16,8 +17,30 @@ export class DeviceService {
 
     private static _instance: DeviceService;
 
-    constructor() {                
-        
+    constructor() {        
+        this.noGroupCheck();
+    }
+    //for version 3.00.25 onward    
+    async noGroupCheck(){
+        //check if "No Group" is exist
+        let groups = await parseService.fetchData({type:Group, 
+            filter: query=> query.equalTo("Name", "Non Main Group").limit(1)})
+        if(!groups || groups.length == 0){
+
+            console.log("create Non Sub Group");
+            let nonSubGroup = new Group();
+            nonSubGroup.Name="Non Sub Group";
+            nonSubGroup.Level = "1";
+            await nonSubGroup.save();
+
+            console.log("create Non Main Group");
+            let nonMainGroup = new Group();
+            nonMainGroup.Name="Non Main Group";
+            nonMainGroup.Level = "0";                
+            nonMainGroup.SubGroup=[nonSubGroup.id];
+            await nonMainGroup.save();
+            
+        }
     }
 
 //#region RESTAPI
