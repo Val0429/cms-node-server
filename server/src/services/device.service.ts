@@ -23,12 +23,9 @@ export class DeviceService {
     //for version 3.00.25 onward    
     async noGroupCheck(){
         //check if "No Group" is exist
-        let groups = await parseService.fetchData({type:Group, 
-            filter: query=> query.equalTo("Name", "Non Main Group").limit(1)})
-        if(!groups || groups.length == 0){
+        let nonMainGroup = await this.getNonMainGroup();
+        if(!nonMainGroup){
             
-            let groupList:Group[];
-            let defaultNvr:Nvr;
             console.log("create Non Sub Group");
             let nonSubGroup = new Group();
             nonSubGroup.Name="Non Sub Group";
@@ -44,39 +41,53 @@ export class DeviceService {
 
             await nonMainGroup.save();
             
-            await Promise.all([this.getGroupList().then(res=>groupList=res),this.getDefaultNvr().then(res=>defaultNvr=res)]);            
-            
-            let cams:Device[]; 
-            let nvrs:Nvr[]; 
-            
-            await Promise.all([
-                parseService.fetchData({type:Nvr, filter:query=>query.limit(Number.MAX_SAFE_INTEGER)}).then(res=>nvrs=res),
-                this.getAllDevice(defaultNvr.Id).then(res=>cams=res)
-            ]);
-
-            let promises=[];
-            //set non group cams
-            for(let cam of cams){
-                let selectedSubGroup = this.findDeviceGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel });                
-                if(selectedSubGroup)continue;                                    
-                //orphan cam
-                promises.push(this.setChannelGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, nonSubGroup.id));                
-            }
-
-            for (let nvr of nvrs.filter(x=>x.id!=defaultNvr.id)){
-                let group = groupList.find(data => data.Nvr && data.Nvr.indexOf(nvr.Id) >= 0);
-                if(group)continue;
-                //orphan nvr
-                promises.push(this.setNvrGroup(nvr.Id, nonSubGroup.id, groupList));
-            }
-            await Promise.all(promises);
-            await this.saveGroupList(groupList);
+            await this.updateOrphanDevice(nonMainGroup);
 
         }
     }
+    private async updateOrphanDevice(nonMainGroup:Group){
+        let groupList:Group[];
+        let defaultNvr:Nvr;
+        await Promise.all([this.getGroupList().then(res=>groupList=res),this.getDefaultNvr().then(res=>defaultNvr=res)]);            
+        
+        let cams:Device[]; 
+        let nvrs:Nvr[]; 
+        
+        await Promise.all([
+            parseService.fetchData({type:Nvr, filter:query=>query.limit(Number.MAX_SAFE_INTEGER)}).then(res=>nvrs=res),
+            this.getAllDevice(defaultNvr.Id).then(res=>cams=res)
+        ]);
+
+        let promises=[];
+        //set non group cams
+        for(let cam of cams){
+            let group = this.findDeviceGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel });                
+            if(group)continue;                                    
+            //orphan cam
+            promises.push(this.setChannelGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, nonMainGroup.SubGroup[0]));                
+        }
+
+        for (let nvr of nvrs.filter(x=>x.id!=defaultNvr.id)){
+            let group = groupList.find(data => data.Nvr && data.Nvr.indexOf(nvr.Id) >= 0);
+            if(group)continue;
+            //orphan nvr
+            promises.push(this.setNvrGroup(nvr.Id, nonMainGroup.SubGroup[0], groupList));
+        }
+        await Promise.all(promises);
+        await this.saveGroupList(groupList);
+    }
+    private async getNonMainGroup() {
+        let groups = await parseService.fetchData({
+        type: Group,
+            filter: query => query.equalTo("Name", "Non Main Group").limit(1)
+        });
+        return groups && groups.length >0 ? groups[0]:undefined;
+    }
 
 //#region RESTAPI
-
+    async updateGroup(req:Request, res:Response){
+        
+    }
     async cloneDevice(req:Request, res:Response){
         try{
             
