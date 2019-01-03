@@ -86,7 +86,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     const fetchGroup$ = Observable.fromPromise(this.parseService.fetchData({
       type: Group,
       filter: query => query
-      .descending("createdAt")
+      .ascending("Name")
       .limit(30000)
     }));
     const fetchNvr$ = Observable.fromPromise(this.parseService.fetchData({
@@ -101,6 +101,10 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
         nvrs.sort(function (a, b) {
           return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
         });
+        let nonGroupIndex = groups.findIndex(x=>x.Level=="0" && x.Name=="Non Main Group");
+        let nonGroup = groups[nonGroupIndex];
+        groups.splice(nonGroupIndex, 1);
+        groups.push(nonGroup);
         this.buildSetupNodes({ groupConfigs: groups, nvrConfigs: nvrs });
       }
     );
@@ -385,11 +389,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   /** 依照目前setupNode的狀況取得應新增, 修改, 刪除資料的task */
   saveTemplateSetup() {
     const alertMessage = [];
-
-    let lic ='pass';
-    if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {
-      lic = '00168';
-    }
+    
+    let lic = this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE ? '00168' : 'pass';      
     
     if (alertMessage.length > 0) {
       alert(alertMessage.join('\n'));

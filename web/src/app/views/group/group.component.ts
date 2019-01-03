@@ -30,7 +30,7 @@ export class GroupComponent implements OnInit {
     this.parseService.fetchData({
       type: Group,      
       filter: query => query.limit(30000)
-      .descending("createdAt")
+      .ascending("Name")
     }).then(groups => {
       this.groupList = groups;
       this.refreshDisplayArray();
