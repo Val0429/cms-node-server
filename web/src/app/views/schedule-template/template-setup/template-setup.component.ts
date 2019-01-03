@@ -182,11 +182,13 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {
       this.setupData
         //.filter(x => (x.data as EventHandler).Schedule == (this.currentTemplate as IEventScheduleTemplate).Schedule)
-        .forEach(x => {          
-          const data = targetData.find(node => node.nvrId == x.data.NvrId && node.channelId == (x.data as EventHandler).DeviceId); // key前加上點避免錯誤          
-          data.apply = x.checked;
-          data.partialApply = x.checked;
-          data.enabled = true;
+        .forEach(eventHandler => {          
+          const foundNode = targetData.find(nodeTarget => nodeTarget.nvrId == eventHandler.data.NvrId && nodeTarget.channelId == (eventHandler.data as EventHandler).DeviceId); // key前加上點避免錯誤          
+          if (foundNode) {
+            foundNode.apply = eventHandler.checked;
+            foundNode.partialApply = eventHandler.checked;
+            foundNode.enabled = true;
+          }
         });
     }
 
