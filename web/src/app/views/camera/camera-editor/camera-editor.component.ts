@@ -2,15 +2,13 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, EventEmitter, Outpu
 import * as _ from 'lodash';
 import { DeviceVendor } from 'app/config/device-vendor.config';
 import { OptionHelper } from 'app/helper/option.helper';
-import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { LicenseService } from 'app/service/license.service';
-import { CryptoService } from 'app/service/crypto.service';
 import { CameraService } from 'app/service/camera.service';
 import { GroupService } from 'app/service/group.service';
 import { CameraEditorParam } from 'app/model/camera-editor-param';
 import { StringHelper } from 'app/helper/string.helper';
-import { Device, Group, Nvr, RecordSchedule } from 'app/model/core';
+import { Device, Group, Nvr } from 'app/model/core';
 import { IDeviceStream } from 'lib/domain/core';
 import { Select2OptionData } from 'ng2-select2/ng2-select2';
 import { Observable } from 'rxjs/Observable';
@@ -30,53 +28,37 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   editorParam: CameraEditorParam;
   /** 當前畫面展開的PTZ Command類型 */
   ptzDisplayType: string;
-  ptzPresets: any[];
-  groupList: Group[]; // 所有group資料
+  ptzPresets: any[]; 
+  noGroup:Group;   
+  @Input() groupList: Group[]; // 所有group資料
   groupOptions: Select2OptionData[]; // group群組化選項物件
   selectedSubGroup: string; // Camera當前選擇的group物件
   /** Driver=IPCamera的Nvr.Id */
-  ipCameraNvr: Nvr;
+  @Input() ipCameraNvr: Nvr;
   /** currentCamera的Tags陣列在編輯畫面上的string */
   tags: string;
-  flag = {
-    save: false,
-    delete: false
-  };
+  @Input() flag:any;
+  capability: any;
 
   constructor(
-    private coreService: CoreService,
     private cameraService: CameraService,
-    private groupService: GroupService,
-    private parseService: ParseService,
-    private cryptoService: CryptoService,
-    private licenseService: LicenseService
+    private groupService: GroupService
   ) { }
 
   ngOnInit() {
-    const getGroup$ = Observable.fromPromise(this.parseService.fetchData({
-      type: Group
-    }).then(groups => {
-      this.groupList = groups;
-      this.groupOptions = this.groupService.getGroupOptions(this.groupList);
-    }));
-
-    const getNvrId$ = Observable.from(this.parseService.getData({
-      type: Nvr,
-      filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
-    })).map(nvr => this.ipCameraNvr = nvr);
-
-    getGroup$
-      .switchMap(() => getNvrId$)
-      .toPromise()
-      .catch(alert);
+    
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.currentCamera) {
-      this.currentCamera = changes.currentCamera.currentValue;
+      this.currentCamera = changes.currentCamera.currentValue;      
       if (!this.currentCamera) {
         return;
       }
+      
+      this.noGroup = this.groupList.find(x=>x.Name=="Non Main Group");
+      this.groupOptions = this.groupService.getGroupOptions(this.groupList);
+
       this.tags = this.currentCamera.Tags ? this.currentCamera.Tags.join(',') : '';
       this.setDefaultBrand();
       
@@ -88,13 +70,15 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (StringHelper.isNullOrEmpty(this.currentCamera.Config.Brand)) {
+    if (!this.currentCamera.Config.Brand) {
       this.currentCamera.Config.Brand = this.brandList[0].Name;
     }
 
     this.getCapability(this.currentCamera.Config.Brand);
-    this.selectedSubGroup = this.groupService.findDeviceGroup(this.groupList,
-      { Nvr: this.currentCamera.NvrId, Channel: this.currentCamera.Channel });
+    let selectedSubGroup = this.groupService.findDeviceGroup(this.groupList, 
+      { Nvr: this.currentCamera.NvrId, Channel: this.currentCamera.Channel });      
+      //if no group found set to "Non Sub Group" group #for version 3.00.25 and above
+      this.selectedSubGroup = selectedSubGroup ? selectedSubGroup.id : this.noGroup.SubGroup[0];
   }
 
   /** 改變Brand的流程 */
@@ -110,15 +94,19 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   }
   
   /** 取得Model Capability */
-  async getCapability(brand: string) {
-    this.modelList=[];
-    await this.cameraService.getCapability(this.currentCamera,brand,this.modelList).toPromise();
+  async getCapability(brand: string) {    
+    this.capability = await this.cameraService.getCapability(brand);    
+    this.modelList = this.cameraService.getModelList(this.capability);
+    // If no value or not on list, set value to first option
+    if (StringHelper.isNullOrEmpty(this.currentCamera.Config.Model) || this.modelList.indexOf(this.currentCamera.Config.Model) < 0) {
+      this.currentCamera.Config.Model = this.modelList[0];
+    }  
     this.onChangeModel(this.currentCamera.Config.Model); 
   }
 
   onChangeModel(model: string) {
     if (model) {
-      this.editorParam = this.cameraService.getCameraEditorParam(model, this.currentCamera);
+      this.editorParam = this.cameraService.getCameraEditorParam(model, this.currentCamera, this.capability);
       this.onChangeDynamicOptions();
       this.setCustomizationProcess();
     } else {
@@ -155,16 +143,8 @@ export class CameraEditorComponent implements OnInit, OnChanges {
   }
 
   /** 點擊save(新增/修改) */
-  clickSave() {
-    this.licenseService.getLicenseAvailableCount('00171')
-      .map(num => {
-        if (num < 0) {
-          alert('License available count is not enough, can not save data.');
-          return;
-        }
-        this.saveCamera();
-      })
-      .subscribe();
+  async clickSave() {    
+    await this.saveCamera();    
   }
 
   /** 儲存Camera */
@@ -174,15 +154,21 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       return;
     }    
     try{
-      this.flag.save = true;
-      await this.cameraService.saveCamera(this.currentCamera, this.ipCameraNvr, this.groupList, this.selectedSubGroup, this.editorParam, this.tags);      
+      this.flag.busy = true;
+
+      this.editorParam.getStreamSaveNumberBeforeSave();
+      this.editorParam.getResolutionBeforeSave();
+      this.editorParam.removeAttributesBeforeSave();    
+      let result = await this.cameraService.saveCamera([this.currentCamera], this.ipCameraNvr, this.selectedSubGroup, this.tags);
+
+      console.debug("save result", result);
       alert('Update Success');
       this.reloadDataEvent.emit();
     }catch(err){
       alert(err);
     }
     finally{
-      this.flag.save = false;
+      this.flag.busy = false;
     }
   }
   
@@ -191,14 +177,14 @@ export class CameraEditorComponent implements OnInit, OnChanges {
     if (!confirm('Are you sure to delete this Camera?')) return;
       
       try{
-        this.flag.delete = true;
+        this.flag.busy = true;
         await this.cameraService.deleteCam([this.currentCamera.id], this.ipCameraNvr.id)           
         this.reloadDataEvent.emit();        
       }catch(err){
         console.error(err);
         alert(err);
       }finally{
-        this.flag.delete=false;
+        this.flag.busy=false;
       }    
   }
   

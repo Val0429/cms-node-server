@@ -1,6 +1,15 @@
 import { INvr, IEvent, ISysLog, IServer, IServerInfo, IDBSync, IDBSyncDestination, IDevice,IDeviceConfig, IGroup, IEventHandlerType, IEventHandler, IRecordScheduleTemplate, IRecordScheduleTemplateFullRecord, IRecordScheduleTemplateEventRecord, IRecordSchedule } from '../../../lib/domain/core';
 // import { IHost, IHostEvent, IVisitEvent, IVisitor } from 'lib/domain/core';
 import * as Parse from 'parse/node';
+
+export function registerSubclass(collectionName?: string) {
+  return (targetClass) => {
+      var name = collectionName || targetClass.name;
+      Parse.Object.registerSubclass(name, targetClass);
+  }
+}
+
+@registerSubclass()
 export class Device extends Parse.Object implements IDevice {
     get NvrId(): string {
       return super.get('NvrId');
@@ -49,7 +58,8 @@ export class Device extends Parse.Object implements IDevice {
       Object.assign(this, value);
     }
   }
-  
+
+@registerSubclass()
 export class RecordSchedule extends Parse.Object implements IRecordSchedule {
     get NvrId(): string {
       return super.get('NvrId');
@@ -80,8 +90,9 @@ export class RecordSchedule extends Parse.Object implements IRecordSchedule {
       Object.assign(this, value);
     }
   }
-  
-  export class RecordScheduleTemplate extends Parse.Object implements IRecordScheduleTemplate {
+
+@registerSubclass()
+export class RecordScheduleTemplate extends Parse.Object implements IRecordScheduleTemplate {
     get RecordRecover(): boolean {
       return super.get('RecordRecover');
     }
@@ -123,7 +134,8 @@ export class RecordSchedule extends Parse.Object implements IRecordSchedule {
       Object.assign(this, value);
     }
   }
-  
+
+@registerSubclass()
 export class EventHandler extends Parse.Object implements IEventHandler {
     get NvrId(): string {
       return super.get('NvrId');
@@ -154,7 +166,8 @@ export class EventHandler extends Parse.Object implements IEventHandler {
       Object.assign(this, value);
     }
   }
-  
+
+@registerSubclass()
 export class Group extends Parse.Object implements IGroup {
     get Name(): string {
       return super.get('Name');
@@ -200,7 +213,10 @@ export class Group extends Parse.Object implements IGroup {
       Object.assign(this, value);
     }
   }
-  
+
+
+
+@registerSubclass()
 export class Nvr extends Parse.Object implements INvr {
 
     get Name(): string { return super.get('Name'); }
@@ -241,6 +257,7 @@ export class Nvr extends Parse.Object implements INvr {
     }
 }
 
+@registerSubclass()
 export class Event extends Parse.Object implements IEvent {
     get Type(): string { return super.get('Type'); }
     set Type(value: string) { super.set('Type', value); }
@@ -260,6 +277,7 @@ export class Event extends Parse.Object implements IEvent {
     }
 }
 
+@registerSubclass()
 export class SysLog extends Parse.Object implements ISysLog {
     get ServerName(): string { return super.get('ServerName'); }
     set ServerName(value: string) { super.set('ServerName', value); }
@@ -275,6 +293,7 @@ export class SysLog extends Parse.Object implements ISysLog {
     }
 }
 
+@registerSubclass()
 export class Server extends Parse.Object implements IServer {
     get Brand(): string { return super.get('Brand'); }
     set Brand(value: string) { super.set('Brand', value); }
@@ -310,6 +329,7 @@ export class Server extends Parse.Object implements IServer {
     }
 }
 
+@registerSubclass()
 export class ServerInfo extends Parse.Object implements IServerInfo {    
     get SSLPort(): number { return super.get('SSLPort'); }
     set SSLPort(value: number) { super.set('SSLPort', value); }
@@ -338,6 +358,7 @@ export class ServerInfo extends Parse.Object implements IServerInfo {
     }
 }
 
+@registerSubclass()
 export class DBSync extends Parse.Object implements IDBSync {
     get autoSync(): boolean { return super.get('autoSync'); }
     set autoSync(value: boolean) { super.set('autoSync', value); }

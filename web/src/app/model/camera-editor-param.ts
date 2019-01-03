@@ -63,7 +63,7 @@ export class CameraEditorParam {
     /** 讓layout判斷此廠牌是否需在Stream設定中設定Resolution Region */
     ResolutionRegionConfig: boolean;
 
-    constructor(private cap: any, private model: string, private data: Device) {
+    constructor(cap: any, model: string, data: Device) {
         if (Array.isArray(cap.Devices.Device)) {
             this.modelCap = cap.Devices.Device.find(x => x.Model === model);
         } else {

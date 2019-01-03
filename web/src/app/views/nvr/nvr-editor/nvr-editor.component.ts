@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Observable';
 import { Select2OptionData } from 'ng2-select2/ng2-select2';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
-import { CryptoService } from 'app/service/crypto.service';
 import { LicenseService } from 'app/service/license.service';
 import { Device, Nvr, Group, RecordSchedule, ServerInfo } from 'app/model/core';
 import { IDeviceStream } from 'lib/domain/core';
@@ -20,16 +19,19 @@ import { NvrService, INvrEditModel } from 'app/service/nvr.service';
   styleUrls: ['./nvr-editor.component.css']
 })
 export class NvrEditorComponent implements OnInit, OnChanges {
-  p:number=1;
+
   /** 傳入ParseObject Nvr物件 */
   @Input() editNvr: Nvr;
   @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
+  p:number=1;
+  @Input()pageSize:number;
   /** 目前編輯的NVR Model資料 */
   currentEditModel: INvrEditModel;
   /** Manufacture選項清單 */
   manufactureOptions = NvrManufacturer.EditorList;
   /** 所有group資料 */
-  groupList: Group[];
+  noGroup:Group;
+  @Input() groupList: Group[];
   /** group群組化選項物件 */
   groupOptions: Select2OptionData[];
   displayDevices: { device: Device, checked: boolean }[]; // 顯示用的Device列表
@@ -39,67 +41,49 @@ export class NvrEditorComponent implements OnInit, OnChanges {
   /** 顯示Get Device狀態的文字 */
   devicesStatusString = '';
 
-  iSapP2PServerList: ServerInfo[];
-  flag = {
-    save: false,
-    delete: false,
-    load: false
+  @Input() iSapP2PServerList: ServerInfo[];
+  @Input() flag :{
+    busy: boolean
   };
 
+  ipRegex=new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/);  
+  domainRegex = new RegExp(/^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|([a-zA-Z0-9][a-zA-Z0-9-_]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,6}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})$/);
+  
   constructor(
     private coreService: CoreService,
     private parseService: ParseService,
     private groupService: GroupService,
-    private cryptoService: CryptoService,
     private licenseService: LicenseService,
     private cameraService:CameraService,
     private nvrService:NvrService
   ) { }
 
-  ngOnInit() {
-    const getGroup$ = Observable.fromPromise(this.parseService.fetchData({
-      type: Group,
-      filter: query => query.limit(30000)
-    }).then(groups => {
-      this.groupList = groups;
-      this.groupOptions = this.groupService.getGroupOptions(this.groupList);
-      this.reloadEditData();
-    }));
-
-    const getServerInfo$ = Observable.fromPromise(this.parseService.fetchData({
-      type: ServerInfo,
-      filter: query => query.matches('Type', new RegExp('SmartMedia'), 'i')
-    }).then(serverInfos => this.iSapP2PServerList = serverInfos));
-
-    getGroup$
-      .switchMap(() => getServerInfo$)
-      .subscribe();
+  async ngOnInit() {
+    
+    this.noGroup = this.groupList.find(x=>x.Name=="Non Main Group");
+    this.groupOptions = this.groupService.getGroupOptions(this.groupList);
+    
   }
-  ngOnChanges(changes: SimpleChanges): void {
+  async ngOnChanges(changes: SimpleChanges) {
     if (changes.editNvr) {
       this.editNvr = changes.editNvr.currentValue;
-      this.reloadEditData();
+      await this.reloadEditData();
     }
   }
 
   /** 取得editModel及此Nvr相關Device */
-  reloadEditData() {
+  async reloadEditData(newGroupId?:string) {
     if (!this.editNvr) {
       return;
     }
     this.p=1;
-    this.currentEditModel = this.nvrService.setEditModel(this.editNvr, this.groupList, this.iSapP2PServerList);
-
-    this.parseService.fetchData({
-      type: Device,
-      filter: query => query
-        .equalTo('NvrId', this.editNvr.Id)
-        .ascending('Channel')
-        .limit(30000)
-    }).then(devices => {
-      this.selectedDevices = devices;
-      this.refreshDeviceList();
-    });
+    this.currentEditModel = this.nvrService.setEditModel(this.editNvr, this.groupList, this.iSapP2PServerList, newGroupId);
+    
+    await this.cameraService.getDevice(this.editNvr.Id, 1, Number.MAX_SAFE_INTEGER)
+      .then(devices => {
+        this.selectedDevices = devices;
+        this.refreshDeviceList();
+      });
   }
 
   
@@ -139,61 +123,67 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     return this.cameraService.getBrandDisplay(companyKey);
   }
 
-  ipRegex=new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/);
   
-  domainRegex = new RegExp(/^(([a-zA-Z]{1})|([a-zA-Z]{1}[a-zA-Z]{1})|([a-zA-Z]{1}[0-9]{1})|([0-9]{1}[a-zA-Z]{1})|([a-zA-Z0-9][a-zA-Z0-9-_]{1,61}[a-zA-Z0-9]))\.([a-zA-Z]{2,6}|[a-zA-Z0-9-]{2,30}\.[a-zA-Z]{2,3})$/);
-  clickSave() {
-    console.debug("ip valid", this.ipRegex.test(this.currentEditModel.Domain));
-    console.debug("domain valid", this.domainRegex.test(this.currentEditModel.Domain));
-    let testDomain =  this.domainRegex.test(this.currentEditModel.Domain) ||
-                      this.ipRegex.test(this.currentEditModel.Domain) || 
-                      this.currentEditModel.Domain=="localhost";
+  async clickSave() {
+    try{
+      console.debug("ip valid", this.ipRegex.test(this.currentEditModel.Domain));
+      console.debug("domain valid", this.domainRegex.test(this.currentEditModel.Domain));
+      let testDomain =  this.domainRegex.test(this.currentEditModel.Domain) ||
+                        this.ipRegex.test(this.currentEditModel.Domain) || 
+                        this.currentEditModel.Domain=="localhost";
 
-    console.debug(this.currentEditModel.Domain);
-    if(!testDomain){
-      alert('invalid domain!')
-      return;
+      console.debug(this.currentEditModel.Domain);
+      if(!testDomain){
+        alert('invalid domain!')
+        return;
+      }
+    
+      this.flag.busy = true;      
+      
+      this.nvrService.getEditModel(this.editNvr, this.currentEditModel);
+      await this.nvrService.saveNvr([this.editNvr], this.currentEditModel.Group).then(async results => {          
+        this.editNvr = await this.parseService.getDataById({type:Nvr, objectId:results[0].objectId});              
+      });
+      await this.saveDevices();
+      
+      this.tempDevices = undefined;
+      this.reloadAfterSave();
+      alert('Update Success');
     }
-
-    this.flag.save = true;
-
-    this.nvrService.saveNvr(this.editNvr, this.currentEditModel)
-      .switchMap(() => this.saveDevices())
-      .map(() => {
-        this.tempDevices = undefined;
-        this.reloadAfterSave();
-        alert('Update Success');
-      })
-      .toPromise()
-      .catch(alert)
-      .then(() => this.flag.save = false);
+    catch(err){
+      alert(err);
+      console.error(err);
+    }
+    finally{
+      this.flag.busy = false;
+    }
   }
 
   async clickDelete() {
     if (!confirm('Are you sure to delete this NVR?')) return;
 
     try{
-      this.flag.delete = true;
-      await this.nvrService.deleteNvr(this.editNvr);
+      this.flag.busy = true;
+      await this.nvrService.deleteNvr([this.editNvr.id]);
       alert("Delete Success");
       this.reloadAfterSave();
     } catch(err){
       console.error(err);
       alert(err);
     }finally{
-      this.flag.delete = false;
+      this.flag.busy = false;
     }
   }
 
-  reloadAfterSave() {
-    this.reloadDataEvent.emit();
+  reloadAfterSave() {    
     this.editNvr = undefined;
     this.currentEditModel = undefined;
     this.tempDevices = undefined;
+    this.reloadDataEvent.emit();
   }
 
   /** 增修刪Device */
-  saveDevices() {
+  async saveDevices() {
     let saveList: Device[] = [];
     let deleteList: Device[] = [];
 
@@ -209,69 +199,41 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     // 依照Manufacutre判斷license可用數量，決定DeviceList是否可儲存
     const lic = this.licenseService.getNvrManufacturerLicenseCode(this.currentEditModel.Manufacture);
 
-    return this.licenseService.getLicenseAvailableCount(lic)
-      .switchMap(num => {
-        if (num < (saveList.length - deleteList.length)) {
-          alert('License available count is not enough, did not save device list.');
-          return Observable.of(null);
-        } else {
-          // 儲存新勾選的Device並加入Notify
-          const save$ = Observable.fromPromise(Parse.Object.saveAll(saveList))
-            .map(() => {
-                this.coreService.addNotifyData({
-                  path: this.coreService.urls.URL_CLASS_DEVICE,
-                  dataArr: saveList
-                });
-              });
-          // 刪除舊的或取消勾選的Device並加入Notify
-          const delete$ = Observable.fromPromise(Parse.Object.destroyAll(deleteList))
-            .map(() => {
-                this.coreService.addNotifyData({
-                  path: this.coreService.urls.URL_CLASS_DEVICE,
-                  dataArr: deleteList
-                });
-              });
+    let num = await this.licenseService.getLicenseAvailableCount(lic).toPromise();
+      
+      if (num < (saveList.length - deleteList.length)) {
+        alert('License available count is not enough, did not save device list.');
+        return Observable.of(null);
+      } 
+      // 儲存新勾選的Device並加入Notify
+      const save$ = this.cameraService.saveCamera(saveList, this.editNvr, undefined, "");
+      // 刪除舊的或取消勾選的Device並加入Notify
+      const delete$ = this.cameraService.deleteCam(deleteList.map(e=>e.id), this.editNvr.id);
 
-          // 找出deleteList中不存在於saveList的Channel，並刪除其recordSchedule
-          const recordScheduleDeleteList = deleteList.filter(x => !saveList.some(y => y.Channel === x.Channel));
-          const removeRecordSchedule$ = Observable.fromPromise(this.parseService.fetchData({
-            type: RecordSchedule,
-            filter: query => query
-              .equalTo('NvrId', this.editNvr.Id)
-              .containedIn('ChannelId', recordScheduleDeleteList.map(x => x.Channel))
-          }))
-            .switchMap(schedules => {
-              return Observable.fromPromise(Parse.Object.destroyAll(schedules))
-                .map(results => this.coreService.notifyWithParseResult({
-                  parseResult: results, path: this.coreService.urls.URL_CLASS_RECORDSCHEDULE
-                }));
-            });
-
-          return save$
-            .switchMap(() => delete$)
-            .switchMap(() => removeRecordSchedule$);
-        }
-      });
+      await Observable.forkJoin(save$, delete$).toPromise();
   }
 
   /** 從MediaServer取得目前可選的Devices，轉換格式後取代displayDevices */
-  clickGetDeviceList() {
-    this.nvrService.saveNvr(this.editNvr, this.currentEditModel)
-      .map(() => {
-        this.reloadEditData();
-        this.getDeviceList();
-      })
-      .subscribe();
+  async clickGetDeviceList() {
+    this.nvrService.getEditModel(this.editNvr, this.currentEditModel);
+    if(!this.editNvr.Id || !this.editNvr.id){
+      await this.nvrService.saveNvr([this.editNvr], this.currentEditModel.Group)
+        .then(async results => {          
+          this.editNvr = await this.parseService.getDataById({type:Nvr, objectId:results[0].objectId});              
+        });
+    }
+    await this.reloadEditData(this.currentEditModel.Group);
+    await this.getDeviceList();
   }
   
   
   /** 轉發CGI取得該NVR的Device */
-  getDeviceList() {
+  async getDeviceList() {
     if (!this.tempDevices) {
       this.tempDevices = [];
     }
 
-    this.flag.load = true;
+    this.flag.busy = true;
 
     const get$ = this.coreService.proxyMediaServer({
       method: 'GET',
@@ -284,10 +246,10 @@ export class NvrEditorComponent implements OnInit, OnChanges {
         this.refreshDeviceList();
       });
 
-    get$
+    await get$
       .toPromise()
       .catch(alert)
-      .then(() => this.flag.load = false);
+      .then(() => this.flag.busy = false);
   }
 
   /** 將media server來的tempDevice轉為CMS儲存格式 */
@@ -366,42 +328,30 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     }
   }
 
-  /** Get Device List之前將Driver替換內容 */
-  // replacePostDataDriver(driver: string) {
-  //   let result = driver;
-  //   switch (driver) {
-  //     case 'ACTi Enterprise':
-  //       result = 'ACTi_E';
-  //       break;
-  //     case 'Diviotec (Windows)':
-  //     case '3TSmart':
-  //     case 'Siemens':
-  //     case 'Certis':
-  //     case 'Dynacolor':
-  //     case 'Customization':
-  //       result = 'iSAP';
-  //       break;
-  //     case 'Diviotec (Linux)':
-  //       result = 'Diviotec';
-  //       break;
-  //   }
-  //   return result;
-  // }
-
   /** 先儲存Nvr再取得PPAuth檔案 */
-  clickGetAuthFile() {
-    this.flag.load = true;
-    this.nvrService.saveNvr(this.editNvr, this.currentEditModel)
-      .map(() => {
-        this.reloadEditData();
+  async clickGetAuthFile() {
+    try{
+        this.flag.busy = true;
+        this.nvrService.getEditModel(this.editNvr, this.currentEditModel);
+        if(!this.editNvr.Id){
+          await this.nvrService.saveNvr([this.editNvr], this.currentEditModel.Group)
+          .then(async results => {          
+            this.editNvr = await this.parseService.getDataById({type:Nvr, objectId:results[0].objectId});          
+          });
+        }    
+        await this.reloadEditData(this.currentEditModel.Group);
         const host = `http://${this.currentEditModel.Domain}:${this.currentEditModel.Port}`;
         const path = `${this.coreService.urls.URL_MEDIA_GET_P2P_AUTH}&nvr=nvr${this.editNvr.Id}`;
         window.open(host + path);
         // this.coreService.clickLink({ link: host + path });
-      })
-      .toPromise()
-      .catch(alert)
-      .then(() => this.flag.load = false);
+    }
+    catch(err){
+      alert(err);
+      console.error(err);
+    }
+    finally{
+      this.flag.busy = false
+    }
   }
 }
 

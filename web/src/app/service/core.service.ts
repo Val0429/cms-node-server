@@ -109,7 +109,7 @@ export class CoreService {
     const options = new RequestOptions({ headers: this.parseHeaders });
     return this.http.post(Parse.serverURL + this.urls.MEDIA_PROXY_URL + (serverId ? `/${serverId}` : ""), body, options)
       .timeout(timeout || 10000)
-      .catch(err => Observable.throw(new Error(err.message)))
+      //.catch(err => Observable.throw(new Error(err.message)))
       .map((response: Response) => response.json());
   }
 
@@ -182,13 +182,17 @@ export class CoreService {
         const body = Object.assign([], this.notifyList);        
         this.notifyList = [];
         setTimeout(() => { // 避免更新後notify速度太快導致讀到舊資料, 延遲1秒notify
+          try{
           this.proxyMediaServer({
             method: 'POST',
             path: this.urls.URL_MEDIA_NOTIFY,
             body: {
               notify: body
             }
-          }).subscribe();
+          }).toPromise();
+        }catch(err){
+          console.error("error from notification", err);
+        }
         }, 2000);
     }
   }

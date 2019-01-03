@@ -28,8 +28,9 @@ export class GroupComponent implements OnInit {
   /** 重新讀取資料並刷新displayArray */
   reloadGroupData() {
     this.parseService.fetchData({
-      type: Group,
+      type: Group,      
       filter: query => query.limit(30000)
+      .ascending("Name")
     }).then(groups => {
       this.groupList = groups;
       this.refreshDisplayArray();

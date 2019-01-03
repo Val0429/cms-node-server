@@ -14,7 +14,8 @@ export class ConfigHelper {
 
     /** Parse Server Config */
     parseConfig: IParseConfig;
-
+    /* external config */
+    externalConfig:ExternalConfig;
     /** Server Default Path Config */
     pathConfig: IPathConfig;
 
@@ -23,15 +24,23 @@ export class ConfigHelper {
     }
 
     private loadConfig() {
+        
+        this.externalConfig = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config', 'external.config.json'), 'utf8'));
+
         this.parseConfig = this.readConfig('parse.config.json');
         this.pathConfig = this.readConfig('path.config.json');
+        
     }
 
     readConfig(filePath: string): any {
         return nconf.argv().env().file({ file: path.join(__dirname, '..', 'config', filePath) }).get();
     }
 }
-
+export interface ExternalConfig{
+    houseKeeper:{
+        keepDays:number
+    }
+};
 export interface IParseConfig {
     PORT?: number;
     SSL_PORT?: number;

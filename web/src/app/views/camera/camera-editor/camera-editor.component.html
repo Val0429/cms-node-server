@@ -29,10 +29,12 @@
       <label class="col-md-4 col-form-label text-md-right" for="grouped-select">Group</label>
       <div class="col-md-8">
         <select class="select1 width-200" [(ngModel)]="selectedSubGroup">
-            <option value="">No Group</option>
-          <optgroup *ngFor="let group of groupOptions" label= {{group.text}}>
-            <option *ngFor="let item of group.children" value= {{item.id}}>{{item.text}}</option>
-          </optgroup>
+            <option value="{{noGroup.SubGroup[0]}}">No Group</option>
+            <ng-container *ngFor="let group of groupOptions">
+              <optgroup label= {{group.text}} *ngIf="group.id != noGroup.id">
+                <option *ngFor="let item of group.children" value= {{item.id}}>{{item.text}}</option>
+              </optgroup>
+            </ng-container>
         </select>
       </div>
     </div>
@@ -60,7 +62,7 @@
         </select>
       </div>
     </div>
-    <ng-container *ngIf="checkDisplayAuthentication()">
+    <ng-container *ngIf="currentCamera && currentCamera.Config && currentCamera.Config.Brand && currentCamera.Config.Model && checkDisplayAuthentication()">
       <legend>Authentication</legend>
       <div class="form-group row">
         <label class="col-md-4 col-form-label text-md-right">Account</label>
@@ -441,12 +443,11 @@
     <div class="form-group row">
       <label class="col-md-4  col-form-label text-md-right"></label>
       <div class="col-md-8">
-        <button type="button" class="btn btn-danger" (click)="clickDelete()" *ngIf="currentCamera.id" [disabled]="flag.delete || flag.save">
-          <i *ngIf="flag.delete" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+          <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+        <button type="button" class="btn btn-danger" (click)="clickDelete()" *ngIf="currentCamera.id" [disabled]="flag.busy">          
           Delete
         </button>
-        <button type="button" class="btn btn-primary" (click)="clickSave()" [disabled]="flag.delete || flag.save">
-          <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+        <button type="button" class="btn btn-primary" (click)="clickSave()" [disabled]="flag.busy">          
           Save
         </button>
       </div>

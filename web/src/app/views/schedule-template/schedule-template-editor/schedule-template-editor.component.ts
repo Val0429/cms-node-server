@@ -2,7 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output, OnChanges, SimpleChange
 import * as _ from 'lodash';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
-import { RecordScheduleTemplate, ServerInfo, RecordSchedule, EventHandler } from 'app/model/core';
+import { ServerInfo, RecordSchedule, EventHandler } from 'app/model/core';
 import OptionHelper from 'app/helper/option.helper';
 import { WeekScheduleOptions } from 'app/config/week-scheduler.config';
 import { Observable } from 'rxjs/Observable';
@@ -158,8 +158,8 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
     let updateChildRecords:Observable<void> = Observable.of(null);
     if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {
       this.currentTemplate.Schedule = this.convertScheduleToUTC(this.schedules.eventSchedule);
-      console.log("this.currentTemplate.Schedule", this.currentTemplate.Schedule);
-      console.log("this.originalSchedule", this.originalSchedule);
+      console.debug("this.currentTemplate.Schedule", this.currentTemplate.Schedule);
+      console.debug("this.originalSchedule", this.originalSchedule);
       
       const getEventHandlers$ = Observable.fromPromise(this.parseService.fetchData({
         type: EventHandler,

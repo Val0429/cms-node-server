@@ -3,9 +3,10 @@ import { CoreService } from 'app/service/core.service';
 import { DeviceVendor } from 'app/config/device-vendor.config';
 import { ArrayHelper } from 'app/helper/array.helper';
 import { ISearchCamera } from 'lib/domain/core';
-import { LicenseService } from 'app/service/license.service';
 import { CameraService } from 'app/service/camera.service';
-import { Nvr, Device } from 'app/model/core';
+import { Nvr, Group, Device } from 'app/model/core';
+import StringHelper from 'app/helper/string.helper';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-camera-search',
@@ -16,52 +17,39 @@ export class CameraSearchComponent implements OnInit {
   
   @Output() closeModal: EventEmitter<any> = new EventEmitter();
   @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
-
-  @Input() cameraConfigs: {device:Device, checked:boolean, brandDisplay:string}[] = [];
-  @Input() ipCameraNvr:Nvr;
+  @Input() ipCameraNvr:Nvr;  
+  @Input() groupList:Group[];
+  @Input() availableLicense:number;
   /** 搜尋結果 */
-  searchList: {device:ISearchCamera, checked:boolean}[];    
+  searchList: SearchCameraResult[];    
   checkedAll:boolean;
   anyChecked:boolean;
   /** Flag:表示loading */
   /** 廠牌選單 */
   deviceVendors= DeviceVendor;
-  flag = {
-    load: false
-  };
+  @Input() flag:any;
+
   constructor(
     private coreService: CoreService, 
-    private cameraService: CameraService, 
-    private licenseService:LicenseService) { }
+    private cameraService: CameraService) { }
 
    async saveAll(){    
       if (!confirm("Add selected camera(s)?")) return;
-      console.debug("this.cameraConfigs",this.cameraConfigs)
+
       try{
-        this.flag.load=true;
+        this.flag.busy=true;
           
-        let cams = this.searchList.filter(x=>x.checked===true);
+        let cams = this.searchList.filter(x=>x.checked===true).map(x=> x.device);
         console.debug("saved cams", cams);
 
-        let num = await this.licenseService.getLicenseAvailableCount('00171').toPromise(); 
-
-        if (num < cams.length) {
+        if (this.availableLicense < cams.length) {
           alert('License available count is not enough, can not add new IP Camera.');
           return;
-        }        
+        }
 
-        for(let cam of cams)  {
-          const newCam = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: this.cameraService.getNewChannelId(this.cameraConfigs.map(function(e){return e.device;})), searchCamera: cam.device });            
-          await this.cameraService.getCapability(newCam, cam.device.COMPANY, []).toPromise(); 
-          let editorParam = this.cameraService.getCameraEditorParam(newCam.Config.Model, newCam);
-          //saves it before the value gets encrypted
-          let tempAuth = Object.assign({}, newCam.Config.Authentication);
-          await this.cameraService.saveCamera(newCam, this.ipCameraNvr, [], "", editorParam, "");
-          //returns the value back
-          newCam.Config.Authentication = Object.assign({}, tempAuth);
-          //push new cam to camera list
-          this.cameraConfigs.push({checked:false, device:newCam, brandDisplay:this.cameraService.getBrandDisplay(cam.device.COMPANY)});          
-        }        
+        let noGroup = this.groupList.find(x=>x.Name=="Non Main Group");
+        let selectedSubGroup = noGroup.SubGroup[0];        
+        await this.cameraService.saveCamera(cams, this.ipCameraNvr, selectedSubGroup, "");
         alert("Save camera(s) sucess");
         this.checkedAll=false;
         this.searchList=[];
@@ -71,7 +59,7 @@ export class CameraSearchComponent implements OnInit {
         console.error(err);
         alert(err);
       }finally{
-        this.flag.load=false;        
+        this.flag.busy=false;        
       }
     
   }
@@ -109,31 +97,57 @@ export class CameraSearchComponent implements OnInit {
     }
 
     try{      
+      let promises=[];
       this.searchList = [];
-      this.flag.load = true;
+      this.flag.busy = true;
       for(let vendor of this.selectedVendors){
+        let lowerVendor = vendor.toLowerCase()
+        if(lowerVendor=="a-mtk"){
+          lowerVendor = "amtk";
+        }
+       
+        
         //push observerable item
-        const search$ = this.coreService.proxyMediaServer({
+        const search$ = (modelList:any[], capability:any) => this.coreService.proxyMediaServer({
           method: 'GET',
-          path: this.coreService.urls.URL_MEDIA_SEARCH_CAMERA + '?vendor=' + vendor.toLowerCase()
+          path: this.coreService.urls.URL_MEDIA_SEARCH_CAMERA + '?vendor=' + lowerVendor
         }, 30000)
           .map(result => {
             let resultArray = ArrayHelper.toArray((result && result.Camera.DATA) ? result.Camera.DATA : []);
-            let searchDisplay:{device:ISearchCamera, checked:boolean}[]=[];
-            for(let device of resultArray){
-              searchDisplay.push({checked:false, device})
+            let searchDisplay:SearchCameraResult[]=[];
+            for(let searchResult of resultArray){
+
+              const device = this.cameraService.getNewDevice({ nvrId: this.ipCameraNvr.Id, channel: 0, searchCamera: searchResult });
+              // If no value or not on list, set value to first option
+              if (StringHelper.isNullOrEmpty(device.Config.Model) || modelList.indexOf(device.Config.Model) < 0) {
+                device.Config.Model = modelList[0];
+              }  
+              let editorParam = this.cameraService.getCameraEditorParam(device.Config.Model, device, capability);  
+              if(editorParam){
+                editorParam.getStreamSaveNumberBeforeSave();
+                editorParam.getResolutionBeforeSave();
+                editorParam.removeAttributesBeforeSave();
+              }
+
+              searchDisplay.push({checked:false, searchResult, device, saved:false})
             }
             this.searchList.push(...searchDisplay);
-            this.searchList.sort((a:{device:ISearchCamera, checked:boolean},
-              b:{device:ISearchCamera, checked:boolean}) => 
-                (a.device.WANIP > b.device.WANIP) ? 1 : ((b.device.WANIP > a.device.WANIP) ? -1 : 0));
+            this.searchList.sort((a:SearchCameraResult,
+              b:SearchCameraResult) => 
+                (a.searchResult.WANIP > b.searchResult.WANIP) ? 1 : ((b.searchResult.WANIP > a.searchResult.WANIP) ? -1 : 0));
           });
-        await search$.toPromise();
+          //get brand capability
+          const singleSearch = this.cameraService.getCapability(vendor).then(async capability=>{
+            let modelList= this.cameraService.getModelList(capability);
+            await search$(modelList, capability).toPromise();
+          }); 
+          promises.push(singleSearch);
       }
+      await Observable.forkJoin(promises).toPromise();
     }catch(err){
       alert(err);
     }finally{
-      this.flag.load = false;
+      this.flag.busy = false;
     }
   }
   selectedVendors:string[]=[];
@@ -144,4 +158,10 @@ export class CameraSearchComponent implements OnInit {
     console.debug("this.selectedVendors", checked, this.selectedVendors);
   }
 
+}
+export interface SearchCameraResult{
+  searchResult:ISearchCamera,   
+  checked:boolean,
+  device:Device,
+  saved:boolean
 }

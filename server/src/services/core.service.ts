@@ -1,8 +1,10 @@
 import { IBatchRequest } from "lib/domain/core";
-import { ConfigHelper } from "../helpers";
+import { ConfigHelper, LogHelper } from "../helpers";
+import { Observable } from "rxjs";
 
-var http = require('http');
+var request = require('request-promise');
 const configHelper = ConfigHelper.instance;
+const logHelper=LogHelper.instance;
 
 export class CoreService {
   static get instance() {
@@ -13,11 +15,7 @@ private static _instance: CoreService;
 
   auth:string;
   urls = urls; 
-  /** 通知CGI的內容清單 */
-  notifyList: {
-    objectId: string;
-    path: string;
-  }[] = [];
+
   
   
 
@@ -26,29 +24,14 @@ private static _instance: CoreService;
 
   
   /** 新增資料至notifyList */
-  addNotifyData(args: { path: string, objectId?: string, dataArr?: any[] }) {
-    if (args.objectId) {
-      this.notifyList.push({
-        objectId: args.objectId,
-        path: args.path
-      });
-    }
-    if (args.dataArr) {
-      args.dataArr.forEach(data => {
-        this.notifyList.push({
-          objectId: data.id,
-          path: args.path
-        });
-      });
-    }
-  }
+  
   mediaHeaders(auth:string) {
     return {
       'Authorization': `Basic ${auth}`,
       'Content-Type': 'text/xml'
     };
   }
-  proxyMediaServer(args: IBatchRequest, timeout?: number) {    
+  async proxyMediaServer(args: IBatchRequest):Promise<any> {    
     
     const body = {
       method: args.method,
@@ -65,63 +48,49 @@ private static _instance: CoreService;
       'Content-Length': Buffer.byteLength(bodyString)
     };;
 
-    let post_options = {
-      hostname: configHelper.parseConfig.HOST,
-      port: configHelper.parseConfig.IS_HTTPS ? configHelper.parseConfig.SSL_PORT : configHelper.parseConfig.PORT,
-      path: '/parse'+ this.urls.MEDIA_PROXY_URL, 
-      method:'POST',      
-      headers: parseHeaders
+    let protocol = configHelper.parseConfig.IS_HTTPS ? 'https' : 'http';
+    let hostname = configHelper.parseConfig.HOST;
+    let port = configHelper.parseConfig.IS_HTTPS ? configHelper.parseConfig.SSL_PORT : configHelper.parseConfig.PORT;
+    let path = 'parse'+ this.urls.MEDIA_PROXY_URL;    
+
+    const options = {
+      uri: `${protocol}://${hostname}:${port}/${path}`,
+      headers: parseHeaders,
+      method: 'POST',
+      body,
+      json: true
     };
-    let post_req = http.request(post_options, function (res) {
-      // console.log('STATUS: ' + res.statusCode);
-      // console.log('HEADERS: ' + JSON.stringify(res.headers));
-      // res.setEncoding('utf8');
-      // res.on('data', function (chunk) {
-      //     console.log('Response: ', chunk);
-      // });
-    });
-    post_req.on('error', function(e) {
-      console.log('problem with request: ' + e.message);
-    });
     
-    post_req.write(bodyString);
-    post_req.end();
+    return await Observable.fromPromise(
+      request(options)
+      .then(function (parsedBody) {        
+        return parsedBody;
+      }).catch(err=>{
+        console.error("error from proxy server");
+      })
+    ).toPromise();
   }
   /** Call CGI通知CMS Client */
-  notify(args?: { path: string, objectId: string }) {
-    if (args) {
-      this.addNotifyData(args);
-    }
-    if (this.notifyList && this.notifyList.length > 0) {      
-        const body = Object.assign([], this.notifyList);
-        this.notifyList = [];        
-        setTimeout(() => { // 避免更新後notify速度太快導致讀到舊資料, 延遲1秒notify
-          this.proxyMediaServer({            
-            method: 'POST',
-            path: this.urls.URL_MEDIA_NOTIFY,
-            body: {
-              notify: body
-            }
-          });
-        }, 2000);
-    }
-  }
-  notifyWithParseResult(args: { parseResult: Parse.Object[], path: string }) {
-    this.addNotifyWithParseResult(args);
-    this.notify();
-  }
-  
-  addNotifyWithParseResult(args: { parseResult: Parse.Object[], path: string }) {
-    args.parseResult.forEach(data => {
-      this.addNotifyData({
-        path: args.path,
-        objectId: data.id
+  async notify(body:NotificationBody[]) {
+    if(!body || body.length<=0) return;
+    try{
+      await this.proxyMediaServer({            
+        method: 'POST',
+        path: this.urls.URL_MEDIA_NOTIFY,
+        body: {
+          notify: body
+        }
       });
-    });    
+    }catch(err){
+      console.error("error from notification:", err);
+    }      
+    
   }
+ 
 
 }
 
+export interface NotificationBody{path: string, objectId: string };
 
 const urls = {
   URL_BATCH: '/batch',

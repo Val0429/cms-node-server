@@ -525,6 +525,9 @@ export class EventRecovery extends Parse.Object implements IEventRecovery {
 }
 
 export class Device extends Parse.Object implements IDevice {
+  
+  objectId:string;
+
   get NvrId(): string {
     return super.get('NvrId');
   }

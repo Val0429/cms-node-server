@@ -19,15 +19,33 @@ const deviceService = DeviceService.instance;
 export const CmsRoute: IRouteMap = {
     path: 'cms',
     router: Router().use(bodyParser.json())
-        .get('/test', (req, res) => { res.send('Test Success') })
-        .get('/device', (req, res) => {
-            deviceService.get(req, res);
+        .get('/test', (req, res) => { res.send('Test Success') })        
+        .get('/externalconfig', (req, res) => {
+            res.json(configHelper.externalConfig);
+        })
+        .get('/device/channel/:nvrId?/:count?', async (req, res) => {
+            await deviceService.getNewChannel(req, res);
+        })
+        .get('/device/count/:nvrId?', async (req, res) => {
+            await deviceService.getDeviceCountByNvrId(req, res);
+        })
+        .get('/device', async (req, res) => {
+            await deviceService.get(req, res);
+        })
+        .delete('/device', async (req, res) => {
+            await deviceService.delete(req, res);
+        })
+        .post('/device/clone', async (req, res) => {            
+            await deviceService.cloneDevice(req, res);
         })
         .post('/device', async (req, res) => {            
             await deviceService.post(req, res);
         })
-        .delete('/device', async (req, res) => {
-            await deviceService.delete(req, res);
+        .delete('/nvr', async (req, res) => {            
+            await deviceService.delNvr(req, res);
+        })
+        .post('/nvr', async (req, res) => {            
+            await deviceService.postNvr(req, res);
         })
         .get('/SetDBSyncDisable', (req, res) => {
             syncHelper.setAutoSyncDefault();

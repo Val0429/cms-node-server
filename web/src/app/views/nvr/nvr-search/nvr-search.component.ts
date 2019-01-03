@@ -17,15 +17,15 @@ export class NvrSearchComponent implements OnInit {
   
   @Output() closeModal: EventEmitter<any> = new EventEmitter();
   @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
-  
+  @Input() groupList:Group[];
   iSapP2PServerList: ServerInfo[];
 
   searchList: {device:any, checked:boolean}[];
   
   vendorOptions = NvrManufacturer.SearchList;
   jsonHelper = JsonHelper.instance;
-  flag = {
-    load: false
+  @Input() flag :{
+    busy: boolean
   };
   checkedAll: boolean;
   anyChecked: boolean;
@@ -48,17 +48,19 @@ export class NvrSearchComponent implements OnInit {
   async saveAll(){    
     if (!confirm("Add selected NVR(s)?")) return;
     try{
-      this.flag.load=true;
+      this.flag.busy=true;
         
-      let nvrs = this.searchList.filter(x=>x.checked===true);
-      console.debug("saved nvrs", nvrs);
-
-      for(let nvr of nvrs)  {
-        let newNvr = this.nvrService.createNVRObject(nvr.device);         
-        let editNvr = this.nvrService.setEditModel(newNvr,[],this.iSapP2PServerList);
-        await this.nvrService.saveNvr(newNvr, editNvr).toPromise();
+      let checkedList = this.searchList.filter(x=>x.checked===true);
+      console.debug("saved nvrs", checkedList);
+      const group = this.groupList.find(x=>x.Name == "Non Sub Group").id;
+      let nvrs=[];
+      for(let nvr of checkedList)  {
+        let newNvr = this.nvrService.createNVRObject(nvr.device);      
+        let editNvr = this.nvrService.setEditModel(newNvr, this.groupList, this.iSapP2PServerList);
+        this.nvrService.getEditModel(newNvr, editNvr);   
+        nvrs.push(newNvr);
       }
-      
+      await this.nvrService.saveNvr(nvrs, group);
       alert("Save NVR(s) success");
       this.checkedAll=false;
       this.searchList=[];
@@ -68,7 +70,7 @@ export class NvrSearchComponent implements OnInit {
       console.error(err);
       alert(err);
     }finally{      
-      this.flag.load=false;      
+      this.flag.busy=false;      
     }
   }
 
@@ -78,7 +80,7 @@ export class NvrSearchComponent implements OnInit {
       return;
     }
     try{
-    this.flag.load = true;
+    this.flag.busy = true;
     this.searchList = [];
       for(let vendor of this.selectedVendors){
     const search$ = this.coreService.proxyMediaServer({
@@ -102,7 +104,7 @@ export class NvrSearchComponent implements OnInit {
     }catch(error){
       alert(error);
     }
-      finally{ this.flag.load = false;
+      finally{ this.flag.busy = false;
       }
   }
 

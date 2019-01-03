@@ -4,13 +4,10 @@
       <header>
         <h6>
           <span class="fw-semi-bold">Added NVR</span>
-        </h6>
-        <!-- <div class="widget-controls" style="padding-right: 20px;">
-          <span class="fa fa-refresh widget-controls-icon" placement="top" tooltip="Reload" (click)="reloadEventData()"></span>
-        </div> -->
+        </h6>        
       </header>
       <div class="widget-body no-padding">
-        <div id="accordion" role="tablist" aria-multiselectable="true">
+        <div id="accordion" role="tablist" aria-multiselectable="true" *ngIf="selectorNvrList && selectorNvrList.length>0">
           <div class="card" *ngFor="let nvr of selectorNvrList">
             <div class="card-header" role="tab" (click)="nvr.isCollapsed = !nvr.isCollapsed">
               <span class="text-primary" style="margin-right: 24px;">{{nvr.Data.Id}}</span>
@@ -23,20 +20,27 @@
             <div class="collapse" [class.show]="!nvr.isCollapsed" role="tabpanel" aria-labelledby="headingOne">
               <div class="card-block">
                 <table class="table table-hover table-lg mb-0">
-                  <tbody *ngIf="nvr.Devices.length > 0">
-                    <tr *ngFor="let device of nvr.Devices" (click)="clickDevice(device)" [class.active]="currentEventHandler && currentEventHandler === device.EventHandler">
+                  <tbody *ngIf="nvr.Devices && nvr.Devices.length > 0">
+                    <tr *ngFor="let device of nvr.Devices | paginate: { id: 'nvr'+nvr.Data.Id, itemsPerPage: pageSize, currentPage: nvr.page, totalItems:nvr.total }" (click)="clickDevice(device)" [class.active]="currentEventHandler && currentEventHandler === device.EventHandler">
                       <td width="5%">{{device.Data.Channel}}</td>
                       <td width="45%">{{device.Data.Name}}</td>
                       <td width="50%">{{getEventHandlingTypes(device)}}</td>
                     </tr>
                   </tbody>
-                  <tbody *ngIf="nvr.Devices.length === 0">
+                  <tbody *ngIf="!nvr.Devices || nvr.Devices.length === 0">
                     <tr>
                       <td width="100%">No Device Available.</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
+
+              <pagination-controls 
+                  id="{{'nvr'+nvr.Data.Id}}"
+                  (pageChange)="pageChange(nvr, $event)" 
+                  *ngIf="nvr.Devices && nvr.Devices.length > 0 && nvr.total > pageSize">
+                </pagination-controls>
+
             </div>
           </div>
         </div>
@@ -45,6 +49,6 @@
 
   </div>
   <div class="col-lg-6">
-    <app-event-type-list [currentDevice]="currentDevice" [currentEventHandler]="currentEventHandler" (reloadCallback)="fetchNvrAndDevice()"></app-event-type-list>
+    <app-event-type-list *ngIf="currentDevice" [currentDevice]="currentDevice" [currentEventHandler]="currentEventHandler" (reloadCallback)="fetchNvrAndDevice()"></app-event-type-list>
   </div>
-</div>
+</div> 

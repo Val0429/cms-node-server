@@ -8,32 +8,38 @@
           </strong>
         </legend>
         <div class="float-right">
-          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="searchWindow.show()">
+          <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>          
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="searchWindow.show()" [disabled]="flag.busy">
             Search
           </button>
-          <button *ngIf="cameraConfigs.length > 0" class="btn btn-secondary width-100 mb-xs" role="button" (click)="cloneWindow.show()" [disabled]="flag.save || flag.delete">
+          <button *ngIf="cameraConfigs && cameraConfigs.length > 0" class="btn btn-secondary width-100 mb-xs" role="button" (click)="cloneWindow.show()" [disabled]="flag.busy">
             Clone
           </button>
-          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addDevice()" [disabled]="flag.save || flag.delete">
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addDevice()" [disabled]="flag.busy">
             Create
           </button>
-          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="deleteAll()" [disabled]="!anyChecked || flag.save || flag.delete">
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="deleteAll()" [disabled]="!anyChecked || flag.busy">
             Delete
           </button>
         </div>
       </header>
-      <div class="widget-body" *ngIf="cameraConfigs.length==0">
+      <div class="widget-body" *ngIf="!cameraConfigs">
           
           <div class="text-center" >
             <i class="fa fa-refresh fa-spin fa-fw" style="font-size: 30px;"></i>
           </div>
       </div>
-      <div class="widget-body" *ngIf="cameraConfigs.length>0">          
-            
+      <div class="widget-body" *ngIf="cameraConfigs">     
+        <pagination-controls (pageChange)="changePage($event)" *ngIf="total>pageSize"></pagination-controls>
+        Page Size: <select (change)="optionChange($event.target.value)" [(ngModel)]="pageSize">
+          <option *ngFor="let option of options" [ngValue]="option">{{option}}</option>
+        </select>  
+        Total: {{total}}, Available License: {{availableLicense}}
+        <div style="width:100%;max-height:500px;overflow-y: scroll;">
         <table class="table table-hover table-lg mt-lg mb-0">
           <thead>
             <tr>
-              <th style="width:20px"><input type="checkbox" id="selectAll" (click)="selectAll($event.target.checked)"  [checked]="checkedAll"/></th>
+              <th style="width:20px"><input type="checkbox" id="selectAll" (click)="selectAll($event.target.checked)"  [checked]="checkedAll" [disabled]="flag.busy"/></th>
               <th>ID</th>
               <th>Brand</th>
               <th>Model</th>
@@ -42,8 +48,8 @@
             </tr>
           </thead>
           <tbody >
-            <tr *ngFor="let cam of cameraConfigs | paginate: { itemsPerPage: 50, currentPage: p }" (click)="currentEditCamera = cam.device" [class.active]="cam.device === currentEditCamera">
-              <td><input type="checkbox" (click)="selectCam(cam, $event.target.checked)" [checked]="cam.checked"></td>
+            <tr *ngFor="let cam of cameraConfigs | paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: total }" (click)="currentEditCamera = cam.device" [class.active]="cam.device === currentEditCamera">
+              <td><input type="checkbox" (click)="selectCam(cam, $event.target.checked)" [checked]="cam.checked" [disabled]="flag.busy"></td>
               <td>{{cam.device.Channel}}</td>
               <td>{{cam.brandDisplay}}</td>
               <td>{{cam.device.Config.Model}}</td>
@@ -53,11 +59,13 @@
           </tbody>
         </table>
       </div>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <pagination-controls (pageChange)="changePage($event)" *ngIf="total>pageSize"></pagination-controls>
+      </div>
+      
     </section>
   </div>
   <div class="col-12">
-    <app-camera-editor [currentCamera]="currentEditCamera" (reloadDataEvent)="reloadData()"></app-camera-editor>
+    <app-camera-editor *ngIf="currentEditCamera" [flag]="flag" [ipCameraNvr]="ipCameraNvr" [groupList]="groupList" [currentCamera]="currentEditCamera" (reloadDataEvent)="reloadData()"></app-camera-editor>
   </div>
 </div>
 <div bsModal #searchWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
@@ -71,10 +79,10 @@
         <h4 class="modal-title text-center fw-bold">Search Device</h4>
       </div>
       <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
-        <app-camera-search [cameraConfigs]="cameraConfigs" [ipCameraNvr]="ipCameraNvr" #searchComponent (closeModal)="searchWindow.hide();"></app-camera-search>
+        <app-camera-search [availableLicense]="availableLicense" [flag]="flag" [groupList]="groupList" [ipCameraNvr]="ipCameraNvr" #searchComponent (reloadDataEvent)="reloadData()" (closeModal)="searchWindow.hide();"></app-camera-search>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-gray" type="button" (click)="searchComponent.saveAll()" [disabled]="!searchComponent.anyChecked || searchComponent.flag.load===true">
+        <button class="btn btn-gray" type="button" (click)="searchComponent.saveAll()" [disabled]="searchComponent && (!searchComponent.anyChecked || flag.busy===true)">
           Save 
         </button>
         <button type="button" class="btn btn-gray" (click)="searchWindow.hide();">
@@ -111,8 +119,8 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="clickClone();" [disabled]="flag.save || flag.delete">Clone</button>
+      <div class="modal-footer">        
+        <button type="button" class="btn btn-primary" (click)="clickClone();" [disabled]="flag.busy">Clone</button>
         <button type="button" class="btn btn-gray" (click)="cloneWindow.hide();">Close</button>
       </div>
     </div>

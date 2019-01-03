@@ -1,12 +1,14 @@
 <div class="form-group row">
-  <div class="col-md-9">    
-    <div *ngFor="let item of vendorOptions;" class="device-vendor">
-      <input [disabled]="flag.load" type="checkbox" (change)="setVendors($event.target.checked, item)" id="{{item}}"/><label for="{{item}}">{{item}}</label>
-    </div>
+  <div class="col-md-9">
+    <ng-container *ngFor="let item of vendorOptions;">
+      <div *ngIf="item != 'Dahua'" class="device-vendor">
+        <input [disabled]="flag.busy" type="checkbox" (change)="setVendors($event.target.checked, item)" id="{{item}}"/><label for="{{item}}">{{item}}</label>
+      </div>
+    </ng-container>    
   </div>
   <div class="col-md-3">
-    <button type="button" class="btn btn-default" (click)="clickSearch()" [disabled]="flag.load">
-      <i *ngIf="flag.load" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+    <button type="button" class="btn btn-default" (click)="clickSearch()" [disabled]="flag.busy">
+      <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
       Search
     </button>
   </div>

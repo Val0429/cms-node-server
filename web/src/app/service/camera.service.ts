@@ -1,27 +1,23 @@
 import { Injectable } from '@angular/core';
 import { CoreService } from './core.service';
-import { IDeviceVendor, DeviceVendor } from '../config/device-vendor.config';
+import { DeviceVendor } from '../config/device-vendor.config';
 import { CameraEditorParam } from '../model/camera-editor-param';
 import { ArrayHelper } from '../helper/array.helper';
-import { Nvr, Device, RecordSchedule, EventHandler, Group } from 'app/model/core';
-import { Observable } from 'rxjs';
+import { Nvr, Device } from 'app/model/core';
 import { ParseService } from './parse.service';
-import { GroupService } from './group.service';
 import { CryptoService } from './crypto.service';
-import StringHelper from 'app/helper/string.helper';
 import { ISearchCamera } from 'lib/domain/core';
 import { Http, RequestOptions } from '@angular/http';
 import { UserService } from './user.service';
 
 @Injectable()
 export class CameraService {
-    currentBrandCapability: any; // 從server取回的json格式capability
+    
 
     constructor(
         private httpService:Http,
         private coreService: CoreService, 
         private parseService:ParseService, 
-        private groupService:GroupService,
         private cryptoService:CryptoService,
         private userService:UserService
         ) { }
@@ -33,34 +29,18 @@ export class CameraService {
         return brand ? brand.Name : key;
     }
     /** 取得Model Capability */
-    getCapability(currentCamera:Device, brand: string,  modelList: string[]):Observable<any> {
+    async getCapability(brand: string):Promise<any> {
         console.debug("brand", brand);
         
         const vendor = this.brandList.find(x => x.Key === brand);
         console.debug("this.brandList", this.brandList);
         console.debug("vendor", vendor);
-        console.debug("currentCamera", currentCamera);
-        
         const data = {
         fileName: vendor.FileName
         };
-        return this.coreService.postConfig({ path: this.coreService.urls.URL_BRAND_CAPABILITY, data: data })
-        .map(result => {
-                console.debug("this.currentBrandCapability", result);
-                this.currentBrandCapability = result;
-                
-                for(let model of this.getModelList()){
-                    modelList.push(model);
-                }
-                
-                // If no value or not on list, set value to first option
-                if (StringHelper.isNullOrEmpty(currentCamera.Config.Model)
-                || modelList.indexOf(currentCamera.Config.Model) < 0) {
-                    currentCamera.Config.Model = modelList[0];
-                }  
-            });
+        return await this.coreService.postConfig({ path: this.coreService.urls.URL_BRAND_CAPABILITY, data: data }).toPromise();        
     }
-
+    
     /** 建立新Device */
     getNewDevice(args: { nvrId: string, searchCamera: ISearchCamera, channel: number }) {
     const obj = new Device();
@@ -116,96 +96,82 @@ export class CameraService {
     };
     return obj;
   }
+  async getDevice(nvrId:string, page:number, pageSize:number):Promise<Device[]>{
+    // REST server performance is too slow, will fix it later
+    // let options=new RequestOptions({ headers:this.coreService.parseHeaders});
+    // let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device?nvrId=${nvrId}&page=${page}&pageSize=${pageSize}`, options ).toPromise();
+    // return response.json();
 
-  private async updateSchedule(currentCamera:Device):Promise<void>{
-    if(!currentCamera.Config.Stream || currentCamera.Config.Stream.length==0)return;
-
-    let schedule = await this.getExistSetupData(currentCamera);
-    console.debug("schedule", schedule);
-    console.debug("this.currentCamera.Config.Stream", currentCamera.Config.Stream);
-    let deletedStream = [];
-    for(let stream of schedule){
-      let find = currentCamera.Config.Stream.find(x=>x.Id == stream.StreamId)
-      if(!find) deletedStream.push(stream);      
-    }
-    console.debug("deleted stream", deletedStream);
-    await Observable.fromPromise(Parse.Object.destroyAll(deletedStream)).toPromise();
+    let devices = await this.parseService.fetchData({
+      type: Device,
+      filter: query=>query
+          .equalTo("NvrId", nvrId)
+          .ascending('Channel')
+          .limit(pageSize)
+          .skip((page-1)*pageSize)
+    });
+    return devices;
   }
-  
-  private async fetchSetupData(currentCamera:Device):Promise<RecordSchedule[]> {
-    let setupData:RecordSchedule[] = undefined;
-    console.debug("fetch setupData", currentCamera.NvrId, currentCamera.Channel);
-    let fetch$ = Observable.fromPromise(this.parseService.fetchData({
-      type: RecordSchedule,
-      filter: query => query
-        // .include('ScheduleTemplate')
-        .equalTo('NvrId', currentCamera.NvrId)
-        .equalTo('ChannelId', currentCamera.Channel)
-        .limit(30000)
-    }));
-
-    await fetch$.map(result => setupData = result).toPromise();
-    return setupData;
-  }
-  private async getExistSetupData(currentCamera:Device):Promise<RecordSchedule[]> {
-        let setupData = await this.fetchSetupData(currentCamera);
-        console.debug("setup data", setupData);
-        
-        if(!setupData)return [];
-
-        const result = setupData.filter(x => x.NvrId === currentCamera.NvrId && x.ChannelId === currentCamera.Channel);
-        return result;      
-  }
-  async saveCamera(currentCamera:Device, ipCameraNvr:Nvr, groupList:Group[], selectedSubGroup:string, editorParam: CameraEditorParam, tags:string):Promise<void>{
-
-    currentCamera.Name = this.coreService.stripScript(currentCamera.Name);
-    currentCamera.Tags = tags.split(',');
-    // this.currentCamera.Tags = this.tags.replace(/ /g, '').split(',');
-    if(editorParam){
-        editorParam.getStreamSaveNumberBeforeSave();
-        editorParam.getResolutionBeforeSave();
-        editorParam.removeAttributesBeforeSave();
-    }
-    console.debug("this.currentCamera.Config", currentCamera.Config);
-    // 加密
-    currentCamera.Config.Authentication.Account = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Account);
-    currentCamera.Config.Authentication.Password = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Password);
-    console.debug("save camera2");
-    // 將RTSPURI組合完整
-    if (currentCamera.Config.Brand === 'Customization') {
-      currentCamera.Config.Stream.forEach(str => {
-        str.RTSPURI = `rtsp://${currentCamera.Config.IPAddress}:${str.Port.RTSP}${str.RTSPURI.indexOf('/') < 0 ? "/" : ""}${str.RTSPURI || ''}`;
-      });
-    }
-    console.debug("this.currentCamera", currentCamera);
-    const save$ = Observable.fromPromise(currentCamera.save())
-      .map(result => {
-        this.coreService.addNotifyData({
-          path: this.coreService.urls.URL_CLASS_NVR,
-          objectId: ipCameraNvr.id
-        });
-        return this.coreService.notifyWithParseResult({
-          parseResult: [result], path: this.coreService.urls.URL_CLASS_DEVICE
-        });
-      });
-    console.debug("this.selectedSubGroup", selectedSubGroup);
+  async saveCamera(cams:Device[], ipCameraNvr:Nvr, selectedSubGroup:string, tags:string):Promise<Device>{
+    cams.forEach(currentCamera=>{
+      currentCamera.Name = this.coreService.stripScript(currentCamera.Name);
+      currentCamera.Tags = tags.split(',');    
       
-    return await save$
-      .switchMap(() =>         
-          this.groupService.setChannelGroup(groupList, { Nvr: ipCameraNvr.Id, Channel: currentCamera.Channel }, selectedSubGroup ? selectedSubGroup : undefined)          
-      )
-      .switchMap(async()=>await this.updateSchedule(currentCamera))
-      .toPromise();
+      // 加密
+      currentCamera.Config.Authentication.Account = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Account);
+      currentCamera.Config.Authentication.Password = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Password);
+      
+      // 將RTSPURI組合完整
+      if (currentCamera.Config.Brand === 'Customization') {
+        currentCamera.Config.Stream.forEach(str => {
+          str.RTSPURI = `rtsp://${currentCamera.Config.IPAddress}:${str.Port.RTSP || 80}${!str.RTSPURI || str.RTSPURI.indexOf('/') < 0 ? "/" : ""}${str.RTSPURI || ''}`;
+        });
+      }
+      console.debug("this.currentCamera", currentCamera);
+    });    
+
+    let auth=this.auth;
+
+    let body = { 
+      cams, 
+      selectedSubGroup,      
+      auth, 
+      nvrObjectId:ipCameraNvr.id,
+      nvrId:ipCameraNvr.Id
+    };
+    let options=new RequestOptions({ headers:this.coreService.parseHeaders});
+    
+    let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/device", body, options).toPromise();
+    return result.json();
+
   }
- 
-    async deleteCam(camIds : string[], nvrObjectId:string): Promise<void>{
+ async getNewChannelId(nvrId:string, count:number):Promise<number[]>{
+    let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/channel/${nvrId}/${count}`, 
+    new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
+    let result = response.json();
+    console.debug("result", result);
+    return result;
+ }
+ async getDeviceCount(nvrId:string):Promise<number>{
+  // REST server performance is too slow, will fix it later
+  // let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/count/${nvrId}`, 
+  // new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
+  // let result = response.json();
+  // return result.count
+
+  let result = await this.parseService.countFetch({type:Device, filter:query=>query.equalTo("NvrId", nvrId)});  
+  return result;
+}
+
+    async deleteCam(camIds : string[], nvrObjectId:string): Promise<any>{
       let result = await this.httpService.delete(this.parseService.parseServerUrl + "/cms/device", 
         new RequestOptions({ headers:this.coreService.parseHeaders, body:{ objectIds: camIds, auth:this.auth, nvrObjectId}})).toPromise();
+        return result.json();
     }
     get auth():string{
       return btoa(`${this.userService.storage['username']}:${this.userService.storage['password']}`);       
     }
-    async cloneCam(cam:Device, quantity:Number, ipCameraNvr:Nvr): Promise<void>{            
+    async cloneCam(cam:Device, quantity:Number, ipCameraNvr:Nvr): Promise<any>{            
       let account = this.cryptoService.encrypt4DB(cam.Config.Authentication.Account);
       let password = this.cryptoService.encrypt4DB(cam.Config.Authentication.Password);
       let auth=this.auth;
@@ -219,48 +185,34 @@ export class CameraService {
       };
       let options=new RequestOptions({ headers:this.coreService.parseHeaders});
       console.debug("options", options);
-      let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/device", body, options).toPromise();
+      let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/device/clone", body, options).toPromise();
+      return result.json();
     }
-        /** 取得適當的新ChannelId */
-    getNewChannelId(cameraConfigs:Device[], tempChannel?: Device[]): number {
-      const list = cameraConfigs.concat(tempChannel || []);
-      list.sort(function (a, b) {
-        return (a.Channel > b.Channel) ? 1 : ((b.Channel > a.Channel) ? -1 : 0);
-      });
-      let channel = 0;
-      let found:boolean = true;
-      let listArray = list.map(function(e){return e.Channel});
-      // find empty channel
-      while(found) {
-        found = listArray.indexOf(++channel) > -1;
-      }
-      return channel;
-      
-    }
+       
     /** 取得當前Brand底下所有Model型號 */
-    getModelList(): string[] {
+    getModelList(currentBrandCapability:any): string[] {
         const result = [];
-        if (!this.currentBrandCapability) {
+        if (!currentBrandCapability) {
             return result;
         } else {
-            if (Array.isArray(this.currentBrandCapability.Devices.Device)) {
-                this.currentBrandCapability.Devices.Device.forEach(element => {
+            if (Array.isArray(currentBrandCapability.Devices.Device)) {
+                currentBrandCapability.Devices.Device.forEach(element => {
                     result.push(element.Model);
                 });
                 ArrayHelper.sortString(result);
             } else {
-                result.push(this.currentBrandCapability.Devices.Device.Model);
+                result.push(currentBrandCapability.Devices.Device.Model);
             }
             return result;
         }
     }
 
     /** 讀取指定model轉為CameraEditorParam物件 */
-    getCameraEditorParam(model: string, data: Device):any {
-        console.debug("currentBrandCapability", this.currentBrandCapability, model, data);
-        if (!this.currentBrandCapability) {
+    getCameraEditorParam(model: string, data: Device, currentBrandCapability):any {
+        console.debug("currentBrandCapability", currentBrandCapability, model, data);
+        if (!currentBrandCapability) {
             return undefined;
         }
-        return new CameraEditorParam(this.currentBrandCapability, model, data);
+        return new CameraEditorParam(currentBrandCapability, model, data);
     }
 }

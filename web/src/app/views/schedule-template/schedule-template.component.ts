@@ -137,8 +137,8 @@ export class ScheduleTemplateComponent implements OnInit {
 
   /** 點擊其中一種Template, 開始套用流程 */
   clickScheduleTemplate(data: any, setupMode: number, isEdit: boolean) {
-    this.currentTemplate = isEdit ? undefined : data;
-    this.currentEditTemplate = isEdit ? data : undefined;
+    this.currentTemplate = isEdit === true ? undefined : data;
+    this.currentEditTemplate = isEdit === true ? data : undefined;
     this.templateSetupMode = setupMode;
   }
 }
