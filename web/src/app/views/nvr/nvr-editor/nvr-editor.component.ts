@@ -141,10 +141,11 @@ export class NvrEditorComponent implements OnInit, OnChanges {
       this.flag.busy = true;      
       
       this.nvrService.getEditModel(this.editNvr, this.currentEditModel);
-      await Promise.all([
-        this.nvrService.saveNvr([this.editNvr], this.currentEditModel.Group),
-        this.saveDevices()
-      ]);
+      await this.nvrService.saveNvr([this.editNvr], this.currentEditModel.Group).then(async results => {          
+        this.editNvr = await this.parseService.getDataById({type:Nvr, objectId:results[0].objectId});              
+      });
+      await this.saveDevices();
+      
       this.tempDevices = undefined;
       this.reloadAfterSave();
       alert('Update Success');

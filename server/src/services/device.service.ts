@@ -26,11 +26,14 @@ export class DeviceService {
         let groups = await parseService.fetchData({type:Group, 
             filter: query=> query.equalTo("Name", "Non Main Group").limit(1)})
         if(!groups || groups.length == 0){
-
+            
+            let groupList:Group[];
+            let defaultNvr:Nvr;
             console.log("create Non Sub Group");
             let nonSubGroup = new Group();
             nonSubGroup.Name="Non Sub Group";
             nonSubGroup.Level = "1";
+            
             await nonSubGroup.save();
 
             console.log("create Non Main Group");
@@ -38,8 +41,37 @@ export class DeviceService {
             nonMainGroup.Name="Non Main Group";
             nonMainGroup.Level = "0";                
             nonMainGroup.SubGroup=[nonSubGroup.id];
+
             await nonMainGroup.save();
             
+            await Promise.all([this.getGroupList().then(res=>groupList=res),this.getDefaultNvr().then(res=>defaultNvr=res)]);            
+            
+            let cams:Device[]; 
+            let nvrs:Nvr[]; 
+            
+            await Promise.all([
+                parseService.fetchData({type:Nvr, filter:query=>query.limit(Number.MAX_SAFE_INTEGER)}).then(res=>nvrs=res),
+                this.getAllDevice(defaultNvr.Id).then(res=>cams=res)
+            ]);
+
+            let promises=[];
+            //set non group cams
+            for(let cam of cams){
+                let selectedSubGroup = this.findDeviceGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel });                
+                if(selectedSubGroup)continue;                                    
+                //orphan cam
+                promises.push(this.setChannelGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, nonSubGroup.id));                
+            }
+
+            for (let nvr of nvrs.filter(x=>x.id!=defaultNvr.id)){
+                let group = groupList.find(data => data.Nvr && data.Nvr.indexOf(nvr.Id) >= 0);
+                if(group)continue;
+                //orphan nvr
+                promises.push(this.setNvrGroup(nvr.Id, nonSubGroup.id, groupList));
+            }
+            await Promise.all(promises);
+            await this.saveGroupList(groupList);
+
         }
     }
 
