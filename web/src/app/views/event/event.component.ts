@@ -27,40 +27,42 @@ export class EventComponent implements OnInit {
   async fetchNvrAndDevice() {
     this.selectorNvrList = [];
 
-    let nvrs = await Observable.fromPromise(this.parseService.fetchData({
-      type: Nvr,
-      filter: query => query.ascending('Id').limit(30000)
-    })).toPromise();
+    let nvrs:Nvr[];
     
-    this.eventHandlers = await Observable.fromPromise(this.parseService.fetchData({
+    let getEvents$ = this.parseService.fetchData({
       type: EventHandler,
       filter: query => query.limit(30000)
-    })).toPromise();
-
+    }).then(res=>this.eventHandlers = res);
     
-    nvrs.sort(function (a, b) {
-      return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
+    let getNvrs$ = this.parseService.fetchData({
+      type: Nvr,
+      filter: query => query.ascending('Id').limit(30000)
+    }).then(res=>{
+        nvrs=res;
+        nvrs.sort(function (a, b) {
+          return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
+        });
     });
-        
-    for(let nvr of nvrs){
-      
-      
-
-      const devices = await this.cameraService.getDevice(nvr.Id, 1, this.pageSize);
-      let total = await this.cameraService.getDeviceCount(nvr.Id);
-
+    
+    await Promise.all([getEvents$, getNvrs$]);
+    let promises=[];
+    for(let nvr of nvrs){      
       const newObj: ISelectorNvrModel = {
-        Data: nvr, Devices: [], isCollapsed: true, page:1, total:total
+        Data: nvr, Devices: [], isCollapsed: true, page:1, total:0
       };
-
-      devices.forEach(device => {
-        const handler = this.eventHandlers.find(x => x.NvrId === nvr.Id && x.DeviceId === device.Channel);
-        newObj.Devices.push({ Data: device, EventHandler: handler });
+      let getDevice$ = this.cameraService.getDevice(nvr.Id, 1, this.pageSize).then(devices=>{ 
+        devices.forEach(device => {
+          const handler = this.eventHandlers.find(x => x.NvrId === nvr.Id && x.DeviceId === device.Channel);
+          newObj.Devices.push({ Data: device, EventHandler: handler });
+        });
       });
-
-      this.selectorNvrList.push(newObj);
-    };
       
+      let getDeviceCount$ = this.cameraService.getDeviceCount(nvr.Id).then(res=> newObj.total = res);
+      this.selectorNvrList.push(newObj);
+      promises.push(getDevice$);
+      promises.push(getDeviceCount$);
+    };
+    await Promise.all(promises);
     console.debug("this.selectorNvrList", this.selectorNvrList);
   }
   async pageChange(target:ISelectorNvrModel, event:number){
