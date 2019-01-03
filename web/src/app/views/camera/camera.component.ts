@@ -203,8 +203,7 @@ export class CameraComponent implements OnInit {
       if (this.cloneCameraParam.quantity > this.availableLicense) {
         throw new Error("Not enough license to add new camera");        
       }      
-      let result = await this.cameraService.cloneCam(this.cloneCameraParam.device, this.cloneCameraParam.quantity, this.ipCameraNvr);                  
-      console.debug("result.target", result.target);
+      let result = await this.cameraService.cloneCam(this.cloneCameraParam.device, this.cloneCameraParam.quantity, this.ipCameraNvr);      
       alert("Clone Success");
     }catch(err){
       console.error(err);

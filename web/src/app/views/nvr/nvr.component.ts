@@ -17,7 +17,8 @@ export class NvrComponent implements OnInit {
   
   @ViewChild('searchComponent') searchComponent:NvrSearchComponent;
   nvrList: NvrList[];
-  
+  p=1;
+  pageSize=50;
   licenseInfo: any;
   currentEditNVR: Nvr;
   checkedAll :boolean = false;
@@ -36,12 +37,7 @@ export class NvrComponent implements OnInit {
     }
 
   async ngOnInit() {
-    const getGroup$ = this.parseService.fetchData({
-      type: Group,
-      filter: query => query.limit(30000)
-    }).then(groups => {
-      this.groupList = groups;       
-    });
+    
     const getServerInfo$ = this.parseService.fetchData({
       type: ServerInfo,
       filter: query => query.matches('Type', new RegExp('SmartMedia'), 'i')
@@ -50,8 +46,17 @@ export class NvrComponent implements OnInit {
       console.debug("iSapP2PServerList",this.iSapP2PServerList);
     });
 
-    await Observable.forkJoin([getGroup$, getServerInfo$, this.reloadData()]).toPromise();
+    await Observable.forkJoin([this.getGroup(), getServerInfo$, this.reloadData()]).toPromise();
     
+  }
+
+  private async getGroup() {
+    return await this.parseService.fetchData({
+      type: Group,
+      filter: query => query.limit(Number.MAX_SAFE_INTEGER)
+    }).then(groups => {
+      this.groupList = groups;
+    });
   }
 
   async reloadData() {
@@ -64,6 +69,7 @@ export class NvrComponent implements OnInit {
         this.nvrList.forEach(nvr=>{
           promises.push(this.cameraService.getDeviceCount(nvr.device.Id).then(num=>nvr.quantity = num));
         });          
+        promises.push(this.getGroup());
         await Observable.forkJoin(promises).toPromise();
       });
   }
@@ -75,6 +81,9 @@ export class NvrComponent implements OnInit {
       filter: query => query.limit(30000).ascending("Id")
     }).then(nvrs => {
       this.nvrList = [];
+      nvrs.sort(function (a, b) {
+        return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
+      });
       nvrs.forEach(nvr=>{
         this.nvrList.push({device:nvr, checked:false, quantity:0});
       });
@@ -128,9 +137,9 @@ export class NvrComponent implements OnInit {
   }
 
   // 取得子模組回傳新的NVR物件並新增
-  addNVR($event?) {
-    const newObj = $event ? this.nvrService.createNVRObject($event.nvr) : this.nvrService.createNVRObject();
-    const confirmText = $event ? 'Add this NVR?' : 'Create new NVR?';
+  addNVR() {
+    const newObj = this.nvrService.createNVRObject();
+    const confirmText =  'Create new NVR?';
     if (confirm(confirmText)) {
       this.currentEditNVR = newObj;
     }

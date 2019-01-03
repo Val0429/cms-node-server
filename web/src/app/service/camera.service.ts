@@ -124,7 +124,7 @@ export class CameraService {
       // 將RTSPURI組合完整
       if (currentCamera.Config.Brand === 'Customization') {
         currentCamera.Config.Stream.forEach(str => {
-          str.RTSPURI = `rtsp://${currentCamera.Config.IPAddress}:${str.Port.RTSP}${str.RTSPURI.indexOf('/') < 0 ? "/" : ""}${str.RTSPURI || ''}`;
+          str.RTSPURI = `rtsp://${currentCamera.Config.IPAddress}:${str.Port.RTSP || 80}${!str.RTSPURI || str.RTSPURI.indexOf('/') < 0 ? "/" : ""}${str.RTSPURI || ''}`;
         });
       }
       console.debug("this.currentCamera", currentCamera);
@@ -162,11 +162,7 @@ export class CameraService {
   let result = await this.parseService.countFetch({type:Device, filter:query=>query.equalTo("NvrId", nvrId)});  
   return result;
 }
- async getStatus(): Promise<any>{
-  let result = await this.httpService.get(this.parseService.parseServerUrl + "/cms/device/status", 
-    new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
-    return result.json();
-}
+
     async deleteCam(camIds : string[], nvrObjectId:string): Promise<any>{
       let result = await this.httpService.delete(this.parseService.parseServerUrl + "/cms/device", 
         new RequestOptions({ headers:this.coreService.parseHeaders, body:{ objectIds: camIds, auth:this.auth, nvrObjectId}})).toPromise();

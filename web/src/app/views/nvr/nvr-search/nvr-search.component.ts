@@ -50,15 +50,17 @@ export class NvrSearchComponent implements OnInit {
     try{
       this.flag.busy=true;
         
-      let nvrs = this.searchList.filter(x=>x.checked===true);
-      console.debug("saved nvrs", nvrs);
-
-      for(let nvr of nvrs)  {
-        let newNvr = this.nvrService.createNVRObject(nvr.device);         
+      let checkedList = this.searchList.filter(x=>x.checked===true);
+      console.debug("saved nvrs", checkedList);
+      const group = this.groupList.find(x=>x.Name == "Non Sub Group").id;
+      let nvrs=[];
+      for(let nvr of checkedList)  {
+        let newNvr = this.nvrService.createNVRObject(nvr.device);      
         let editNvr = this.nvrService.setEditModel(newNvr, this.groupList, this.iSapP2PServerList);
-        await this.nvrService.saveNvr(newNvr, editNvr).toPromise();
+        this.nvrService.getEditModel(newNvr, editNvr);   
+        nvrs.push(newNvr);
       }
-      
+      await this.nvrService.saveNvr(nvrs, group);
       alert("Save NVR(s) success");
       this.checkedAll=false;
       this.searchList=[];

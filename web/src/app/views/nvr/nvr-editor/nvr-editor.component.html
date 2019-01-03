@@ -154,7 +154,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of displayDevices | paginate: { itemsPerPage: 50, currentPage: p }">
+              <tr *ngFor="let item of displayDevices | paginate: { itemsPerPage: pageSize, currentPage: p }">
                 <td>
                   <input type="checkbox" [checked]="item.checked" (change)="item.checked = !item.checked" [disabled]="currentEditModel.Manufacture === 'SmartMedia'">
                 </td>
@@ -173,7 +173,7 @@
               </tr>
             </tbody>
           </table>
-          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          <pagination-controls (pageChange)="p = $event" *ngIf="displayDevices && displayDevices.length>pageSize"></pagination-controls>
         </div>
       </div>
     </ng-container>

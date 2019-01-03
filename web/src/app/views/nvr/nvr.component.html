@@ -46,7 +46,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let nvr of nvrList" (click)="clickEditNVR(nvr.device)" [class.active]="nvr.device == currentEditNVR">
+            <tr *ngFor="let nvr of nvrList | paginate: { itemsPerPage: pageSize, currentPage: p }" (click)="clickEditNVR(nvr.device)" [class.active]="nvr.device == currentEditNVR">
               <td><input *ngIf="nvr.device.Id!=='1' && nvr.device.Id!=='2'" type="checkbox" (click)="selectNvr(nvr, $event.target.checked)" [checked]="nvr.checked" [disabled]="flag.busy"></td>
               <td>{{nvr.device.Id}}</td>
               <td>{{nvr.device.Name}}</td>
@@ -58,11 +58,12 @@
             </tr>
           </tbody>
         </table>
+        <pagination-controls (pageChange)="p = $event" *ngIf="nvrList && nvrList.length>pageSize"></pagination-controls>
       </div>
     </section>
   </div>
   <div class="col-12">
-    <app-nvr-editor *ngIf="currentEditNVR" [flag]="flag" [iSapP2PServerList]="iSapP2PServerList" [groupList]="groupList" #editor [editNvr]="currentEditNVR" (reloadDataEvent)="reloadData()"></app-nvr-editor>
+    <app-nvr-editor *ngIf="currentEditNVR" [pageSize]="pageSize" [flag]="flag" [iSapP2PServerList]="iSapP2PServerList" [groupList]="groupList" #editor [editNvr]="currentEditNVR" (reloadDataEvent)="reloadData()"></app-nvr-editor>
   </div>
 </div>
 
