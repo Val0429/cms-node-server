@@ -68,7 +68,10 @@ export class GroupComponent implements OnInit {
   /** Modal點擊儲存事件 */
   clickModalSave() {
     const group = this.currentEditData || new Group();
-
+    if(this.editDataModel.Name =="Non Main Group" || this.editDataModel.Name =="Non Sub Group"){
+      alert("Invalid group name!")
+      return;
+    }
     group.Name = this.editDataModel.Name;
     group.Level = this.editDataModel.Level;
     group.SubGroup = this.editDataModel.SubGroup;
