@@ -103,7 +103,7 @@ export class DeviceService {
             
             let availableLicense = await this.getLicenseAvailableCount("00171");
             if(availableLicense < quantity){
-                throw new Error("Not enough license");
+                throw new Error(`Not enough license, ${availableLicense}`);
             }
 
             if(!nvrObjectId){
@@ -169,8 +169,8 @@ export class DeviceService {
     
     
     async delete(req:Request, res:Response){
-        try{           
-
+        try{
+        
             coreService.auth = req.body.auth;            
             let {nvrObjectId, objectIds} = req.body;
 
@@ -179,8 +179,21 @@ export class DeviceService {
                 nvrObjectId = nvr.id;
             }
             
-            let groupList = await this.getGroupList();                        
-            await this.deleteCamAsync(objectIds, nvrObjectId, groupList);
+            let groupList = await this.getGroupList(); 
+            
+            let promises=[]
+            console.log("delete start", new Date());
+            for (let objectId of objectIds) {                
+                let delCam = parseService.getDataById({ type: Device, objectId }).then(async cam=>{
+                    await Promise.all([this.deleteCam(cam, nvrObjectId, groupList, true), this.deleteCamRelatedData(cam)]);
+                });
+                promises.push(delCam);
+            }
+            //we put save group at the last process to prevent overwritten by concurrent processes            
+            await Promise.all(promises);
+            await this.saveGroupList(groupList);
+            console.log("delete end", new Date());              
+            
             res.json({message:"success"});
         }
         catch(err){
@@ -552,30 +565,6 @@ async cloneCam(cam:Device, quantity:number, nvrObjectId:string, groupList:Group[
   }
 }
 
-private async deleteCamAsync(objectIds:string[], nvrObjectId: any, groupList: Group[]) {
-    try{
-        
-        let promises=[]
-        console.log("delete start", new Date());
-        for (let objectId of objectIds) {                
-            let delCam = parseService.getDataById({ type: Device, objectId }).then(async cam=>{
-                await Promise.all([this.deleteCam(cam, nvrObjectId, groupList, true), this.deleteCamRelatedData(cam)]);
-            });
-            promises.push(delCam);
-        }
-        //we put save group at the last process to prevent overwritten by concurrent processes            
-        await Promise.all(promises);
-        await this.saveGroupList(groupList);
-        console.log("delete end", new Date());
-      }
-      catch(err){
-        console.error(err);            
-      }
-      finally{
-                  
-      }
-    
-}
 async deleteCam(cam:Device, nvrObjectId:string, groupList: Group[], notifyNvr:boolean){   
     let notifications=[];
     if(notifyNvr === true){
@@ -655,7 +644,10 @@ async getLicenseLimit(lic) {
     });
     
         
-    if(!result || !result.License) return 0;
+    if(!result || !result.License){
+        console.log("getLicenseResult", result);
+        return 0;
+    } 
 
     const temp = result.License;
     temp.Adaptor = this.toArray(temp.Adaptor);

@@ -1,10 +1,10 @@
 import { IBatchRequest } from "lib/domain/core";
-import { ConfigHelper, LogHelper } from "../helpers";
+import { ConfigHelper } from "../helpers";
 import { Observable } from "rxjs";
 
 var request = require('request-promise');
 const configHelper = ConfigHelper.instance;
-const logHelper=LogHelper.instance;
+
 
 export class CoreService {
   static get instance() {
@@ -12,15 +12,13 @@ export class CoreService {
   }
 
 private static _instance: CoreService;
-
   auth:string;
   urls = urls; 
 
-  
-  
-
   constructor(
-  ) { }
+  ) { 
+    this.sendNotifications();
+  }
 
   
   /** 新增資料至notifyList */
@@ -60,20 +58,18 @@ private static _instance: CoreService;
       body,
       json: true
     };
-    
-    return await Observable.fromPromise(
-      request(options)
-      .then(function (parsedBody) {        
-        return parsedBody;
-      }).catch(err=>{
+
+    return await request(options)
+      .catch(err=>{
         console.error("error from proxy server");
-      })
-    ).toPromise();
+      });
   }
+
   /** Call CGI通知CMS Client */
-  async notify(body:NotificationBody[]) {
-    if(!body || body.length<=0) return;
-    try{
+  async notify(body:NotificationBody[], immediate?:boolean) {
+    if(!body || body.length<=0) return;    
+    
+    if(immediate===true){      
       await this.proxyMediaServer({            
         method: 'POST',
         path: this.urls.URL_MEDIA_NOTIFY,
@@ -81,13 +77,28 @@ private static _instance: CoreService;
           notify: body
         }
       });
-    }catch(err){
-      console.error("error from notification:", err);
-    }      
-    
+    }else{
+      this.notifications.push({body});
+    }
   }
  
-
+  notifications=[];
+  //check and send notification every 1 second to prevent media server overwhelmed by too many requests
+  sendNotifications(){
+    setInterval(async ()=>{
+      if(this.notifications.length==0)return;
+      
+      let data = this.notifications.splice(0, 1);
+      
+      await this.proxyMediaServer({            
+        method: 'POST',
+        path: this.urls.URL_MEDIA_NOTIFY,
+        body: {
+          notify: data[0].body
+        }
+      });      
+    }, 1000)
+  }
 }
 
 export interface NotificationBody{path: string, objectId: string };
