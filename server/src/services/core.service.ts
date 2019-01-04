@@ -1,6 +1,5 @@
 import { IBatchRequest } from "lib/domain/core";
 import { ConfigHelper } from "../helpers";
-import { Observable } from "rxjs";
 
 var request = require('request-promise');
 const configHelper = ConfigHelper.instance;
@@ -61,7 +60,7 @@ private static _instance: CoreService;
 
     return await request(options)
       .catch(err=>{
-        console.error("error from proxy server");
+        console.error("error from proxy server", err.message ? err.message : err);
       });
   }
 
