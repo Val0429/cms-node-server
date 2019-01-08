@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ParseService } from 'app/service/parse.service';
-import { Nvr, Device, Group, ServerInfo } from 'app/model/core';
+import { Nvr, Group, ServerInfo } from 'app/model/core';
 
 import { NvrService } from 'app/service/nvr.service';
 import { NvrSearchComponent } from './nvr-search/nvr-search.component';
 import { CameraService } from 'app/service/camera.service';
+import { PagerService } from 'app/service/pager.service';
+
 
 
 @Component({
@@ -17,10 +19,7 @@ export class NvrComponent implements OnInit {
   
   @ViewChild('searchComponent') searchComponent:NvrSearchComponent;
   nvrList: NvrList[];
-  p=1;
-  options=[20, 50, 100, 500, 1000];
-  total=0;
-  pageSize=50;
+  
   licenseInfo: any;
   currentEditNVR: Nvr;
   checkedAll :boolean = false;
@@ -30,12 +29,15 @@ export class NvrComponent implements OnInit {
   flag:{
     busy:boolean;
   }
+  paging:PagerService = new PagerService();
   constructor(
     private parseService: ParseService,
     private nvrService:NvrService,
-    private cameraService:CameraService    
+    private cameraService:CameraService ,
+    
     ) { 
-      this.flag = {busy: false};   
+      this.flag = {busy: false}; 
+      
     }
 
   async ngOnInit() {
@@ -80,18 +82,18 @@ export class NvrComponent implements OnInit {
 
   /** 取得所有Nvr */
   async getNvrs() {
-    const getNvrs$ = this.nvrService.getNvrList(this.p, this.pageSize).then(nvrs => {
+    const getNvrs$ = this.nvrService.getNvrList(this.paging.page, this.paging.pageSize).then(nvrs => {
       this.nvrList = [];      
       nvrs.forEach(nvr=>{
         this.nvrList.push({device:nvr, checked:false, quantity:0});
       });
     });
-    const getTotal$ = this.nvrService.getNvrCount().then(total=> this.total=total);
+    const getTotal$ = this.nvrService.getNvrCount().then(total=> this.paging.total=total);
     return await Promise.all([getNvrs$, getTotal$]);
   }
 
   async pageChange(event:number){
-    this.p = event;
+    this.paging.page = event;
     await this.reloadData();
   }
   checkSelected(){

@@ -8,6 +8,7 @@ import { Device, Nvr, Group } from 'app/model/core';
 import { DeviceVendor } from 'app/config/device-vendor.config';
 import { CameraService } from 'app/service/camera.service';
 import { CameraSearchComponent } from './camera-search/camera-search.component';
+import { PagerService } from 'app/service/pager.service';
 
 @Component({
   selector: 'app-camera',
@@ -16,11 +17,11 @@ import { CameraSearchComponent } from './camera-search/camera-search.component';
 })
 
 export class CameraComponent implements OnInit {
-  p: number = 1;
+  
   flag = {
     busy: false
   };
-  options=[20, 50, 100, 500, 1000];
+  
   brandList = DeviceVendor;
   checkedAll: boolean = false;
   anyChecked: boolean = false;
@@ -36,8 +37,7 @@ export class CameraComponent implements OnInit {
     device: undefined,
     quantity: 0
   };
-  pageSize:number=50;
-  total:number=0;
+  paging:PagerService = new PagerService();
   
  @ViewChild("searchComponent") searchComponent:CameraSearchComponent;
 
@@ -45,15 +45,18 @@ export class CameraComponent implements OnInit {
     private parseService: ParseService,
     private cryptoService: CryptoService,
     private licenseService: LicenseService,    
-    private cameraService: CameraService
-  ) { }
+    private cameraService: CameraService,
+    
+  ) { 
+    
+  }
 
   async ngOnInit() {
     await Observable.forkJoin([
       this.getIPCameraNvr().then(async nvr=>{
         this.ipCameraNvr = nvr;
         await Observable.forkJoin([
-          this.cameraService.getDeviceCount(this.ipCameraNvr.Id).then(total=>this.total=total),
+          this.cameraService.getDeviceCount(this.ipCameraNvr.Id).then(total=>this.paging.total=total),
           this.fetchDevice()
         ]).toPromise();
       }),
@@ -110,7 +113,7 @@ export class CameraComponent implements OnInit {
     this.currentEditCamera = undefined;
     await Observable.forkJoin([
       this.getGroup().then(groupList=>this.groupList = groupList),
-      this.cameraService.getDeviceCount(this.ipCameraNvr.Id).then(total=>this.total = total),
+      this.cameraService.getDeviceCount(this.ipCameraNvr.Id).then(total=>this.paging.total = total),
       this.fetchDevice(),  
       this.getAvailableLicense(),
     ]).toPromise();    
@@ -118,7 +121,7 @@ export class CameraComponent implements OnInit {
   }
 
   async changePage($event:number){
-    this.p=$event;
+    this.paging.page=$event;
     this.currentEditCamera = undefined;
     await this.fetchDevice();
     this.checkSelected();    
@@ -155,7 +158,7 @@ export class CameraComponent implements OnInit {
   async fetchDevice() {    
     this.cameraConfigs=[];
     
-    let devices = await this.cameraService.getDevice(this.ipCameraNvr.Id, this.p, this.pageSize);         
+    let devices = await this.cameraService.getDevice(this.ipCameraNvr.Id, this.paging.page, this.paging.pageSize);         
     
     this.cameraConfigs = devices && devices.length > 0 ? 
     devices.map(dev => {

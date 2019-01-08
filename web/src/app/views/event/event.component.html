@@ -8,7 +8,7 @@
       </header>
       <div class="widget-body no-padding">
         <div id="accordion" role="tablist" aria-multiselectable="true" *ngIf="selectorNvrList && selectorNvrList.length>0">
-          <div class="card" *ngFor="let nvr of selectorNvrList | paginate: { id: 'nvrList', itemsPerPage: pageSize, currentPage: p, totalItems:total }">
+          <div class="card" *ngFor="let nvr of selectorNvrList | paginate: { id: 'nvrList', itemsPerPage: paging.pageSize, currentPage: paging.page, totalItems:paging.total }">
             <div class="card-header" role="tab" (click)="nvr.isCollapsed = !nvr.isCollapsed">
               <span class="text-primary" style="margin-right: 24px;">{{nvr.Data.Id}}</span>
               <span class="text-primary">{{nvr.Data.Name}}</span>
@@ -21,7 +21,7 @@
               <div class="card-block">
                 <table class="table table-hover table-lg mb-0">
                   <tbody *ngIf="nvr.Devices && nvr.Devices.length > 0">
-                    <tr *ngFor="let device of nvr.Devices | paginate: { id: 'nvr'+nvr.Data.Id, itemsPerPage: pageSize, currentPage: nvr.page, totalItems:nvr.total }" (click)="clickDevice(device)" [class.active]="currentEventHandler && currentEventHandler === device.EventHandler">
+                    <tr *ngFor="let device of nvr.Devices | paginate: { id: 'nvr'+nvr.Data.Id, itemsPerPage: paging.pageSize, currentPage: nvr.page, totalItems:nvr.total }" (click)="clickDevice(device)" [class.active]="currentEventHandler && currentEventHandler === device.EventHandler">
                       <td width="5%">{{device.Data.Channel}}</td>
                       <td width="45%">{{device.Data.Name}}</td>
                       <td width="50%">{{getEventHandlingTypes(device)}}</td>
@@ -38,12 +38,12 @@
               <pagination-controls 
                   id="{{'nvr'+nvr.Data.Id}}"
                   (pageChange)="cameraPageChange(nvr, $event)" 
-                  *ngIf="nvr.Devices && nvr.Devices.length > 0 && nvr.total > pageSize">
+                  *ngIf="nvr.Devices && nvr.Devices.length > 0 && nvr.total > paging.pageSize">
                 </pagination-controls>
 
             </div>
           </div>
-          <pagination-controls (pageChange)="pageChange($event)" id="nvrList" *ngIf="total>pageSize"></pagination-controls>
+          <pagination-controls (pageChange)="pageChange($event)" id="nvrList" *ngIf="paging.total>paging.pageSize"></pagination-controls>
         </div>
       </div>
     </section>
