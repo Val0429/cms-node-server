@@ -8,7 +8,7 @@
       </header>
       <div class="widget-body no-padding">
         <div id="accordion" role="tablist" aria-multiselectable="true" *ngIf="selectorNvrList && selectorNvrList.length>0">
-          <div class="card" *ngFor="let nvr of selectorNvrList">
+          <div class="card" *ngFor="let nvr of selectorNvrList | paginate: { id: 'nvrList', itemsPerPage: pageSize, currentPage: p, totalItems:total }">
             <div class="card-header" role="tab" (click)="nvr.isCollapsed = !nvr.isCollapsed">
               <span class="text-primary" style="margin-right: 24px;">{{nvr.Data.Id}}</span>
               <span class="text-primary">{{nvr.Data.Name}}</span>
@@ -37,12 +37,13 @@
 
               <pagination-controls 
                   id="{{'nvr'+nvr.Data.Id}}"
-                  (pageChange)="pageChange(nvr, $event)" 
+                  (pageChange)="cameraPageChange(nvr, $event)" 
                   *ngIf="nvr.Devices && nvr.Devices.length > 0 && nvr.total > pageSize">
                 </pagination-controls>
 
             </div>
           </div>
+          <pagination-controls (pageChange)="pageChange($event)" id="nvrList" *ngIf="total>pageSize"></pagination-controls>
         </div>
       </div>
     </section>

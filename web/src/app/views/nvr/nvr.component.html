@@ -32,6 +32,11 @@
         </div>
       </header>
       <div class="widget-body">
+          <pagination-controls (pageChange)="pageChange($event)" *ngIf="total>pageSize"></pagination-controls>
+          Page Size: <select (change)="optionChange($event.target.value)" [(ngModel)]="pageSize">
+              <option *ngFor="let option of options" [ngValue]="option">{{option}}</option>
+            </select>  
+            Total: {{total}}
         <table class="table table-hover table-lg mt-lg mb-0">
           <thead>
             <tr>
@@ -46,7 +51,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let nvr of nvrList | paginate: { itemsPerPage: pageSize, currentPage: p }" (click)="clickEditNVR(nvr.device)" [class.active]="nvr.device == currentEditNVR">
+            <tr *ngFor="let nvr of nvrList | paginate: { itemsPerPage: pageSize, currentPage: p, totalItems:total }" (click)="clickEditNVR(nvr.device)" [class.active]="nvr.device == currentEditNVR">
               <td><input *ngIf="nvr.device.Id!=='1' && nvr.device.Id!=='2'" type="checkbox" (click)="selectNvr(nvr, $event.target.checked)" [checked]="nvr.checked" [disabled]="flag.busy"></td>
               <td>{{nvr.device.Id}}</td>
               <td>{{nvr.device.Name}}</td>
@@ -58,7 +63,7 @@
             </tr>
           </tbody>
         </table>
-        <pagination-controls (pageChange)="p = $event" *ngIf="nvrList && nvrList.length>pageSize"></pagination-controls>
+        <pagination-controls (pageChange)="pageChange($event)" *ngIf="total>pageSize"></pagination-controls>
       </div>
     </section>
   </div>

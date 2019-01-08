@@ -116,6 +116,12 @@ export class Nvr extends Parse.Object implements INvr {
   set Name(value: string) {
     super.set('Name', value);
   }
+  get SequenceNumber(): number {
+    return super.get('SequenceNumber');
+  }
+  set SequenceNumber(value: number) {
+    super.set('SequenceNumber', value);
+  }
   get Id(): string {
     return super.get('Id');
   }

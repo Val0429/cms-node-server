@@ -19,6 +19,18 @@ export class DeviceService {
 
     constructor() {        
         this.noGroupCheck();
+        this.updateNvrChannel();
+    }
+    //for version 3.00.26 onward    
+    async updateNvrChannel(){        
+        await parseService.fetchData({type:Nvr, filter:query=>query.equalTo("SequenceNumber", undefined)}).then(async nvrs=>{
+            let promises=[];
+            for(let nvr of nvrs){
+                nvr.SequenceNumber = Number(nvr.Id);                
+                promises.push(nvr.save());
+            }
+            await Promise.all(promises);
+        })
     }
     //for version 3.00.25 onward    
     async noGroupCheck(){
@@ -304,7 +316,7 @@ export class DeviceService {
             let {nvrs, newGroupId, auth}=req.body;
             coreService.auth = auth;            
             let groupList:Group[];            
-            let ids :string[];
+            let ids :number[];
             await Promise.all([this.getGroupList().then(groups=>groupList=groups), this.getNewNvrId(nvrs.length).then(newIds => ids=newIds)]);
             let promises=[]; 
             let results=[];           
@@ -319,7 +331,8 @@ export class DeviceService {
                 this.assignNvrPoperties(dev, nvr);
                 
                 if(!dev.Id || dev.Id=="0"){
-                    dev.Id = ids[i];   
+                    dev.Id = ids[i].toString();
+                    dev.SequenceNumber = ids[i];
                 }
                 if(!dev.Name){
                     dev.Name=`New NVR ${dev.Id}`;
@@ -717,22 +730,20 @@ async getLicenseUsageIPCamera() {
     let nvrs = await parseService.fetchData({
       type: Nvr,
       filter: query => query
-        .select('Id')
-        .ascending('Id')
+        .select('SequenceNumber')
+        .ascending('SequenceNumber')
         .limit(Number.MAX_SAFE_INTEGER)
     })
-    nvrs.sort(function (a, b) {
-        return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
-    });
+    
     let result = [];                
-    let occupiedIds = nvrs.map(e => e.Id);
+    let occupiedIds = nvrs.map(e => e.SequenceNumber);
     let channel = 0;        
     while (result.length < count) {            
         channel++;
         // find empty channel
-        let found = occupiedIds.find(Id => Id == channel.toString());
+        let found = occupiedIds.find(Id => Id == channel);
         if(found) continue;
-        result.push(channel.toString());
+        result.push(channel);
     }
     return result;
         

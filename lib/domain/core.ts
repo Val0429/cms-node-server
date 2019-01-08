@@ -1,6 +1,8 @@
 export interface INvr {
     Name: string,
     Id: string,
+    //copy of Id saved in number
+    SequenceNumber: number,
     Driver: string,
     Manufacture: string,
     Domain: string,

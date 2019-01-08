@@ -18,6 +18,8 @@ export class NvrComponent implements OnInit {
   @ViewChild('searchComponent') searchComponent:NvrSearchComponent;
   nvrList: NvrList[];
   p=1;
+  options=[20, 50, 100, 500, 1000];
+  total=0;
   pageSize=50;
   licenseInfo: any;
   currentEditNVR: Nvr;
@@ -49,7 +51,9 @@ export class NvrComponent implements OnInit {
     await Observable.forkJoin([this.getGroup(), getServerInfo$, this.reloadData()]).toPromise();
     
   }
-
+  optionChange(size:number){
+    this.pageChange(1);
+  }
   private async getGroup() {
     return await this.parseService.fetchData({
       type: Group,
@@ -75,23 +79,21 @@ export class NvrComponent implements OnInit {
   }
 
   /** 取得所有Nvr */
-  getNvrs() {
-    const get$ = this.parseService.fetchData({
-      type: Nvr,      
-      filter: query => query.limit(30000).ascending("Id")
-    }).then(nvrs => {
-      this.nvrList = [];
-      nvrs.sort(function (a, b) {
-        return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
-      });
+  async getNvrs() {
+    const getNvrs$ = this.nvrService.getNvrList(this.p, this.pageSize).then(nvrs => {
+      this.nvrList = [];      
       nvrs.forEach(nvr=>{
         this.nvrList.push({device:nvr, checked:false, quantity:0});
       });
     });
-    return get$;
+    const getTotal$ = this.nvrService.getNvrCount().then(total=> this.total=total);
+    return await Promise.all([getNvrs$, getTotal$]);
   }
 
-  
+  async pageChange(event:number){
+    this.p = event;
+    await this.reloadData();
+  }
   checkSelected(){
     let checked = this.nvrList.filter(x=>x.device.Id !== "1" && x.device.Id !== "2").map(function(e){return e.checked});
     //console.debug("checked",checked);
