@@ -1,27 +1,27 @@
 import { Router } from 'express';
 import * as bodyParser from 'body-parser';
 import * as xml2js from 'xml2js';
-import * as got from 'got';
-import * as fetch from 'node-fetch';
 import { IRouteMap, ParseHelper, LogHelper } from '../helpers';
 import { ServerInfo } from '../domain/core';
-import { DH_UNABLE_TO_CHECK_GENERATOR } from 'constants';
+import { ConfigHelper } from "../helpers";
 
+const request = require('request-promise');
 const parseHelper = ParseHelper.instance;
 const logHelper = LogHelper.instance;
+const configHelper = ConfigHelper.instance;
 
 export const ProxyRoute: IRouteMap = {
     path: 'proxy',
     router: Router().use(bodyParser.json())
         .get('/test', (req, res) => { res.send('Proxy Test') })
-        .post('/:id?', (req, res) => {
+        .post('/:id?', async (req, res) => {
             if (!req.body || !req.body.path) {
                 res.send({});
                 return;
             }
             
             // 先取得MediaServer的連線URL再轉發
-            parseHelper.getData({
+            await parseHelper.getData({
                 type: ServerInfo,
                 filter: query => {
                     //console.log("proxy/:id", req.params["id"]);
@@ -31,8 +31,11 @@ export const ProxyRoute: IRouteMap = {
                         query.equalTo('objectId', req.params["id"]);
                     }
                 }
-            }).then(serverInfo => {
-                const mediaUrl = `http://${serverInfo.Domain}:${serverInfo.Port}`;
+            }).then(async serverInfo => {
+                let protocol = configHelper.parseConfig.IS_HTTPS ? 'https' : 'http';
+                let port = configHelper.parseConfig.IS_HTTPS ? serverInfo.SSLPort : serverInfo.Port;
+
+                const mediaUrl = `${protocol}://${serverInfo.Domain}:${port}`;
 
                 const path = req.body.domainPath ?
                     req.body.domainPath + req.body.path :
@@ -40,7 +43,8 @@ export const ProxyRoute: IRouteMap = {
 
                 console.log('proxy path: ', path);
 
-                const requestInit = {
+                const options = {
+                    uri: path,
                     timeout: 0, 
                     method: req.body.method || 'GET',
                     headers: req.body.headers,
@@ -48,15 +52,15 @@ export const ProxyRoute: IRouteMap = {
                         ? req.body.body
                         : JSON.stringify(req.body.body)
                 };
-
-                fetch(path, requestInit)
-                    .then(data => data.text())
+            
+            
+                return await request(options)
                     .then(data => convertToJsonRes(data, res))
                     .catch(err => {
                         logHelper.writeLog({ type: 'Proxy', msg: err.message });
                         res.status(500);
                         res.json({ type: 'Proxy', msg: err.message });
-                    });
+                });
             })
         }),
     children: []
