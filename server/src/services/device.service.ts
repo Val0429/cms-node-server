@@ -149,16 +149,16 @@ export class DeviceService {
     async get(req:Request, res:Response){
         
         let nvrId = req.query["nvrId"];
-        let page = parseInt(req.query["page"]);
-        let pageSize = parseInt(req.query["pageSize"]);                
-        
+        let page = parseInt(req.query["page"] || "1");
+        let pageSize = parseInt(req.query["pageSize"] || "50");                
+                
         let devices = await parseService.fetchData({
             type: Device,
             filter: query=>query
                 .equalTo("NvrId", nvrId)
                 .limit(pageSize)
                 .skip((page-1)*pageSize)
-        });
+        });        
         
         res.json(devices);
     }
