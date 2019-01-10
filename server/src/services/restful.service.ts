@@ -28,6 +28,7 @@ export class RestFulService {
           
             
             if(pageSize>1000)pageSize=1000;
+            else if(pageSize<1)pageSize=1;
             if(page<1)page=1;
 
             await Promise.all([
