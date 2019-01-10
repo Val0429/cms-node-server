@@ -2,7 +2,6 @@
 import { ConfigHelper } from '../helpers';
 import { Request, Response } from 'express';
 
-//const mongoPaging = require('mongo-cursor-pagination');
 const mongoist = require('mongoist');
 const config = ConfigHelper.instance;
 
@@ -26,18 +25,7 @@ export class RestFulService {
             let className = req.params["className"];
             let data = [];
             let total = 0;
-            // let hasNext=false;
-            // let previous = "";
-            // let next="";
-            // const paging$= mongoPaging.find(this.db.collection(className), {
-            //     limit: pageSize,
-            //     next:"Inp6V0h5U2VaTkgi"
-            //   }).then(res=>{
-            //     data = res.results;
-            //     hasNext = res.hasNext;
-            //     previous = res.previous;
-            //     next = res.next;
-            //   });
+          
             
             if(pageSize>1000)pageSize=1000;
             if(page<1)page=1;
@@ -49,7 +37,6 @@ export class RestFulService {
             ]);
             let totalPages=Math.ceil(total/pageSize);
             //console.log("getData end", new Date()) ;
-            //res.json({pageSize,page,total,totalPages,next,previous,hasNext,data});
             res.json({pageSize,page,total,totalPages,data});
         }
         catch(err){
