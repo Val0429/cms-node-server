@@ -48,4 +48,25 @@ export class RestFulService {
             });
         }
     }
+    async post(req:Request, res:Response){       
+        try{
+            
+            let className = req.params["className"];
+            let data = req.body;
+            for(let item of data){
+                item._created_at=new Date();
+                item._updated_at=new Date();
+            }
+            let result = await this.db.collection(className).insertMany(data);
+            res.json(result);
+        }
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
+    }
 }

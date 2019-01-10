@@ -23,7 +23,10 @@ export const CmsRoute: IRouteMap = {
         .get('/test', (req, res) => { res.send('Test Success') })
         .get('/data/:className', async(req, res)=>{
             await resultFulService.get(req, res);
-        })        
+        })      
+        .post('/data/:className', async(req, res)=>{
+            await resultFulService.post(req, res);
+        })   
         .get('/externalconfig', (req, res) => {
             res.json(configHelper.externalConfig);
         })
