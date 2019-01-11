@@ -2,11 +2,9 @@
 import { ConfigHelper } from '../helpers';
 import { Request, Response } from 'express';
 
-const mongoist = require('mongoist');
-const config = ConfigHelper.instance;
-
 export class RestFulService {    
-    
+    mongoist = require('mongoist');
+    config = ConfigHelper.instance;
     static get instance() {
         return this._instance || (this._instance = new this());
     }
@@ -14,7 +12,7 @@ export class RestFulService {
     private static _instance: RestFulService;
 
     constructor() {     
-        this.db = mongoist(`${config.parseConfig.DATABASE_URI}`);  
+        this.db = this.mongoist(`${this.config.parseConfig.DATABASE_URI}`);  
     }
 
     async get(req:Request, res:Response){       

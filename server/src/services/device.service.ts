@@ -5,6 +5,7 @@ import { ParseHelper } from '../helpers';
 import { CoreService, NotificationBody } from './core.service';
 import { IGroupChannel } from 'lib/domain/core';
 import { save } from 'nconf';
+import { catchError } from 'rxjs/operators';
 
 const parseService = ParseHelper.instance;
 const coreService = CoreService.instance;
@@ -22,39 +23,47 @@ export class DeviceService {
         this.updateNvrChannel();
     }
     //for version 3.00.26 onward    
-    async updateNvrChannel(){        
-        await parseService.fetchData({type:Nvr, filter:query=>query.equalTo("SequenceNumber", undefined)}).then(async nvrs=>{
-            let promises=[];
-            for(let nvr of nvrs){
-                nvr.SequenceNumber = Number(nvr.Id);                
-                promises.push(nvr.save());
-            }
-            await Promise.all(promises);
-        })
+    async updateNvrChannel(){       
+        try{ 
+            await parseService.fetchData({type:Nvr, filter:query=>query.equalTo("SequenceNumber", undefined)}).then(async nvrs=>{
+                let promises=[];
+                for(let nvr of nvrs){
+                    nvr.SequenceNumber = Number(nvr.Id);                
+                    promises.push(nvr.save());
+                }
+                await Promise.all(promises);
+            })
+        }catch(err){
+            console.error("error thrown from updateNvrChannel")
+        }
     }
     //for version 3.00.25 onward    
     async noGroupCheck(){
+        try{
         //check if "No Group" is exist
-        let nonMainGroup = await this.getNonMainGroup();
-        if(!nonMainGroup){
-            
-            console.log("create Non Sub Group");
-            let nonSubGroup = new Group();
-            nonSubGroup.Name="Non Sub Group";
-            nonSubGroup.Level = "1";
-            
-            await nonSubGroup.save();
+            let nonMainGroup = await this.getNonMainGroup();
+            if(!nonMainGroup){
+                
+                console.log("create Non Sub Group");
+                let nonSubGroup = new Group();
+                nonSubGroup.Name="Non Sub Group";
+                nonSubGroup.Level = "1";
+                
+                await nonSubGroup.save();
 
-            console.log("create Non Main Group");
-            let nonMainGroup = new Group();
-            nonMainGroup.Name="Non Main Group";
-            nonMainGroup.Level = "0";                
-            nonMainGroup.SubGroup=[nonSubGroup.id];
+                console.log("create Non Main Group");
+                let nonMainGroup = new Group();
+                nonMainGroup.Name="Non Main Group";
+                nonMainGroup.Level = "0";                
+                nonMainGroup.SubGroup=[nonSubGroup.id];
 
-            await nonMainGroup.save();
-            
-            await this.updateOrphanDevice();
+                await nonMainGroup.save();
+                
+                await this.updateOrphanDevice();
 
+            }
+        }catch(err){
+            console.error("error thrown from noGroupCheck")
         }
     }
     private async updateOrphanDevice(){
