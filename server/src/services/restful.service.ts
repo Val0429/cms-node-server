@@ -21,18 +21,17 @@ export class RestFulService {
             let page = parseInt(req.query["page"] || "1");                            
             let pageSize = parseInt(req.query["pageSize"] || "50");                                
             let className = req.params["className"];
+            let where = JSON.parse(req.query["where"] || "{}");
             let data = [];
             let total = 0;
           
-            
             if(pageSize>1000)pageSize=1000;
             else if(pageSize<1)pageSize=1;
             if(page<1)page=1;
 
             await Promise.all([
-                //paging$,
-                this.db.collection(className).findAsCursor().skip((page-1)*pageSize).limit(pageSize ).toArray().then(res=>data =res),
-                this.db.collection(className).count().then(res=>total=res)
+                this.db.collection(className).findAsCursor(where).skip((page-1)*pageSize).limit(pageSize ).toArray().then(res=>data =res),
+                this.db.collection(className).count(where).then(res=>total=res)
             ]);
             let totalPages=Math.ceil(total/pageSize);
             //console.log("getData end", new Date()) ;
