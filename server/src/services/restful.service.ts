@@ -69,44 +69,49 @@ export class RestFulService {
         }
     }
     constructInclude(includeRequest:string):includeData{
-        let includes = includeRequest.split(',');
-        let includeData:includeClass[]=[];
+        let includeArray = includeRequest.split(',');
+        let includeData:{fieldName:string, depth:number}[]=[];
         let maxDepth=0;
-        for(let include of includes){
-            let depth=include.split('.').length;
+        for(let fieldName of includeArray){
+            let depth=fieldName.split('.').length;
+            includeData.push({depth, fieldName});
+            //update max depth
             if(depth>maxDepth)maxDepth=depth;
-            includeData.push({depth, fieldName:include})
         }
         return {maxDepth, includeData}
     }
     async getData(className:string, page:number, pageSize:number, where?:string, includeRequest?:string){
         
         let data = await this.db.collection(className).findAsCursor(where).skip((page-1)*pageSize).limit(pageSize).toArray();
-        if(includeRequest){
-            let includes = this.constructInclude(includeRequest);
-            //console.log(includes);
-            for(let i=1;i<=includes.maxDepth;i++){
-                let currentIncludeDepth = includes.includeData.filter(x=>x.depth==i);
-                let promises=[];
-                for(let include of currentIncludeDepth){
-                    for(let record of data){
-                        if(record[include.fieldName]){
-                            let link = record[include.fieldName].split('$');
-                            //console.log(link);
-                            if(link.length<2)continue;
-                            let parentClassName = link[0];
-                            let _id = link[1];
-                            const getData$ = this.db.collection(parentClassName).find({_id}).then(res=>{ 
-                                //console.log(res);
-                                if(res&&res.length>0) record[include.fieldName]=res[0];
-                            });
-                            promises.push(getData$);
-                        }
-                    }
+        
+        if(!includeRequest)return data;
+
+        let includes = this.constructInclude(includeRequest);
+        //console.log(includes);
+        for(let depth=1;depth<=includes.maxDepth;depth++){            
+            // forks promises based on depth level
+            let promises=[];
+            for(let include of includes.includeData.filter(x=>x.depth==depth)){
+                //get parent link data
+                for(let record of data){                    
+                    if(!record[include.fieldName])continue;
+                    //change from className$objectId to parent json object
+                    let link = record[include.fieldName].split('$');
+                    //console.log(link);
+                    if(link.length<2)continue;
+                    
+                    let parentClassName = link[0];
+                    let _id = link[1];
+                    const getData$ = this.db.collection(parentClassName).find({_id}).then(res=>{ 
+                        //console.log(res);
+                        if(res&&res.length>0) record[include.fieldName]=res[0];
+                    });
+                    promises.push(getData$);                    
                 }
-                await Promise.all(promises);
             }
+            await Promise.all(promises);
         }
+        
         return data;
     }
     async getCount(className:string, where?:string){        
@@ -114,11 +119,8 @@ export class RestFulService {
         return total;
     }
 }
-export interface includeClass{
-    fieldName:string,
-    depth:number
-}
+
 export interface includeData{
-    includeData:includeClass[];
+    includeData:{fieldName:string, depth:number}[];
     maxDepth:number
 }
