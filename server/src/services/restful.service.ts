@@ -22,6 +22,7 @@ export class RestFulService {
             let pageSize = parseInt(req.query["pageSize"] || "50");                                
             let className = req.params["className"];
             let where = JSON.parse(req.query["where"] || "{}");
+            let include = req.query["include"];
             let data = [];
             let total = 0;
           
@@ -30,8 +31,8 @@ export class RestFulService {
             if(page<1)page=1;
 
             await Promise.all([
-                this.db.collection(className).findAsCursor(where).skip((page-1)*pageSize).limit(pageSize ).toArray().then(res=>data =res),
-                this.db.collection(className).count(where).then(res=>total=res)
+                this.getData(className, page, pageSize, where, include).then(res=>data =res),
+                this.getCount(className, where).then(res=>total=res)
             ]);
             let totalPages=Math.ceil(total/pageSize);
             //console.log("getData end", new Date()) ;
@@ -67,4 +68,57 @@ export class RestFulService {
             });
         }
     }
+    constructInclude(includeRequest:string):includeData{
+        let includes = includeRequest.split(',');
+        let includeData:includeClass[]=[];
+        let maxDepth=0;
+        for(let include of includes){
+            let depth=include.split('.').length;
+            if(depth>maxDepth)maxDepth=depth;
+            includeData.push({depth, fieldName:include})
+        }
+        return {maxDepth, includeData}
+    }
+    async getData(className:string, page:number, pageSize:number, where?:string, includeRequest?:string){
+        
+        let data = await this.db.collection(className).findAsCursor(where).skip((page-1)*pageSize).limit(pageSize).toArray();
+        if(includeRequest){
+            let includes = this.constructInclude(includeRequest);
+            //console.log(includes);
+            for(let i=1;i<=includes.maxDepth;i++){
+                let currentIncludeDepth = includes.includeData.filter(x=>x.depth==i);
+                let promises=[];
+                for(let include of currentIncludeDepth){
+                    for(let record of data){
+                        if(record[include.fieldName]){
+                            let link = record[include.fieldName].split('$');
+                            //console.log(link);
+                            if(link.length<2)continue;
+                            let parentClassName = link[0];
+                            let _id = link[1];
+                            const getData$ = this.db.collection(parentClassName).find({_id}).then(res=>{ 
+                                //console.log(res);
+                                if(res&&res.length>0) record[include.fieldName]=res[0];
+                            });
+                            promises.push(getData$);
+                        }
+                    }
+                }
+                await Promise.all(promises);
+            }
+        }
+        return data;
+    }
+    async getCount(className:string, where?:string){        
+        let total:number= await this.db.collection(className).count(where);
+        return total;
+    }
+}
+export interface includeClass{
+    fieldName:string,
+    depth:number
+}
+export interface includeData{
+    includeData:includeClass[];
+    maxDepth:number
 }
