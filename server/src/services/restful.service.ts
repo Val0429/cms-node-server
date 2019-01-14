@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 
 export class RestFulService {    
     mongoist = require('mongoist');
+    jsonPointer = require('json-pointer');
     config = ConfigHelper.instance;
     static get instance() {
         return this._instance || (this._instance = new this());
@@ -70,57 +71,68 @@ export class RestFulService {
     }
     constructInclude(includeRequest:string):includeData{
         let includeArray = includeRequest.split(',');
-        let includeData:{fieldName:string, depth:number}[]=[];
+        let includeData:{fieldNames:string[], depth:number}[]=[];
         let maxDepth=0;
-        for(let fieldName of includeArray){
-            let depth=fieldName.split('.').length;
-            includeData.push({depth, fieldName});
+        for(let include of includeArray){
+            let fieldNames=include.split('.');
+            let depth=fieldNames.length;
+            includeData.push({depth, fieldNames});
             //update max depth
             if(depth>maxDepth)maxDepth=depth;
         }
         return {maxDepth, includeData}
     }
-    async getData(className:string, page:number, pageSize:number, where?:string, includeRequest?:string){
-        
-        let data = await this.db.collection(className).findAsCursor(where).skip((page-1)*pageSize).limit(pageSize).toArray();
-        
-        if(!includeRequest)return data;
-
+    getTargetField(obj:any,fieldNames:string[]):any{        
+        return this.jsonPointer.get(obj, "/"+fieldNames.join("/"));
+    }
+    updateTargetField(obj:any,fieldNames:string[],val:any){        
+        this.jsonPointer.set(obj, "/"+fieldNames.join("/"), val);
+    }
+    async fetchInclude(includeRequest:string, data:any[]){
         let includes = this.constructInclude(includeRequest);
         //console.log(includes);
-        for(let depth=1;depth<=includes.maxDepth;depth++){            
+        for(let depth=1;depth<=includes.maxDepth;depth++){              
             // forks promises based on depth level
             let promises=[];
             for(let include of includes.includeData.filter(x=>x.depth==depth)){
                 //get parent link data
-                for(let record of data){                    
-                    if(!record[include.fieldName])continue;
+                for(let record of data){      
+                    var target = this.getTargetField(record, include.fieldNames);
+                    //console.log(target);
+                    if(!target)continue;
                     //change from className$objectId to parent json object
-                    let link = record[include.fieldName].split('$');
+                    let link = target.split('$');
                     //console.log(link);
                     if(link.length<2)continue;
                     
                     let parentClassName = link[0];
                     let _id = link[1];
                     const getData$ = this.db.collection(parentClassName).find({_id}).then(res=>{ 
-                        //console.log(res);
-                        if(res&&res.length>0) record[include.fieldName]=res[0];
+                        //console.log(res);                        
+                        if(res&&res.length>0) this.updateTargetField(record, include.fieldNames, res[0]);                           
                     });
                     promises.push(getData$);                    
                 }
             }
             await Promise.all(promises);
         }
-        
         return data;
     }
-    async getCount(className:string, where?:string){        
+    async getData(className:string, page:number, pageSize:number, where:string, includeRequest?:string){
+        
+        let data = await this.db.collection(className).findAsCursor(where).skip((page-1)*pageSize).limit(pageSize).toArray();
+        
+        if(!includeRequest)return data;
+
+        return await this.fetchInclude(includeRequest, data);
+    }
+    async getCount(className:string, where:string){        
         let total:number= await this.db.collection(className).count(where);
         return total;
     }
 }
 
 export interface includeData{
-    includeData:{fieldName:string, depth:number}[];
+    includeData:{fieldNames:string[], depth:number}[];
     maxDepth:number
 }
