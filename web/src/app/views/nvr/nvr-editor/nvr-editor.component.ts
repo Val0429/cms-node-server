@@ -186,16 +186,20 @@ export class NvrEditorComponent implements OnInit, OnChanges {
   async saveDevices() {
     let saveList: Device[] = [];
     let deleteList: Device[] = [];
-
+    console.debug("selectedDevices", this.selectedDevices);
     const hasClickedGetDevice = this.tempDevices ? true : false;
-
+    
     if (hasClickedGetDevice) { // 有點擊過GetDeviceList，刪除所有舊資料，並新增打勾項目
       deleteList = deleteList.concat(this.selectedDevices);
       saveList = saveList.concat(this.displayDevices.filter(item => item.checked).map(item => item.device));
     } else { // 沒點擊過GetDeviceList，刪除被取消勾選的資料
       deleteList = deleteList.concat(this.displayDevices.filter(item => !item.checked).map(item => item.device));
     }
-
+    //delete object and re-create from save list
+    for(let item of deleteList){
+      let exists = this.selectedDevices.find(x=>x.Channel == item.Channel);
+      item.objectId = exists ? exists.objectId : undefined;
+    }
     // 依照Manufacutre判斷license可用數量，決定DeviceList是否可儲存
     const lic = this.licenseService.getNvrManufacturerLicenseCode(this.currentEditModel.Manufacture);
 
@@ -205,12 +209,10 @@ export class NvrEditorComponent implements OnInit, OnChanges {
         alert('License available count is not enough, did not save device list.');
         return Observable.of(null);
       } 
-      // 儲存新勾選的Device並加入Notify
-      const save$ = this.cameraService.saveCamera(saveList, this.editNvr, undefined, "");
-      // 刪除舊的或取消勾選的Device並加入Notify
-      const delete$ = this.cameraService.deleteCam(deleteList.map(e=>e.id), this.editNvr.id);
+      
+      await this.cameraService.deleteCam(deleteList.map(e=>e.id), this.editNvr.id);
+      await this.cameraService.saveCamera(saveList, this.editNvr, undefined, "");
 
-      await Observable.forkJoin(save$, delete$).toPromise();
   }
 
   /** 從MediaServer取得目前可選的Devices，轉換格式後取代displayDevices */
