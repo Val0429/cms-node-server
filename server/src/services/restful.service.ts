@@ -26,7 +26,7 @@ export class RestFulService {
             let where = JSON.parse((req.query["where"] || "{}"));
             this.sanitizeQuery(where);
             let include = req.query["include"];
-            let data = [];
+            let results = [];
             let total = 0;
           
             if(pageSize>1000)pageSize=1000;
@@ -34,12 +34,12 @@ export class RestFulService {
             if(page<1)page=1;
             
             await Promise.all([
-                this.getData(className, page, pageSize, where, include).then(res=>data =res),
+                this.getData(className, page, pageSize, where, include).then(res=>results =res),
                 this.getCount(className, where).then(res=>total=res)
             ]);
             let totalPages=Math.ceil(total/pageSize);
             //console.log("getData end", new Date()) ;
-            res.json({pageSize,page,total,totalPages,data});
+            res.json({pageSize,page,total,totalPages,results});
         }
         catch(err){
             console.error(err);
