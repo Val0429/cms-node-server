@@ -5,6 +5,7 @@ import { ParseHelper } from '../helpers';
 import { CoreService, NotificationBody } from './core.service';
 import { IGroupChannel } from 'lib/domain/core';
 import { save } from 'nconf';
+import { catchError } from 'rxjs/operators';
 
 const parseService = ParseHelper.instance;
 const coreService = CoreService.instance;
@@ -19,64 +20,102 @@ export class DeviceService {
 
     constructor() {        
         this.noGroupCheck();
+        this.updateNvrChannel();
+    }
+    //for version 3.00.26 onward    
+    async updateNvrChannel(){       
+        try{ 
+            await parseService.fetchData({type:Nvr, filter:query=>query.equalTo("SequenceNumber", undefined)}).then(async nvrs=>{
+                let promises=[];
+                for(let nvr of nvrs){
+                    nvr.SequenceNumber = Number(nvr.Id);                
+                    promises.push(nvr.save());
+                }
+                await Promise.all(promises);
+            })
+        }catch(err){
+            console.error("error thrown from updateNvrChannel")
+        }
     }
     //for version 3.00.25 onward    
     async noGroupCheck(){
+        try{
         //check if "No Group" is exist
-        let groups = await parseService.fetchData({type:Group, 
-            filter: query=> query.equalTo("Name", "Non Main Group").limit(1)})
-        if(!groups || groups.length == 0){
-            
-            let groupList:Group[];
-            let defaultNvr:Nvr;
-            console.log("create Non Sub Group");
-            let nonSubGroup = new Group();
-            nonSubGroup.Name="Non Sub Group";
-            nonSubGroup.Level = "1";
-            
-            await nonSubGroup.save();
+            let nonMainGroup = await this.getNonMainGroup();
+            if(!nonMainGroup){
+                
+                console.log("create Non Sub Group");
+                let nonSubGroup = new Group();
+                nonSubGroup.Name="Non Sub Group";
+                nonSubGroup.Level = "1";
+                
+                await nonSubGroup.save();
 
-            console.log("create Non Main Group");
-            let nonMainGroup = new Group();
-            nonMainGroup.Name="Non Main Group";
-            nonMainGroup.Level = "0";                
-            nonMainGroup.SubGroup=[nonSubGroup.id];
+                console.log("create Non Main Group");
+                let nonMainGroup = new Group();
+                nonMainGroup.Name="Non Main Group";
+                nonMainGroup.Level = "0";                
+                nonMainGroup.SubGroup=[nonSubGroup.id];
 
-            await nonMainGroup.save();
-            
-            await Promise.all([this.getGroupList().then(res=>groupList=res),this.getDefaultNvr().then(res=>defaultNvr=res)]);            
-            
-            let cams:Device[]; 
-            let nvrs:Nvr[]; 
-            
-            await Promise.all([
-                parseService.fetchData({type:Nvr, filter:query=>query.limit(Number.MAX_SAFE_INTEGER)}).then(res=>nvrs=res),
-                this.getAllDevice(defaultNvr.Id).then(res=>cams=res)
-            ]);
+                await nonMainGroup.save();
+                
+                await this.updateOrphanDevice();
 
-            let promises=[];
-            //set non group cams
-            for(let cam of cams){
-                let selectedSubGroup = this.findDeviceGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel });                
-                if(selectedSubGroup)continue;                                    
-                //orphan cam
-                promises.push(this.setChannelGroup(groupList, { Nvr: cam.NvrId, Channel: cam.Channel }, nonSubGroup.id));                
             }
-
-            for (let nvr of nvrs.filter(x=>x.id!=defaultNvr.id)){
-                let group = groupList.find(data => data.Nvr && data.Nvr.indexOf(nvr.Id) >= 0);
-                if(group)continue;
-                //orphan nvr
-                promises.push(this.setNvrGroup(nvr.Id, nonSubGroup.id, groupList));
-            }
-            await Promise.all(promises);
-            await this.saveGroupList(groupList);
-
+        }catch(err){
+            console.error("error thrown from noGroupCheck")
         }
+    }
+    private async updateOrphanDevice(){
+        let groupList:Group[];        
+        let defaultNvr:Nvr;
+        await Promise.all([this.getGroupList().then(res=>groupList=res),this.getDefaultNvr().then(res=>defaultNvr=res)]);            
+        
+        let noGroup = groupList.find(x=>x.Name == "Non Sub Group");
+        let cams:Device[]; 
+        let nvrs:Nvr[]; 
+        
+        await Promise.all([
+            parseService.fetchData({type:Nvr, filter:query=>query.limit(Number.MAX_SAFE_INTEGER)}).then(res=>nvrs=res),
+            this.getAllDevice(defaultNvr.Id).then(res=>cams=res)
+        ]);
+
+        let promises=[];
+        //set non group cams
+        for(let cam of cams){
+            let groupChannel={ Nvr: cam.NvrId, Channel: cam.Channel };
+            let group = this.findDeviceGroup(groupList, groupChannel);                
+            if(group)continue;                                    
+            //orphan cam
+            if(!noGroup.Channel)noGroup.Channel=[];
+            const insertIndex = this.findInsertIndexForGroupChannel(noGroup.Channel, groupChannel);
+            noGroup.Channel.splice(insertIndex, 0, groupChannel);
+        }
+
+        for (let nvr of nvrs.filter(x=>x.id!=defaultNvr.id)){
+            let group = groupList.find(data => data.Nvr && data.Nvr.indexOf(nvr.Id) >= 0);
+            if(group)continue;
+            //orphan nvr
+            if(!noGroup.Nvr)noGroup.Nvr=[];
+            const insertIndex = this.findInsertIndex(noGroup.Nvr, nvr.Id);
+            noGroup.Nvr.splice(insertIndex, 0, nvr.Id);
+        }
+        promises.push(noGroup.save());
+        await Promise.all(promises);
+        
+    }
+    private async getNonMainGroup() {
+        let groups = await parseService.fetchData({
+        type: Group,
+            filter: query => query.equalTo("Name", "Non Main Group").limit(1)
+        });
+        return groups && groups.length >0 ? groups[0]:undefined;
     }
 
 //#region RESTAPI
-
+    async updateGroup(req:Request, res:Response){
+        
+    }
     async cloneDevice(req:Request, res:Response){
         try{
             
@@ -85,7 +124,7 @@ export class DeviceService {
             
             let availableLicense = await this.getLicenseAvailableCount("00171");
             if(availableLicense < quantity){
-                throw new Error("Not enough license");
+                throw new Error(`Not enough license, ${availableLicense}`);
             }
 
             if(!nvrObjectId){
@@ -119,16 +158,16 @@ export class DeviceService {
     async get(req:Request, res:Response){
         
         let nvrId = req.query["nvrId"];
-        let page = parseInt(req.query["page"]);
-        let pageSize = parseInt(req.query["pageSize"]);                
-        
+        let page = parseInt(req.query["page"] || "1");
+        let pageSize = parseInt(req.query["pageSize"] || "50");                
+                
         let devices = await parseService.fetchData({
             type: Device,
             filter: query=>query
                 .equalTo("NvrId", nvrId)
                 .limit(pageSize)
                 .skip((page-1)*pageSize)
-        });
+        });        
         
         res.json(devices);
     }
@@ -151,8 +190,8 @@ export class DeviceService {
     
     
     async delete(req:Request, res:Response){
-        try{           
-
+        try{
+        
             coreService.auth = req.body.auth;            
             let {nvrObjectId, objectIds} = req.body;
 
@@ -161,8 +200,21 @@ export class DeviceService {
                 nvrObjectId = nvr.id;
             }
             
-            let groupList = await this.getGroupList();                        
-            await this.deleteCamAsync(objectIds, nvrObjectId, groupList);
+            let groupList = await this.getGroupList(); 
+            
+            let promises=[]
+            console.log("delete start", new Date());
+            for (let objectId of objectIds) {                
+                let delCam = parseService.getDataById({ type: Device, objectId }).then(async cam=>{
+                    await Promise.all([this.deleteCam(cam, nvrObjectId, groupList, true), this.deleteCamRelatedData(cam)]);
+                });
+                promises.push(delCam);
+            }
+            //we put save group at the last process to prevent overwritten by concurrent processes            
+            await Promise.all(promises);
+            await this.saveGroupList(groupList);
+            console.log("delete end", new Date());              
+            
             res.json({message:"success"});
         }
         catch(err){
@@ -273,7 +325,7 @@ export class DeviceService {
             let {nvrs, newGroupId, auth}=req.body;
             coreService.auth = auth;            
             let groupList:Group[];            
-            let ids :string[];
+            let ids :number[];
             await Promise.all([this.getGroupList().then(groups=>groupList=groups), this.getNewNvrId(nvrs.length).then(newIds => ids=newIds)]);
             let promises=[]; 
             let results=[];           
@@ -288,7 +340,8 @@ export class DeviceService {
                 this.assignNvrPoperties(dev, nvr);
                 
                 if(!dev.Id || dev.Id=="0"){
-                    dev.Id = ids[i];   
+                    dev.Id = ids[i].toString();
+                    dev.SequenceNumber = ids[i];
                 }
                 if(!dev.Name){
                     dev.Name=`New NVR ${dev.Id}`;
@@ -503,7 +556,7 @@ async cloneCam(cam:Device, quantity:number, nvrObjectId:string, groupList:Group[
     if(!selectedSubGroup){
         let groups = await parseService.fetchData({
             type:Group, 
-            filter:query=>query.equalTo("Name", "Non Main Group").limit(1)
+            filter:query=>query.equalTo("Name", "Non Sub Group").limit(1)
         });
         selectedSubGroup = groups[0];
     }
@@ -534,30 +587,6 @@ async cloneCam(cam:Device, quantity:number, nvrObjectId:string, groupList:Group[
   }
 }
 
-private async deleteCamAsync(objectIds:string[], nvrObjectId: any, groupList: Group[]) {
-    try{
-        
-        let promises=[]
-        console.log("delete start", new Date());
-        for (let objectId of objectIds) {                
-            let delCam = parseService.getDataById({ type: Device, objectId }).then(async cam=>{
-                await Promise.all([this.deleteCam(cam, nvrObjectId, groupList, true), this.deleteCamRelatedData(cam)]);
-            });
-            promises.push(delCam);
-        }
-        //we put save group at the last process to prevent overwritten by concurrent processes            
-        await Promise.all(promises);
-        await this.saveGroupList(groupList);
-        console.log("delete end", new Date());
-      }
-      catch(err){
-        console.error(err);            
-      }
-      finally{
-                  
-      }
-    
-}
 async deleteCam(cam:Device, nvrObjectId:string, groupList: Group[], notifyNvr:boolean){   
     let notifications=[];
     if(notifyNvr === true){
@@ -637,7 +666,10 @@ async getLicenseLimit(lic) {
     });
     
         
-    if(!result || !result.License) return 0;
+    if(!result || !result.License){
+        console.log("getLicenseResult", result);
+        return 0;
+    } 
 
     const temp = result.License;
     temp.Adaptor = this.toArray(temp.Adaptor);
@@ -707,22 +739,20 @@ async getLicenseUsageIPCamera() {
     let nvrs = await parseService.fetchData({
       type: Nvr,
       filter: query => query
-        .select('Id')
-        .ascending('Id')
+        .select('SequenceNumber')
+        .ascending('SequenceNumber')
         .limit(Number.MAX_SAFE_INTEGER)
     })
-    nvrs.sort(function (a, b) {
-        return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
-    });
+    
     let result = [];                
-    let occupiedIds = nvrs.map(e => e.Id);
+    let occupiedIds = nvrs.map(e => e.SequenceNumber);
     let channel = 0;        
     while (result.length < count) {            
         channel++;
         // find empty channel
-        let found = occupiedIds.find(Id => Id == channel.toString());
+        let found = occupiedIds.find(Id => Id == channel);
         if(found) continue;
-        result.push(channel.toString());
+        result.push(channel);
     }
     return result;
         

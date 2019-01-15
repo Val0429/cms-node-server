@@ -52,6 +52,7 @@ export interface IParseConfig {
     MASTER_KEY?: string;
     FILE_KEY?: string;
     DB_BACKUP_PERIOD?: number;
+    USE_MULTI_THREADS?:boolean;
 }
 
 export interface IPathConfig {

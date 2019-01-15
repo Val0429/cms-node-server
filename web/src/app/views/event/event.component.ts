@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { Nvr, Device, EventHandler } from 'app/model/core';
-import { Observable } from 'rxjs/Observable';
 import { CameraService } from 'app/service/camera.service';
+import { NvrService } from 'app/service/nvr.service';
+import { PagerService } from 'app/service/pager.service';
+
 
 @Component({
   selector: 'app-event',
@@ -15,8 +16,13 @@ export class EventComponent implements OnInit {
   currentDevice: Device;
   currentEventHandler: EventHandler; // 欲編輯的EventHandler
   eventHandlers:EventHandler[];
-  pageSize:number=20;
-  constructor(private parseService: ParseService, private cameraService:CameraService) { }
+  paging:PagerService = new PagerService();
+  
+  constructor(private parseService: ParseService, 
+    private cameraService:CameraService, 
+    private nvrService:NvrService) { 
+    
+  }
 
   async ngOnInit() {
     this.selectorNvrList = [];
@@ -26,56 +32,58 @@ export class EventComponent implements OnInit {
   /** 取得左邊Selector列表 */
   async fetchNvrAndDevice() {
     this.selectorNvrList = [];
-
-    let nvrs:Nvr[];
     
     let getEvents$ = this.parseService.fetchData({
       type: EventHandler,
       filter: query => query.limit(30000)
     }).then(res=>this.eventHandlers = res);
     
-    let getNvrs$ = this.parseService.fetchData({
-      type: Nvr,
-      filter: query => query.ascending('Id').limit(30000)
-    }).then(res=>{
-        nvrs=res;
-        nvrs.sort(function (a, b) {
-          return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
-        });
-    });
+    let getNvrs$ = this.fetchNvrs();
     
     await Promise.all([getEvents$, getNvrs$]);
-    let promises=[];
-    for(let nvr of nvrs){      
-      const newObj: ISelectorNvrModel = {
-        Data: nvr, Devices: [], isCollapsed: true, page:1, total:0
-      };
-      let getDevice$ = this.cameraService.getDevice(nvr.Id, 1, this.pageSize).then(devices=>{ 
-        devices.forEach(device => {
-          const handler = this.eventHandlers.find(x => x.NvrId === nvr.Id && x.DeviceId === device.Channel);
-          newObj.Devices.push({ Data: device, EventHandler: handler });
-        });
-      });
-      
-      let getDeviceCount$ = this.cameraService.getDeviceCount(nvr.Id).then(res=> newObj.total = res);
-      this.selectorNvrList.push(newObj);
-      promises.push(getDevice$);
-      promises.push(getDeviceCount$);
-    };
-    await Promise.all(promises);
+    
     console.debug("this.selectorNvrList", this.selectorNvrList);
   }
-  async pageChange(target:ISelectorNvrModel, event:number){
+  private async fetchNvrs() {    
+    const getNvrs$ = this.nvrService.getNvrList(this.paging.page, this.paging.pageSize).then(async (nvrs) => {
+      this.selectorNvrList=[];
+      let promises = [];
+      for (let nvr of nvrs) {
+        const newObj: ISelectorNvrModel = {
+          Data: nvr, Devices: [], isCollapsed: true, page: 1, total: 0
+        };
+        let getDevice$ = this.cameraService.getDevice(nvr.Id, 1, this.paging.pageSize).then(devices => {
+          devices.forEach(device => {
+            const handler = this.eventHandlers.find(x => x.NvrId === nvr.Id && x.DeviceId === device.Channel);
+            newObj.Devices.push({ Data: device, EventHandler: handler });
+          });
+        });
+        let getDeviceCount$ = this.cameraService.getDeviceCount(nvr.Id).then(res => newObj.total = res);
+        this.selectorNvrList.push(newObj);
+        promises.push(getDevice$);
+        promises.push(getDeviceCount$);
+      }
+      await Promise.all(promises);
+    });
+
+    const getNvrsCount$ = this.nvrService.getNvrCount().then(res=>this.paging.total=res);
+    await Promise.all([getNvrs$, getNvrsCount$]);
+  }
+
+  async cameraPageChange(target:ISelectorNvrModel, event:number){
     target.page = event;
     target.Devices=[];
-    let devices = await this.cameraService.getDevice(target.Data.Id, target.page, this.pageSize);
+    let devices = await this.cameraService.getDevice(target.Data.Id, target.page, this.paging.pageSize);
     devices.forEach(device => {
       const handler = this.eventHandlers.find(x => x.NvrId === target.Data.Id && x.DeviceId === device.Channel);
       target.Devices.push({ Data: device, EventHandler: handler });
     });
   }
   
-
+ async pageChange(event:number){
+   this.paging.page = event;
+   await this.fetchNvrs();
+ }
   /** 利用參數Device找出相應EventHandler資料 */
   clickDevice(device: ISelectorDeviceModel) {
     if (device.Data.NvrId === '2') {

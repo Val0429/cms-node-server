@@ -124,7 +124,8 @@ Section
 	
     # create the uninstaller
     WriteUninstaller "$INSTDIR\uninstall.exe"
-     
+    
+	
 	# specify file to go in output path	
 	# backend
 	File /r ..\server\dist\*
@@ -133,7 +134,13 @@ Section
 	File /r ..\server\node_modules\*
 	# frontend
 	SetOutPath $INSTDIR\web\dist	
-	File /r ..\web\dist\*
+	File /r ..\web\dist\*	
+	
+	# strange issue since version 26
+	# have to include package.json
+	# otherwise service will fail to start
+	SetOutPath $INSTDIR\server
+	File ..\server\package.json
 	
 	;Store installation folder
 	WriteRegStr HKLM "Software\${PRODUCT_NAME}" "" $INSTDIR

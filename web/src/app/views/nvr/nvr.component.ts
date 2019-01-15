@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ParseService } from 'app/service/parse.service';
-import { Nvr, Device, Group, ServerInfo } from 'app/model/core';
+import { Nvr, Group, ServerInfo } from 'app/model/core';
 
 import { NvrService } from 'app/service/nvr.service';
 import { NvrSearchComponent } from './nvr-search/nvr-search.component';
 import { CameraService } from 'app/service/camera.service';
+import { PagerService } from 'app/service/pager.service';
+
 
 
 @Component({
@@ -17,8 +19,7 @@ export class NvrComponent implements OnInit {
   
   @ViewChild('searchComponent') searchComponent:NvrSearchComponent;
   nvrList: NvrList[];
-  p=1;
-  pageSize=50;
+  
   licenseInfo: any;
   currentEditNVR: Nvr;
   checkedAll :boolean = false;
@@ -28,12 +29,15 @@ export class NvrComponent implements OnInit {
   flag:{
     busy:boolean;
   }
+  paging:PagerService = new PagerService();
   constructor(
     private parseService: ParseService,
     private nvrService:NvrService,
-    private cameraService:CameraService    
+    private cameraService:CameraService ,
+    
     ) { 
-      this.flag = {busy: false};   
+      this.flag = {busy: false}; 
+      
     }
 
   async ngOnInit() {
@@ -49,7 +53,9 @@ export class NvrComponent implements OnInit {
     await Observable.forkJoin([this.getGroup(), getServerInfo$, this.reloadData()]).toPromise();
     
   }
-
+  optionChange(size:number){
+    this.pageChange(1);
+  }
   private async getGroup() {
     return await this.parseService.fetchData({
       type: Group,
@@ -75,23 +81,21 @@ export class NvrComponent implements OnInit {
   }
 
   /** 取得所有Nvr */
-  getNvrs() {
-    const get$ = this.parseService.fetchData({
-      type: Nvr,      
-      filter: query => query.limit(30000).ascending("Id")
-    }).then(nvrs => {
-      this.nvrList = [];
-      nvrs.sort(function (a, b) {
-        return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
-      });
+  async getNvrs() {
+    const getNvrs$ = this.nvrService.getNvrList(this.paging.page, this.paging.pageSize).then(nvrs => {
+      this.nvrList = [];      
       nvrs.forEach(nvr=>{
         this.nvrList.push({device:nvr, checked:false, quantity:0});
       });
     });
-    return get$;
+    const getTotal$ = this.nvrService.getNvrCount().then(total=> this.paging.total=total);
+    return await Promise.all([getNvrs$, getTotal$]);
   }
 
-  
+  async pageChange(event:number){
+    this.paging.page = event;
+    await this.reloadData();
+  }
   checkSelected(){
     let checked = this.nvrList.filter(x=>x.device.Id !== "1" && x.device.Id !== "2").map(function(e){return e.checked});
     //console.debug("checked",checked);

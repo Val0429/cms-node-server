@@ -14,6 +14,7 @@ import { ParseService } from 'app/service/parse.service';
 import { LicenseService } from 'app/service/license.service';
 import { CSVService } from 'app/service/csv.service';
 import { NvrService } from './nvr.service';
+import { PagerService } from './pager.service';
 
 @NgModule({
   imports: [
@@ -24,7 +25,7 @@ import { NvrService } from './nvr.service';
   ],
   declarations: [],
   providers: [CoreService, IsapSidebarService, EventService, CameraService, NvrService,
-    GroupService, CryptoService, UserService, ParseService, LicenseService,
+    GroupService, CryptoService, UserService, ParseService, LicenseService, PagerService,
     CSVService]
 })
 export class ServiceModule { }

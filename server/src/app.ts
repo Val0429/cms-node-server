@@ -1,10 +1,11 @@
 import { ConfigHelper, ParseDashboardHelper, ParseHelper, ParseServerHelper, ServerHelper, SyncHelper, RouterHelper } from './helpers';
-import {DeviceService, CoreService} from './services';
+import {DeviceService, CoreService, RestFulService} from './services';
 
 
 // 初始化順序不可變更
 
 const configHelper = ConfigHelper.instance;
+const restFulService = RestFulService.instance;
 const serverHelper = ServerHelper.instance;
 const parseHelper = ParseHelper.instance;
 const parseServerHelper = ParseServerHelper.instance;

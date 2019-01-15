@@ -4,7 +4,10 @@ import * as http from 'http';
 import * as https from 'https';
 import * as path from 'path';
 import { ConfigHelper } from './config-helper';
-
+const cluster = require('cluster');
+const numCPUs = require('os').cpus().length;
+    
+    
 export class ServerHelper {
 
     app: express.Express;
@@ -38,12 +41,20 @@ export class ServerHelper {
     }
 
     runServer() {
-        this.httpServer.listen(this.parseConfig.PORT, () =>
-            console.log(`Works served at port ${this.parseConfig.PORT}.`));
+            
+        if (cluster.isMaster) {
+            for (var i = 0; i < numCPUs; i++) {
+                cluster.fork();
+            }
+        }
+        else {
+            this.httpServer.listen(this.parseConfig.PORT, () =>
+                console.log(`Works served at port ${this.parseConfig.PORT}.`));
 
-        if (this.parseConfig.IS_HTTPS) {
-            this.httpServerSSL.listen(this.parseConfig.SSL_PORT, () =>
-                console.log(`Works served at port ${this.parseConfig.SSL_PORT}.`));
+            if (this.parseConfig.IS_HTTPS) {
+                this.httpServerSSL.listen(this.parseConfig.SSL_PORT, () =>
+                    console.log(`Works served at port ${this.parseConfig.SSL_PORT}.`));
+            }
         }
     }
 }

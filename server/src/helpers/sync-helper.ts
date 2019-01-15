@@ -22,22 +22,34 @@ export class SyncHelper {
 
 
     constructor() {
+        
         this.setAutoSyncDefault();
         this.syncTimeout();
         console.log(`Addr: ${this.configHelper.parseConfig.HOST}`);
+        
     }
 
     /** 每次重啟server後都將DBSync的autoSync設為false, 避免Server復活後主動備份資料 */
     setAutoSyncDefault() {
-        Observable.fromPromise(this.parseHelper.getData({ type: DBSync }))
-            .map(result => {
-                const data = result ? result : new DBSync();
-                data.autoSync = false;
-                if (!data.destination) {
-                    data.destination = [];
+        
+        setTimeout(async ()=>{
+            try{
+                await this.parseHelper.getData({ type: DBSync })
+                    .then(result => {
+                        const data = result ? result : new DBSync();
+                        data.autoSync = false;
+                        if (!data.destination) {
+                            data.destination = [];
+                        }
+                        data.save();
+                    })
+                }catch(err){
+                    //console.log(err);
+                    console.log("unable to connect to parse server")
                 }
-                data.save();
-            }).subscribe();
+        },5000);
+        
+            
     }
 
     /** 計數器, 一開始先等待一輪時間避免剛啟動就同步

@@ -30,11 +30,11 @@
           </div>
       </div>
       <div class="widget-body" *ngIf="cameraConfigs">     
-        <pagination-controls (pageChange)="changePage($event)" *ngIf="total>pageSize"></pagination-controls>
-        Page Size: <select (change)="optionChange($event.target.value)" [(ngModel)]="pageSize">
-          <option *ngFor="let option of options" [ngValue]="option">{{option}}</option>
+        <pagination-controls (pageChange)="changePage($event)" *ngIf="paging.total>paging.pageSize"></pagination-controls>
+        Page Size: <select (change)="optionChange($event.target.value)" [(ngModel)]="paging.pageSize">
+          <option *ngFor="let option of paging.options" [ngValue]="option">{{option}}</option>
         </select>  
-        Total: {{total}}, Available License: {{availableLicense}}
+        Total: {{paging.total}}, Available License: {{availableLicense}}
         <div style="width:100%;max-height:500px;overflow-y: scroll;">
         <table class="table table-hover table-lg mt-lg mb-0">
           <thead>
@@ -48,7 +48,7 @@
             </tr>
           </thead>
           <tbody >
-            <tr *ngFor="let cam of cameraConfigs | paginate: { itemsPerPage: pageSize, currentPage: p, totalItems: total }" (click)="currentEditCamera = cam.device" [class.active]="cam.device === currentEditCamera">
+            <tr *ngFor="let cam of cameraConfigs | paginate: { itemsPerPage: paging.pageSize, currentPage: paging.page, totalItems: paging.total }" (click)="currentEditCamera = cam.device" [class.active]="cam.device === currentEditCamera">
               <td><input type="checkbox" (click)="selectCam(cam, $event.target.checked)" [checked]="cam.checked" [disabled]="flag.busy"></td>
               <td>{{cam.device.Channel}}</td>
               <td>{{cam.brandDisplay}}</td>
@@ -59,7 +59,7 @@
           </tbody>
         </table>
       </div>
-      <pagination-controls (pageChange)="changePage($event)" *ngIf="total>pageSize"></pagination-controls>
+      <pagination-controls (pageChange)="changePage($event)" *ngIf="paging.total>paging.pageSize"></pagination-controls>
       </div>
       
     </section>
@@ -114,7 +114,7 @@
           <label class="col-md-4  col-form-label text-md-right">Quantity</label>
           <div class="col-md-8">
             <div class="input-group">
-              <input type="number" class="form-control" [(ngModel)]="cloneCameraParam.quantity" max="{{availableLicense}}" min="0">
+              <input type="number" class="form-control" [(ngModel)]="cloneCameraParam.quantity" max="{{availableLicense <= 1000 ? availableLicense : 1000}}" min="0">
             </div>
           </div>
         </div>

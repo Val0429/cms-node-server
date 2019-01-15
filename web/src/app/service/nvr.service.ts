@@ -26,6 +26,19 @@ export class NvrService {
       new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
       return result.json();   
   }
+  async getNvrList(page:number, pageSize:number){
+    
+    return await this.parseService.fetchData({
+      type: Nvr,
+      filter: query => query
+        .ascending("SequenceNumber")
+        .skip((page-1)*pageSize)
+        .limit(pageSize)
+    });
+  }
+  async getNvrCount(){
+    return await this.parseService.countFetch({type:Nvr, filter:query=>query.limit(Number.MAX_SAFE_INTEGER)});
+  }
          /** 依照Manufacture決定Driver value */
   getNvrDriverByManufacture(currentEditModel:INvrEditModel) {
     switch (currentEditModel.Manufacture.toLowerCase()) {

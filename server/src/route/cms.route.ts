@@ -7,19 +7,26 @@ import * as xml2js from 'xml2js';
 import * as shelljs from 'shelljs';
 import { Observable } from 'rxjs/Observable';
 import { IRouteMap, ParseHelper, ConfigHelper, LogHelper, SyncHelper } from '../helpers';
-import { Nvr, Event, SysLog, Server } from '../domain/core';
-import { DeviceService } from '../services';
+import { Nvr, Event,  Server } from '../domain/core';
+import { DeviceService, RestFulService } from '../services';
 
 const parseHelper = ParseHelper.instance;
 const configHelper = ConfigHelper.instance;
 const logHelper = LogHelper.instance;
 const syncHelper = SyncHelper.instance;
 const deviceService = DeviceService.instance;
+const resultFulService = RestFulService.instance;
 
 export const CmsRoute: IRouteMap = {
     path: 'cms',
     router: Router().use(bodyParser.json())
-        .get('/test', (req, res) => { res.send('Test Success') })        
+        .get('/test', (req, res) => { res.send('Test Success') })
+        .get('/data/:className', async(req, res)=>{
+            await resultFulService.get(req, res);
+        })      
+        .post('/data/:className', async(req, res)=>{
+            await resultFulService.post(req, res);
+        })   
         .get('/externalconfig', (req, res) => {
             res.json(configHelper.externalConfig);
         })
@@ -29,7 +36,7 @@ export const CmsRoute: IRouteMap = {
         .get('/device/count/:nvrId?', async (req, res) => {
             await deviceService.getDeviceCountByNvrId(req, res);
         })
-        .get('/device', async (req, res) => {
+        .get('/device', async (req, res) => {            
             await deviceService.get(req, res);
         })
         .delete('/device', async (req, res) => {

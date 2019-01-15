@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { Observable } from 'rxjs/Observable';
-import { ModalEditorModeEnum } from 'app/shared/enum/modalEditorModeEnum';
 import { Group } from 'app/model/core';
+import { GroupService } from 'app/service/group.service';
+import { InsertHelper } from 'app/helper/insert.helper';
 
 @Component({
   selector: 'app-group',
@@ -19,7 +20,8 @@ export class GroupComponent implements OnInit {
   currentEditData: Group;
   /** 目前顯示在畫面上編輯的Group Model */
   editDataModel: IGroupEditModel;
-  constructor(private coreService: CoreService, private parseService: ParseService) { }
+  constructor(private coreService: CoreService, 
+    private parseService: ParseService) { }
 
   ngOnInit() {
     this.reloadGroupData();
@@ -68,7 +70,10 @@ export class GroupComponent implements OnInit {
   /** Modal點擊儲存事件 */
   clickModalSave() {
     const group = this.currentEditData || new Group();
-
+    if(this.editDataModel.Name =="Non Main Group" || this.editDataModel.Name =="Non Sub Group"){
+      alert("Invalid group name!")
+      return;
+    }
     group.Name = this.editDataModel.Name;
     group.Level = this.editDataModel.Level;
     group.SubGroup = this.editDataModel.SubGroup;
@@ -87,24 +92,37 @@ export class GroupComponent implements OnInit {
 
   /** Modal點擊刪除事件 */
   clickModalDelete() {
-    if (confirm('Are you sure to delete ' + this.editDataModel.Name + '?')) {
-      const deleteGroup$ = Observable.fromPromise(this.currentEditData.destroy()
-        .then(group => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_GROUP, objectId: group.id })));
-      deleteGroup$
-        .switchMap(() => this.updateSubGroupOfMain(this.currentEditData))
-        .switchMap(() => this.removeSubGroupsByMain(this.currentEditData))
-        .do(() => this.coreService.notify())
-        .subscribe(() => {
-          if (this.editDataModel.Level === '0') {
-            this.selectedMainGroup = undefined;
-          } else {
-            this.selectedMainGroup = this.mainGroups.find(x => x.id === this.selectedMainGroup.id);
-          }
-          this.reloadGroupData();
-        });
-    } else {
-      return;
+    if (!confirm('Are you sure to delete ' + this.editDataModel.Name + '?')) return;
+    let noGroup = this.groupList.find(x=>x.Name=="Non Sub Group");
+    //move channel and nvr to "Non Sub Group"
+    if(this.currentEditData.Channel || this.currentEditData.Nvr){
+      
+      for(let nvrId of this.currentEditData.Nvr){
+        if(!noGroup.Nvr)noGroup.Nvr=[];
+        const insertIndex = InsertHelper.findInsertIndex(noGroup.Nvr, nvrId);
+        noGroup.Nvr.splice(insertIndex, 0, nvrId);        
+      }
+      for(let cam of this.currentEditData.Channel){
+        if(!noGroup.Channel)noGroup.Channel=[];
+        const insertIndex = InsertHelper.findInsertIndexForGroupChannel(noGroup.Channel, cam);
+        noGroup.Channel.splice(insertIndex, 0, cam);
+      }      
     }
+    const deleteGroup$ = Observable.fromPromise(this.currentEditData.destroy().then(res=> noGroup.save())
+      .then(group => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_GROUP, objectId: group.id })));
+    deleteGroup$
+      .switchMap(() => this.updateSubGroupOfMain(this.currentEditData))
+      .switchMap(() => this.removeSubGroupsByMain(this.currentEditData))
+      .do(() => this.coreService.notify())
+      .subscribe(() => {
+        if (this.editDataModel.Level === '0') {
+          this.selectedMainGroup = undefined;
+        } else {
+          this.selectedMainGroup = this.mainGroups.find(x => x.id === this.selectedMainGroup.id);
+        }
+        this.reloadGroupData();
+      });
+    
   }
 
   /** 更新DB中mainGroup底下的subGroup集合 */
