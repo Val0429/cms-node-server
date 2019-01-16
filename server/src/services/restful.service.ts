@@ -179,7 +179,17 @@ export class RestFulService {
             if(data[key] && data[key]!=null && typeof(data[key])==="object") this.postProcessJson(data[key]);
         }
     }
-    async getData(className:string, page:number, pageSize:number, where:string, includeRequest?:string){        
+    async getFirstData(className:string, where:any, includeRequest?:string):Promise<any>{        
+        let data = await this.db.collection(className).find(where);
+        let item = data&& data.length>0 ? data[0] : {};
+
+        this.postProcessJson(item);            
+
+        if(!includeRequest)return item;
+
+        return await this.fetchInclude(includeRequest, [item]);
+    }
+    async getData(className:string, page:number, pageSize:number, where:any, includeRequest?:string):Promise<any[]>{        
         let data = await this.db.collection(className).findAsCursor(where).skip((page-1)*pageSize).limit(pageSize).toArray();
         for(let item of data){
             this.postProcessJson(item);            
