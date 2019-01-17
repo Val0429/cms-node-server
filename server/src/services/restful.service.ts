@@ -20,15 +20,23 @@ export class RestFulService {
         try{
             //console.log("getData start", new Date()) ;
             let page = parseInt(req.query["page"] || "1");                            
-            let pageSize = parseInt(req.query["pageSize"] || "50");                                
+            let pageSize = parseInt(req.query["limit"] || "50");                                
             let className = req.params["className"];
             //mask fieldname to follow parse format
-            let where = JSON.parse((req.query["where"] || "{}"));
-            let sort = req.query["sort"] ? JSON.parse(req.query["sort"]) : undefined;
-            let select = req.query["select"] ? JSON.parse(req.query["select"]) : undefined;
-            this.sanitizeQuery(where);
-            this.sanitizeQuery(sort);
-            this.sanitizeQuery(select);
+            let whereJson = JSON.parse((req.query["where"] || "{}"));
+
+            let sortArray = req.query["order"] ? req.query["order"].split(","):[];
+            let sortJson= sortArray.length>0 ? this.constructJson(sortArray) : undefined;
+            
+            let selectArray = req.query["keys"] ? req.query["keys"].split(","):[];
+            let selectJson = selectArray.length>0 ? this.constructJson(selectArray) : undefined;
+            if(selectJson){
+                selectJson["createdAt"]=1;
+                selectJson["updatedAt"]=1;
+            }
+            this.sanitizeQuery(whereJson);
+            this.sanitizeQuery(sortJson);
+            this.sanitizeQuery(selectJson);
             let include = req.query["include"];
             let results = [];
             let total = 0;
@@ -38,8 +46,8 @@ export class RestFulService {
             if(page<1)page=1;
             
             await Promise.all([
-                this.getData(className, page, pageSize, where, sort, select, include).then(res=>results =res),
-                this.getCount(className, where).then(res=>total=res)
+                this.getData(className, page, pageSize, whereJson, sortJson, selectJson, include).then(res=>results =res),
+                this.getCount(className, whereJson).then(res=>total=res)
             ]);
             let totalPages=Math.ceil(total/pageSize);
             //console.log("getData end", new Date()) ;
@@ -54,6 +62,17 @@ export class RestFulService {
             });
         }
     }
+    private constructJson(keys: string[]) {
+        let data={};
+        for (let key of keys) {
+            if (key.indexOf("-") == 0)
+                data[key.substring(1, key.length)] = -1;
+            else
+                data[key] = 1;
+        }
+        return data;
+    }
+
     async post(req:Request, res:Response){       
         try{
             
@@ -216,7 +235,7 @@ export class RestFulService {
 
         return await this.fetchInclude(includeRequest, data);
     }
-    async getCount(className:string, where:string){        
+    async getCount(className:string, where:any){        
         let total:number= await this.db.collection(className).count(where);
         return total;
     }
