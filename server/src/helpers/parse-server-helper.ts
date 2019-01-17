@@ -36,22 +36,19 @@ export class ParseServerHelper {
             serverURL: this.parseHelper.parseServerUrl,
             verbose: false,
             silent: true,
-            // liveQuery: {
-            //     'classNames': [
-            //         'VisitEvent',
-            //         'Visitor',
-            //         'HostEvent',
-            //         'Host'
-            //     ]
-            // }
+            liveQuery: {
+                classNames: [
+                    "Device"
+                ]
+            }
         });
 
         this.serverHelper.app.use(this.pathConfig.PARSE_PATH, this.parseServer);
 
-        // this.parseLiveQueryServer = ParseServer.createLiveQueryServer(this.serverHelper.httpServer);
+        this.parseLiveQueryServer = ParseServer.createLiveQueryServer(this.serverHelper.httpServer);
 
-        // if (this.parseConfig.IS_HTTPS) {
-        //     this.parseLiveQueryServerSSL = ParseServer.createLiveQueryServer(this.serverHelper.httpServerSSL);
-        // }
+        if (this.parseConfig.IS_HTTPS) {
+            this.parseLiveQueryServerSSL = ParseServer.createLiveQueryServer(this.serverHelper.httpServerSSL);
+        }
     }
 }

@@ -53,7 +53,16 @@ export class ParseHelper {
         
     }
 
-
+    getQuerySubscription<T extends Parse.Object>(args: {
+        type: new (options?: any) => T,
+        filter?: (query: Parse.Query<T>) => void
+      }) {
+        const query = new Parse.Query(args.type);
+        if (args.filter) {
+          args.filter(query);
+        }
+        return (query as any).subscribe();
+    }
     createLiveQueryWatcher<T extends Parse.Object>(args: {
         type: new (options?: any) => T,
         action: LiveQueryEventType,
