@@ -23,7 +23,10 @@ export const CmsRoute: IRouteMap = {
         .get('/test', (req, res) => { res.send('Test Success') })
         .get('/data/:className', async(req, res)=>{
             await resultFulService.get(req, res);
-        })      
+        })     
+        .get('/data/:className/:_id', async(req, res)=>{
+            await resultFulService.getById(req, res);
+        })  
         .post('/data/:className', async(req, res)=>{
             await resultFulService.post(req, res);
         })   

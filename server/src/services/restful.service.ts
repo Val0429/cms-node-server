@@ -15,7 +15,31 @@ export class RestFulService {
     constructor() {     
         this.db = this.mongoist(`${this.config.parseConfig.DATABASE_URI}`);  
     }
-
+    async getById(req:Request, res:Response){       
+        try{
+            
+            let className = req.params["className"];            
+            let whereJson = {_id:req.params["_id"]};
+            let selectArray = req.query["keys"] ? req.query["keys"].split(","):[];
+            let selectJson = selectArray.length>0 ? this.constructJson(selectArray) : undefined;
+            if(selectJson){
+                selectJson["createdAt"]=1;
+                selectJson["updatedAt"]=1;
+                this.sanitizeQuery(selectJson);
+            }            
+            let include = req.query["include"];
+            let result = await this.getFirstData(className, whereJson, include, selectJson);
+            res.json(result);            
+        }
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
+    }
     async get(req:Request, res:Response){       
         try{
             //console.log("getData start", new Date()) ;
@@ -72,19 +96,21 @@ export class RestFulService {
         }
         return data;
     }
-
+    getNewObjectId(){
+        return this.mongoist.ObjectId().toString();
+    }
     async post(req:Request, res:Response){       
         try{
             
             let className = req.params["className"];
             let data = req.body;
             for(let item of data){
-                item._id= this.mongoist.ObjectId().toString();                                
+                item._id= this.getNewObjectId();
                 this.preProcessJson(item);
                 item._created_at=new Date();
                 item._updated_at=new Date();
             }
-            let result = await this.db.collection(className).insertMany(data);
+            let result = await this.insertMany(className, data);
             for(let item of result){
                 this.postProcessJson(item);
             }
@@ -99,6 +125,10 @@ export class RestFulService {
             });
         }
     }
+    private async insertMany(className: any, data: any) {
+        return await this.db.collection(className).insertMany(data);
+    }
+
     constructInclude(includeRequest:string):includeData{
         let includeArray = includeRequest.split(',');
         let includeData:{fieldNames:string[], depth:number}[]=[];
@@ -205,8 +235,8 @@ export class RestFulService {
             if(data[key] && data[key]!=null && typeof(data[key])==="object") this.postProcessJson(data[key]);
         }
     }
-    async getFirstData(className:string, where:any, includeRequest?:string):Promise<any>{        
-        let data = await this.db.collection(className).find(where);
+    async getFirstData(className:string, where:any, includeRequest?:string, select?:any):Promise<any>{        
+        let data = await this.db.collection(className).find(select !== undefined ? where : where, select);
         let item = data&& data.length>0 ? data[0] : {};
 
         this.postProcessJson(item);            
