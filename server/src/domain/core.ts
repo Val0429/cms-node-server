@@ -310,7 +310,7 @@ export class SystemLog extends Parse.Object implements ISystemLog {
     super.set('Message', value);
   }
   get Timestamp(): number {
-    return super.get('Message');
+    return super.get('Timestamp');
   }
   set Timestamp(value: number) {
     super.set('Timestamp', value);

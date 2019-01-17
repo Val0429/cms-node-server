@@ -67,7 +67,7 @@ export class ParseService {
     Parse.Object.registerSubclass('EventRecovery', EventRecovery);
     Parse.Object.registerSubclass('Device', Device);
     Parse.Object.registerSubclass('General', General);
-    Parse.Object.registerSubclass('SysLog', SystemLog);
+    Parse.Object.registerSubclass('SystemLog', SystemLog);
     Parse.Object.registerSubclass('DBSync', DBSync);
   }
 

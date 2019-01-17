@@ -75,7 +75,7 @@ export class LogComponent implements OnInit {
     // 查詢條件
     const filter = (query: Parse.Query<SystemLog>) => {
       if (this.queryParams.keyword) {
-        const keywordQueries = ['ServerName', 'Type', 'Description'].map(column =>
+        const keywordQueries = ['Level', 'Category', 'Identity','Message'].map(column =>
           new Parse.Query(SystemLog)
             .contains(column, this.queryParams.keyword));
         Object.assign(query, Parse.Query.or(...keywordQueries));
@@ -85,15 +85,16 @@ export class LogComponent implements OnInit {
       }
       if (this.queryParams.startDate) {
         const date = moment(this.queryParams.startDate).format('x');
-        query.greaterThanOrEqualTo('Time', Number(date));
+        query.greaterThanOrEqualTo('Timestamp', Number(date));
       }
       if (this.queryParams.endDate) {
         const date = moment(this.queryParams.endDate).add(1, 'd').subtract(1, 's').format('x');
-        query.lessThanOrEqualTo('Time', Number(date));
+        query.lessThanOrEqualTo('Timestamp', Number(date));
       }
       query.descending('createAt');
+      console.log(query);
     };
-
+    
     // 取得分頁資料
     const fetch$ = Observable.fromPromise(this.parseService.fetchPagingAndCount({
       type: SystemLog,
@@ -135,8 +136,8 @@ export class LogComponent implements OnInit {
   }
 
   /** 取得timestamp所定時間, 使用在顯示list與匯出csv */
-  getDate(timestamp: number) {
-    return moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+  getDate(timestamp: any) {    
+      return moment(timestamp).format('YYYY-MM-DD HH:mm:ss');    
   }
 
   /** 將目前Filter符合的Log資料匯出為CSV */
