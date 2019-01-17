@@ -423,18 +423,10 @@ assignNvrPoperties(dev: Nvr, nvr: any) {
 private async getDeviceCount(nvrId?:string):Promise<number>{
         
     if(nvrId){
-        return await parseService
-            .countFetch({type:Device, 
-                filter:query=>query
-                .equalTo("NvrId", nvrId)
-                .limit(Number.MAX_SAFE_INTEGER)})
+        return await restFulService.getCount("Device", {"NvrId": nvrId});        
     }
     else{
-        return await parseService
-        .countFetch({type:Device, 
-            filter:query=>query
-            .limit(Number.MAX_SAFE_INTEGER)})
-        
+        return await restFulService.getCount("Device", {});
     }
 }
 

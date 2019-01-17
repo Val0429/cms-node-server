@@ -145,23 +145,17 @@ export class CameraService {
     return result.json();
 
   }
- async getNewChannelId(nvrId:string, count:number):Promise<number[]>{
-    let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/channel/${nvrId}/${count}`, 
-    new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
-    let result = response.json();
-    console.debug("result", result);
-    return result;
- }
- async getDeviceCount(nvrId:string):Promise<number>{
-  // REST server performance is too slow, will fix it later
-  // let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/count/${nvrId}`, 
-  // new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
-  // let result = response.json();
-  // return result.count
-
-  let result = await this.parseService.countFetch({type:Device, filter:query=>query.equalTo("NvrId", nvrId)});  
-  return result;
-}
+  async getDeviceCount(nvrId:string):Promise<number>{
+    try{
+      let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device/count/${nvrId}`, 
+      new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
+      let result = response.json();
+      return result.count;
+    }catch(err){
+      console.log(err);
+      return 0;
+    }
+  }
 
     async deleteCam(camIds : string[], nvrObjectId:string): Promise<any>{
       let result = await this.httpService.delete(this.parseService.parseServerUrl + "/cms/device", 
