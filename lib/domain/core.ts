@@ -28,11 +28,12 @@ export interface IEvent {
     Status: string
 }
 
-export interface ISysLog {
-    ServerName: string,
-    Type: string,
-    Time: number,
-    Description: string
+export interface ISystemLog {
+    Timestamp: number,
+    Level: string,
+    Category: string,
+    Identity: string,
+    Message:string    
 }
 
 export interface IServer {

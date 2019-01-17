@@ -1,6 +1,5 @@
-import { DBSync, Event, SysLog } from '../domain/core';
+import { DBSync, Event, SystemLog } from '../domain/core';
 import { ParseHelper, LogHelper, ConfigHelper } from '.';
-import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 import * as fetch from 'node-fetch';
 
@@ -106,7 +105,7 @@ export class SyncHelper {
     /** 依序指定collection呼叫檢查 */
     refreshDatabase() {
         return this.refreshCollection(Event)
-            .switchMap(() => this.refreshCollection(SysLog));
+            .switchMap(() => this.refreshCollection(SystemLog));
     }
 
     /** 檢查單一collection是否超出資料上限並刪除多餘的舊資料 */

@@ -1,4 +1,4 @@
-import { INvr, IEvent, ISysLog, IServer, IServerInfo, IDBSync, IDBSyncDestination, IDevice,IDeviceConfig, IGroup, IEventHandlerType, IEventHandler, IRecordScheduleTemplate, IRecordScheduleTemplateFullRecord, IRecordScheduleTemplateEventRecord, IRecordSchedule } from '../../../lib/domain/core';
+import { INvr, IEvent, ISystemLog, IServer, IServerInfo, IDBSync, IDBSyncDestination, IDevice,IDeviceConfig, IGroup, IEventHandlerType, IEventHandler, IRecordScheduleTemplate, IRecordScheduleTemplateFullRecord, IRecordScheduleTemplateEventRecord, IRecordSchedule } from '../../../lib/domain/core';
 // import { IHost, IHostEvent, IVisitEvent, IVisitor } from 'lib/domain/core';
 import * as Parse from 'parse/node';
 
@@ -284,19 +284,42 @@ export class Event extends Parse.Object implements IEvent {
 }
 
 @registerSubclass()
-export class SysLog extends Parse.Object implements ISysLog {
-    get ServerName(): string { return super.get('ServerName'); }
-    set ServerName(value: string) { super.set('ServerName', value); }
-    get Type(): string { return super.get('Type'); }
-    set Type(value: string) { super.set('Type', value); }
-    get Time(): number { return super.get('Time'); }
-    set Time(value: number) { super.set('Time', value); }
-    get Description(): string { return super.get('Description'); }
-    set Description(value: string) { super.set('Description', value); }
-    constructor(data?: Partial<ISysLog>) {
-        super('SysLog');
-        Object.assign(this, data);
-    }
+export class SystemLog extends Parse.Object implements ISystemLog {
+  get Level(): string {
+    return super.get('Level');
+  }
+  set Level(value: string) {
+    super.set('Level', value);
+  }
+  get Category(): string {
+    return super.get('Category');
+  }
+  set Category(value: string) {
+    super.set('Category', value);
+  }
+  get Identity(): string {
+    return super.get('Identity');
+  }
+  set Identity(value: string) {
+    super.set('Identity', value);
+  }
+  get Message(): string {
+    return super.get('Message');
+  }
+  set Message(value: string) {
+    super.set('Message', value);
+  }
+  get Timestamp(): number {
+    return super.get('Message');
+  }
+  set Timestamp(value: number) {
+    super.set('Timestamp', value);
+  };
+  
+  constructor(value?: Partial<ISystemLog>) {
+    super('SystemLog');
+    Object.assign(this, value);
+  }
 }
 
 @registerSubclass()

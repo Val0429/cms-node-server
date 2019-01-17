@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Rx';
 import {
   UserGroup, Group, Nvr, ServerInfo, Server,
   RecordScheduleTemplate, RecordSchedule, Event, EventScheduleTemplate,
-  EventHandler, EventRecovery, Device, General, SysLog, DBSync
+  EventHandler, EventRecovery, Device, General, SystemLog, DBSync
 } from 'app/model/core';
 
 @Injectable()
@@ -67,7 +67,7 @@ export class ParseService {
     Parse.Object.registerSubclass('EventRecovery', EventRecovery);
     Parse.Object.registerSubclass('Device', Device);
     Parse.Object.registerSubclass('General', General);
-    Parse.Object.registerSubclass('SysLog', SysLog);
+    Parse.Object.registerSubclass('SysLog', SystemLog);
     Parse.Object.registerSubclass('DBSync', DBSync);
   }
 
@@ -102,7 +102,7 @@ export class ParseService {
   getQuerySubscription<T extends Parse.Object>(args: {
     type: new (options?: any) => T,
     filter?: (query: Parse.Query<T>) => void
-  }): Parse.Promise<T[]> {
+  }){
     const query = new Parse.Query(args.type);
     if (args.filter) {
       args.filter(query);

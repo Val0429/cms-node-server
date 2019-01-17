@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { CSVService } from 'app/service/csv.service';
-import { SysLog } from 'app/model/core';
+import { SystemLog } from 'app/model/core';
 import { IPageViewerOptions } from 'app/shared/components/page-viewer/page-viewer.component';
 import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
@@ -14,7 +14,7 @@ import * as moment from 'moment';
   styleUrls: ['./log.component.css']
 })
 export class LogComponent implements OnInit {
-  dataList: SysLog[];
+  dataList: SystemLog[];
   pageViewerOptions: IPageViewerOptions;
   queryParams: {
     page?: number,
@@ -73,10 +73,10 @@ export class LogComponent implements OnInit {
     };
 
     // 查詢條件
-    const filter = (query: Parse.Query<SysLog>) => {
+    const filter = (query: Parse.Query<SystemLog>) => {
       if (this.queryParams.keyword) {
         const keywordQueries = ['ServerName', 'Type', 'Description'].map(column =>
-          new Parse.Query(SysLog)
+          new Parse.Query(SystemLog)
             .contains(column, this.queryParams.keyword));
         Object.assign(query, Parse.Query.or(...keywordQueries));
         // Object.assign之後重新設定分頁
@@ -96,7 +96,7 @@ export class LogComponent implements OnInit {
 
     // 取得分頁資料
     const fetch$ = Observable.fromPromise(this.parseService.fetchPagingAndCount({
-      type: SysLog,
+      type: SystemLog,
       currentPage: options.currentPage,
       itemVisibleSize: options.itemVisibleSize,
       filter: filter
@@ -140,46 +140,46 @@ export class LogComponent implements OnInit {
   }
 
   /** 將目前Filter符合的Log資料匯出為CSV */
-  exportCSV() {
-    let tempLogs: SysLog[];
+  // exportCSV() {
+  //   let tempLogs: SystemLog[];
 
-    // 查詢條件
-    const filter = (query: Parse.Query<SysLog>) => {
-      if (this.queryParams.keyword) {
-        const keywordQueries = ['ServerName', 'Type', 'Description'].map(column =>
-          new Parse.Query(SysLog)
-            .contains(column, this.queryParams.keyword));
-        Object.assign(query, Parse.Query.or(...keywordQueries));
-      }
-      if (this.queryParams.startDate) {
-        const date = moment(this.queryParams.startDate).format('x');
-        query.greaterThanOrEqualTo('Time', Number(date));
-      }
-      if (this.queryParams.endDate) {
-        const date = moment(this.queryParams.endDate).add(1, 'd').subtract(1, 's').format('x');
-        query.lessThanOrEqualTo('Time', Number(date));
-      }
-      query.descending('createAt');
-      query.limit(30000);
-    };
+  //   // 查詢條件
+  //   const filter = (query: Parse.Query<SystemLog>) => {
+  //     if (this.queryParams.keyword) {
+  //       const keywordQueries = ['ServerName', 'Type', 'Description'].map(column =>
+  //         new Parse.Query(SystemLog)
+  //           .contains(column, this.queryParams.keyword));
+  //       Object.assign(query, Parse.Query.or(...keywordQueries));
+  //     }
+  //     if (this.queryParams.startDate) {
+  //       const date = moment(this.queryParams.startDate).format('x');
+  //       query.greaterThanOrEqualTo('Time', Number(date));
+  //     }
+  //     if (this.queryParams.endDate) {
+  //       const date = moment(this.queryParams.endDate).add(1, 'd').subtract(1, 's').format('x');
+  //       query.lessThanOrEqualTo('Time', Number(date));
+  //     }
+  //     query.descending('createAt');
+  //     query.limit(30000);
+  //   };
 
-    // 取得所有Log資料
-    const fetch$ = Observable.fromPromise(this.parseService.fetchData({
-      type: SysLog,
-      filter: filter
-    }))
-      .map(logs => tempLogs = logs);
+  //   // 取得所有Log資料
+  //   const fetch$ = Observable.fromPromise(this.parseService.fetchData({
+  //     type: SystemLog,
+  //     filter: filter
+  //   }))
+  //     .map(logs => tempLogs = logs);
 
-    fetch$
-      .do(logs => {
-        const rows = tempLogs
-          .map(log => `${this.getDate(log.Time)},${log.Type},${log.ServerName},${log.Description}`);
-        this.csvService.downloadCSV({
-          header: 'Time,Type,Server Name,Description',
-          data: rows,
-          fileName: 'Log_Export',
-          timestamp: 'YYYY-MM-DD HHmmss'
-        });
-      }).subscribe();
-  }
+  //   fetch$
+  //     .do(logs => {
+  //       const rows = tempLogs
+  //         .map(log => `${this.getDate(log.Time)},${log.Type},${log.ServerName},${log.Description}`);
+  //       this.csvService.downloadCSV({
+  //         header: 'Time,Type,Server Name,Description',
+  //         data: rows,
+  //         fileName: 'Log_Export',
+  //         timestamp: 'YYYY-MM-DD HHmmss'
+  //       });
+  //     }).subscribe();
+  // }
 }
