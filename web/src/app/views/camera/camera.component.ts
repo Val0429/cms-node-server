@@ -3,12 +3,10 @@ import { ParseService } from 'app/service/parse.service';
 import { CryptoService } from 'app/service/crypto.service';
 import { LicenseService } from 'app/service/license.service';
 import { Observable } from 'rxjs/Observable';
-import { ISearchCamera } from 'lib/domain/core';
-import { Device, Nvr, Group } from 'app/model/core';
+import { Device, Nvr, Group, PagerClass } from 'app/model/core';
 import { DeviceVendor } from 'app/config/device-vendor.config';
 import { CameraService } from 'app/service/camera.service';
 import { CameraSearchComponent } from './camera-search/camera-search.component';
-import { PagerService } from 'app/service/pager.service';
 
 @Component({
   selector: 'app-camera',
@@ -37,7 +35,7 @@ export class CameraComponent implements OnInit {
     device: undefined,
     quantity: 0
   };
-  paging:PagerService = new PagerService();
+  paging:PagerClass = new PagerClass();
   
  @ViewChild("searchComponent") searchComponent:CameraSearchComponent;
 
@@ -64,7 +62,7 @@ export class CameraComponent implements OnInit {
       this.getAvailableLicense()
     ]).toPromise();
   }
-  optionChange(option:number){    
+  optionChange(){    
     this.changePage(1);
   }
   private async getGroup() {
@@ -206,7 +204,6 @@ export class CameraComponent implements OnInit {
       if (this.cloneCameraParam.quantity > this.availableLicense) {
         throw new Error("Not enough license to add new camera");        
       }      
-      let result = await this.cameraService.cloneCam(this.cloneCameraParam.device, this.cloneCameraParam.quantity, this.ipCameraNvr);      
       alert("Clone Success");
     }catch(err){
       console.error(err);

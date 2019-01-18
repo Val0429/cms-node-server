@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ParseService } from 'app/service/parse.service';
-import { Nvr, Device, EventHandler } from 'app/model/core';
+import { Nvr, Device, EventHandler, PagerClass } from 'app/model/core';
 import { CameraService } from 'app/service/camera.service';
 import { NvrService } from 'app/service/nvr.service';
-import { PagerService } from 'app/service/pager.service';
 
 
 @Component({
@@ -16,7 +15,7 @@ export class EventComponent implements OnInit {
   currentDevice: Device;
   currentEventHandler: EventHandler; // 欲編輯的EventHandler
   eventHandlers:EventHandler[];
-  paging:PagerService = new PagerService();
+  paging:PagerClass = new PagerClass();
   
   constructor(private parseService: ParseService, 
     private cameraService:CameraService, 

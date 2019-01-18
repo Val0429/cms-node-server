@@ -25,7 +25,12 @@ import {
   IRecordScheduleTemplateEventRecord,
 } from 'lib/domain/core';
 // import * as parse from 'parse';
-
+export class PagerClass{
+  public total:number=0;
+  public page:number=1;
+  public pageSize:number=20;
+  public options:number[]=[20,50,100,500,1000];
+}
 export class RoleType {
   static ADMINISTRATOR = 'Administrator';
   static SUPERUSER = 'Superuser';

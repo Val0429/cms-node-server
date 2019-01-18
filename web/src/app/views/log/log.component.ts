@@ -7,6 +7,7 @@ import { SystemLog } from 'app/model/core';
 import { IPageViewerOptions } from 'app/shared/components/page-viewer/page-viewer.component';
 import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
+import { RestFulService } from 'app/service/restful.service';
 
 @Component({
   selector: 'app-log',
@@ -30,6 +31,7 @@ export class LogComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private restFulService:RestFulService,
     private coreService: CoreService,
     private parseService: ParseService,
     private csvService: CSVService,
@@ -39,7 +41,7 @@ export class LogComponent implements OnInit {
   ngOnInit() {
     this.initUIData();
     this.fetchRouteQueryParams()
-      .switchMap(() => this.fetchDataList())
+      .switchMap(async () => this.fetchDataList())
       .subscribe();
   }
 
@@ -61,17 +63,17 @@ export class LogComponent implements OnInit {
   }
 
   /** 取得DataList */
-  fetchDataList() {
+  async fetchDataList() {
     this.dataList = undefined;
 
     // 分頁器選項
     const options: IPageViewerOptions = {
       currentPage: this.queryParams.page || 1,
       pageVisibleSize: 10,
-      itemVisibleSize: this.queryParams.count || 20,
+      itemVisibleSize: 20,
       itemCount: 0
     };
-
+    console.log("paging", options);
     // 查詢條件
     const filter = (query: Parse.Query<SystemLog>) => {
       if (this.queryParams.keyword) {
@@ -91,23 +93,16 @@ export class LogComponent implements OnInit {
         const date = moment(this.queryParams.endDate).add(1, 'd').subtract(1, 's').format('x');
         query.lessThanOrEqualTo('Timestamp', Number(date));
       }
-      query.descending('createAt');
-      console.log(query);
+      query.descending('createdAt');
+      //console.log(query);
+      return query;
     };
-    
-    // 取得分頁資料
-    const fetch$ = Observable.fromPromise(this.parseService.fetchPagingAndCount({
-      type: SystemLog,
-      currentPage: options.currentPage,
-      itemVisibleSize: options.itemVisibleSize,
-      filter: filter
-    })).do(result => {
+    await this.restFulService.get({type:SystemLog, filter}).then(result=>{
       options.itemCount = result.count;
       this.pageViewerOptions = options;
-      this.dataList = result.data;
+      this.dataList = result.results;
     });
-
-    return fetch$;
+    
   }
 
   /** 頁碼變更 */
@@ -141,46 +136,46 @@ export class LogComponent implements OnInit {
   }
 
   /** 將目前Filter符合的Log資料匯出為CSV */
-  // exportCSV() {
-  //   let tempLogs: SystemLog[];
+  exportCSV() {
+    let tempLogs: SystemLog[];
 
-  //   // 查詢條件
-  //   const filter = (query: Parse.Query<SystemLog>) => {
-  //     if (this.queryParams.keyword) {
-  //       const keywordQueries = ['ServerName', 'Type', 'Description'].map(column =>
-  //         new Parse.Query(SystemLog)
-  //           .contains(column, this.queryParams.keyword));
-  //       Object.assign(query, Parse.Query.or(...keywordQueries));
-  //     }
-  //     if (this.queryParams.startDate) {
-  //       const date = moment(this.queryParams.startDate).format('x');
-  //       query.greaterThanOrEqualTo('Time', Number(date));
-  //     }
-  //     if (this.queryParams.endDate) {
-  //       const date = moment(this.queryParams.endDate).add(1, 'd').subtract(1, 's').format('x');
-  //       query.lessThanOrEqualTo('Time', Number(date));
-  //     }
-  //     query.descending('createAt');
-  //     query.limit(30000);
-  //   };
+    // 查詢條件
+    const filter = (query: Parse.Query<SystemLog>) => {
+      if (this.queryParams.keyword) {
+        const keywordQueries = ['Level', 'Category', 'Identity','Message'].map(column =>
+          new Parse.Query(SystemLog)
+            .contains(column, this.queryParams.keyword));
+        Object.assign(query, Parse.Query.or(...keywordQueries));
+      }
+      if (this.queryParams.startDate) {
+        const date = moment(this.queryParams.startDate).format('x');
+        query.greaterThanOrEqualTo('Timestamp', Number(date));
+      }
+      if (this.queryParams.endDate) {
+        const date = moment(this.queryParams.endDate).add(1, 'd').subtract(1, 's').format('x');
+        query.lessThanOrEqualTo('Timestamp', Number(date));
+      }
+      query.descending('createdAt');
+      query.limit(30000);
+    };
 
-  //   // 取得所有Log資料
-  //   const fetch$ = Observable.fromPromise(this.parseService.fetchData({
-  //     type: SystemLog,
-  //     filter: filter
-  //   }))
-  //     .map(logs => tempLogs = logs);
+    // 取得所有Log資料
+    const fetch$ = Observable.fromPromise(this.parseService.fetchData({
+      type: SystemLog,
+      filter: filter
+    }))
+      .map(logs => tempLogs = logs);
 
-  //   fetch$
-  //     .do(logs => {
-  //       const rows = tempLogs
-  //         .map(log => `${this.getDate(log.Time)},${log.Type},${log.ServerName},${log.Description}`);
-  //       this.csvService.downloadCSV({
-  //         header: 'Time,Type,Server Name,Description',
-  //         data: rows,
-  //         fileName: 'Log_Export',
-  //         timestamp: 'YYYY-MM-DD HHmmss'
-  //       });
-  //     }).subscribe();
-  // }
+    fetch$
+      .do(logs => {
+        const rows = tempLogs
+          .map(log => `${this.getDate(log.Timestamp)},${log.Level},${log.Identity},${log.Category},${log.Message}`);
+        this.csvService.downloadCSV({
+          header: 'Time,Level,Identity,Category,Message',
+          data: rows,
+          fileName: 'Log_Export',
+          timestamp: 'YYYY-MM-DD HHmmss'
+        });
+      }).subscribe();
+  }
 }
