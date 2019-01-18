@@ -65,7 +65,7 @@ export class RestFulService {
             let results = [];
             let count = 0;
           
-            if(pageSize>1000)pageSize=1000;
+            if(pageSize>10000)pageSize=10000;
             else if(pageSize<1)pageSize=20;
             
             await Promise.all([
