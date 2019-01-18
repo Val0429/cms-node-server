@@ -4,12 +4,13 @@ import * as xml2js from 'xml2js';
 import { IRouteMap, ParseHelper, LogHelper } from '../helpers';
 import { ServerInfo } from '../domain/core';
 import { ConfigHelper } from "../helpers";
+import { RestFulService } from '../services';
 
 const request = require('request-promise');
 const parseHelper = ParseHelper.instance;
 const logHelper = LogHelper.instance;
 const configHelper = ConfigHelper.instance;
-
+const restFulService = RestFulService.instance;
 export const ProxyRoute: IRouteMap = {
     path: 'proxy',
     router: Router().use(bodyParser.json())
@@ -19,19 +20,17 @@ export const ProxyRoute: IRouteMap = {
                 res.send({});
                 return;
             }
-            
-            // 先取得MediaServer的連線URL再轉發
-            await parseHelper.getData({
-                type: ServerInfo,
-                filter: query => {
-                    //console.log("proxy/:id", req.params["id"]);
-                    if(!req.params["id"]){
-                        query.matches('Type', new RegExp('CMSManager'), 'i')
-                    }else{
-                        query.equalTo('objectId', req.params["id"]);
-                    }
+            try{
+                let where={};
+
+                if(!req.params["id"]){
+                    where={"Type":"CMSManager"};
+                }else{
+                    where={"objectId":req.params["id"]}; 
                 }
-            }).then(async serverInfo => {
+                // 先取得MediaServer的連線URL再轉發
+                let serverInfo = await restFulService.getFirstData("ServerInfo",where);
+                
                 let protocol = configHelper.parseConfig.IS_HTTPS ? 'https' : 'http';
                 let port = configHelper.parseConfig.IS_HTTPS ? serverInfo.SSLPort : serverInfo.Port;
 
@@ -55,13 +54,12 @@ export const ProxyRoute: IRouteMap = {
             
             
                 return await request(options)
-                    .then(data => convertToJsonRes(data, res))
-                    .catch(err => {
-                        logHelper.writeLog({ type: 'Proxy', msg: err.message });
-                        res.status(500);
-                        res.json({ type: 'Proxy', msg: err.message });
-                });
-            })
+                    .then(data => convertToJsonRes(data, res));
+            }catch(err){
+                logHelper.writeLog({ type: 'Proxy', msg: err.message });                
+                res.status(500);
+                res.json({ type: 'Proxy', msg: err.message });
+            }
         }),
     children: []
 }

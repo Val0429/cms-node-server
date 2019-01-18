@@ -16,7 +16,7 @@ import {
   IEvent,
   IEventHandler,
   IEventHandlerType,
-  ISysLog,
+  ISystemLog,
   IDBSync,
   IDBSyncDestination,
   IEventRecovery,
@@ -25,7 +25,12 @@ import {
   IRecordScheduleTemplateEventRecord,
 } from 'lib/domain/core';
 // import * as parse from 'parse';
-
+export class PagerClass{
+  public total:number=0;
+  public page:number=1;
+  public pageSize:number=20;
+  public options:number[]=[20,50,100,500,1000];
+}
 export class RoleType {
   static ADMINISTRATOR = 'Administrator';
   static SUPERUSER = 'Superuser';
@@ -781,33 +786,40 @@ export class General extends Parse.Object implements IGeneral {
   }
 }
 
-export class SysLog extends Parse.Object implements ISysLog {
-  get ServerName(): string {
-    return super.get('ServerName');
+export class SystemLog extends Parse.Object implements ISystemLog {
+  get Level(): string {
+    return super.get('Level');
   }
-  set ServerName(value: string) {
-    super.set('ServerName', value);
+  set Level(value: string) {
+    super.set('Level', value);
   }
-  get Type(): string {
-    return super.get('Type');
+  get Category(): string {
+    return super.get('Category');
   }
-  set Type(value: string) {
-    super.set('Type', value);
+  set Category(value: string) {
+    super.set('Category', value);
   }
-  get Time(): number {
-    return super.get('Time');
+  get Identity(): string {
+    return super.get('Identity');
   }
-  set Time(value: number) {
-    super.set('Time', value);
+  set Identity(value: string) {
+    super.set('Identity', value);
   }
-  get Description(): string {
-    return super.get('Description');
+  get Message(): string {
+    return super.get('Message');
   }
-  set Description(value: string) {
-    super.set('Description', value);
+  set Message(value: string) {
+    super.set('Message', value);
   }
-  constructor(value?: Partial<ISysLog>) {
-    super('SysLog');
+  get Timestamp(): number {
+    return super.get('Timestamp');
+  }
+  set Timestamp(value: number) {
+    super.set('Timestamp', value);
+  };
+  
+  constructor(value?: Partial<ISystemLog>) {
+    super('SystemLog');
     Object.assign(this, value);
   }
 }

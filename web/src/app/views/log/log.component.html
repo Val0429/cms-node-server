@@ -35,18 +35,20 @@
           <table class="table table-bordered table-lg mb-lg" *ngIf="dataList">
             <thead>
               <tr>
-                <th>Time</th>
-                <th>Type</th>
-                <th>Server Name</th>
-                <th>Description</th>
+                <th>Time</th>                
+                <th>Level</th>                
+                <th>Identity</th>
+                <th>Category</th>
+                <th>Message</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let log of dataList;">
-                <td>{{getDate(log.Time)}}</td>
-                <td>{{log.Type}}</td>
-                <td>{{log.ServerName}}</td>
-                <td>{{log.Description}}</td>
+                <td>{{getDate(log.Timestamp)}}</td>
+                <td>{{log.Level}}</td>
+                <td>{{log.Identity}}</td>
+                <td>{{log.Category}}</td>
+                <td>{{log.Message}}</td>
               </tr>
             </tbody>
           </table>

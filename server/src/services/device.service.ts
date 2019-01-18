@@ -4,11 +4,12 @@ import { Nvr, Device, Group, EventHandler, RecordSchedule } from '../domain';
 import { ParseHelper } from '../helpers';
 import { CoreService, NotificationBody } from './core.service';
 import { IGroupChannel } from 'lib/domain/core';
-import { save } from 'nconf';
-import { catchError } from 'rxjs/operators';
+import { RestFulService } from './restful.service';
+
 
 const parseService = ParseHelper.instance;
 const coreService = CoreService.instance;
+const restFulService = RestFulService.instance;
 
 export class DeviceService {    
     
@@ -113,9 +114,7 @@ export class DeviceService {
     }
 
 //#region RESTAPI
-    async updateGroup(req:Request, res:Response){
-        
-    }
+
     async cloneDevice(req:Request, res:Response){
         try{
             
@@ -151,40 +150,65 @@ export class DeviceService {
     }
     
     async getDeviceCountByNvrId(req:Request, res:Response){
-        let nvrId = req.params["nvrId"];        
-        let count = await this.getDeviceCount(nvrId);
-        res.json({count});
+        try{
+            let nvrId = req.params["nvrId"];        
+            let count = await this.getDeviceCount(nvrId);
+            res.json({count});
+        }
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
     }
     async get(req:Request, res:Response){
-        
-        let nvrId = req.query["nvrId"];
-        let page = parseInt(req.query["page"] || "1");
-        let pageSize = parseInt(req.query["pageSize"] || "50");                
-                
-        let devices = await parseService.fetchData({
-            type: Device,
-            filter: query=>query
-                .equalTo("NvrId", nvrId)
-                .limit(pageSize)
-                .skip((page-1)*pageSize)
-        });        
-        
-        res.json(devices);
+        try{
+            let nvrId = req.query["nvrId"];
+            let page = parseInt(req.query["page"] || "1");
+            let pageSize = parseInt(req.query["pageSize"] || "50");                
+                    
+            let devices = await parseService.fetchData({
+                type: Device,
+                filter: query=>query
+                    .equalTo("NvrId", nvrId)
+                    .limit(pageSize)
+                    .skip((page-1)*pageSize)
+            });        
+            
+            res.json(devices);
+        }
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
     }
     async getNewChannel(req:Request, res:Response){
-        let nvrId = req.params["nvrId"];
-        let count = parseInt(req.params["count"] || "1");
-        if(!nvrId){
-            let nvr = await parseService.getData({
-                type: Nvr,
-                filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
-              });
-
-            nvrId = nvr.Id;
+        try{
+            let nvrId = req.params["nvrId"];
+            let count = parseInt(req.params["count"] || "1");
+            if(!nvrId){
+                let nvr = await restFulService.getFirstData("Nvr",{'Driver':'IPCamera'});
+                nvrId = nvr.Id;
+            }
+            let result = await this.getNewChannelArray(nvrId, count);
+            
+            res.json(result);
         }
-        let result = await this.getNewChannelArray(nvrId, count);
-        
-        res.json(result);
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
     }
     
     
@@ -399,32 +423,27 @@ assignNvrPoperties(dev: Nvr, nvr: any) {
 private async getDeviceCount(nvrId?:string):Promise<number>{
         
     if(nvrId){
-        return await parseService
-            .countFetch({type:Device, 
-                filter:query=>query
-                .equalTo("NvrId", nvrId)
-                .limit(Number.MAX_SAFE_INTEGER)})
+        return await restFulService.getCount("Device", {"NvrId": nvrId});        
     }
     else{
-        return await parseService
-        .countFetch({type:Device, 
-            filter:query=>query
-            .limit(Number.MAX_SAFE_INTEGER)})
-        
+        return await restFulService.getCount("Device", {});
     }
 }
 
 private async getNewChannelArray(nvrId: any, count: number) {
     
     let result = [];        
-    let data = await this.getAllDevice(nvrId);
-    let occupiedChannels = data.map(e => e.Channel);        
+    let devices = await restFulService.getRawData("Device",1,Number.MAX_SAFE_INTEGER,{NvrId: nvrId}, {Channel:1}, {Channel:1, _id:0});
+    let occupiedChannels = devices.map(e=>e.Channel);    
     let channel = 0;        
     while (result.length < count) {            
         channel++;
         // find empty channel
-        let found = occupiedChannels.find(Channel => Channel == channel);            
-        if(found) continue;
+        let found = occupiedChannels.length > 0 ? occupiedChannels.indexOf(channel) : -1; 
+        if(found>-1) {
+            occupiedChannels.splice(0,found+1);
+            continue;
+        }        
         result.push(channel);
     }
     return result;

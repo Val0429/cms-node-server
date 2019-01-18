@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ParseService } from 'app/service/parse.service';
-import { Nvr, Group, ServerInfo } from 'app/model/core';
+import { Nvr, Group, ServerInfo, PagerClass } from 'app/model/core';
 
 import { NvrService } from 'app/service/nvr.service';
 import { NvrSearchComponent } from './nvr-search/nvr-search.component';
 import { CameraService } from 'app/service/camera.service';
-import { PagerService } from 'app/service/pager.service';
 
 
 
@@ -29,7 +28,7 @@ export class NvrComponent implements OnInit {
   flag:{
     busy:boolean;
   }
-  paging:PagerService = new PagerService();
+  paging:PagerClass = new PagerClass();
   constructor(
     private parseService: ParseService,
     private nvrService:NvrService,
@@ -53,7 +52,7 @@ export class NvrComponent implements OnInit {
     await Observable.forkJoin([this.getGroup(), getServerInfo$, this.reloadData()]).toPromise();
     
   }
-  optionChange(size:number){
+  optionChange(){
     this.pageChange(1);
   }
   private async getGroup() {

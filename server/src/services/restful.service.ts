@@ -15,31 +15,21 @@ export class RestFulService {
     constructor() {     
         this.db = this.mongoist(`${this.config.parseConfig.DATABASE_URI}`);  
     }
-
-    async get(req:Request, res:Response){       
+    async getById(req:Request, res:Response){       
         try{
-            //console.log("getData start", new Date()) ;
-            let page = parseInt(req.query["page"] || "1");                            
-            let pageSize = parseInt(req.query["pageSize"] || "50");                                
-            let className = req.params["className"];
-            //mask fieldname to follow parse format
-            let where = JSON.parse((req.query["where"] || "{}"));
-            this.sanitizeQuery(where);
-            let include = req.query["include"];
-            let data = [];
-            let total = 0;
-          
-            if(pageSize>1000)pageSize=1000;
-            else if(pageSize<1)pageSize=1;
-            if(page<1)page=1;
             
-            await Promise.all([
-                this.getData(className, page, pageSize, where, include).then(res=>data =res),
-                this.getCount(className, where).then(res=>total=res)
-            ]);
-            let totalPages=Math.ceil(total/pageSize);
-            //console.log("getData end", new Date()) ;
-            res.json({pageSize,page,total,totalPages,data});
+            let className = req.params["className"];            
+            let whereJson = {_id:req.params["_id"]};
+            let selectArray = req.query["keys"] ? req.query["keys"].split(","):[];
+            let selectJson = selectArray.length>0 ? this.constructJson(selectArray) : undefined;
+            if(selectJson){
+                selectJson["createdAt"]=1;
+                selectJson["updatedAt"]=1;
+                this.sanitizeQuery(selectJson);
+            }            
+            let include = req.query["include"];
+            let result = await this.getFirstData(className, whereJson, include, selectJson);
+            res.json(result);            
         }
         catch(err){
             console.error(err);
@@ -50,18 +40,77 @@ export class RestFulService {
             });
         }
     }
+    async get(req:Request, res:Response){       
+        try{
+            //console.log("getData start", new Date()) ;            
+            let skip = parseInt(req.query["skip"] || "0");
+            let pageSize = parseInt(req.query["limit"] || "50");                                
+            let className = req.params["className"];
+            //mask fieldname to follow parse format
+            let whereJson = JSON.parse((req.query["where"] || "{}"));
+
+            let sortArray = req.query["order"] ? req.query["order"].split(","):[];
+            let sortJson= sortArray.length>0 ? this.constructJson(sortArray) : undefined;
+            
+            let selectArray = req.query["keys"] ? req.query["keys"].split(","):[];
+            let selectJson = selectArray.length>0 ? this.constructJson(selectArray) : undefined;
+            if(selectJson){
+                selectJson["createdAt"]=1;
+                selectJson["updatedAt"]=1;
+            }
+            this.sanitizeQuery(whereJson);
+            this.sanitizeQuery(sortJson);
+            this.sanitizeQuery(selectJson);
+            let include = req.query["include"];
+            let results = [];
+            let count = 0;
+          
+            if(pageSize>10000)pageSize=10000;
+            else if(pageSize<1)pageSize=20;
+            
+            await Promise.all([
+                this.getData(className, skip, pageSize, whereJson, sortJson, selectJson, include).then(res=>results =res),
+                this.getCount(className, whereJson).then(res=>count=res)
+            ]);
+            let totalPages=Math.ceil(count/pageSize);
+            //console.log("getData end", new Date()) ;
+            let page = (skip / pageSize)+1;
+            res.json({pageSize,page,count,totalPages,results});
+        }
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
+    }
+    private constructJson(keys: string[]) {
+        let data={};
+        for (let key of keys) {
+            if (key.indexOf("-") == 0)
+                data[key.substring(1, key.length)] = -1;
+            else
+                data[key] = 1;
+        }
+        return data;
+    }
+    getNewObjectId(){
+        return this.mongoist.ObjectId().toString();
+    }
     async post(req:Request, res:Response){       
         try{
             
             let className = req.params["className"];
             let data = req.body;
             for(let item of data){
-                item._id= this.mongoist.ObjectId().toString();                                
+                item._id= this.getNewObjectId();
                 this.preProcessJson(item);
                 item._created_at=new Date();
                 item._updated_at=new Date();
             }
-            let result = await this.db.collection(className).insertMany(data);
+            let result = await this.insertMany(className, data);
             for(let item of result){
                 this.postProcessJson(item);
             }
@@ -76,6 +125,10 @@ export class RestFulService {
             });
         }
     }
+    private async insertMany(className: any, data: any) {
+        return await this.db.collection(className).insertMany(data);
+    }
+
     constructInclude(includeRequest:string):includeData{
         let includeArray = includeRequest.split(',');
         let includeData:{fieldNames:string[], depth:number}[]=[];
@@ -125,7 +178,8 @@ export class RestFulService {
         return data;
     }
     //make it similar to parse object
-    preProcessJson(data:any){        
+    preProcessJson(data:any){  
+        if(!data)return;      
         let keys = Object.keys(data);
         if(!keys || keys.length<=0)return;
 
@@ -137,7 +191,8 @@ export class RestFulService {
             if(data[key] && data[key]!=null && typeof(data[key])==="object") this.preProcessJson(data[key]);
         }
     }
-    sanitizeQuery(data:any){        
+    sanitizeQuery(data:any){   
+        if(!data)return;
         let keys = Object.keys(data);
         if(!keys || keys.length<=0)return;
 
@@ -159,6 +214,7 @@ export class RestFulService {
     }
     //make it similar to parse object
     postProcessJson(data:any){
+        if(!data)return;
         let pointer="_p_";
         let keys = Object.keys(data);
         
@@ -179,8 +235,28 @@ export class RestFulService {
             if(data[key] && data[key]!=null && typeof(data[key])==="object") this.postProcessJson(data[key]);
         }
     }
-    async getData(className:string, page:number, pageSize:number, where:string, includeRequest?:string){        
-        let data = await this.db.collection(className).findAsCursor(where).skip((page-1)*pageSize).limit(pageSize).toArray();
+    async getFirstData(className:string, where:any, includeRequest?:string, select?:any):Promise<any>{        
+        let data = await this.db.collection(className).find(select !== undefined ? where : where, select);
+        let item = data&& data.length>0 ? data[0] : {};
+
+        this.postProcessJson(item);            
+
+        if(!includeRequest)return item;
+
+        return await this.fetchInclude(includeRequest, [item]);
+    }
+    async getRawData(className:string, page:number, pageSize:number, where:any, sort?:any, select?:any):Promise<any[]>{        
+        let data = sort === undefined ? 
+            await this.db.collection(className).findAsCursor(select !== undefined ? where : where, select).skip((page-1)*pageSize).limit(pageSize).toArray():
+            await this.db.collection(className).findAsCursor(select !== undefined ? where : where, select).sort(sort).skip((page-1)*pageSize).limit(pageSize).toArray();
+        return data;
+
+        
+    }
+    async getData(className:string, skip:number, pageSize:number, where:any, sort?:any, select?:any, includeRequest?:string):Promise<any[]>{        
+        let data = sort === undefined ? 
+            await this.db.collection(className).findAsCursor(select !== undefined ? where : where, select).skip(skip).limit(pageSize).toArray():
+            await this.db.collection(className).findAsCursor(select !== undefined ? where : where, select).sort(sort).skip(skip).limit(pageSize).toArray();
         for(let item of data){
             this.postProcessJson(item);            
         }
@@ -189,7 +265,7 @@ export class RestFulService {
 
         return await this.fetchInclude(includeRequest, data);
     }
-    async getCount(className:string, where:string){        
+    async getCount(className:string, where:any){        
         let total:number= await this.db.collection(className).count(where);
         return total;
     }
