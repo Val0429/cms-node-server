@@ -17,7 +17,7 @@ export class RestFulService{
         let url = this.parseService.parseServerUrl+"/cms/data/"+query.className;
         if(args.filter){                
             let q = args.filter(query) as any;    
-            console.log("query", q)        ;
+            console.debug("query", q);
             url+=`?where=${JSON.stringify(q._where)}`;
             if(q._order)url+=`&order=${q._order.join(",")}`;
             if(q._include)url+=`&include=${q._include.join(",")}`;

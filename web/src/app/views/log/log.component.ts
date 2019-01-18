@@ -73,7 +73,7 @@ export class LogComponent implements OnInit {
       itemVisibleSize: 20,
       itemCount: 0
     };
-    console.log("paging", options);
+    console.debug("paging", options);
     
     await this.getData((options.currentPage - 1) * options.itemVisibleSize, options.itemVisibleSize).then(result=>{
       options.itemCount = result.count;
