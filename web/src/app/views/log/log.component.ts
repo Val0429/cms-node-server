@@ -7,7 +7,7 @@ import { SystemLog } from 'app/model/core';
 import { IPageViewerOptions } from 'app/shared/components/page-viewer/page-viewer.component';
 import { Observable } from 'rxjs/Observable';
 import * as moment from 'moment';
-import { RestFulService } from 'app/service/restful.service';
+import { RestFulService, GetResult } from 'app/service/restful.service';
 
 @Component({
   selector: 'app-log',
@@ -74,30 +74,8 @@ export class LogComponent implements OnInit {
       itemCount: 0
     };
     console.log("paging", options);
-    // 查詢條件
-    const filter = (query: Parse.Query<SystemLog>) => {
-      if (this.queryParams.keyword) {
-        const keywordQueries = ['Level', 'Category', 'Identity','Message'].map(column =>
-          new Parse.Query(SystemLog)
-            .contains(column, this.queryParams.keyword));
-        Object.assign(query, Parse.Query.or(...keywordQueries));
-        // Object.assign之後重新設定分頁
-        query.limit(options.itemVisibleSize);
-        query.skip((options.currentPage - 1) * options.itemVisibleSize);
-      }
-      if (this.queryParams.startDate) {
-        const date = moment(this.queryParams.startDate).format('x');
-        query.greaterThanOrEqualTo('Timestamp', Number(date));
-      }
-      if (this.queryParams.endDate) {
-        const date = moment(this.queryParams.endDate).add(1, 'd').subtract(1, 's').format('x');
-        query.lessThanOrEqualTo('Timestamp', Number(date));
-      }
-      query.descending('createdAt');
-      //console.log(query);
-      return query;
-    };
-    await this.restFulService.get({type:SystemLog, filter}).then(result=>{
+    
+    await this.getData((options.currentPage - 1) * options.itemVisibleSize, options.itemVisibleSize).then(result=>{
       options.itemCount = result.count;
       this.pageViewerOptions = options;
       this.dataList = result.results;
@@ -136,46 +114,63 @@ export class LogComponent implements OnInit {
   }
 
   /** 將目前Filter符合的Log資料匯出為CSV */
-  exportCSV() {
-    let tempLogs: SystemLog[];
-
-    // 查詢條件
-    const filter = (query: Parse.Query<SystemLog>) => {
-      if (this.queryParams.keyword) {
-        const keywordQueries = ['Level', 'Category', 'Identity','Message'].map(column =>
-          new Parse.Query(SystemLog)
-            .contains(column, this.queryParams.keyword));
-        Object.assign(query, Parse.Query.or(...keywordQueries));
+  async exportCSV() {
+    let total = this.pageViewerOptions.itemCount;
+    let limit=10000;
+    let skip=0;
+    let results:GetResult[]= [];
+    let promises = [];
+    if(total>limit){
+      let page=1;
+      while(skip<total){        
+        const get$ = this.getData(skip,limit).then(result =>{
+          results = results.concat(result);
+        });        
+        promises.push(get$);
+        page++;   
+        skip = (page-1)*limit;     
       }
-      if (this.queryParams.startDate) {
-        const date = moment(this.queryParams.startDate).format('x');
-        query.greaterThanOrEqualTo('Timestamp', Number(date));
-      }
-      if (this.queryParams.endDate) {
-        const date = moment(this.queryParams.endDate).add(1, 'd').subtract(1, 's').format('x');
-        query.lessThanOrEqualTo('Timestamp', Number(date));
-      }
-      query.descending('createdAt');
-      query.limit(30000);
-    };
-
+      await Promise.all(promises);
+      results.sort((a, b) => a.page> b.page ? 1 : b.page > a.page ? -1 : 0);
+    }else{
+      let result = await this.getData(skip,limit);
+      results.push(result);
+    }
     // 取得所有Log資料
-    const fetch$ = Observable.fromPromise(this.parseService.fetchData({
+    let rows = [];
+    for(let item of results){
+      rows = rows.concat(item.results);
+    }
+    this.csvService.downloadCSV({
+      header: 'Time,Level,Identity,Category,Message',
+      data: rows.map(log => `${this.getDate(log.Timestamp)},${log.Level},${log.Identity},${log.Category},${log.Message}`),
+      fileName: 'Log_Export',
+      timestamp: 'YYYY-MM-DD HHmmss'
+    });
+  }
+  async getData(skip:number, limit:number){
+   return await this.restFulService.get({
       type: SystemLog,
-      filter: filter
-    }))
-      .map(logs => tempLogs = logs);
-
-    fetch$
-      .do(logs => {
-        const rows = tempLogs
-          .map(log => `${this.getDate(log.Timestamp)},${log.Level},${log.Identity},${log.Category},${log.Message}`);
-        this.csvService.downloadCSV({
-          header: 'Time,Level,Identity,Category,Message',
-          data: rows,
-          fileName: 'Log_Export',
-          timestamp: 'YYYY-MM-DD HHmmss'
-        });
-      }).subscribe();
+      filter: query => {
+        if (this.queryParams.keyword) {
+          const keywordQueries = ['Level', 'Category', 'Identity','Message'].map(column =>
+            new Parse.Query(SystemLog)
+              .contains(column, this.queryParams.keyword));
+          Object.assign(query, Parse.Query.or(...keywordQueries));
+        }
+        if (this.queryParams.startDate) {
+          const date = moment(this.queryParams.startDate).format('x');
+          query.greaterThanOrEqualTo('Timestamp', Number(date));
+        }
+        if (this.queryParams.endDate) {
+          const date = moment(this.queryParams.endDate).add(1, 'd').subtract(1, 's').format('x');
+          query.lessThanOrEqualTo('Timestamp', Number(date));
+        }
+        //query.descending('createdAt');      
+        query.skip(skip);
+        query.limit(limit);
+        return query;
+      }
+    });
   }
 }

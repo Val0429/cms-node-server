@@ -90,17 +90,13 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       .limit(30000)
     }));
     const fetchNvr$ = Observable.fromPromise(this.parseService.fetchData({
-      type: Nvr,
-      filter: query => query.limit(30000)
+      type: Nvr,      
+      filter: query => query.limit(30000).ascending("SequenceNumber")
     }));
 
     return Observable.combineLatest(
       fetchGroup$, fetchNvr$,
-      (groups, nvrs) => {
-        // Nvr先以Id排序
-        nvrs.sort(function (a, b) {
-          return (Number(a.Id) > Number(b.Id)) ? 1 : ((Number(b.Id) > Number(a.Id)) ? -1 : 0);
-        });
+      (groups, nvrs) => {        
         let nonGroupIndex = groups.findIndex(x=>x.Level=="0" && x.Name=="Non Main Group");
         let nonGroup = groups[nonGroupIndex];
         groups.splice(nonGroupIndex, 1);

@@ -28,7 +28,7 @@ export class RestFulService{
         const options = new RequestOptions({ headers: this.coreService.parseHeaders });
         let result = await this.http.get(url, options).toPromise();        
         let resultJson = result.json();
-        console.log("result json", resultJson);
+        //console.log("result json", resultJson);
         return resultJson;
         
       }
