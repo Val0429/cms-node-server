@@ -42,8 +42,8 @@ export class RestFulService {
     }
     async get(req:Request, res:Response){       
         try{
-            //console.log("getData start", new Date()) ;
-            let page = parseInt(req.query["page"] || "1");                            
+            //console.log("getData start", new Date()) ;            
+            let skip = parseInt(req.query["skip"] || "0");
             let pageSize = parseInt(req.query["limit"] || "50");                                
             let className = req.params["className"];
             //mask fieldname to follow parse format
@@ -63,19 +63,19 @@ export class RestFulService {
             this.sanitizeQuery(selectJson);
             let include = req.query["include"];
             let results = [];
-            let total = 0;
+            let count = 0;
           
             if(pageSize>1000)pageSize=1000;
-            else if(pageSize<1)pageSize=1;
-            if(page<1)page=1;
+            else if(pageSize<1)pageSize=20;
             
             await Promise.all([
-                this.getData(className, page, pageSize, whereJson, sortJson, selectJson, include).then(res=>results =res),
-                this.getCount(className, whereJson).then(res=>total=res)
+                this.getData(className, skip, pageSize, whereJson, sortJson, selectJson, include).then(res=>results =res),
+                this.getCount(className, whereJson).then(res=>count=res)
             ]);
-            let totalPages=Math.ceil(total/pageSize);
+            let totalPages=Math.ceil(count/pageSize);
             //console.log("getData end", new Date()) ;
-            res.json({pageSize,page,total,totalPages,results});
+            let page = (skip / pageSize)+1;
+            res.json({pageSize,page,count,totalPages,results});
         }
         catch(err){
             console.error(err);
@@ -253,10 +253,10 @@ export class RestFulService {
 
         
     }
-    async getData(className:string, page:number, pageSize:number, where:any, sort?:any, select?:any, includeRequest?:string):Promise<any[]>{        
+    async getData(className:string, skip:number, pageSize:number, where:any, sort?:any, select?:any, includeRequest?:string):Promise<any[]>{        
         let data = sort === undefined ? 
-            await this.db.collection(className).findAsCursor(select !== undefined ? where : where, select).skip((page-1)*pageSize).limit(pageSize).toArray():
-            await this.db.collection(className).findAsCursor(select !== undefined ? where : where, select).sort(sort).skip((page-1)*pageSize).limit(pageSize).toArray();
+            await this.db.collection(className).findAsCursor(select !== undefined ? where : where, select).skip(skip).limit(pageSize).toArray():
+            await this.db.collection(className).findAsCursor(select !== undefined ? where : where, select).sort(sort).skip(skip).limit(pageSize).toArray();
         for(let item of data){
             this.postProcessJson(item);            
         }
