@@ -1148,6 +1148,7 @@ export class CameraEditorParam {
 
     /** 因解析度選單為寬x高的字串，在儲存前需先將此字串轉為個別的寬與高屬性，記錄在device/config/stream/video/width and height */
     getResolutionBeforeSave() {
+        console.debug("getResolutionBeforeSave", this.currentCameraConfig);
         if (!this.currentCameraConfig) {
             return;
         }

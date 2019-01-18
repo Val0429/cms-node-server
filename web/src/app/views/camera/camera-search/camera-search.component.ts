@@ -124,6 +124,14 @@ export class CameraSearchComponent implements OnInit {
               }  
               let editorParam = this.cameraService.getCameraEditorParam(device.Config.Model, device, capability);  
               if(editorParam){
+                //refer to bug 9397
+                editorParam.getCurrentStreamParam();
+                device.Config.Stream.forEach(str=>{
+                  console.debug("stream", str);
+                  let resolutionOptions = editorParam.getResolutionOptionsByStreamId(str.Id);
+                  if(resolutionOptions.length>0) str.Video.Resolution = resolutionOptions[0];
+                });
+                
                 editorParam.getStreamSaveNumberBeforeSave();
                 editorParam.getResolutionBeforeSave();
                 editorParam.removeAttributesBeforeSave();
