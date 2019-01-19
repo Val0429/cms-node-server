@@ -44,7 +44,7 @@ export class ServerHelper {
 
     runServer() {
             
-        if (cluster.isMaster && this.parseConfig.USE_MULTI_THREADS===true) {
+        if (cluster.isMaster&&this.parseConfig.USE_MULTI_THREADS===true) {
             for (var i = 0; i < numCPUs; i++) {
                 cluster.fork();
             }
