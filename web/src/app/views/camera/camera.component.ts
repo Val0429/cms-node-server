@@ -198,12 +198,10 @@ export class CameraComponent implements OnInit {
   async clickClone() {
     try{
       this.flag.busy=true;      
-      //dummy 
-      await Observable.of(null).toPromise();
-
       if (this.cloneCameraParam.quantity > this.availableLicense) {
         throw new Error("Not enough license to add new camera");        
       }      
+      await this.cameraService.cloneCam(this.cloneCameraParam.device,this.cloneCameraParam.quantity, this.ipCameraNvr);
       alert("Clone Success");
     }catch(err){
       console.error(err);
