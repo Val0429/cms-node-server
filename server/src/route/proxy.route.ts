@@ -15,19 +15,13 @@ export const ProxyRoute: IRouteMap = {
     path: 'proxy',
     router: Router().use(bodyParser.json())
         .get('/test', (req, res) => { res.send('Proxy Test') })
-        .post('/:id?', async (req, res) => {
+        .post('/:_id?', async (req, res) => {
             if (!req.body || !req.body.path) {
                 res.send({});
                 return;
             }
             try{
-                let where={};
-
-                if(!req.params["id"]){
-                    where={"Type":"CMSManager"};
-                }else{
-                    where={"objectId":req.params["id"]}; 
-                }
+                let where= !req.params["_id"] ? {"Type":"CMSManager"} : {"_id":req.params["_id"]};
                 // 先取得MediaServer的連線URL再轉發
                 let serverInfo = await restFulService.getFirstData("ServerInfo",where);
                 
