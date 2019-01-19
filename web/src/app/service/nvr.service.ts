@@ -5,6 +5,7 @@ import { CryptoService } from './crypto.service';
 import { Nvr, Group, ServerInfo } from 'app/model/core';
 import { RequestOptions, Http } from '@angular/http';
 import { UserService } from './user.service';
+import { RestFulService } from './restful.service';
 
 
 
@@ -19,7 +20,8 @@ export class NvrService {
         private parseService:ParseService,         
         private cryptoService:CryptoService,
         private httpService:Http,
-        private userService:UserService
+        private userService:UserService,
+        private restFulService:RestFulService
         ) { }
   async saveNvr(nvrs:Nvr[], group:string):Promise<any[]>{      
       let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/nvr", { nvrs, newGroupId:group, auth:this.auth},
@@ -37,7 +39,7 @@ export class NvrService {
     });
   }
   async getNvrCount(){
-    return await this.parseService.countFetch({type:Nvr, filter:query=>query.limit(Number.MAX_SAFE_INTEGER)});
+    return await this.restFulService.getCount({type:Nvr, filter:query=>query.limit(Number.MAX_SAFE_INTEGER)});
   }
          /** 依照Manufacture決定Driver value */
   getNvrDriverByManufacture(currentEditModel:INvrEditModel) {

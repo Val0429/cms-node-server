@@ -121,7 +121,7 @@ export class DeviceService {
             coreService.auth = req.body.auth;     
             let { nvrObjectId, cam, quantity, account, password } = req.body;         
             
-            let availableLicense = await this.getLicenseAvailableCount("00171");
+            let availableLicense = await this.getLicenseAvailableCount("00171");            
             if(availableLicense < quantity){
                 throw new Error(`Not enough license, ${availableLicense}`);
             }
@@ -743,11 +743,7 @@ async getLicenseUsageIPCamera() {
         filter: query => query.equalTo('Driver', 'IPCamera')
     });
 
-    let usage = await parseService.countFetch({
-        type: Device,
-        filter: query => query.equalTo('NvrId', nvr.Id).limit(Number.MAX_SAFE_INTEGER)
-    });
-
+    let usage = await restFulService.getCount("Device", {'NvrId':nvr.Id});    
     return usage;
 }
 
