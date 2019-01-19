@@ -47,6 +47,7 @@ export const ProxyRoute: IRouteMap = {
                     timeout: 0, 
                     method: req.body.method || 'GET',
                     headers: req.body.headers,
+                    rejectUnauthorized: false,
                     body: typeof req.body.body === 'string'
                         ? req.body.body
                         : JSON.stringify(req.body.body)
