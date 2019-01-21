@@ -17,26 +17,27 @@ export class HouseKeeperService {
         this.db = this.mongoist(`${this.config.parseConfig.DATABASE_URI}`); 
         this.days = this.config.externalConfig.houseKeeper.keepDays || 90;        
         //run check every hour
-        setInterval(this.startTask, 60 * 60 * 1000);
+        setInterval(async ()=>{
+            await this.startTask();
+        }, 60 * 60 * 1000);
         //this.startTask();
     }
     
     days :number;
-
-    writeLog(d) {        
-        this.logHelper.writeLog({ type: 'HouseKeeper', msg: new Date().toLocaleString('en-US', { hour12: false }) + ' ' + util.format(d) + '\n' });               
+    writeLog(d:any){
+        this.logHelper.writeLog({ type: 'HouseKeeper', msg: new Date().toLocaleString('en-US', { hour12: false }) + ' ' + util.format(d) + '\n' });       
     }
 
     async startTask() {
         try{
             let baseline = new Date();            
-            baseline.setDate(baseline.getDate() - this.days);            
-            this.writeLog("Delete Event and SystemLog older than " + baseline.toISOString());  
-            const delEvents$ =  this.db.collection('Event').remove({ _created_at: { $lt: baseline } });            
-            const delSystemLogs$ = this.db.collection('SystemLog').remove({ _created_at: { $lt: baseline } }) ;
+            baseline.setDate(baseline.getDate() - this.days);      
+            this.writeLog("Delete Event and SystemLog older than " + baseline.toISOString());
+            const delEvents$ =  this.db.collection('Event').remove({ _created_at: { $lt: baseline } }).then(res=>this.writeLog("Deleted Event count: " + res.deletedCount));
+            const delSystemLogs$ = this.db.collection('SystemLog').remove({ _created_at: { $lt: baseline } }).then(res=>this.writeLog("Deleted SystemLog count: " + res.deletedCount));
             await Promise.all([delEvents$, delSystemLogs$]);
         }catch(err){
-            this.writeLog(err)
+            this.writeLog(err.toString());
         }
     }
         
