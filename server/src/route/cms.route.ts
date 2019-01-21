@@ -24,6 +24,9 @@ export const CmsRoute: IRouteMap = {
         .get('/data/:className', async(req, res)=>{
             await resultFulService.get(req, res);
         })     
+        .get('/count/:className', async(req, res)=>{
+            await resultFulService.getCount(req, res);
+        })
         .get('/data/:className/:_id', async(req, res)=>{
             await resultFulService.getById(req, res);
         })  

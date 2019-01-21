@@ -70,12 +70,37 @@ export class RestFulService {
             
             await Promise.all([
                 this.getData(className, skip, pageSize, whereJson, sortJson, selectJson, include).then(res=>results =res),
-                this.getCount(className, whereJson).then(res=>count=res)
+                this.getDataCount(className, whereJson).then(res=>count=res)
             ]);
             let totalPages=Math.ceil(count/pageSize);
             //console.log("getData end", new Date()) ;
             let page = (skip / pageSize)+1;
             res.json({pageSize,page,count,totalPages,results});
+        }
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
+    }
+    async getCount(req:Request, res:Response){       
+        try{       
+            
+            let className = req.params["className"];
+            //mask fieldname to follow parse format
+            let whereJson = JSON.parse((req.query["where"] || "{}"));
+
+            this.sanitizeQuery(whereJson);
+            
+            let count = 0;
+            await Promise.all([
+                this.getDataCount(className, whereJson).then(res=>count=res)
+            ]);
+
+            res.json({count});
         }
         catch(err){
             console.error(err);
@@ -265,7 +290,7 @@ export class RestFulService {
 
         return await this.fetchInclude(includeRequest, data);
     }
-    async getCount(className:string, where:any){        
+    async getDataCount(className:string, where:any){        
         let total:number= await this.db.collection(className).count(where);
         return total;
     }

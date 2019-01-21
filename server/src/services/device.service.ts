@@ -423,10 +423,10 @@ assignNvrPoperties(dev: Nvr, nvr: any) {
 private async getDeviceCount(nvrId?:string):Promise<number>{
         
     if(nvrId){
-        return await restFulService.getCount("Device", {"NvrId": nvrId});        
+        return await restFulService.getDataCount("Device", {"NvrId": nvrId});        
     }
     else{
-        return await restFulService.getCount("Device", {});
+        return await restFulService.getDataCount("Device", {});
     }
 }
 
@@ -743,7 +743,7 @@ async getLicenseUsageIPCamera() {
         filter: query => query.equalTo('Driver', 'IPCamera')
     });
 
-    let usage = await restFulService.getCount("Device", {'NvrId':nvr.Id});    
+    let usage = await restFulService.getDataCount("Device", {'NvrId':nvr.Id});    
     return usage;
 }
 

@@ -38,10 +38,10 @@ export class RestFulService{
       }) :Promise<number>{  
          
         let query = new Parse.Query(args.type);   
-        let url = `${this.parseService.parseServerUrl}/cms/data/${query.className}?limit=1&keys=objectId`;
+        let url = `${this.parseService.parseServerUrl}/cms/count/${query.className}`;
         if(args.filter){                
             let q = args.filter(query) as any;                
-            url+=`&where=${JSON.stringify(q._where)}`;
+            url+=`?where=${JSON.stringify(q._where)}`;
         }
         const options = new RequestOptions({ headers: this.coreService.parseHeaders });
         let result = await this.http.get(url, options).toPromise();        
