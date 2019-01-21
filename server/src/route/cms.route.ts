@@ -33,6 +33,9 @@ export const CmsRoute: IRouteMap = {
         .post('/data/:className', async(req, res)=>{
             await resultFulService.post(req, res);
         })   
+        .delete('/data/:className', async(req, res)=>{
+            await resultFulService.del(req, res);
+        }) 
         .get('/externalconfig', (req, res) => {
             res.json(configHelper.externalConfig);
         })

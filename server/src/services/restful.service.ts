@@ -86,6 +86,29 @@ export class RestFulService {
             });
         }
     }
+    async del(req:Request, res:Response){       
+        try{
+            //console.log("getData start", new Date()) ;                                                        
+            let className = req.params["className"];
+            //mask fieldname to follow parse format
+            let whereJson = JSON.parse((req.query["where"] || "{}"));
+            this.sanitizeQuery(whereJson);            
+            let result = await this.deleteMany(className, whereJson);
+            res.json(result);
+        }
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
+    }
+    private async deleteMany(className: string, where: any) {
+        return await this.db.collection(className).remove(where);
+    }
+
     async getCount(req:Request, res:Response){       
         try{       
             
