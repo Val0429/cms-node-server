@@ -85,10 +85,8 @@ export class CameraComponent implements OnInit {
   }
   
   private async finish() {
-    
-    this.flag.busy = false;
-    
     await this.reloadData();
+    this.flag.busy = false;
   }
 
   async deleteAll(){
@@ -111,10 +109,14 @@ export class CameraComponent implements OnInit {
     this.currentEditCamera = undefined;
     await Observable.forkJoin([
       this.getGroup().then(groupList=>this.groupList = groupList),
-      this.cameraService.getDeviceCount(this.ipCameraNvr.Id).then(total=>this.paging.total = total),
-      this.fetchDevice(),  
+      this.cameraService.getDeviceCount(this.ipCameraNvr.Id).then(total=> {
+        this.paging.total = total;
+        let maxPage=Math.ceil(this.paging.total / this.paging.pageSize);
+        if(this.paging.page > maxPage) this.paging.page=maxPage;
+      }),      
       this.getAvailableLicense(),
     ]).toPromise();    
+    await this.fetchDevice();
     this.checkSelected();    
   }
 
