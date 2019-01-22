@@ -17,7 +17,7 @@ export class LicenseService {
         private coreService: CoreService,
         private restFulService:RestFulService
     ) {
-        this.getLicenseLimit().subscribe();
+        //this.getLicenseLimit().subscribe();
     }
 
     /** 取得目前所有的License並計算未過期的數量
