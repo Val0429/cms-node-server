@@ -1,6 +1,6 @@
 import { ParseServer } from 'parse-server';
 import { ConfigHelper, ParseHelper, ServerHelper } from './';
-
+const bodyParser = require('body-parser');
 export class ParseServerHelper {
     parseServerHttps: ParseServer;
     parseServer: ParseServer;
@@ -42,6 +42,8 @@ export class ParseServerHelper {
                 ]
             }
         });
+        this.serverHelper.app.use(bodyParser.json({limit: '999mb', type: 'application/json'}));
+        this.serverHelper.app.use(bodyParser.urlencoded({extended: true}));
         console.log("this.parseServerUrl", this.parseHelper.parseServerUrl);
         this.serverHelper.app.use(this.pathConfig.PARSE_PATH, this.parseServer);        
 
