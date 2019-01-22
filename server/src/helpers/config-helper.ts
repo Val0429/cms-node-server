@@ -38,7 +38,8 @@ export class ConfigHelper {
 }
 export interface ExternalConfig{
     houseKeeper:{
-        keepDays:number
+        keepDays:number,
+        cycleInterval:number
     }
 };
 export interface IParseConfig {
