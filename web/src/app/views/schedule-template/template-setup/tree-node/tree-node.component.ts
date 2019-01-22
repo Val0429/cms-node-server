@@ -13,6 +13,7 @@ export class TreeNodeComponent implements OnInit {
   @Input() treeNode = <ITemplateSetupNode>null;
   @Input() hasChild: boolean;
   @Output() changeSetupNodeEvent: EventEmitter<any> = new EventEmitter();
+  @Output() checkParentEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(private parseService:ParseService) { }
 
@@ -79,8 +80,9 @@ export class TreeNodeComponent implements OnInit {
     return classes;
   }
 
-  changeSetupNode($event:any) {
+  clickNode($event:any) {
     this.changeSetupNodeEvent.emit({node:this.treeNode, $event});
+    this.checkParentEvent.emit({node:this.treeNode});
   }
 
   

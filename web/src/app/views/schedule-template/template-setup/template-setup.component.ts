@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { Group, Nvr, Device, RecordSchedule, EventHandler } from 'app/model/core';
 import { Observable } from 'rxjs/Observable';
 import { IRecordScheduleTemplate, IEventScheduleTemplate } from 'lib/domain/core';
+import { CameraService } from 'app/service/camera.service';
 
 @Component({
   selector: 'app-template-setup',
@@ -53,6 +54,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   constructor(
     private coreService: CoreService,
     private parseService: ParseService,
+    private cameraService:CameraService,
     private licenseService: LicenseService
   ) { }
 
@@ -72,7 +74,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       await this.fetchSetupData().toPromise();  
     }
   }
-
+ 
   getIPCameraNvr() {
     const getNvr$ = Observable.from(this.parseService.getData({
       type: Nvr,
@@ -169,9 +171,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
           const foundNode = targetData.find(nodeTarget => nodeTarget.nvrId == recordSchedule.data.NvrId && nodeTarget.channelId == recordData.ChannelId);
           if (foundNode) {
             let foundStream = foundNode.checkedStreamId.find(x=>x == recordData.StreamId);
-            if(!foundStream){
-              foundNode.checkedStreamId.push(recordData.StreamId);
-            }            
+            if(!foundStream) foundNode.checkedStreamId.push(recordData.StreamId);
+            
             foundNode.apply = true;
             foundNode.partialApply = true;
             foundNode.checkChecked();
@@ -193,21 +194,20 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     }
 
     this.associateApply();
+    this.flag.load = false;
   }
 
   /** 從最上層或指定node開始，向下調整 */
   associateApply(node?: ITemplateSetupNode) {
     const loopTarget = node ? node.child : this.setupNode;
-    loopTarget.forEach(childNode => {
-      if (childNode.level !== this.levelLimit) {
-        if (childNode.child.length > 0) {
-          this.associateApply(childNode);
-          childNode.apply = childNode.child.filter(x => x.apply).length === childNode.child.length;
-          childNode.partialApply = childNode.child.some(x => x.apply || x.partialApply);
-        }
-      }
-    });
-    this.flag.load = false;
+    for(let childNode of loopTarget){
+      if (childNode.level == this.levelLimit || childNode.child.length <= 0) continue;
+        
+      this.associateApply(childNode);
+      childNode.apply = childNode.child.filter(x => x.apply).length === childNode.child.length;
+      childNode.partialApply = childNode.child.some(x => x.apply || x.partialApply);
+      
+    }
   }
 
   /** 建立階層式物件集合
@@ -252,7 +252,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
                 .fetchData({type:Device, 
                   filter:query => query.equalTo("NvrId", nvr.Id)
                 })).toPromise();
-              this.buildSetupNodeForNvrDev({ sg: newSgNode, nvr, sgIpCamChannel: devs.map(function(e){return e.Channel}) });
+              this.buildSetupNodeForNvrDev({ sg: newSgNode, nvr, sgIpCamChannel: devs.map(e => e.Channel) });
             });
           }
         });
@@ -260,7 +260,6 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     });
   }
 
-  
 
   /** 加入Nvr及底下內容至樹狀圖 */
   buildSetupNodeForNvrDev(args: { sg: ITemplateSetupNode, nvr: Nvr, sgIpCamChannel?: number[] }) {
@@ -282,7 +281,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
         nvrId:args.nvr.Id, channelId:dev, enabled:true, parent:newNvrNode, setupMode:this.setupMode, checkedStreamId:[]
       };
 
-      newDevNode.checkChecked = ()=>{
+      newDevNode.checkChecked = ()=>{        
+        console.debug("checkedStreamId",newDevNode.checkedStreamId);
         for(let str of newDevNode.child){
           let checked = newDevNode.checkedStreamId.find(x=>x == str.streamId) != undefined;
           str.apply = checked;
@@ -344,43 +344,49 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       .then(() => this.flag.save = false)
       .catch(alert);
   }
-
-  changeSetupNode(obj:{node: ITemplateSetupNode, $event: any}) {    
-    let checked:boolean = obj.$event.target.checked;
-    //console.debug("old item", this.getExistSetupData(node))
-    console.debug("changeSetupNode node", obj.node);
-    console.debug("changeSetupNode val", checked); 
-
-    let oldItem = this.getExistSetupData(obj.node);
-    if(oldItem==undefined){
-      if(this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE && obj.node.level==this.levelLimit){
-        oldItem = { checked, data: this.createNewRecordSchedule(obj.node), originalShedule:""};
-        this.setupData.push(oldItem);
-      }
-      else if(this.setupMode == this.setupModes.EVENT_TEMPLATE){                
-        alert("Event setup is necessary");
-        obj.$event.preventDefault();
-        return;
-      }
-    }else{    
-      oldItem.checked=checked;    
-    }
-    
-    console.debug("oldItem", oldItem);
-
-    // 修改目前node本身的值
-    obj.node.apply = checked;
-    obj.node.partialApply = checked;
-    // 若非最底層則找出所有child一起修改
-    if (obj.node.level !== this.levelLimit) {
-      obj.node.child.forEach(cn => {
-        this.changeSetupNode({node:cn, $event: obj.$event});
-      });
-    }     
-     this.associateApply();    
+  //check if parent node should be checked
+  checkParent(obj:{node: ITemplateSetupNode}){
+      if(!obj.node.parent)return;
+      obj.node.parent.apply = obj.node.parent.child.filter(x => x.apply).length === obj.node.parent.child.length;;
+      obj.node.parent.partialApply = obj.node.parent.child.some(x => x.apply || x.partialApply);
+      this.checkParent({node:obj.node.parent});
   }
-  
+  changeSetupNode(obj:{node: ITemplateSetupNode, $event: any}) {
+      //console.debug(obj.node.level, obj.node.nvrId, obj.node.channelId);
+      let checked:boolean = obj.$event.target.checked;
+      //console.debug("old item", this.getExistSetupData(node))
+      //console.debug("changeSetupNode node", obj.node);
+      //console.debug("changeSetupNode val", checked);             
 
+      if(obj.node.level==this.levelLimit){
+        let oldItem = this.getExistSetupData(obj.node);
+        if(oldItem==undefined){
+          if(this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE){
+            oldItem = { checked, data: this.createNewRecordSchedule(obj.node), originalShedule:""};            
+            this.setupData.push(oldItem);
+          }
+          else if(this.setupMode == this.setupModes.EVENT_TEMPLATE){                
+            alert("Event setup is necessary");
+            obj.$event.preventDefault();
+            return;
+          }
+        }else{    
+          oldItem.checked=checked;    
+        }
+        //console.debug("oldItem", oldItem);
+      }else if(obj.node.level==4 && this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE && !obj.node.data && checked===true){
+        obj.node.checkedStreamId.push(1);
+      }
+      // 修改目前node本身的值
+      obj.node.apply = checked;
+      obj.node.partialApply = checked;
+      // 若非最底層則找出所有child一起修改
+      if (obj.node.level >= this.levelLimit) return;
+      
+      for(let cn of obj.node.child){          
+        this.changeSetupNode({node:cn, $event: obj.$event});
+      }
+  }
 
   /** 依照目前setupNode的狀況取得應新增, 修改, 刪除資料的task */
   saveTemplateSetup() {
@@ -568,6 +574,6 @@ export interface ITemplateSetupNode {
   /* for pagination current page */
   page?:number;
   name:string
-
+  //check if this node should be checked
   checkChecked?();
 }
