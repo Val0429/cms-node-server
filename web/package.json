@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "install": "napa",
-    "start": "ng serve --open",
+    "start": "ng serve --open --delete-output-path=false",
     "build": "ng build -bh /cms-setup/ -e cms",
     "build-cms-setup": "ng build -prod -aot=false --base-href /cms-setup/ -d /cms-setup/",
     "test": "ng test",
