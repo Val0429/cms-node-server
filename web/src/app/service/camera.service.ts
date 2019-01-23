@@ -186,7 +186,7 @@ export class CameraService {
       let results = await this.parseService.fetchData({
         type: Device, filter: query => query.equalTo("NvrId", nvrId)
           .equalTo("Channel", channelId)
-          .select("Channel", "NvrId", "Config")
+          .select("Channel", "NvrId", "Config","Name")
           .limit(1)
         });
         return results && results.length>0 ? results[0] : undefined;

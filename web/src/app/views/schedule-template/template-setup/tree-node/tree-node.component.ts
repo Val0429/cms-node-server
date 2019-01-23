@@ -25,21 +25,22 @@ export class TreeNodeComponent implements OnInit {
         dev.Name = "Device not found";        
       }      
       this.treeNode.name=`Channel: ${dev.Channel} ${dev.Name}`;
-      this.treeNode.data = dev;      
+      this.treeNode.data = dev;  
+    
       // 若是RecordSchedule額外多處理stream
-      if (dev.Config.Stream && this.treeNode.setupMode === 1) {
-        dev.Config.Stream.filter(x => x.Id < 3).sort(function (a, b) {
-          return (a.Id > b.Id) ? 1 : ((b.Id > a.Id) ? -1 : 0);
-        }).forEach(str => {          
-          const newStrNode: ITemplateSetupNode = {
-            name:`Stream: ${str.Id}`,
-            level: 5, data: str, apply: false, partialApply: false, collapsed: true, child: [], streamId:str.Id, 
-            nvrId: this.treeNode.nvrId, channelId:dev.Channel, enabled:true, parent:this.treeNode, setupMode:this.treeNode.setupMode
-          };
-          this.treeNode.child.push(newStrNode);
-          this.treeNode.checkChecked();
-        });
+      if (!this.treeNode.data.Config.Stream || this.treeNode.setupMode !== 1) return;
+      
+      for(let str of this.treeNode.data.Config.Stream.filter(x => x.Id < 3)){
+        if(this.treeNode.child.find(x=>x.streamId == str.Id))continue;
+        const newStrNode: ITemplateSetupNode = {
+          name:`Stream: ${str.Id}`,
+          level: 5, data: str, apply: false, partialApply: false, collapsed: true, child: [], streamId:str.Id, 
+          nvrId: this.treeNode.nvrId, channelId:this.treeNode.data.Channel, enabled:true, parent:this.treeNode, setupMode:this.treeNode.setupMode
+        };
+        this.treeNode.child.push(newStrNode);
+        this.treeNode.checkChecked();
       }
+      
     }
   }
 
