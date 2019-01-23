@@ -426,7 +426,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
           for(let found of this.setupData.filter(x=>x.checked &&
               x.data.NvrId==obj.node.nvrId &&
              (x.data as RecordSchedule).ChannelId == obj.node.channelId ))
-          found.checked=false;
+          found.checked=false; 
         }
       }
       // 修改目前node本身的值
