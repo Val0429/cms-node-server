@@ -1,5 +1,6 @@
 import { ConfigHelper, ParseDashboardHelper, ParseHelper, ParseServerHelper, ServerHelper, SyncHelper, RouterHelper } from './helpers';
-import {DeviceService, CoreService, RestFulService} from './services';
+import {DeviceService, CoreService, RestFulService, HouseKeeperService} from './services';
+
 
 
 // 初始化順序不可變更
@@ -15,5 +16,5 @@ const routerHelper= RouterHelper.instance;
 
 const coreService = CoreService.instance;
 const deviceService=DeviceService.instance;
-
+const houseKeeper = HouseKeeperService.instance;
 serverHelper.runServer();

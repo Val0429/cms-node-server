@@ -1,5 +1,6 @@
 {
   "houseKeeper":{
-    "keepDays":90
+    "keepDays":90,
+    "cycleInterval":3600000
   }
 }

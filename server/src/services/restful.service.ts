@@ -25,11 +25,34 @@ export class RestFulService {
             if(selectJson){
                 selectJson["createdAt"]=1;
                 selectJson["updatedAt"]=1;
-                this.sanitizeQuery(selectJson);
+                this.maskJson(selectJson);
             }            
             let include = req.query["include"];
             let result = await this.getFirstData(className, whereJson, include, selectJson);
             res.json(result);            
+        }
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
+    }
+    async putById(req:Request, res:Response){       
+        try{
+            
+            let className = req.params["className"];            
+            let whereJson = {_id:req.params["_id"]};                        
+            let newData = req.body;
+            this.preProcessJson(newData);
+            delete(newData.objectId);
+            delete(newData.createdAt);
+            delete(newData.updatedAt);
+            newData["_updated_at"] = new Date();            
+            let result = await this.db.collection(className).update(whereJson,{$set: newData}, {upsert:false});
+            res.json(result);
         }
         catch(err){
             console.error(err);
@@ -58,9 +81,9 @@ export class RestFulService {
                 selectJson["createdAt"]=1;
                 selectJson["updatedAt"]=1;
             }
-            this.sanitizeQuery(whereJson);
-            this.sanitizeQuery(sortJson);
-            this.sanitizeQuery(selectJson);
+            this.maskJson(whereJson);
+            this.maskJson(sortJson);
+            this.maskJson(selectJson);
             let include = req.query["include"];
             let results = [];
             let count = 0;
@@ -70,12 +93,62 @@ export class RestFulService {
             
             await Promise.all([
                 this.getData(className, skip, pageSize, whereJson, sortJson, selectJson, include).then(res=>results =res),
-                this.getCount(className, whereJson).then(res=>count=res)
+                this.getDataCount(className, whereJson).then(res=>count=res)
             ]);
             let totalPages=Math.ceil(count/pageSize);
             //console.log("getData end", new Date()) ;
             let page = (skip / pageSize)+1;
             res.json({pageSize,page,count,totalPages,results});
+        }
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
+    }
+    async del(req:Request, res:Response){       
+        try{
+            //console.log("getData start", new Date()) ;                                                        
+            let className = req.params["className"];
+            //mask fieldname to follow parse format
+            let whereJson = JSON.parse((req.query["where"] || "{}"));
+            this.maskJson(whereJson);            
+            let result = await this.deleteMany(className, whereJson);
+            res.json(result);
+        }
+        catch(err){
+            console.error(err);
+            res.status(err.status || 500);
+            res.json({
+                message: err.message,
+                error: err
+            });
+        }
+    }
+    async deleteMany(className: string, where: any) {
+        return await this.db.collection(className).remove(where);
+    }
+    async dropCollection(className:string, callBack:(err, success)=>void){
+        this.db.collection(className).drop(callBack);
+    }
+    async getCount(req:Request, res:Response){       
+        try{       
+            
+            let className = req.params["className"];
+            //mask fieldname to follow parse format
+            let whereJson = JSON.parse((req.query["where"] || "{}"));
+
+            this.maskJson(whereJson);
+            
+            let count = 0;
+            await Promise.all([
+                this.getDataCount(className, whereJson).then(res=>count=res)
+            ]);
+
+            res.json({count});
         }
         catch(err){
             console.error(err);
@@ -125,7 +198,7 @@ export class RestFulService {
             });
         }
     }
-    private async insertMany(className: any, data: any) {
+    async insertMany(className: any, data: any[]) {
         return await this.db.collection(className).insertMany(data);
     }
 
@@ -191,7 +264,7 @@ export class RestFulService {
             if(data[key] && data[key]!=null && typeof(data[key])==="object") this.preProcessJson(data[key]);
         }
     }
-    sanitizeQuery(data:any){   
+    maskJson(data:any){   
         if(!data)return;
         let keys = Object.keys(data);
         if(!keys || keys.length<=0)return;
@@ -209,7 +282,7 @@ export class RestFulService {
                 data["_updated_at"]=data[key];
                 delete(data[key]);
             }
-            if(data[key] && data[key]!=null && typeof(data[key])==="object") this.sanitizeQuery(data[key]);
+            if(data[key] && data[key]!=null && typeof(data[key])==="object") this.maskJson(data[key]);
         }
     }
     //make it similar to parse object
@@ -237,11 +310,11 @@ export class RestFulService {
     }
     async getFirstData(className:string, where:any, includeRequest?:string, select?:any):Promise<any>{        
         let data = await this.db.collection(className).find(select !== undefined ? where : where, select);
-        let item = data&& data.length>0 ? data[0] : {};
+        let item = data&& data.length>0 ? data[0] : undefined;
 
         this.postProcessJson(item);            
 
-        if(!includeRequest)return item;
+        if(!includeRequest || !item)return item;
 
         return await this.fetchInclude(includeRequest, [item]);
     }
@@ -265,7 +338,7 @@ export class RestFulService {
 
         return await this.fetchInclude(includeRequest, data);
     }
-    async getCount(className:string, where:any){        
+    async getDataCount(className:string, where:any){        
         let total:number= await this.db.collection(className).count(where);
         return total;
     }

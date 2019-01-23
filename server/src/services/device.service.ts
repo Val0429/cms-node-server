@@ -121,7 +121,7 @@ export class DeviceService {
             coreService.auth = req.body.auth;     
             let { nvrObjectId, cam, quantity, account, password } = req.body;         
             
-            let availableLicense = await this.getLicenseAvailableCount("00171");
+            let availableLicense = await this.getLicenseAvailableCount("00171");            
             if(availableLicense < quantity){
                 throw new Error(`Not enough license, ${availableLicense}`);
             }
@@ -423,10 +423,10 @@ assignNvrPoperties(dev: Nvr, nvr: any) {
 private async getDeviceCount(nvrId?:string):Promise<number>{
         
     if(nvrId){
-        return await restFulService.getCount("Device", {"NvrId": nvrId});        
+        return await restFulService.getDataCount("Device", {"NvrId": nvrId});        
     }
     else{
-        return await restFulService.getCount("Device", {});
+        return await restFulService.getDataCount("Device", {});
     }
 }
 
@@ -439,9 +439,9 @@ private async getNewChannelArray(nvrId: any, count: number) {
     while (result.length < count) {            
         channel++;
         // find empty channel
-        let found = occupiedChannels.length > 0 ? occupiedChannels.indexOf(channel) : -1; 
-        if(found>-1) {
-            occupiedChannels.splice(0,found+1);
+        let found = occupiedChannels.length > 0 ? occupiedChannels[0] == channel : false; 
+        if(found) {
+            occupiedChannels.splice(0,1);
             continue;
         }        
         result.push(channel);
@@ -743,34 +743,27 @@ async getLicenseUsageIPCamera() {
         filter: query => query.equalTo('Driver', 'IPCamera')
     });
 
-    let usage = await parseService.countFetch({
-        type: Device,
-        filter: query => query.equalTo('NvrId', nvr.Id).limit(Number.MAX_SAFE_INTEGER)
-    });
-
+    let usage = await restFulService.getDataCount("Device", {'NvrId':nvr.Id});    
     return usage;
 }
 
 
 
   async getNewNvrId(count:number) {
-    
-    let nvrs = await parseService.fetchData({
-      type: Nvr,
-      filter: query => query
-        .select('SequenceNumber')
-        .ascending('SequenceNumber')
-        .limit(Number.MAX_SAFE_INTEGER)
-    })
+   
+    let nvrs = await restFulService.getRawData("Nvr",1,Number.MAX_SAFE_INTEGER,{},{'SequenceNumber':1},{'SequenceNumber':1});
     
     let result = [];                
     let occupiedIds = nvrs.map(e => e.SequenceNumber);
     let channel = 0;        
     while (result.length < count) {            
         channel++;
-        // find empty channel
-        let found = occupiedIds.find(Id => Id == channel);
-        if(found) continue;
+        // find empty Id
+        let found = occupiedIds.length > 0 ? occupiedIds[0] == channel : false; 
+        if(found) {
+            occupiedIds.splice(0,1);
+            continue;
+        }
         result.push(channel);
     }
     return result;

@@ -6,6 +6,7 @@ import { ILicenseStatistics } from 'lib/domain/core';
 import { Nvr, Device, RecordSchedule } from 'app/model/core';
 import { ArrayHelper } from 'app/helper/array.helper';
 import { LicenseProduct } from 'app/config/license-product.config';
+import { RestFulService } from './restful.service';
 
 @Injectable()
 export class LicenseService {
@@ -13,9 +14,10 @@ export class LicenseService {
     licenseLimit: { [key: string]: number } = {};
     constructor(
         private parseService: ParseService,
-        private coreService: CoreService
+        private coreService: CoreService,
+        private restFulService:RestFulService
     ) {
-        this.getLicenseLimit().subscribe();
+        //this.getLicenseLimit().subscribe();
     }
 
     /** 取得目前所有的License並計算未過期的數量
@@ -89,7 +91,7 @@ export class LicenseService {
                 .matches('Driver', new RegExp('iSAP'), 'i')
                 .limit(30000)
         }));
-        const getDevice$ = (nvrIds: string[]) => Observable.fromPromise(this.parseService.countFetch({
+        const getDevice$ = (nvrIds: string[]) => Observable.fromPromise(this.restFulService.getCount({
             type: Device,
             filter: query => query.containedIn('NvrId', nvrIds)
         }));
@@ -107,7 +109,7 @@ export class LicenseService {
                 .select('Id')
                 .limit(30000)
         }));
-        const getDevice$ = (nvrIds: string[]) => Observable.fromPromise(this.parseService.countFetch({
+        const getDevice$ = (nvrIds: string[]) => Observable.fromPromise(this.restFulService.getCount({
             type: Device,
             filter: query => query.containedIn('NvrId', nvrIds)
         }));
@@ -118,33 +120,30 @@ export class LicenseService {
 
     /** 取得License 00168 BackendRecord控管的RecordSchedule數量 */
     getLicenseUsageBackendRecord() {
-        const get$ = Observable.fromPromise(this.parseService.countFetch({
-            type: RecordSchedule,
-            filter: query => query.limit(30000)
+        const get$ = Observable.fromPromise(this.restFulService.getCount({
+            type: RecordSchedule            
         }));
         return get$;
     }
 
     /** 取得License 00169 SmartPatrol控管的Device數量 */
     getLicenseUsageSmartPatrol() {
-        const get$ = Observable.fromPromise(this.parseService.countFetch({
+        const get$ = Observable.fromPromise(this.restFulService.getCount({
             type: Device,
             filter: query => query
                 .equalTo('Config.Brand', 'iSapSolution')
-                .equalTo('Config.Model', 'Smart Patrol Service')
-                .limit(30000)
+                .equalTo('Config.Model', 'Smart Patrol Service')                
         }));
         return get$;
     }
 
     /** 取得License 00170 SmartMonitor控管的Device數量 */
     getLicenseUsageSmartMonitor() {
-        const get$ = Observable.fromPromise(this.parseService.countFetch({
+        const get$ = Observable.fromPromise(this.restFulService.getCount({
             type: Device,
             filter: query => query
                 .equalTo('Config.Brand', 'iSapSolution')
-                .equalTo('Config.Model', 'Smart Monitor Service')
-                .limit(30000)
+                .equalTo('Config.Model', 'Smart Monitor Service')                
         }));
         return get$;
     }
@@ -156,9 +155,9 @@ export class LicenseService {
             filter: query => query.equalTo('Driver', 'IPCamera')
         }));
 
-        const getDevice$ = (nvrId: string) => Observable.fromPromise(this.parseService.countFetch({
+        const getDevice$ = (nvrId: string) => Observable.fromPromise(this.restFulService.getCount({
             type: Device,
-            filter: query => query.equalTo('NvrId', nvrId).limit(30000)
+            filter: query => query.equalTo('NvrId', nvrId)
         }));
 
         return getNvr$

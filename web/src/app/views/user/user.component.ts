@@ -22,7 +22,7 @@ export class UserComponent implements OnInit {
   userList: Parse.User[] = [];
   groupList: UserGroup[];
   nvrList: Nvr[];
-  regexUsername = new RegExp(/[a-zA-Z\d]/);
+  regexUsername = new RegExp(/^\w+$/);
   currentEditUser: Parse.User;
 
   /** User可編輯項目 */
@@ -163,12 +163,13 @@ export class UserComponent implements OnInit {
   }
 
   createUser() {
-
-    const user = new Parse.User();
-    if(!this.regexUsername.test(this.editUserModel.username)){
+    let testUserName = this.regexUsername.test(this.editUserModel.username);
+    console.debug(testUserName, this.editUserModel.username);
+    if(testUserName!==true){
       alert("Invalid username");
       return;
     }
+    const user = new Parse.User();
     user.setUsername(this.cryptoService.encrypt4DB(this.editUserModel.username));
     user.setPassword(this.cryptoService.encrypt4DB(this.editUserModel.password));
     user.setEmail(this.editUserModel.email);

@@ -14,10 +14,10 @@ export class RestFulService{
       }) :Promise<GetResult>{  
          
         let query = new Parse.Query(args.type);   
-        let url = this.parseService.parseServerUrl+"/cms/data/"+query.className;
+        let url = `${this.parseService.parseServerUrl}/cms/data/${query.className}`;
         if(args.filter){                
             let q = args.filter(query) as any;    
-            console.log("query", q)        ;
+            console.debug("query", q);
             url+=`?where=${JSON.stringify(q._where)}`;
             if(q._order)url+=`&order=${q._order.join(",")}`;
             if(q._include)url+=`&include=${q._include.join(",")}`;
@@ -30,6 +30,24 @@ export class RestFulService{
         let resultJson = result.json();
         //console.log("result json", resultJson);
         return resultJson;
+        
+      }
+      async getCount<T extends Parse.Object>(args: {
+        type: new (options?: any) => T,
+        filter?: (query: Parse.Query<T>) => Parse.Query<T>
+      }) :Promise<number>{  
+         
+        let query = new Parse.Query(args.type);   
+        let url = `${this.parseService.parseServerUrl}/cms/count/${query.className}`;
+        if(args.filter){                
+            let q = args.filter(query) as any;                
+            url+=`?where=${JSON.stringify(q._where)}`;
+        }
+        const options = new RequestOptions({ headers: this.coreService.parseHeaders });
+        let result = await this.http.get(url, options).toPromise();        
+        let resultJson = result.json();
+        //console.log("result json", resultJson);
+        return resultJson.count;
         
       }
 }

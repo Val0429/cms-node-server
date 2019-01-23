@@ -1,5 +1,5 @@
 <div class="tree-node-container" *ngIf="treeNode.data">
-  <input type="checkbox" [checked]="treeNode.apply" [disabled]="treeNode.enabled!==true" (click)="changeSetupNode($event)">
+  <input type="checkbox" [checked]="treeNode.apply" [disabled]="treeNode.enabled!==true" (click)="clickNode($event)">
   <span [ngClass]="getListTextClasses()" (click)="treeNode.collapsed = !treeNode.collapsed">{{treeNode.name}}</span>
   <!-- <i [ngClass]="getListArrowClasses()"></i> -->
 </div>

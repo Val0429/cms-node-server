@@ -182,7 +182,15 @@ export class CameraService {
       let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/device/clone", body, options).toPromise();
       return result.json();
     }
-       
+    async getCameraPrimaryData(nvrId:string, channelId:number){
+      let results = await this.parseService.fetchData({
+        type: Device, filter: query => query.equalTo("NvrId", nvrId)
+          .equalTo("Channel", channelId)
+          .select("Channel", "NvrId", "Config","Name")
+          .limit(1)
+        });
+        return results && results.length>0 ? results[0] : undefined;
+    }
     /** 取得當前Brand底下所有Model型號 */
     getModelList(currentBrandCapability:any): string[] {
         const result = [];

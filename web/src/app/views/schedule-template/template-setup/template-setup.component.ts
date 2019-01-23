@@ -6,6 +6,8 @@ import * as _ from 'lodash';
 import { Group, Nvr, Device, RecordSchedule, EventHandler } from 'app/model/core';
 import { Observable } from 'rxjs/Observable';
 import { IRecordScheduleTemplate, IEventScheduleTemplate } from 'lib/domain/core';
+import { CameraService } from 'app/service/camera.service';
+
 
 @Component({
   selector: 'app-template-setup',
@@ -30,7 +32,8 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   ipCameraNvr: Nvr;
   flag = {
     load: false,
-    save: false
+    save: false,
+    ready:false
   };
   pageSize:number=20;
 
@@ -53,14 +56,13 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   constructor(
     private coreService: CoreService,
     private parseService: ParseService,
+    private cameraService:CameraService,
     private licenseService: LicenseService
   ) { }
 
-  ngOnInit() {
-    this.getIPCameraNvr()
-      .switchMap(() => this.fetchBasicData())
-      .subscribe();
-      
+  async ngOnInit() {
+    await this.getIPCameraNvr();
+    await this.fetchBasicData();      
   }
 
   async ngOnChanges(changes: SimpleChanges){
@@ -72,38 +74,40 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       await this.fetchSetupData().toPromise();  
     }
   }
-
-  getIPCameraNvr() {
-    const getNvr$ = Observable.from(this.parseService.getData({
+ 
+  async getIPCameraNvr() {
+    const getNvr$ = this.parseService.getData({
       type: Nvr,
       filter: query => query.matches('Driver', new RegExp('IPCamera'), 'i')
-    })).map(nvr => this.ipCameraNvr = nvr);
-    return getNvr$;
+    }).then(nvr => this.ipCameraNvr = nvr);
+    return await getNvr$;
   }
 
   /** 讀取Group, Nvr, Device等基本資料 */
-  fetchBasicData() {
-    const fetchGroup$ = Observable.fromPromise(this.parseService.fetchData({
+  async fetchBasicData() {
+    let groups=[];
+    let nvrs=[];
+    const fetchGroup$ = this.parseService.fetchData({
       type: Group,
       filter: query => query
-      .ascending("Name")
-      .limit(30000)
-    }));
-    const fetchNvr$ = Observable.fromPromise(this.parseService.fetchData({
+        .ascending("Name")
+        .limit(30000)
+    }).then(res=>groups=res);
+    const fetchNvr$ = this.parseService.fetchData({
       type: Nvr,      
-      filter: query => query.limit(30000).ascending("SequenceNumber")
-    }));
-
-    return Observable.combineLatest(
-      fetchGroup$, fetchNvr$,
-      (groups, nvrs) => {        
-        let nonGroupIndex = groups.findIndex(x=>x.Level=="0" && x.Name=="Non Main Group");
-        let nonGroup = groups[nonGroupIndex];
-        groups.splice(nonGroupIndex, 1);
-        groups.push(nonGroup);
-        this.buildSetupNodes({ groupConfigs: groups, nvrConfigs: nvrs });
-      }
-    );
+      filter: query => query
+        .ascending("SequenceNumber")
+        .limit(30000)
+    }).then(res=>nvrs=res);
+    
+    await Promise.all([fetchGroup$, fetchNvr$]);
+        
+    let nonGroupIndex = groups.findIndex(x=>x.Level=="0" && x.Name=="Non Main Group");
+    let nonGroup = groups[nonGroupIndex];
+    groups.splice(nonGroupIndex, 1);
+    groups.push(nonGroup);
+    await this.buildSetupNodes({ groupConfigs: groups, nvrConfigs: nvrs });
+    
   }
 
   /** 依照setupMode取得不同的設定資料集合 */
@@ -164,60 +168,57 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     const targetData = this.getSetupNodeWithLevel();
     
     if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {      
-        this.setupData.forEach(recordSchedule => {          
+      for(let recordSchedule of this.setupData) {          
           let recordData = (recordSchedule.data as RecordSchedule);
           const foundNode = targetData.find(nodeTarget => nodeTarget.nvrId == recordSchedule.data.NvrId && nodeTarget.channelId == recordData.ChannelId);
           if (foundNode) {
             let foundStream = foundNode.checkedStreamId.find(x=>x == recordData.StreamId);
-            if(!foundStream){
-              foundNode.checkedStreamId.push(recordData.StreamId);
-            }            
+            if(!foundStream) foundNode.checkedStreamId.push(recordData.StreamId);
+            
             foundNode.apply = true;
             foundNode.partialApply = true;
             foundNode.checkChecked();
           }          
-        });
+      }
     }
 
     if (this.setupMode === this.setupModes.EVENT_TEMPLATE) {
-      this.setupData
-        //.filter(x => (x.data as EventHandler).Schedule == (this.currentTemplate as IEventScheduleTemplate).Schedule)
-        .forEach(eventHandler => {          
+      for(let eventHandler of this.setupData){          
           const foundNode = targetData.find(nodeTarget => nodeTarget.nvrId == eventHandler.data.NvrId && nodeTarget.channelId == (eventHandler.data as EventHandler).DeviceId); // key前加上點避免錯誤          
           if (foundNode) {
             foundNode.apply = eventHandler.checked;
             foundNode.partialApply = eventHandler.checked;
             foundNode.enabled = true;
           }
-        });
+        }
     }
 
     this.associateApply();
+    this.flag.load = false;
   }
 
   /** 從最上層或指定node開始，向下調整 */
   associateApply(node?: ITemplateSetupNode) {
     const loopTarget = node ? node.child : this.setupNode;
-    loopTarget.forEach(childNode => {
-      if (childNode.level !== this.levelLimit) {
-        if (childNode.child.length > 0) {
-          this.associateApply(childNode);
-          childNode.apply = childNode.child.filter(x => x.apply).length === childNode.child.length;
-          childNode.partialApply = childNode.child.some(x => x.apply || x.partialApply);
-        }
-      }
-    });
-    this.flag.load = false;
+    for(let childNode of loopTarget){
+      if (childNode.level == this.levelLimit || childNode.child.length <= 0) continue;
+        
+      this.associateApply(childNode);
+      childNode.apply = childNode.child.filter(x => x.apply).length === childNode.child.length;
+      childNode.partialApply = childNode.child.some(x => x.apply || x.partialApply);
+      
+    }
   }
 
   /** 建立階層式物件集合
    * Mode: RecordScheduleTemplate由上到下個別為: MainGroup, SubGroup, Nvr, Camera, Stream
    * Mode: EventTemplate由上到下個別為: MainGroup, SubGroup, Nvr, Camera
   */
-  buildSetupNodes(args: { groupConfigs: Group[], nvrConfigs: Nvr[] }) {
+  async buildSetupNodes(args: { groupConfigs: Group[], nvrConfigs: Nvr[] }) {
     this.setupNode = [];
+    
     // 從MainGroup開始層層往下新增節點
-    args.groupConfigs.filter(x => x.Level === '0').forEach(mg => {
+    for(let mg of args.groupConfigs.filter(x => x.Level === '0')){
 
       const newMgNode: ITemplateSetupNode = {
         name:`Main Group: ${mg.Name}`,
@@ -226,44 +227,51 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       };
       this.setupNode.push(newMgNode);
 
-      if (mg.SubGroup) {
-        args.groupConfigs.filter(group => mg.SubGroup.includes(group.id)).forEach(sg => {
-          const newSgNode: ITemplateSetupNode = {
-            name:`Sub Group: ${sg.Name}`,
-            id:sg.id, level: 2, data: sg, apply: false, partialApply: false, collapsed: true, child: [], 
-            enabled:true, parent:newMgNode, setupMode:this.setupMode,
-          };
-          newMgNode.child.push(newSgNode);
+      if (!mg.SubGroup) continue;
 
-          // 若SubGroup有Channel(直連), 將隸屬此Group的直連Device資料一起處理
-          if (sg.Channel && sg.Channel.length > 0) {
-            const channelsId = sg.Channel.map(x => x.Channel);
-            this.buildSetupNodeForNvrDev({
-              sg: newSgNode,              
-              nvr: this.ipCameraNvr,
-              sgIpCamChannel: channelsId
-            });
-          }
+      for(let sg of args.groupConfigs.filter(group => mg.SubGroup.includes(group.id))) {
+        const newSgNode: ITemplateSetupNode = {
+          name:`Sub Group: ${sg.Name}`,
+          id:sg.id, level: 2, data: sg, apply: false, partialApply: false, collapsed: true, child: [], 
+          enabled:true, parent:newMgNode, setupMode:this.setupMode,
+        };
+        newMgNode.child.push(newSgNode);
 
-          // 若SubGroup有Nvr, 將所有Nvr及其底下的Device資料一起處理
-          if (sg.Nvr && sg.Nvr.length > 0) {
-            args.nvrConfigs.filter(x => sg.Nvr.includes(x.Id)).forEach(async nvr => {
-              let devs = await Observable.fromPromise(this.parseService
-                .fetchData({type:Device, 
-                  filter:query => query.equalTo("NvrId", nvr.Id)
-                })).toPromise();
-              this.buildSetupNodeForNvrDev({ sg: newSgNode, nvr, sgIpCamChannel: devs.map(function(e){return e.Channel}) });
+        // 若SubGroup有Channel(直連), 將隸屬此Group的直連Device資料一起處理
+        if (sg.Channel && sg.Channel.length > 0) {
+          const channelsId = sg.Channel.map(x => x.Channel);
+          await this.buildSetupNodeForNvrDev({
+            sg: newSgNode,              
+            nvr: this.ipCameraNvr,
+            sgIpCamChannel: channelsId
+          });
+        }
+
+        // 若SubGroup有Nvr, 將所有Nvr及其底下的Device資料一起處理
+        if (!sg.Nvr || sg.Nvr.length <= 0) continue;
+        let promises=[];
+        for(let nvr of args.nvrConfigs.filter(x => sg.Nvr.includes(x.Id))){
+          const getDev$ = this.parseService
+            .fetchData({type:Device, 
+              filter:query => query
+                .equalTo("NvrId", nvr.Id)
+                .ascending("Id")
+                .select("Channel")
+                .limit(30000)
+            }).then(async devs=>{
+              await this.buildSetupNodeForNvrDev({ sg: newSgNode, nvr, sgIpCamChannel: devs.map(e => e.Channel) });
             });
-          }
-        });
-      }
-    });
+            promises.push(getDev$);
+        }
+        await Promise.all(promises);  
+      }  
+    }    
+    this.flag.ready=true;
   }
 
-  
 
   /** 加入Nvr及底下內容至樹狀圖 */
-  buildSetupNodeForNvrDev(args: { sg: ITemplateSetupNode, nvr: Nvr, sgIpCamChannel?: number[] }) {
+  async buildSetupNodeForNvrDev(args: { sg: ITemplateSetupNode, nvr: Nvr, sgIpCamChannel?: number[] }) {
     // 加入一般Nvr或直連用的預設虛擬Nvr
     const newNvrNode: ITemplateSetupNode = {
       name:`Nvr: ${args.nvr.Id} ${args.nvr.Name}`,
@@ -271,27 +279,45 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
         nvrId:args.nvr.Id, enabled:true, parent:args.sg, setupMode:this.setupMode
     };
     args.sg.child.push(newNvrNode);
-    
-    args.sgIpCamChannel.forEach(dev => {
+    let index=0;
+    let promises = [];
+    for(let dev of args.sgIpCamChannel){
       
       // set data to undefined to let tree node load the data directly from parse server
       // implement lazy load
       const newDevNode: ITemplateSetupNode = {
         name: `Channel: ${dev}`,
-        level: 4, data: undefined, apply: false, partialApply: false, collapsed: true, child: [],
+        level: 4, data:undefined, apply: false, partialApply: false, collapsed: true, child: [],
         nvrId:args.nvr.Id, channelId:dev, enabled:true, parent:newNvrNode, setupMode:this.setupMode, checkedStreamId:[]
       };
-
-      newDevNode.checkChecked = ()=>{
+      newDevNode.checkChecked = ()=>{        
+        //console.debug("checkedStreamId",newDevNode.checkedStreamId);
         for(let str of newDevNode.child){
           let checked = newDevNode.checkedStreamId.find(x=>x == str.streamId) != undefined;
           str.apply = checked;
           str.partialApply= checked;
         }
       }
-
-      newNvrNode.child.push(newDevNode);      
-    });
+      newNvrNode.child.push(newDevNode);
+      //only load first 128 devices, the rest will be load on demand            
+      if(index++>128 || this.setupMode != this.setupModes.RECORD_SCHEDULE_TEMPLATE)continue;
+      const getData$ = this.cameraService.getCameraPrimaryData(args.nvr.Id, dev).then(data=>{
+        newDevNode.name=`Channel: ${dev} ${data.Name}`
+        newDevNode.data=data;  
+        if (!data.Config.Stream)return;
+          for(let str of data.Config.Stream.filter(x => x.Id < 3)){      
+            const newStrNode: ITemplateSetupNode = {
+              name:`Stream: ${str.Id}`,
+              level: 5, data: str, apply: false, partialApply: false, collapsed: true, child: [], streamId:str.Id, 
+              nvrId: newDevNode.nvrId, channelId: newDevNode.data.Channel, enabled:true, parent:newDevNode, setupMode:this.setupMode
+            };              
+            newDevNode.child.push(newStrNode);
+            newDevNode.checkChecked();            
+          }
+      });  
+      promises.push(getData$);      
+    }
+    await Promise.all(promises);
   }
 
   /** 取得指定節點的level */
@@ -344,43 +370,76 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       .then(() => this.flag.save = false)
       .catch(alert);
   }
-
-  changeSetupNode(obj:{node: ITemplateSetupNode, $event: any}) {    
-    let checked:boolean = obj.$event.target.checked;
-    //console.debug("old item", this.getExistSetupData(node))
-    console.debug("changeSetupNode node", obj.node);
-    console.debug("changeSetupNode val", checked); 
-
-    let oldItem = this.getExistSetupData(obj.node);
-    if(oldItem==undefined){
-      if(this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE && obj.node.level==this.levelLimit){
-        oldItem = { checked, data: this.createNewRecordSchedule(obj.node), originalShedule:""};
-        this.setupData.push(oldItem);
-      }
-      else if(this.setupMode == this.setupModes.EVENT_TEMPLATE){                
-        alert("Event setup is necessary");
-        obj.$event.preventDefault();
-        return;
-      }
-    }else{    
-      oldItem.checked=checked;    
-    }
-    
-    console.debug("oldItem", oldItem);
-
-    // 修改目前node本身的值
-    obj.node.apply = checked;
-    obj.node.partialApply = checked;
-    // 若非最底層則找出所有child一起修改
-    if (obj.node.level !== this.levelLimit) {
-      obj.node.child.forEach(cn => {
-        this.changeSetupNode({node:cn, $event: obj.$event});
-      });
-    }     
-     this.associateApply();    
+  //check if parent node should be checked
+  checkParent(obj:{node: ITemplateSetupNode}){
+      if(!obj.node.parent)return;
+      obj.node.parent.apply = obj.node.parent.child.filter(x => x.apply).length === obj.node.parent.child.length;;
+      obj.node.parent.partialApply = obj.node.parent.child.some(x => x.apply || x.partialApply);
+      this.checkParent({node:obj.node.parent});
   }
-  
+  changeSetupNode(obj:{node: ITemplateSetupNode, $event: any}) {
+      //console.debug(obj.node.level, obj.node.nvrId, obj.node.channelId);
+      let checked:boolean = obj.$event.target.checked;
+      //console.debug("old item", this.getExistSetupData(node))
+      //console.debug("changeSetupNode node", obj.node);
+      //console.debug("changeSetupNode val", checked);             
 
+      if(obj.node.level==this.levelLimit){
+        let oldItem = this.getExistSetupData(obj.node);
+        if(oldItem==undefined){
+          if(this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE){
+            oldItem = { checked, data: this.createNewRecordSchedule(obj.node), originalShedule:""};            
+            this.setupData.push(oldItem);
+          }
+          else if(this.setupMode == this.setupModes.EVENT_TEMPLATE){                
+            alert("Event setup is necessary");
+            obj.$event.preventDefault();
+            return;
+          }
+        }else{    
+          oldItem.checked=checked;    
+        }
+        //console.debug("oldItem", oldItem);
+      }      
+      //handle non visible devices
+      else if(obj.node.level==4 && this.setupMode == this.setupModes.RECORD_SCHEDULE_TEMPLATE && !obj.node.data){        
+        if(checked){
+          
+          obj.node.checkedStreamId = [1];
+          
+          let newItem = new RecordSchedule({
+            NvrId: obj.node.nvrId,
+            ChannelId: obj.node.channelId,
+            StreamId: 1,
+            ScheduleTemplate: this.currentTemplate as IRecordScheduleTemplate
+          });
+
+          let found = this.setupData.filter(x=>!x.checked).find(x=>
+             (x.data as RecordSchedule).StreamId == newItem.StreamId && 
+             (x.data as RecordSchedule).ChannelId == newItem.ChannelId &&
+              x.data.NvrId==newItem.NvrId);
+
+           if(found) found.checked=true;
+           else this.setupData.push({data:newItem, checked:true, originalShedule:""});
+        }else{
+          obj.node.checkedStreamId = [];
+          for(let found of this.setupData.filter(x=>x.checked &&
+              x.data.NvrId==obj.node.nvrId &&
+             (x.data as RecordSchedule).ChannelId == obj.node.channelId ))
+          found.checked=false; 
+        }
+      }
+      // 修改目前node本身的值
+      obj.node.apply = checked;
+      obj.node.partialApply = checked;
+      // 若非最底層則找出所有child一起修改
+      if (obj.node.level >= this.levelLimit)return;
+
+      for(let cn of obj.node.child){          
+        this.changeSetupNode({node:cn, $event: obj.$event});
+      }
+      
+  }
 
   /** 依照目前setupNode的狀況取得應新增, 修改, 刪除資料的task */
   saveTemplateSetup() {
@@ -452,7 +511,9 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     let saveSchedule = [];
     let deleteSchedule = [];
     for (let item of this.setupData) {
-      if (item.checked === true) {
+      if (item.checked === true && !saveSchedule.find(x=>x.NvrId==item.data.NvrId &&
+          x.ChannelId == (item.data as RecordSchedule).ChannelId &&
+          x.StreamId == (item.data as RecordSchedule).StreamId)) {
         saveSchedule.push(item.data);
       }
       else {
@@ -478,7 +539,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
 
   /** 檢查db當前資料, 檢查此node是否有套用template */
   getExistSetupData(node: ITemplateSetupNode) {
-    if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {
+    if (this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) {      
       const result = this.setupData.find(x => x.data.NvrId === node.nvrId &&
         (x.data as RecordSchedule).ChannelId === node.channelId && 
         (x.data as RecordSchedule).StreamId === node.streamId)
@@ -512,23 +573,23 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
 
   /** 開展所有節點 */
   clickExpandAll() {
-    this.setupNode.forEach(node => {
+    for(let node of this.setupNode) {
       this.setNodeCollapse(node, false);
-    });
+    }
   }
 
   clickCollapseAll() {
-    this.setupNode.forEach(node => {
+    for(let node of this.setupNode) {
       this.setNodeCollapse(node, true);
-    });
+    }
   }
 
   setNodeCollapse(node: ITemplateSetupNode, collapse: boolean) {
     node.collapsed = collapse;
     if (node.child) {
-      node.child.forEach(ch => {
+      for(let ch of node.child) {
         this.setNodeCollapse(ch, collapse);
-      });
+      }
     }
   }
 }
@@ -568,6 +629,6 @@ export interface ITemplateSetupNode {
   /* for pagination current page */
   page?:number;
   name:string
-
+  //check if this node should be checked
   checkChecked?();
 }

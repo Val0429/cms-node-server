@@ -81,14 +81,19 @@ export class NvrComponent implements OnInit {
 
   /** 取得所有Nvr */
   async getNvrs() {
-    const getNvrs$ = this.nvrService.getNvrList(this.paging.page, this.paging.pageSize).then(nvrs => {
+    
+    await this.nvrService.getNvrCount().then(total=> {
+      this.paging.total=total;
+      let maxPage=Math.ceil(this.paging.total / this.paging.pageSize);
+      if(this.paging.page > maxPage) this.paging.page=maxPage;
+    });
+    await this.nvrService.getNvrList(this.paging.page, this.paging.pageSize).then(nvrs => {
       this.nvrList = [];      
       nvrs.forEach(nvr=>{
         this.nvrList.push({device:nvr, checked:false, quantity:0});
       });
     });
-    const getTotal$ = this.nvrService.getNvrCount().then(total=> this.paging.total=total);
-    return await Promise.all([getNvrs$, getTotal$]);
+    
   }
 
   async pageChange(event:number){

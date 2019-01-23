@@ -31,18 +31,20 @@ export class ServerHelper {
     private initExpress() {
         this.app = express();
         this.httpServer = http.createServer(this.app);
-
+        
+        
         if (this.parseConfig.IS_HTTPS) {
-            this.httpServerSSL = https.createServer({
-                key: fs.readFileSync(path.join(__dirname, '../assets/ssl/private.key')).toString(),
-                cert: fs.readFileSync(path.join(__dirname, '../assets/ssl/certificate.crt')).toString()
-            }, this.app);
+            let options={
+                key: fs.readFileSync(path.join(__dirname, '../assets/ssl/mykey.pem')).toString(),
+                cert: fs.readFileSync(path.join(__dirname, '../assets/ssl/mycert.pem')).toString()
+            };
+            this.httpServerSSL = https.createServer(options, this.app);
         }
     }
 
     runServer() {
             
-        if (cluster.isMaster) {
+        if (cluster.isMaster&&this.parseConfig.USE_MULTI_THREADS===true) {
             for (var i = 0; i < numCPUs; i++) {
                 cluster.fork();
             }

@@ -85,10 +85,8 @@ export class CameraComponent implements OnInit {
   }
   
   private async finish() {
-    
-    this.flag.busy = false;
-    
     await this.reloadData();
+    this.flag.busy = false;
   }
 
   async deleteAll(){
@@ -96,7 +94,7 @@ export class CameraComponent implements OnInit {
     try{      
       this.flag.busy=true;
     
-      let camIds = this.cameraConfigs.filter(x=>x.checked===true).map(function(e){return e.device.id});
+      let camIds = this.cameraConfigs.filter(x=>x.checked===true).map(e => e.device.id);
       let result = await this.cameraService.deleteCam(camIds, this.ipCameraNvr.id);     
       console.debug("result.target", result.target);
       alert('Delete Success');
@@ -111,10 +109,14 @@ export class CameraComponent implements OnInit {
     this.currentEditCamera = undefined;
     await Observable.forkJoin([
       this.getGroup().then(groupList=>this.groupList = groupList),
-      this.cameraService.getDeviceCount(this.ipCameraNvr.Id).then(total=>this.paging.total = total),
-      this.fetchDevice(),  
+      this.cameraService.getDeviceCount(this.ipCameraNvr.Id).then(total=> {
+        this.paging.total = total;
+        let maxPage=Math.ceil(this.paging.total / this.paging.pageSize);
+        if(this.paging.page > maxPage) this.paging.page=maxPage;
+      }),      
       this.getAvailableLicense(),
     ]).toPromise();    
+    await this.fetchDevice();
     this.checkSelected();    
   }
 
@@ -198,12 +200,10 @@ export class CameraComponent implements OnInit {
   async clickClone() {
     try{
       this.flag.busy=true;      
-      //dummy 
-      await Observable.of(null).toPromise();
-
       if (this.cloneCameraParam.quantity > this.availableLicense) {
         throw new Error("Not enough license to add new camera");        
       }      
+      await this.cameraService.cloneCam(this.cloneCameraParam.device,this.cloneCameraParam.quantity, this.ipCameraNvr);
       alert("Clone Success");
     }catch(err){
       console.error(err);

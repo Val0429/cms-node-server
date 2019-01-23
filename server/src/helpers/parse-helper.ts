@@ -6,21 +6,24 @@ import {} from '../domain';
 export class ParseHelper {
 
     host: string;
-
+    httpsPort: number;
     port: number;
 
-    isHttps = false;
 
-    get httpType() {
-        return this.isHttps ? 'https' : 'http';
+    get serverHttpsUrl() {
+        return `http://${this.host}:${this.httpsPort}`;
+    }
+
+    get parseServerHttpsUrl() {
+        return `https://${this.host}:${this.httpsPort}${this.pathConfig.PARSE_PATH}`;
     }
 
     get serverUrl() {
-        return `${this.httpType}://${this.host}:${this.port}`;
+        return `http://${this.host}:${this.port}`;
     }
 
     get parseServerUrl() {
-        return `${this.httpType}://${this.host}:${this.port}${this.pathConfig.PARSE_PATH}`;
+        return `http://${this.host}:${this.port}${this.pathConfig.PARSE_PATH}`;
     }
 
     static get instance() {
@@ -40,13 +43,13 @@ export class ParseHelper {
     initParse() {
         this.host = this.parseConfig.HOST || 'localhost';
         this.port = this.parseConfig.PORT || 3000;
-        this.isHttps = this.parseConfig.IS_HTTPS || false;
+        this.httpsPort = this.parseConfig.SSL_PORT || 443;
 
         Parse.initialize(
             this.parseConfig.APPLICATION_ID || 'APPLICATION_ID',
             this.parseConfig.JAVASCRIPT_KEY || 'JAVASCRIPT_KEY'
         );
-
+        
         Parse[`${'masterKey'}`] = this.parseConfig.MASTER_KEY || 'MASTER_KEY';
         Parse[`${'serverURL'}`] = this.parseServerUrl;
 
