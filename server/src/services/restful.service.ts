@@ -128,10 +128,12 @@ export class RestFulService {
             });
         }
     }
-    private async deleteMany(className: string, where: any) {
+    async deleteMany(className: string, where: any) {
         return await this.db.collection(className).remove(where);
     }
-
+    async dropCollection(className:string, callBack:(err, success)=>void){
+        this.db.collection(className).drop(callBack);
+    }
     async getCount(req:Request, res:Response){       
         try{       
             
@@ -196,7 +198,7 @@ export class RestFulService {
             });
         }
     }
-    private async insertMany(className: any, data: any) {
+    async insertMany(className: any, data: any[]) {
         return await this.db.collection(className).insertMany(data);
     }
 
