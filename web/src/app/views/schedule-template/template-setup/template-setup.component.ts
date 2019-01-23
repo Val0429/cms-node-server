@@ -250,7 +250,10 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
             args.nvrConfigs.filter(x => sg.Nvr.includes(x.Id)).forEach(async nvr => {
               let devs = await Observable.fromPromise(this.parseService
                 .fetchData({type:Device, 
-                  filter:query => query.equalTo("NvrId", nvr.Id)
+                  filter:query => query
+                    .equalTo("NvrId", nvr.Id)
+                    .select("Name", "NvrId", "Channel", "Config")
+                    .limit(30000)
                 })).toPromise();
               this.buildSetupNodeForNvrDev({ sg: newSgNode, nvr, sgIpCamChannel: devs.map(e => e.Channel) });
             });
@@ -282,7 +285,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       };
 
       newDevNode.checkChecked = ()=>{        
-        console.debug("checkedStreamId",newDevNode.checkedStreamId);
+        //console.debug("checkedStreamId",newDevNode.checkedStreamId);
         for(let str of newDevNode.child){
           let checked = newDevNode.checkedStreamId.find(x=>x == str.streamId) != undefined;
           str.apply = checked;

@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ITemplateSetupNode } from '../template-setup.component';
-import { ParseService } from 'app/service/parse.service';
-import { Observable } from 'rxjs';
 import { Device } from 'app/model/core';
+import { CameraService } from 'app/service/camera.service';
 
 @Component({
   selector: 'app-tree-node',
@@ -15,23 +14,13 @@ export class TreeNodeComponent implements OnInit {
   @Output() changeSetupNodeEvent: EventEmitter<any> = new EventEmitter();
   @Output() checkParentEvent: EventEmitter<any> = new EventEmitter();
 
-  constructor(private parseService:ParseService) { }
+  constructor(private cameraService:CameraService) { }
 
   async ngOnInit() { 
     const level = this.treeNode.level;
     if(!this.treeNode.data && level==4){
-      
-      
-      let devices: Device[] = await Observable.fromPromise(this.parseService.fetchData({
-      type: Device, filter: query => query.equalTo("NvrId", this.treeNode.nvrId)
-        .equalTo("Channel", this.treeNode.channelId)
-        .limit(1)
-      })).toPromise();
-
-      let dev :Device;
-      if(devices && devices.length >0){
-        dev =  devices[0];
-      }else{
+      let dev = await this.cameraService.getCameraPrimaryData(this.treeNode.nvrId, this.treeNode.channelId);
+      if(!dev){
         dev = new Device();
         dev.Name = "Device not found";        
       }      
