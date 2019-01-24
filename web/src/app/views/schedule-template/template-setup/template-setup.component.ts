@@ -3,9 +3,8 @@ import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { LicenseService } from 'app/service/license.service';
 import * as _ from 'lodash';
-import { Group, Nvr, Device, RecordSchedule, EventHandler } from 'app/model/core';
+import { Group, Nvr, Device, RecordSchedule, EventHandler, RecordScheduleTemplate, EventScheduleTemplate } from 'app/model/core';
 import { Observable } from 'rxjs/Observable';
-import { IRecordScheduleTemplate, IEventScheduleTemplate } from 'lib/domain/core';
 import { CameraService } from 'app/service/camera.service';
 
 
@@ -21,7 +20,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   
   @Input() setupMode: number;
   /** RecordScheduleTemplate or EventScheduleTemplate */
-  @Input() currentTemplate: IRecordScheduleTemplate | IEventScheduleTemplate ;
+  @Input() currentTemplate: RecordScheduleTemplate | EventScheduleTemplate ;
   setupNode: ITemplateSetupNode[]; // 階層資料集合
   setupModes = {
     RECORD_SCHEDULE_TEMPLATE: 1,
@@ -146,7 +145,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
         for(let data of result){          
           
           let checked = this.setupMode==this.setupModes.RECORD_SCHEDULE_TEMPLATE 
-            || (data as EventHandler).Schedule == (this.currentTemplate as IEventScheduleTemplate).Schedule;
+            || (data as EventHandler).Schedule == (this.currentTemplate as EventScheduleTemplate).Schedule;
 
           let originalShedule = this.setupMode==this.setupModes.EVENT_TEMPLATE ? (data as EventHandler).Schedule : "";
 
@@ -444,14 +443,19 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   saveTemplateSetup() {
     const alertMessage = [];
     
-    let lic = this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE ? '00168' : 'pass';      
-    
+    let lic = 'pass';
+    let serverId:string;
+    if(this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) { 
+      lic = '00168';
+      serverId = (this.currentTemplate as RecordScheduleTemplate).Recorder.id;
+      console.debug("serverId");
+    }
     if (alertMessage.length > 0) {
       alert(alertMessage.join('\n'));
       return Observable.of(null);
     }
 
-    return this.licenseService.getLicenseAvailableCount(lic)
+    return this.licenseService.getLicenseAvailableCount(lic, serverId)
       .switchMap(num => {
         console.debug("num", num);
         if (num < (this.setupData.filter(x=>x.checked).length)) {
@@ -476,7 +480,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   private saveEventHandler() {    
 
     let deleteEvent = this.setupData.filter(x=> x.checked !== true && 
-      x.originalShedule == (this.currentTemplate as IEventScheduleTemplate).Schedule)
+      x.originalShedule == (this.currentTemplate as EventScheduleTemplate).Schedule)
     .map(e=>{ 
       (e.data as EventHandler).Schedule = "";
       return e.data;
@@ -488,7 +492,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
         parseResult: result, path: this.notifyPath
       });
     });
-    let schedule = (this.currentTemplate as IEventScheduleTemplate).Schedule;
+    let schedule = (this.currentTemplate as EventScheduleTemplate).Schedule;
     let saveEvent = this.setupData.filter(x=>x.checked === true).map(e => { 
       (e.data as EventHandler).Schedule = schedule;
       return e.data; 
@@ -515,7 +519,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
           NvrId: item.nvrId,
           ChannelId: item.channelId,
           StreamId: streamId,
-          ScheduleTemplate: this.currentTemplate as IRecordScheduleTemplate
+          ScheduleTemplate: this.currentTemplate as RecordScheduleTemplate
         });
         saveSchedule.push(newObj);
       }
@@ -558,7 +562,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       NvrId: node.nvrId,
       ChannelId: node.channelId,
       StreamId: node.streamId,
-      ScheduleTemplate: this.currentTemplate as IRecordScheduleTemplate
+      ScheduleTemplate: this.currentTemplate as RecordScheduleTemplate
     });
     return newObj;
   }
