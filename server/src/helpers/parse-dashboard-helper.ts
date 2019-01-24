@@ -4,7 +4,7 @@ import { ParseHelper } from './parse-helper';
 import { ServerHelper } from './server-helper';
 
 export class ParseDashboardHelper {
-    parseDashboardHttps: any;
+
     parseDashboard: any;
 
     static get instance() {
@@ -41,23 +41,6 @@ export class ParseDashboardHelper {
         }, { allowInsecureHTTP: true });
 
         this.serverHelper.app.use(this.pathConfig.PARSE_DASHBOARD_PATH, this.parseDashboard);
-
-        if(this.parseConfig.IS_HTTPS){
-            this.parseDashboardHttps = new ParseDashboard({
-                apps: [
-                    {
-                        appName: 'iSAP-CMS-Server',
-                        appId: this.parseConfig.APPLICATION_ID,
-                        masterKey: this.parseConfig.MASTER_KEY,
-                        serverURL: this.parseHelper.parseServerHttpsUrl
-                    }
-                ],
-                users: [
-                    { user: 'admin', pass: 'iSap2017' }
-                ]
-            }, { allowInsecureHTTP: true });
-    
-            this.serverHelper.app.use(this.pathConfig.PARSE_DASHBOARD_PATH, this.parseDashboardHttps);
-        }
+        
     }
 }
