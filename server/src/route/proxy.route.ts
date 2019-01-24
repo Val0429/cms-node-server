@@ -25,8 +25,8 @@ export const ProxyRoute: IRouteMap = {
                 // 先取得MediaServer的連線URL再轉發
                 let serverInfo = await restFulService.getFirstData("ServerInfo",where);
                 
-                let protocol = configHelper.parseConfig.IS_HTTPS ? 'https' : 'http';
-                let port = configHelper.parseConfig.IS_HTTPS ? serverInfo.SSLPort : serverInfo.Port;
+                let protocol = configHelper.parseConfig.IS_HTTPS && serverInfo.SSLPort ? 'https' : 'http';
+                let port = configHelper.parseConfig.IS_HTTPS && serverInfo.SSLPort ? serverInfo.SSLPort : serverInfo.Port;
 
                 const mediaUrl = `${protocol}://${serverInfo.Domain}:${port}`;
 

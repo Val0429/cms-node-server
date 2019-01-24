@@ -375,16 +375,20 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
    * 由treeNode callback時參數val一律undefined，進行遞迴設定時才指定參數val */
   
 
-  clickSave() {
+  async clickSave() {
     if (!this.setupNode) {
       return;
     }
-
-    this.flag.save = true;
-    this.saveTemplateSetup()
-      .toPromise()
-      .then(() => this.flag.save = false)
-      .catch(alert);
+    try{
+        this.flag.save = true;
+        await this.saveTemplateSetup().toPromise();
+      }
+      catch(err){
+        console.error(err);
+        alert(err);
+      }finally{
+        this.flag.save = false;
+      }
   }
   //check if parent node should be checked
   checkParent(obj:{node: ITemplateSetupNode}){
