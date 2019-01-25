@@ -215,8 +215,13 @@ export class RestFulService {
         }
         return {maxDepth, includeData}
     }
-    getTargetField(obj:any,fieldNames:string[]):any{        
-        return this.jsonPointer.get(obj, "/"+fieldNames.join("/"));
+    getTargetField(obj:any,fieldNames:string[]):any{  
+        try{      
+            return this.jsonPointer.get(obj, "/"+fieldNames.join("/"));
+        }catch(err){
+            console.log(err);
+            return undefined;
+        }
     }
     updateTargetField(obj:any,fieldNames:string[],val:any){        
         let newPath="/"+fieldNames.join("/");
@@ -232,7 +237,8 @@ export class RestFulService {
             for(let include of includes.includeData.filter(x=>x.depth==depth)){
                 //get parent link data
                 for(let record of data){      
-                    var target = this.getTargetField(record, include.fieldNames);
+                    let target = this.getTargetField(record, include.fieldNames);
+                    if(!target)continue;
                     //console.log(target);
                     const getData$ = this.db.collection(target.className).find({_id:target.objectId}).then(res=>{ 
                         //console.log(res);
