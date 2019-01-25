@@ -170,7 +170,7 @@ export class EventTypeListComponent implements OnInit, OnChanges {
     this.availableEventTypeList = [];
 
     // 在getEventCondition中依照device的model判斷參數EventType是否新增入列表
-    Object.keys(this.currentDevice.Capability).forEach(key => {
+    Object.keys(this.currentDevice.Capability || {}).forEach(key => {
       if (key.toLowerCase() === 'numberofmotion') {
         for (let i = 1; i <= Number(this.currentDevice.Capability[key]); i++) {
           this.insertFakeEventHandler(EventConfigs.EventType.Motion, i.toString());

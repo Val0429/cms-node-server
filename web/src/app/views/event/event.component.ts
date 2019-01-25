@@ -91,6 +91,7 @@ export class EventComponent implements OnInit {
     }
     this.currentDevice = device.Data;
     const item = device.EventHandler;
+    console.debug("item", item);
     if (item) {
       this.currentEventHandler = item;
     } else {

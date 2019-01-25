@@ -12,7 +12,7 @@ export class EventService {
     this.availableEventType = [];
     console.debug("device.Config", device.Config);
     const modelManufacture = device.Config.Brand ? device.Config.Brand.toLowerCase() : "";
-    const modelType = device.Capability.CapabilityType;
+    const modelType = device.Capability && device.Capability.CapabilityType ? device.Capability.CapabilityType : "";
 
     if (modelManufacture === 'isapsolution' && modelType === 'smartmonitorservice') {
       this.availableEventType.push(new CameraEvent({ Type: EventConfigs.EventType.UsbAttach }));
@@ -60,7 +60,7 @@ export class EventService {
         // break;
       }
 
-      Object.keys(device.Capability).forEach(key => {
+      Object.keys(device.Capability || {}).forEach(key => {
         if (key.toLowerCase() === 'numberofmotion') {
           for (let i = 1; i <= Number(device.Capability[key]); i++) {
             this.availableEventType.push(new CameraEvent({ Type: EventConfigs.EventType.Motion, Id: i.toString() }));
