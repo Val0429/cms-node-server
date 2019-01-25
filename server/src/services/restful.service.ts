@@ -216,10 +216,10 @@ export class RestFulService {
         return {maxDepth, includeData}
     }
     getTargetField(obj:any,fieldNames:string[]):any{  
-        try{      
+        try{
             return this.jsonPointer.get(obj, "/"+fieldNames.join("/"));
         }catch(err){
-            console.log(err);
+            console.error(err.message);
             return undefined;
         }
     }
