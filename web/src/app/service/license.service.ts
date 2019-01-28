@@ -23,7 +23,7 @@ export class LicenseService {
     /** 取得目前所有的License並計算未過期的數量
      * 格式: key: ProductNo, value: 數量
      */
-    getLicenseLimit() {
+    getLicenseLimit(serverId?:string) {
         this.licenseLimit = {};
         // 初始化licenseLimit
         LicenseProduct.forEach(type => {
@@ -32,7 +32,7 @@ export class LicenseService {
         return this.coreService.proxyMediaServer({
             method: 'GET',
             path: this.coreService.urls.URL_MEDIA_LICENSE_INFO
-        }).map(result => {
+        }, undefined, serverId).map(result => {
             const temp = result.License;
             temp.Adaptor = ArrayHelper.toArray(temp.Adaptor);
             // 分類所有License Key並計算各ProductNo上限總和
@@ -56,7 +56,7 @@ export class LicenseService {
     }
 
     /** 取得指定license剩餘可用數量 */
-    getLicenseAvailableCount(lic: string) {
+    getLicenseAvailableCount(lic: string, serverId?:string) {
         if (!lic) {
             alert('No available license type.');
             return Observable.of(0);
@@ -66,7 +66,7 @@ export class LicenseService {
         }
         const get$ = this.getCurrentUsageCountByLicense(lic)
             .map(num => this.licenseLimit[lic] - num);
-        return this.getLicenseLimit()
+        return this.getLicenseLimit(serverId)
             .switchMap(() => get$);
     }
 

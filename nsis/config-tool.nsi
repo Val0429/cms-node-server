@@ -11,6 +11,7 @@
 !define ARP "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define CMS_MONITOR "CMSConfigMonitor"
 !define CMS_SERVICE "cms30configserver.exe"
+!define TEMP_FOLDER "$TEMP\${PRODUCT_NAME}"
 
 # define name of installer
 !system 'md "${PATH_OUT}"'	
@@ -19,6 +20,19 @@ Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 
 # define installation directory
 InstallDir "$PROGRAMFILES\CMS 3.0\Config"
+
+!macro BackupFile FILE_DIR FILE BACKUP_TO
+ IfFileExists "${BACKUP_TO}\*.*" +2
+  CreateDirectory "${BACKUP_TO}"
+ IfFileExists "${FILE_DIR}\${FILE}" 0 +2
+  Rename "${FILE_DIR}\${FILE}" "${BACKUP_TO}\${FILE}"
+!macroend
+
+!macro RestoreFile BUP_DIR FILE RESTORE_TO
+ IfFileExists "${BUP_DIR}\${FILE}" 0 +3
+  Delete "${RESTORE_TO}\${FILE}"
+  Rename "${BUP_DIR}\${FILE}" "${RESTORE_TO}\${FILE}"
+!macroend
 
 !macro DoUninstall UN
 Function ${UN}DoUninstall
@@ -40,7 +54,8 @@ FunctionEnd
 !macroend
 !insertmacro DoUninstall "" 
 
-	
+
+
 Function .onInit
  
   ReadRegStr $R0 HKLM "${ARP}" "UninstallString"
@@ -54,6 +69,15 @@ Function .onInit
  
 ;Run the uninstaller
 uninst:
+	RMDir /r "${TEMP_FOLDER}\server"
+	RMDir /r "${TEMP_FOLDER}\server"
+	;copy config first to temp folder
+	!insertmacro BackupFile "$INSTDIR\server\src\config" "parse.config.json" "${TEMP_FOLDER}\server"
+	!insertmacro BackupFile "$INSTDIR\server\src\config" "path.config.json" "${TEMP_FOLDER}\server"
+	!insertmacro BackupFile "$INSTDIR\server\src\config" "external.config.json" "${TEMP_FOLDER}\server"
+	!insertmacro BackupFile "$INSTDIR\web\dist\config" "parse.config.json" "${TEMP_FOLDER}\web"
+
+
   ClearErrors
   Call DoUninstall
  
@@ -159,6 +183,14 @@ Section
 	
 	;refresh path to enable node
 	Call RefreshProcessEnvironmentPath
+	
+	
+	;restore old config	
+	
+	!insertmacro RestoreFile "${TEMP_FOLDER}\server" "parse.config.json" "$INSTDIR\server\src\config"
+	!insertmacro RestoreFile "${TEMP_FOLDER}\server" "path.config.json" "$INSTDIR\server\src\config"
+	!insertmacro RestoreFile "${TEMP_FOLDER}\server" "external.config.json" "$INSTDIR\server\src\config"
+	!insertmacro RestoreFile "${TEMP_FOLDER}\web" "parse.config.json" "$INSTDIR\web\dist\config"
 	
 	ExecWait '"install.bat" /s'
 	; wait till finish installing service

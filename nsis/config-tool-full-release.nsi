@@ -1,7 +1,8 @@
 !define PRODUCT_VERSION "3.0.0"
+!define PRODUCT_NAME "CMS Config Tool"
 
 # define installation directory
-InstallDir "$TEMP\CMS 3.0\Temp"
+InstallDir "$TEMP\${PRODUCT_NAME}"
 OutFile "config-tool-setup-v${PRODUCT_VERSION}-FULL.exe"
 
 ; request admin level

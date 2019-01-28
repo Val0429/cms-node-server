@@ -6,17 +6,7 @@ import {} from '../domain';
 export class ParseHelper {
 
     host: string;
-    httpsPort: number;
     port: number;
-
-
-    get serverHttpsUrl() {
-        return `http://${this.host}:${this.httpsPort}`;
-    }
-
-    get parseServerHttpsUrl() {
-        return `https://${this.host}:${this.httpsPort}${this.pathConfig.PARSE_PATH}`;
-    }
 
     get serverUrl() {
         return `http://${this.host}:${this.port}`;
@@ -43,7 +33,6 @@ export class ParseHelper {
     initParse() {
         this.host = this.parseConfig.HOST || 'localhost';
         this.port = this.parseConfig.PORT || 3000;
-        this.httpsPort = this.parseConfig.SSL_PORT || 443;
 
         Parse.initialize(
             this.parseConfig.APPLICATION_ID || 'APPLICATION_ID',
@@ -53,7 +42,6 @@ export class ParseHelper {
         Parse[`${'masterKey'}`] = this.parseConfig.MASTER_KEY || 'MASTER_KEY';
         Parse[`${'serverURL'}`] = this.parseServerUrl;
 
-        
     }
 
     getQuerySubscription<T extends Parse.Object>(args: {
