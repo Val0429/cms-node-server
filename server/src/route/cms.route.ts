@@ -15,29 +15,29 @@ const configHelper = ConfigHelper.instance;
 const logHelper = LogHelper.instance;
 const syncHelper = SyncHelper.instance;
 const deviceService = DeviceService.instance;
-const resultFulService = RestFulService.instance;
+const restFulService = RestFulService.instance;
 
 export const CmsRoute: IRouteMap = {
     path: 'cms',
     router: Router().use(bodyParser.json())
         .get('/test', (req, res) => { res.send('Test Success') })
         .get('/data/:className', async(req, res)=>{
-            await resultFulService.get(req, res);
+            await restFulService.get(req, res);
         })     
         .get('/count/:className', async(req, res)=>{
-            await resultFulService.getCount(req, res);
+            await restFulService.getCount(req, res);
         })
         .get('/data/:className/:_id', async(req, res)=>{
-            await resultFulService.getById(req, res);
+            await restFulService.getById(req, res);
         })  
         .put('/data/:className/:_id', async(req, res)=>{
-            await resultFulService.putById(req, res);
+            await restFulService.putById(req, res);
         })
         .post('/data/:className', async(req, res)=>{
-            await resultFulService.post(req, res);
+            await restFulService.post(req, res);
         })   
         .delete('/data/:className', async(req, res)=>{
-            await resultFulService.del(req, res);
+            await restFulService.del(req, res);
         }) 
         .get('/externalconfig', (req, res) => {
             res.json(configHelper.externalConfig);
@@ -191,70 +191,43 @@ export const CmsRoute: IRouteMap = {
                     })
             })
         })
-        .post('/eventsearch', (req, res) => {
-            parseHelper.fetchData({
-                type: Event,
-                filter: query => {
-                    query
-                        .greaterThanOrEqualTo('Time', req.body.StartTime)
-                        .lessThanOrEqualTo('Time', req.body.EndTime)
-                        .limit(30000);
-                    if (req.body.EventType && req.body.EventType.length > 0) {
-                        query.containedIn('Type', req.body.EventType);
-                    }
+        .post('/eventsearch',  async (req, res) => {            
+
+            try{                    
+                let where={};
+                where["Time"]={"$gte":req.body.StartTime};
+                where["Time"]={"$lte":req.body.EndTime};
+                where["Type"]={"$in":req.body.EventType};
+                if (req.body.Channels && req.body.Channels.length > 0) {
+                    let channel = req.body.Channels[0];
+                    where["NvrId"] = channel.NvrId
+                    where["ChannelId"] = channel.ChannelId; 
                 }
-            }).then(events => {
-                let resultEvents = req.body.Channels ? [] : events;
-                if (req.body.Channels) {
-                    req.body.Channels.forEach(channel => {
-                        const subs = events.filter(x => x.NvrId === channel.NvrId && x.ChannelId === channel.ChannelId);
-                        resultEvents = resultEvents.concat(subs);
-                    });
-                }
-                const totalRecord = resultEvents.length;
-                resultEvents.sort(function (a, b) { // 倒序排序
-                    return (a.Time < b.Time) ? 1 : ((b.Time < a.Time) ? -1 : 0);
-                });
+                //console.log(where);
+                let totalRecord=0;let events=[];
+                const totalRecord$ = restFulService.getDataCount("Event", where).then(res=>totalRecord=res);;
                 const count = req.body.Count || 100;
                 const page = req.body.Page || 1;
                 const skip = (page - 1) * count;
+
+                let events$ = restFulService.getData("Event", skip, count, where).then(res=>events=res);
+                await Promise.all([totalRecord$, events$]);
+                //console.log(events);
                 res.json({
                     TotalRecords: totalRecord,
                     Page: page,
                     Count: count,
-                    Records: resultEvents.slice(skip, skip + count)
+                    Records: events
                 });
-            });
-            // let channelQueries = [];
-            // if (req.body.Channels) {
-            //     channelQueries = req.body.Channels.map(data =>
-            //         new Parse.Query(Event)
-            //             .equalTo('NvrId', data.NvrId)
-            //             .equalTo('ChannelId', data.ChannelId));
-            // }
-            // parseHelper.fetchPagingAndCount({
-            //     type: Event,
-            //     currentPage: req.body.Page || 1,
-            //     itemVisibleSize: req.body.Count || 100,
-            //     filter: query => {
-            //         query.greaterThanOrEqualTo('Time', req.body.StartTime)
-            //             .lessThanOrEqualTo('Time', req.body.EndTime)
-            //         if (req.body.EventType && req.body.EventType.length > 0) {
-            //             query.containedIn('Type', req.body.EventType);
-            //         }
-            //         if (channelQueries.length > 0) {
-            //             Object.assign(query, Parse.Query.or(...channelQueries));
-            //             // Object.assign之後重新設定分頁
-            //             query.limit(req.body.Count);
-            //             query.skip((req.body.Page - 1) * req.body.Count);
-            //         }
-            //     }
-            // }).then(events => res.json({
-            //     TotalRecords: events.count,
-            //     Page: req.body.Page || 1,
-            //     Count: req.body.Count || 100,
-            //     Records: events.data
-            // }))
+            }
+            catch(err){
+                console.error(err);
+                res.status(err.status || 500);
+                res.json({
+                    message: err.message,
+                    error: err
+                });
+            }
         })
         .post('/eventcalendar', (req, res) => {
             parseHelper.fetchData({
