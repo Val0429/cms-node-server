@@ -113,11 +113,14 @@ export class CameraService {
     return devices;
   }
   async saveCamera(cams:Device[], ipCameraNvr:Nvr, selectedSubGroup:string, tags:string):Promise<Device>{
-    cams.forEach(currentCamera=>{
+    for (let currentCamera of cams){
+      
       currentCamera.Name = this.coreService.stripScript(currentCamera.Name);
       currentCamera.Tags = tags.split(',');    
       
-      // 加密
+      if(!currentCamera.Config) currentCamera.Config={};
+      if(!currentCamera.Config.Authentication) currentCamera.Config.Authentication={Account:"Admin", Password:"123456", Encryption:"BASIC", OccupancyPriority:0};
+      // 加密      
       currentCamera.Config.Authentication.Account = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Account);
       currentCamera.Config.Authentication.Password = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Password);
       
@@ -128,7 +131,7 @@ export class CameraService {
         });
       }
       console.debug("this.currentCamera", currentCamera);
-    });    
+    }
 
     let auth=this.auth;
 
