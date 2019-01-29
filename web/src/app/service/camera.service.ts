@@ -117,12 +117,13 @@ export class CameraService {
       
       currentCamera.Name = this.coreService.stripScript(currentCamera.Name);
       currentCamera.Tags = tags.split(',');    
-            
-      if(currentCamera.Config.Authentication) {
-        // 加密      
-        currentCamera.Config.Authentication.Account = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Account);
-        currentCamera.Config.Authentication.Password = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Password);
-      }
+      
+      if(!currentCamera.Config) currentCamera.Config={};
+      if(!currentCamera.Config.Authentication) currentCamera.Config.Authentication={Account:"Admin", Password:"123456", Encryption:"BASIC", OccupancyPriority:0};
+      // 加密      
+      currentCamera.Config.Authentication.Account = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Account);
+      currentCamera.Config.Authentication.Password = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Password);
+      
       // 將RTSPURI組合完整
       if (currentCamera.Config.Brand === 'Customization') {
         currentCamera.Config.Stream.forEach(str => {
