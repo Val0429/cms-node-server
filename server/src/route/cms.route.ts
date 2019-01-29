@@ -229,28 +229,24 @@ export const CmsRoute: IRouteMap = {
                 });
             }
         })
-        .post('/eventcalendar', (req, res) => {
-            parseHelper.fetchData({
-                type: Event,
-                filter: query => {
-                    query
-                        .greaterThanOrEqualTo('Time', req.body.StartTime)
-                        .lessThanOrEqualTo('Time', req.body.EndTime);
-                    if (req.body.EventType && req.body.EventType.length > 0) {
-                        query.containedIn('Type', req.body.EventType);
-                    }
+        .post('/eventcalendar', async (req, res) => {
+            //console.log("req.body", req.body);
+            let where={};
+                where["Time"]={"$gte":req.body.StartTime};
+                where["Time"]={"$lte":req.body.EndTime};
+                if(req.body.EventType && req.body.EventType.length>0){
+                    where["Type"]={"$in":req.body.EventType};
                 }
-            }).then(events => {
-                let resultEvents = req.body.Channels ? [] : events;
-                if (req.body.Channels) {
-                    req.body.Channels.forEach(channel => {
-                        const subs = events.filter(x => x.NvrId === channel.NvrId && x.ChannelId === channel.ChannelId);
-                        resultEvents = resultEvents.concat(subs);
-                    });
+                if (req.body.Channels && req.body.Channels.length > 0) {                    
+                    let nvrs = req.body.Channels.map(x=>x.NvrId);
+                    let channels = req.body.Channels.map(x=>x.ChannelId);
+                    where["NvrId"]={"$in":nvrs};
+                    where["ChannelId"] = {"$in":channels}
                 }
-
+            //console.log("where",where);
+            await restFulService.getData("Event", 0, Number.MAX_SAFE_INTEGER, where).then(resultEvents => { 
                 const result: { Date: number, Events: { Type: string, Count: number }[] }[] = [];
-                resultEvents.forEach(event => {
+                for(let event of resultEvents){
                     const eventTime = new Date(event.Time).getDate(); // 取得Day-of-the-month作為key
                     // 檢查時間，若尚未出現就新增物件
                     if (!result.some(x => x.Date === eventTime)) {
@@ -264,9 +260,8 @@ export const CmsRoute: IRouteMap = {
                     } else {
                         resultEvent.Events.push({ Type: event.Type, Count: 1 });
                     }
-                });
-
-                res.send(JSON.stringify({ Records: result }));
+                }
+                res.send({ Records: result });
             })
         })
         .post('/syncDB', (req, res) => {
