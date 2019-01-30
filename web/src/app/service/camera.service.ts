@@ -101,23 +101,26 @@ export class CameraService {
     // let options=new RequestOptions({ headers:this.coreService.parseHeaders});
     // let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device?nvrId=${nvrId}&page=${page}&pageSize=${pageSize}`, options ).toPromise();
     // return response.json();
-
+    let skip=(page-1)*pageSize;
     let devices = await this.parseService.fetchData({
       type: Device,
       filter: query=>query
           .equalTo("NvrId", nvrId)
           .ascending('Channel')
           .limit(pageSize)
-          .skip((page-1)*pageSize)
+          .skip(skip>-1?skip:0)
     });
     return devices;
   }
   async saveCamera(cams:Device[], ipCameraNvr:Nvr, selectedSubGroup:string, tags:string):Promise<Device>{
-    cams.forEach(currentCamera=>{
+    for (let currentCamera of cams){
+      
       currentCamera.Name = this.coreService.stripScript(currentCamera.Name);
       currentCamera.Tags = tags.split(',');    
       
-      // 加密
+      if(!currentCamera.Config) currentCamera.Config={};
+      if(!currentCamera.Config.Authentication) currentCamera.Config.Authentication={Account:"Admin", Password:"123456", Encryption:"BASIC", OccupancyPriority:0};
+      // 加密      
       currentCamera.Config.Authentication.Account = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Account);
       currentCamera.Config.Authentication.Password = this.cryptoService.encrypt4DB(currentCamera.Config.Authentication.Password);
       
@@ -128,7 +131,7 @@ export class CameraService {
         });
       }
       console.debug("this.currentCamera", currentCamera);
-    });    
+    }
 
     let auth=this.auth;
 

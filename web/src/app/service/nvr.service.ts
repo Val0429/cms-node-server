@@ -29,12 +29,12 @@ export class NvrService {
       return result.json();   
   }
   async getNvrList(page:number, pageSize:number){
-    
+    let skip=(page-1)*pageSize;
     return await this.parseService.fetchData({
       type: Nvr,
       filter: query => query
         .ascending("SequenceNumber")
-        .skip((page-1)*pageSize)
+        .skip(skip>-1?skip:0)
         .limit(pageSize)
     });
   }
