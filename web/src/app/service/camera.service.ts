@@ -101,14 +101,14 @@ export class CameraService {
     // let options=new RequestOptions({ headers:this.coreService.parseHeaders});
     // let response = await this.httpService.get(this.parseService.parseServerUrl + `/cms/device?nvrId=${nvrId}&page=${page}&pageSize=${pageSize}`, options ).toPromise();
     // return response.json();
-
+    let skip=(page-1)*pageSize;
     let devices = await this.parseService.fetchData({
       type: Device,
       filter: query=>query
           .equalTo("NvrId", nvrId)
           .ascending('Channel')
           .limit(pageSize)
-          .skip((page-1)*pageSize)
+          .skip(skip>-1?skip:0)
     });
     return devices;
   }
