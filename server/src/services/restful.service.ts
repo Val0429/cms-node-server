@@ -93,7 +93,7 @@ export class RestFulService {
             
             await Promise.all([
                 this.getData(className, skip, pageSize, whereJson, sortJson, selectJson, include).then(res=>results =res),
-                this.getDataCount(className, whereJson).then(res=>count=res)
+                this.db.collection(className).findAsCursor(whereJson).limit(1000000).count().then(res=>count=res)
             ]);
             let totalPages=Math.ceil(count/pageSize);
             //console.log("getData end", new Date()) ;
