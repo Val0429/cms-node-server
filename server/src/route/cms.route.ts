@@ -205,7 +205,7 @@ export const CmsRoute: IRouteMap = {
                 }
                 //console.log(where);
                 let totalRecord=0;let events=[];
-                const totalRecord$ = restFulService.getDataCount("Event", where).then(res=>totalRecord=res);;
+                const totalRecord$ = restFulService.getDataCountWithLimit("Event", where).then(res=>totalRecord=res);;
                 const count = req.body.Count || 100;
                 const page = req.body.Page || 1;
                 const skip = (page - 1) * count;
