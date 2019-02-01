@@ -93,7 +93,7 @@ export class RestFulService {
             
             await Promise.all([
                 this.getData(className, skip, pageSize, whereJson, sortJson, selectJson, include).then(res=>results =res),
-                //with where query, it should limit count to 1m
+                //with where query, it should limit the count
                 Object.keys(whereJson).length > 0 ? 
                     this.getDataCountWithLimit(className, whereJson).then(res=>count=res):
                     this.getDataCount(className, whereJson).then(res=>count=res)
@@ -113,7 +113,7 @@ export class RestFulService {
         }
     }
     async getDataCountWithLimit(className: any, whereJson: any, limit?:number) {
-        return await this.db.collection(className).findAsCursor(whereJson).limit(limit||1000000).count();
+        return await this.db.collection(className).findAsCursor(whereJson).limit(limit||500000).count();
     }
 
     async del(req:Request, res:Response){       
