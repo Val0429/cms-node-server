@@ -44,7 +44,7 @@ export class ParseService {
         if(environment.production){
           this.host = window.location.hostname;          
           this.isHttps = window.location.protocol == "https:";          
-          this.port = parseInt(window.location.port || this.isHttps == true ? "443" : "80");          
+          this.port = parseInt(window.location.port? window.location.port :  this.isHttps == true ? "443" : "80");          
           //console.log(this.parseServerUrl);
         }else{
           this.isHttps = config.IS_HTTPS || false;
