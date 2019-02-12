@@ -113,7 +113,7 @@ export class RestFulService {
         }
     }
     async getDataCountWithLimit(className: any, whereJson: any, limit?:number) {
-        return await this.db.collection(className).findAsCursor(whereJson).limit(limit||500000).count();
+        return await this.db.collection(className).findAsCursor(whereJson).limit(limit||100000).count();
     }
 
     async del(req:Request, res:Response){       
