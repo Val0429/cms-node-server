@@ -93,7 +93,10 @@ export class RestFulService {
             
             await Promise.all([
                 this.getData(className, skip, pageSize, whereJson, sortJson, selectJson, include).then(res=>results =res),
-                this.getDataCount(className, whereJson).then(res=>count=res)
+                //with where query, it should limit the count
+                Object.keys(whereJson).length > 0 ? 
+                    this.getDataCountWithLimit(className, whereJson).then(res=>count=res):
+                    this.getDataCount(className, whereJson).then(res=>count=res)
             ]);
             let totalPages=Math.ceil(count/pageSize);
             //console.log("getData end", new Date()) ;
@@ -109,6 +112,10 @@ export class RestFulService {
             });
         }
     }
+    async getDataCountWithLimit(className: any, whereJson: any, limit?:number) {
+        return await this.db.collection(className).findAsCursor(whereJson).limit(limit||100000).count();
+    }
+
     async del(req:Request, res:Response){       
         try{
             //console.log("getData start", new Date()) ;                                                        

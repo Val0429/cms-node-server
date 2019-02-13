@@ -461,22 +461,17 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
 
     return this.licenseService.getLicenseAvailableCount(lic, serverId)
       .switchMap(num => {
-        console.debug("num", num);
-        if (num < (this.setupData.filter(x=>x.checked).length)) {
-          alert('License available count is not enough, did not save template setup.');
-          return Observable.of(null);
-        }  
+        console.debug("num", num);        
 
         if(this.setupMode == this.setupModes.EVENT_TEMPLATE){                     
           return this.saveEventHandler();              
         }
         else{
-          return this.saveRecordSchedule();
+          return this.saveRecordSchedule(num);
         }
           
       })      
-      .do(async ()=>{
-        alert('Update Success.');
+      .do(async ()=>{        
         await this.fetchSetupData().toPromise();  
       });
   }
@@ -511,10 +506,10 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
           parseResult: result, path: this.notifyPath
         });
       });
-    return delete$.switchMap(()=>save$);
+    return delete$.switchMap(()=>save$).do(()=>alert('Update Success.'));;
   }
 
-  private saveRecordSchedule() {
+  private saveRecordSchedule(limit:number) {
     let saveSchedule = [];
     let deleteSchedule = this.setupData.map(e => e.data);
     for (let item of this.getSetupNodeWithLevel(true)) {
@@ -528,6 +523,10 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
         saveSchedule.push(newObj);
       }
     }
+    if (limit < (saveSchedule.length - deleteSchedule.length)) {
+      alert('License available count is not enough, did not save template setup.');
+      return Observable.of(null);
+    }  
     console.debug("saveSchedule", saveSchedule);
     console.debug("deleteSchedule", deleteSchedule);
     //save checked schedules
@@ -542,7 +541,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
       .map(result => this.coreService.notifyWithParseResult({
         parseResult: result, path: this.notifyPath
       }));
-    return delete$.switchMap(() => save$);
+    return delete$.switchMap(() => save$).do(()=>alert('Update Success.'));
   }
 
   /** 檢查db當前資料, 檢查此node是否有套用template */

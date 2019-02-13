@@ -70,7 +70,7 @@ export class LogComponent implements OnInit {
     const options: IPageViewerOptions = {
       currentPage: this.queryParams.page || 1,
       pageVisibleSize: 10,
-      itemVisibleSize: 20,
+      itemVisibleSize: 50,
       itemCount: 0
     };
     console.debug("paging", options);

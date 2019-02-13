@@ -218,12 +218,12 @@ export class NvrEditorComponent implements OnInit, OnChanges {
   /** 從MediaServer取得目前可選的Devices，轉換格式後取代displayDevices */
   async clickGetDeviceList() {
     this.nvrService.getEditModel(this.editNvr, this.currentEditModel);
-    if(!this.editNvr.Id || !this.editNvr.id){
-      await this.nvrService.saveNvr([this.editNvr], this.currentEditModel.Group)
-        .then(async results => {          
-          this.editNvr = await this.parseService.getDataById({type:Nvr, objectId:results[0].objectId});              
-        });
-    }
+    
+    await this.nvrService.saveNvr([this.editNvr], this.currentEditModel.Group)
+      .then(async results => {          
+        this.editNvr = await this.parseService.getDataById({type:Nvr, objectId:results[0].objectId});              
+      });
+    
     await this.reloadEditData(this.currentEditModel.Group);
     await this.getDeviceList();
   }

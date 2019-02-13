@@ -123,6 +123,10 @@ Section "MS Visual C++ Redist 2015 x64" SEC03
   ExecWait Prerequisites\vc_redist.x64.exe
 SectionEnd 
 
+Section "Stand alone MongoDb service" SEC04
+		
+SectionEnd 
+
 ;--------------------------------
 ;macros
   
@@ -193,17 +197,26 @@ Section
 	!insertmacro RestoreFile "${TEMP_FOLDER}\web" "parse.config.json" "$INSTDIR\web\dist\config"
 	
 	ExecWait '"install.bat" /s'
-	; wait till finish installing service
+	; wait till finish installing service	
+	Sleep 1000	
+	
+	${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
+	IntFmt $0 "0x%08X" $0
+	WriteRegDWORD HKLM "${ARP}" "EstimatedSize" "$0"
+	
+
+	#install mongo service
+	SetOutPath "$INSTDIR\server\src\mongodb"
+	${If} ${SectionIsSelected} ${SEC04}			
+		ExecWait '"mongo_install.bat" /s'
+		;start service
+		ExecWait '"net" start "${CMS_SERVICE}"'
+	${Else}		
+		ExecWait '"mongo_install_replica.bat" /s'
+	${EndIf}
+	
+	
 	Sleep 1000
-	
-	
-	 ${GetSize} "$INSTDIR" "/S=0K" $0 $1 $2
-	 IntFmt $0 "0x%08X" $0
-	 WriteRegDWORD HKLM "${ARP}" "EstimatedSize" "$0"
-	 
-	 ;start service
-	 ExecWait '"net" start "${CMS_SERVICE}"'
-	 Sleep 1000
 SectionEnd
 
 UninstallText "This will uninstall ${PRODUCT_NAME}. Press uninstall to continue."
@@ -211,7 +224,10 @@ UninstallText "This will uninstall ${PRODUCT_NAME}. Press uninstall to continue.
 
 # uninstaller section start
 Section "uninstall"
-  Call un.DoUninstall  
+  Call un.DoUninstall 
+	#  uninstall mongo db
+	ExecWait 'net stop "MongoDb"'
+	ExecWait 'sc delete "MongoDb"'
 # uninstaller section end
 SectionEnd
 

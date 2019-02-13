@@ -41,10 +41,16 @@ export class ParseService {
         if (!config || Object.keys(config).length < 1) {
           return;
         }
-        this.isHttps = config.IS_HTTPS || false;
-        this.host = config.HOST || 'localhost';
-        this.port = config.PORT || 3000;
-
+        if(environment.production){
+          this.host = window.location.hostname;          
+          this.isHttps = window.location.protocol == "https:";          
+          this.port = parseInt(window.location.port? window.location.port :  this.isHttps == true ? "443" : "80");          
+          //console.log(this.parseServerUrl);
+        }else{
+          this.isHttps = config.IS_HTTPS || false;
+          this.host = config.HOST || 'localhost';
+          this.port = config.PORT || 3000;
+        }
         Parse.initialize(config.APPLICATION_ID, config.JAVASCRIPT_KEY);
         Parse.masterKey = config.MASTER_KEY;
         Parse.serverURL = this.parseServerUrl;
