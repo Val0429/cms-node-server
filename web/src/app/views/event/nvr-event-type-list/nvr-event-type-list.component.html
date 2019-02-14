@@ -1,0 +1,167 @@
+<section class="widget" *ngIf="currentEventHandler">
+  <header>
+    <h6>
+      <span class="fw-semi-bold">Virtual NVR Event Handler</span>
+    </h6>
+  </header>
+  <div class="widget-body no-padding">
+    <div id="accordion" role="tablist" aria-multiselectable="true">
+      <div class="card" *ngFor="let handler of currentEventHandler.EventHandler">
+        <div class="card-header" role="tab">
+          <span class="text-primary">{{getEventHandlerTitle(handler)}}</span>
+          <i class="fa fa-plus float-right" (click)="clickAddAction(handler);modalWindow.show();"></i>
+          <div class="float-right" *ngIf="handler.AlarmName !== undefined" style="margin-right: 10px;">
+            <span>Alarm Name </span>
+            <input type="text" class="form-control" [(ngModel)]="handler.AlarmName" style="width: 200px;">
+          </div>
+        </div>
+        <div class="collapse" [class.show]="handler.Action.length > 0" role="tabpanel" aria-labelledby="headingOne">
+          <div class="card-block">
+            <table class="table table-hover table-lg mb-0">
+              <tbody *ngIf="handler.Action">
+                <tr *ngFor="let action of handler.Action">
+                  <td width="5%">
+                    <i class="fa fa-times text-danger" (click)="clickDeleteAction(handler.Action, action);" placement="top" tooltip="Delete"></i>
+                  </td>
+                  <td width="30%">{{eventService.getEventActionTypeDisplayText(action.Type)}}</td>
+                  <td width="65%">
+                    <ng-container *ngIf="action.Type === 'DigitalOut'">
+                      <div class="form-group row">
+                        <label class="col-md-4  col-form-label text-md-right">Nvr</label>
+                        <div class="col-md-8">
+                          <select class="select1" [(ngModel)]="action.NvrId" (change)="action.DeviceId = undefined; action.DigitalOutputId = ''">
+                            <option *ngFor="let item of nvrOptions;" [value]="item.value">{{item.key}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4  col-form-label text-md-right">Device</label>
+                        <div class="col-md-8">
+                          <select class="select1" (change)="setDeviceId($event, action)" [disabled]="getDeviceOptions(action).length === 0">
+                            <option *ngFor="let item of getDeviceOptions(action);" [value]="item.value">{{item.key}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4  col-form-label text-md-right">ID</label>
+                        <div class="col-md-8">
+                          <select class="select1" [(ngModel)]="action.DigitalOutputId" [disabled]="getDigitalOutputIdOptions(action.NvrId, action.DeviceId).length === 0">
+                            <option *ngFor="let item of getDigitalOutputIdOptions(action.NvrId, action.DeviceId);" [value]="item">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4  col-form-label text-md-right">Status</label>
+                        <div class="col-md-8">
+                          <select class="select1" [(ngModel)]="action.Status" [disabled]="getDeviceOptions(action).length === 0">
+                            <option value="1">On</option>
+                            <option value="0">Off</option>
+                          </select>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="action.Type === 'SendMail'">
+                      <div class="form-group row">
+                        <label class="col-md-4  col-form-label text-md-right">Email To</label>
+                        <div class="col-md-8">
+                          <div class="input-group">
+                            <input type="text" class="form-control" [(ngModel)]="action.Recipient">
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="action.Type === 'Beep'">
+                      <div class="form-group row">
+                        <label class="col-md-4  col-form-label text-md-right">Times</label>
+                        <div class="col-md-8">
+                          <select class="select1" [(ngModel)]="action.Times">
+                            <option *ngFor="let item of beepTimes;" [value]="item">{{item}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4  col-form-label text-md-right">Duration</label>
+                        <div class="col-md-8">
+                          <select class="select1" [(ngModel)]="action.Duration">
+                            <option *ngFor="let item of beepDuration" [value]="item.value">{{item.key}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="action.Type === 'Audio' || action.Type === 'ExecCmd'">
+                      <div class="form-group row">
+                        <label class="col-md-4  col-form-label text-md-right">File Name</label>
+                        <div class="col-md-8">
+                          <div class="input-group">
+                            <input type="text" class="form-control" [(ngModel)]="action.FileName">
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="action.Type === 'PopupLive' || action.Type === 'PopupPlayback' || action.Type === 'HotSpot'">
+                      <div class="form-group row">
+                        <label class="col-md-4  col-form-label text-md-right">Nvr</label>
+                        <div class="col-md-8">
+                          <select class="select1" [(ngModel)]="action.NvrId">
+                            <option *ngFor="let item of nvrOptions;" [value]="item.value">{{item.key}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4  col-form-label text-md-right">Device</label>
+                        <div class="col-md-8">
+                          <select class="select1" (change)="setDeviceId($event, action)" [disabled]="getDeviceOptions(action).length === 0">
+                            <option *ngFor="let item of getDeviceOptions(action);" [value]="item.value" [selected]="action.DeviceId === item.value">{{item.key}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="widget-footer">
+    <div class="form-group row" style="margin-top: 25px;">
+      <label class="col-md-4  col-form-label text-md-right"></label>
+      <div class="col-md-4">
+        <button class="btn btn-primary width-100 mb-xs" role="button" (click)="clickSaveConfig()">Save</button>
+      </div>
+    </div>
+  </div>
+</section>
+<div bsModal #modalWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header flex-column">
+        <button (click)="modalWindow.hide()" aria-label="Close" class="close ml-auto" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title text-center fw-bold">Add Action</h4>
+      </div>
+      <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
+        <table class="table table-hover table-lg mb-0">
+          <tbody>
+            <tr *ngFor="let option of addActionOptions;" (click)="checkAddAction(option.value);" [class.active]="selectedAddAction.indexOf(option.value) >= 0">
+              <td width="100%">{{eventService.getEventActionTypeDisplayText(option.key)}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <div class="form-group row" *ngFor="let option of addActionOptions;">
+          <div class="col-md-6" style="padding-top: 4px;">
+            <input id="{{option.key}}" type="checkbox" [checked]="selectedAddAction.indexOf(option.value) >= 0" (change)="checkAddAction(option.value);">
+            <label for="{{option.key}}">{{option.key}}</label>
+          </div>
+        </div> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="modalWindow.hide();clickSaveAddAction()">Save</button>
+        <button type="button" class="btn btn-gray" (click)="modalWindow.hide();">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

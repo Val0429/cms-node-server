@@ -45,11 +45,12 @@
           </div>
           <pagination-controls (pageChange)="pageChange($event)" id="nvrList" *ngIf="paging.total>paging.pageSize"></pagination-controls>
         </div>
+
       </div>
     </section>
-
+    <app-nvr-event-type-list *ngIf="currentNVR" [currentNVR]="currentNVR" [currentEventHandler]="currentNvrEventHandler" (reloadCallback)="fetchNvrAndDevice()"></app-nvr-event-type-list>
   </div>
   <div class="col-lg-6">
     <app-event-type-list *ngIf="currentDevice" [currentDevice]="currentDevice" [currentEventHandler]="currentEventHandler" (reloadCallback)="fetchNvrAndDevice()"></app-event-type-list>
-  </div>
+  </div>   
 </div> 

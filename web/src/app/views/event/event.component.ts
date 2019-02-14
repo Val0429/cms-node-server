@@ -3,6 +3,7 @@ import { ParseService } from 'app/service/parse.service';
 import { Nvr, Device, EventHandler, PagerClass } from 'app/model/core';
 import { CameraService } from 'app/service/camera.service';
 import { NvrService } from 'app/service/nvr.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class EventComponent implements OnInit {
   currentEventHandler: EventHandler; // 欲編輯的EventHandler
   eventHandlers:EventHandler[];
   paging:PagerClass = new PagerClass();
-  
+  currentNVR:Nvr;
+  currentNvrEventHandler:EventHandler;
   constructor(private parseService: ParseService, 
     private cameraService:CameraService, 
     private nvrService:NvrService) { 
@@ -45,6 +47,8 @@ export class EventComponent implements OnInit {
   }
   private async fetchNvrs() {    
     const getNvrs$ = this.nvrService.getNvrList(this.paging.page, this.paging.pageSize).then(async (nvrs) => {
+      this.selectNvrEvent(nvrs.find(x=>x.Id=="1"));
+      console.debug(this.currentNVR);
       this.selectorNvrList=[];
       let promises = [];
       for (let nvr of nvrs) {
@@ -78,7 +82,36 @@ export class EventComponent implements OnInit {
       target.Devices.push({ Data: device, EventHandler: handler });
     });
   }
-  
+  selectNvrEvent(nvr: Nvr) {
+    console.debug("nvr", nvr);
+    if(!nvr || nvr.Id!="1"){
+      this.currentNVR=undefined;
+      this.currentNvrEventHandler = undefined;
+      return;
+    }
+    this.currentNVR=nvr;
+    Observable.fromPromise(this.parseService.getData({
+      type: EventHandler,
+      filter: query => query
+        .equalTo('NvrId', nvr.Id)
+        .equalTo('DeviceId', 0)
+    })).map(result => {
+      if (result) {
+        this.currentNvrEventHandler = result;
+      } else {
+        this.currentNvrEventHandler = this.createFakeEventHandler(nvr);
+      }
+    }).subscribe();
+  }
+
+  createFakeEventHandler(nvr: Nvr): EventHandler {
+    return new EventHandler({
+      NvrId: nvr.Id,
+      DeviceId: 0,
+      Schedule: '',
+      EventHandler: []
+    });
+  }
  async pageChange(event:number){
    this.paging.page = event;
    await this.fetchNvrs();
