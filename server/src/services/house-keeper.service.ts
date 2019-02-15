@@ -18,6 +18,7 @@ export class HouseKeeperService {
     
         this.keepDays = this.config.externalConfig.houseKeeper.keepDays || 90;
         this.cycleInterval = this.config.externalConfig.houseKeeper.cycleInterval || 60*60*1000;        
+        
         //run check every hour
         setInterval(async ()=>{
             await this.startTask();
@@ -33,15 +34,16 @@ export class HouseKeeperService {
     async startTask() {
         try{
             let baseline = new Date();
-            //only 1 process allowed per minute
-            let month=baseline.getMonth()+1;
-            let timestamp = `${baseline.getFullYear()}${month<10?'0'+month:month}${baseline.getDate()}${baseline.getHours()}${baseline.getMinutes()}`;
-            let locking = await this.restFulService.getDataCount(this.className, {timestamp});
+            //only 1 process allowed per cycle         
+            let lastCycle = new Date();
+            lastCycle.setTime(lastCycle.getTime()-this.cycleInterval+100);
+            
+            let locking = await this.restFulService.getDataCount(this.className, { _created_at: { $gt: lastCycle }});
             if(locking>0)return;                        
             baseline.setDate(baseline.getDate() - this.keepDays);      
             let message = "Delete Event and SystemLog older than " + baseline.toISOString();
             this.writeLog(message);
-            await this.restFulService.insertMany(this.className,[{timestamp, _created_at:new Date()}]);
+            await this.restFulService.insertMany(this.className,[{timestamp:baseline.toISOString(), _created_at:new Date()}]);
             
             const delEvents$ =  this.restFulService.deleteMany('Event', { _created_at: { $lt: baseline } }).then(res=>this.writeLog("Deleted Event count: " + res.deletedCount));
             const delSystemLogs$ = this.restFulService.deleteMany('SystemLog', { _created_at: { $lt: baseline } }).then(res=>this.writeLog("Deleted SystemLog count: " + res.deletedCount));
