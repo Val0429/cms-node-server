@@ -192,10 +192,17 @@ export class EventTypeListComponent implements OnInit, OnChanges {
       }
     });
 
+    //9200
+    if(this.currentDevice.Config.Brand && this.currentDevice.Config.Brand.toUpperCase() === "AXIS" && this.currentDevice.Config.Model === "P8221"){            
+      for (let i = 1; i <= 8; i++) {   
+        this.insertFakeEventHandler(EventConfigs.EventType.DigitalInput, i.toString(), true, true);
+        this.insertFakeEventHandler(EventConfigs.EventType.DigitalInput, i.toString(), false, true);
+      }
+    }
     // ISSUE: How to know SupportDO?
 
     // Issue: IOPort特殊狀況如何處理
-    if (this.currentDevice.Config.Brand === 'Axis') {
+    if (this.currentDevice.Config.Brand && this.currentDevice.Config.Brand.toUpperCase() === 'AXIS') {
       for (let i = 1; i <= 6; i++) {
         this.insertFakeEventHandler(EventConfigs.EventType.TemperatureDetection, i.toString(), true);
       }
@@ -239,10 +246,10 @@ export class EventTypeListComponent implements OnInit, OnChanges {
     // ISSUE: EnableUserDefine如何判定?
   }
 
-  insertFakeEventHandler(eventType: string, id: string = '1', value: boolean = true) {
+  insertFakeEventHandler(eventType: string, id: string = '1', value: boolean = true, forcePush:boolean = false) {
     const availableObj = this.eventService.getCameraEvent({ Type: eventType, Id: id, Value: value });
-    if (availableObj) {
-      const val = availableObj.Value ? '1' : '0';
+    
+      const val = (availableObj ? availableObj.Value : value) ? '1' : '0';
       const insertObj = {
         EventType: eventType,
         Id: id,
@@ -251,8 +258,8 @@ export class EventTypeListComponent implements OnInit, OnChanges {
         Interval: '1',
         Action: []
       };
-      this.availableEventTypeList.push(insertObj);
-    }
+
+      if(availableObj || forcePush) this.availableEventTypeList.push(insertObj);    
   }
 
   // 將EventHandler Config加入所有可用的EventType
