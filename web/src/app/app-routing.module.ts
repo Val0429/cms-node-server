@@ -74,10 +74,6 @@ const routes: Routes = [
         loadChildren: 'app/views/license/license.module#LicenseModule'
       },
       {
-        path: 'io-event',
-        loadChildren: 'app/views/io-event/io-event.module#IoEventModule'
-      },
-      {
         path: 'log',
         loadChildren: 'app/views/log/log.module#LogModule'
       },
