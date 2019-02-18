@@ -1,0 +1,47 @@
+<div class="widget-body no-padding">
+    <div id="accordion" role="tablist" aria-multiselectable="true" *ngIf="selectorNvrList && selectorNvrList.length>0">
+      <div class="card" *ngFor="let nvr of selectorNvrList | paginate: { id: 'nvrList', itemsPerPage: paging.pageSize, currentPage: paging.page, totalItems:paging.total }">
+        <div class="card-header" role="tab" (click)="nvr.isCollapsed = !nvr.isCollapsed">
+          <span class="text-primary" style="margin-right: 24px;">{{nvr.Data.Id}}</span>
+          <span class="text-primary">{{nvr.Data.Name}}</span>
+          <span class="text-info">&nbsp;-&nbsp;{{nvr.Data.Manufacture}}</span>
+          <span class="text-mute">&nbsp;&nbsp;&nbsp;{{nvr.Data.Domain || 'localhost'}}:{{nvr.Data.Port}}</span>
+          <i class="fa fa-angle-down float-right" style="font-size: 1.5rem;" *ngIf="nvr.isCollapsed"></i>
+          <i class="fa fa-angle-up float-right" style="font-size: 1.5rem;" *ngIf="!nvr.isCollapsed"></i>
+        </div>
+        <div class="collapse" [class.show]="!nvr.isCollapsed" role="tabpanel" aria-labelledby="headingOne">
+          <div class="card-block">
+            <table class="table table-hover table-lg mb-0">
+              <tbody *ngIf="nvr.Devices && nvr.Devices.length > 0">
+                <tr *ngFor="let device of nvr.Devices | paginate: { id: 'nvr'+nvr.Data.Id, itemsPerPage: paging.pageSize, currentPage: nvr.page, totalItems:nvr.total }" 
+                 (click)="selectDevice(device.Data)"
+                 [class.active]="currentAction && currentAction.NvrId==device.Data.NvrId && currentAction.DeviceId == device.Data.Channel">
+                  <td width="5%">{{device.Data.Channel}}</td>
+                  <td width="60%">{{device.Data.Name}}</td> 
+                  <td *ngIf="streamMode && currentAction && currentAction.NvrId==device.Data.NvrId && currentAction.DeviceId == device.Data.Channel && device.Data.Config && device.Data.Config.Stream">
+                      D/O Id:<select (change)="selectStream($event)" [(ngModel)]="currentAction.DigitalOutputId">
+                      <option *ngFor="let str of device.Data.Config.Stream" [value]="str.Id">{{str.Id}}</option>
+                    </select>
+                  </td>                 
+                </tr>
+              </tbody>
+              <tbody *ngIf="!nvr.Devices || nvr.Devices.length === 0">
+                <tr>
+                  <td width="100%">No Device Available.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <pagination-controls 
+              id="{{'nvr'+nvr.Data.Id}}"
+              (pageChange)="cameraPageChange(nvr, $event)" 
+              *ngIf="nvr.Devices && nvr.Devices.length > 0 && nvr.total > paging.pageSize">
+            </pagination-controls>
+
+        </div>
+      </div>
+      <pagination-controls (pageChange)="pageChange($event)" id="nvrList" *ngIf="paging.total>paging.pageSize"></pagination-controls>
+    </div>
+
+  </div>

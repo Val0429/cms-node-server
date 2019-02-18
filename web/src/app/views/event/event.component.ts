@@ -84,11 +84,7 @@ export class EventComponent implements OnInit {
   }
   selectNvrEvent(nvr: Nvr) {
     console.debug("nvr", nvr);
-    if(!nvr || nvr.Id!="1"){
-      this.currentNVR=undefined;
-      this.currentNvrEventHandler = undefined;
-      return;
-    }
+   
     this.currentNVR=nvr;
     Observable.fromPromise(this.parseService.getData({
       type: EventHandler,
@@ -157,7 +153,7 @@ export class EventComponent implements OnInit {
   }
 }
 
-interface ISelectorNvrModel {
+export interface ISelectorNvrModel {
   Data: Nvr,
   Devices: ISelectorDeviceModel[],
   isCollapsed: boolean,
@@ -165,7 +161,7 @@ interface ISelectorNvrModel {
   total:number
 }
 
-interface ISelectorDeviceModel {
+export interface ISelectorDeviceModel {
   Data: Device,
   EventHandler: EventHandler
 }

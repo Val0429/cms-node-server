@@ -25,8 +25,9 @@
                   </td>
                   <td width="30%">{{eventService.getEventActionTypeDisplayText(action.Type)}}</td>
                   <td width="65%">
-                    <ng-container *ngIf="action.Type === 'DigitalOut'">
+                    <ng-container *ngIf="action.Type === 'DigitalOut'">                      
                       <div class="form-group row">
+                        
                         <label class="col-md-4  col-form-label text-md-right">Nvr</label>
                         <div class="col-md-8">
                           <select class="select1" [(ngModel)]="action.NvrId" (change)="action.DeviceId = undefined; action.DigitalOutputId = ''">
@@ -37,6 +38,8 @@
                       <div class="form-group row">
                         <label class="col-md-4  col-form-label text-md-right">Device</label>
                         <div class="col-md-8">
+                          {{action | json}}                          
+                          <button (click)="showDevice(action, true);deviceModal.show();">Select Device</button>
                           <select class="select1" [(ngModel)]="action.DeviceId" [disabled]="getDeviceOptions(action).length === 0">
                             <option *ngFor="let item of getDeviceOptions(action);" [value]="item.value">{{item.key}}</option>
                           </select>
@@ -53,7 +56,7 @@
                       <div class="form-group row">
                         <label class="col-md-4  col-form-label text-md-right">Status</label>
                         <div class="col-md-8">
-                          <select class="select1" [(ngModel)]="action.Status" [disabled]="getDeviceOptions(action).length === 0">
+                          <select class="select1" [(ngModel)]="action.Status" [disabled]="!action.NvrId || !action.DeviceId || !action.DigitalOutputId">
                             <option value="1">On</option>
                             <option value="0">Off</option>
                           </select>
@@ -77,6 +80,8 @@
                       </div>
                       <div class="form-group row">
                         <label class="col-md-4  col-form-label text-md-right">Snapshot - Device</label>
+                        {{action | json}}                          
+                          <button (click)="showDevice(action);deviceModal.show();">Select Device</button>
                         <div class="col-md-8">
                           <select class="select1" (change)="setDeviceId($event, action)" [disabled]="getDeviceOptions(action).length === 0 || action.Attach == 'false'">
                             <option *ngFor="let item of getDeviceOptions(action);" [value]="item.value" [selected]="action.DeviceId === item.value">{{item.key}}</option>
@@ -103,6 +108,8 @@
                       </div>
                       <div class="form-group row">
                         <label class="col-md-4  col-form-label text-md-right">Snapshot - Device</label>
+                        {{action | json}}                          
+                          <button (click)="showDevice(action);deviceModal.show();">Select Device</button>
                         <div class="col-md-8">
                           <select class="select1" (change)="setDeviceId($event, action)" [disabled]="getDeviceOptions(action).length === 0" (change)="getUploadFTPFileName(action)">
                             <option *ngFor="let item of getDeviceOptions(action);" [value]="item.value" [selected]="action.DeviceId === item.value">{{item.key}}</option>
@@ -157,6 +164,8 @@
                       </div>
                       <div class="form-group row">
                         <label class="col-md-4  col-form-label text-md-right">Device</label>
+                        {{action | json}}                          
+                          <button (click)="showDevice(action);deviceModal.show();">Select Device</button>
                         <div class="col-md-8">
                           <select class="select1" (change)="setDeviceId($event, action)" [disabled]="getDeviceOptions(action).length === 0">
                             <option *ngFor="let item of getDeviceOptions(action);" [value]="item.value" [selected]="action.DeviceId === item.value">{{item.key}}</option>
@@ -182,6 +191,27 @@
     </div>
   </div>
 </section>
+
+<div bsModal #deviceModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">{{title || 'Device Selector'}}</h4>
+            <button type="button" class="close" (click)="deviceModal.hide()">&times;</button>
+          </div>
+          <div class="modal-body">
+              <div class="col-12">
+                <app-device-selector [currentAction]="currentAction" [streamMode]="streamMode" (selectedCallBack)="selectedCallBack($event)"></app-device-selector>
+              </div>
+        </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="deviceModal.hide();cleanAction()">Close</button>      
+    </div>
+    </div>
+    </div>
+</div>
+
+
 <div bsModal #modalWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

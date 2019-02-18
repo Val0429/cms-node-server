@@ -12,6 +12,10 @@ import { RestFulService } from './restful.service';
   
 @Injectable()
 export class NvrService {
+  async getNvrById(nvrId:string):Promise<Nvr>{
+    let results = await this.parseService.fetchData({type:Nvr, filter:query=>query.equalTo("Id", nvrId).limit(1)});
+    return results.length>0 ? results[0] : undefined;
+  }
   get auth():string{
     return btoa(`${this.userService.storage['username']}:${this.userService.storage['password']}`);       
   }

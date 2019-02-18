@@ -8,6 +8,8 @@ import { EventConfigs, EventDisplaySetup } from 'app/config/event.config';
 import { Observable } from 'rxjs/Observable';
 import { StringHelper } from 'app/helper/string.helper';
 import { JsonHelper } from 'app/helper/json.helper';
+import { CameraService } from 'app/service/camera.service';
+import { NvrService } from 'app/service/nvr.service';
 
 @Component({
   selector: 'app-event-type-list',
@@ -16,6 +18,7 @@ import { JsonHelper } from 'app/helper/json.helper';
 })
 export class EventTypeListComponent implements OnInit, OnChanges {
   @Input() currentDevice: Device;
+  @Input() currentNVR:Nvr;
   @Input() currentEventHandler: EventHandler;
   @Output() reloadCallback: EventEmitter<any> = new EventEmitter();
   jsonHelper = JsonHelper.instance;
@@ -33,7 +36,9 @@ export class EventTypeListComponent implements OnInit, OnChanges {
   constructor(
     private coreService: CoreService,
     private parseService: ParseService,
-    private eventService: EventService
+    private eventService: EventService,
+    private cameraService:CameraService,
+    private nvrService:NvrService
   ) { }
 
   ngOnInit() {
@@ -124,22 +129,37 @@ export class EventTypeListComponent implements OnInit, OnChanges {
     if (!action || !action.NvrId) {
       return [];
     }
-    const devices = this.nvrOptions.find(nvr => nvr.data.Id === action.NvrId).devices;
+    let nvr =this.nvrOptions.find(nvr => nvr.data.Id === action.NvrId);
+    const devices = nvr?nvr.devices:[];
     if (!action.DeviceId && devices.length > 0) {
       action.DeviceId = Number(devices[0].value);
     }
     return devices;
   }
-
+  streamMode:boolean=false;
+  currentAction:any;
+  selectedCallBack($event:any){    
+    console.debug("$event", $event);
+    this.currentAction.NvrId = $event.NvrId;
+    this.currentAction.DeviceId = $event.DeviceId;
+    this.currentAction.DigitalOutputId = $event.DigitalOutputId; 
+  }
+  cleanAction(){    
+    this.currentAction = undefined;    
+  }
+  showDevice(action:any, streamMode:boolean=false){    
+    this.streamMode=streamMode;
+    this.currentAction = action;    
+  }
   /** TriggerDO的(Stream)Id選項 */
   getDigitalOutputIdOptions(nvrId: string, deviceChannel: number) {
     if (!nvrId || !deviceChannel) {
       return [];
     }
-
-    const device = this.nvrOptions.find(nvr => nvr.data.Id === nvrId)
-      .devices.find(dev => dev.data.Channel === Number(deviceChannel)).data;
-    const stream = this.jsonHelper.findAttributeByString(device, 'Config.Stream');
+    let nvr =this.nvrOptions.find(nvr => nvr.data.Id === nvrId);
+    const devices = nvr?nvr.devices:[];
+    const device = devices.find(dev => dev.data.Channel === Number(deviceChannel));
+    const stream = this.jsonHelper.findAttributeByString(device ? device.data : undefined, 'Config.Stream');
 
     if (!stream) {
       return [];
@@ -331,7 +351,7 @@ export class EventTypeListComponent implements OnInit, OnChanges {
           Subject: `${this.currentDevice.Channel} ${this.currentDevice.Name} - `
             + `${this.currentClickedHandler.EventType} ${this.currentClickedHandler.Id}`,
           Body: `${this.currentDevice.Channel} ${this.currentDevice.Name} - `
-            + `${this.currentClickedHandler.EventType} ${this.currentClickedHandler.Id} (Server ${this.getCurrentNvr().Domain})`,
+            + `${this.currentClickedHandler.EventType} ${this.currentClickedHandler.Id} (Server ${this.currentNVR.Domain})`,
           Attach: 'true', // boolean: true/false
           NvrId: '',
           DeviceId: '',
@@ -426,14 +446,6 @@ export class EventTypeListComponent implements OnInit, OnChanges {
       .catch(alert);
   }
 
-  /** 找出currentDevice所屬的Nvr */
-  getCurrentNvr(): Nvr {
-    if (!this.currentDevice) {
-      return undefined;
-    }
-
-    return this.nvrOptions.find(nvr => nvr.data.Id === this.currentDevice.NvrId).data;
-  }
 }
 
 interface INvrOption {

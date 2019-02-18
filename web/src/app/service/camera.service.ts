@@ -12,6 +12,12 @@ import { UserService } from './user.service';
 
 @Injectable()
 export class CameraService {
+  async getDeviceById(nvrId:string,channel: number): Promise<Device> {
+    let results = await this.parseService.fetchData({type:Device, 
+      filter:query=>query.equalTo("NvrId", nvrId)
+        .equalTo("Channel", channel).limit(1)});
+    return results.length>0 ? results[0] : undefined;
+  }
     
 
     constructor(

@@ -9,7 +9,7 @@
       <div class="widget-body no-padding">
         <div id="accordion" role="tablist" aria-multiselectable="true" *ngIf="selectorNvrList && selectorNvrList.length>0">
           <div class="card" *ngFor="let nvr of selectorNvrList | paginate: { id: 'nvrList', itemsPerPage: paging.pageSize, currentPage: paging.page, totalItems:paging.total }">
-            <div class="card-header" role="tab" (click)="nvr.isCollapsed = !nvr.isCollapsed">
+            <div class="card-header" role="tab" (click)="nvr.isCollapsed = !nvr.isCollapsed; currentNVR=nvr.Data">
               <span class="text-primary" style="margin-right: 24px;">{{nvr.Data.Id}}</span>
               <span class="text-primary">{{nvr.Data.Name}}</span>
               <span class="text-info">&nbsp;-&nbsp;{{nvr.Data.Manufacture}}</span>
@@ -48,9 +48,9 @@
 
       </div>
     </section>
-    <app-nvr-event-type-list *ngIf="currentNVR" [currentNVR]="currentNVR" [currentEventHandler]="currentNvrEventHandler" (reloadCallback)="fetchNvrAndDevice()"></app-nvr-event-type-list>
+    <app-nvr-event-type-list *ngIf="currentNVR && currentNVR.Id=='1'" [currentNVR]="currentNVR" [currentEventHandler]="currentNvrEventHandler" (reloadCallback)="fetchNvrAndDevice()"></app-nvr-event-type-list>
   </div>
   <div class="col-lg-6">
-    <app-event-type-list *ngIf="currentDevice" [currentDevice]="currentDevice" [currentEventHandler]="currentEventHandler" (reloadCallback)="fetchNvrAndDevice()"></app-event-type-list>
+    <app-event-type-list *ngIf="currentDevice" [currentNVR]="currentNVR" [currentDevice]="currentDevice" [currentEventHandler]="currentEventHandler" (reloadCallback)="fetchNvrAndDevice()"></app-event-type-list>
   </div>   
 </div> 
