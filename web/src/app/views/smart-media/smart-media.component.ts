@@ -10,6 +10,7 @@ import { CryptoService } from 'app/service/crypto.service';
 import { LicenseService } from 'app/service/license.service';
 import * as QRCode from 'qrcode';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CameraService } from 'app/service/camera.service';
 
 @Component({
   selector: 'app-smart-media',
@@ -50,6 +51,7 @@ export class SmartMediaComponent implements OnInit {
     private cryptoService: CryptoService,
     private activatedRoute: ActivatedRoute,
     private licenseService: LicenseService,
+    private cameraService:CameraService,
     protected domSanitizer: DomSanitizer
   ) { }
 
@@ -225,37 +227,35 @@ export class SmartMediaComponent implements OnInit {
       .catch(alert);
   }
 
-  remove(data: Device) {
+  async remove(data: Device) {
     if (!data || !confirm('Are you sure to delete this Smart Media?')) {
       return;
     }
-
-    // 移除 FRSPersonGroup
-    const destroyFRSPersonGroup$ = Observable.fromPromise(data.destroy());
-
-    // 合併執行
-    destroyFRSPersonGroup$
-      .concatMap(() => this.fetchDataList())
-      .map(device => this.coreService.notifyWithParseResult({
-        parseResult: [data], path: this.coreService.urls.URL_CLASS_DEVICE
-      }))
-      .toPromise()      
-      .catch(alert);
+    try{      
+      
+      await this.cameraService.deleteCam([data.id], this.smartMediaNvr.id);      
+      alert('Delete Success');
+      
+    }catch(err){
+      console.error(err);
+      alert(err);            
+    }finally{
+      this.fetchDataList().toPromise();
+    }
   }
 
   /** 在點擊Create之後設定畫面上的預設資料 */
-  setCreateData() {
+  async setCreateData() {
     this.flag.editDefault = true;
-    this.getNewChannelId()
-      .map(id => {
+    await this.getNewChannelId()
+      .then(id => {
         this.editDataModel = {
           channelId: id,
           model: this.smartMediaModelList[0]
         };
         this.currentEditData = undefined;
-      })
-      .toPromise()
-      .then(() => this.flag.editDefault = false);
+        this.flag.editDefault = false
+      })            
   }
 
   /** 取得欲編輯的FRSPersonGroup資料 */
@@ -282,25 +282,9 @@ export class SmartMediaComponent implements OnInit {
   }
 
   /** 依照DB目前內容，取得適當ChannelId */
-  getNewChannelId() {
-    const get$ = Observable.fromPromise(this.parseService.fetchData({
-      type: Device,
-      filter: query => query.equalTo('NvrId', this.smartMediaNvr.Id)
-        .ascending('Channel')
-        .select('Channel')
-        .limit(30000)
-    })).map(devices => {
-      let result = 1;
-      devices.forEach(dev => {
-        if (result === dev.Channel) {
-          result++;
-        } else {
-          return;
-        }
-      });
-      return result;
-    });
-    return get$;
+  async getNewChannelId() {
+    let channels = await this.cameraService.getNewChannel(this.smartMediaNvr.Id, 1);
+    return channels.length>0?channels[0]:0;
   }
 
   /** Call cgi 下載key file */
