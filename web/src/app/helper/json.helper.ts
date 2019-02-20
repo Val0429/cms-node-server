@@ -79,6 +79,7 @@ export class JsonHelper {
     }
     // 檢查指定字串的屬性是否存在，存在則回傳指定屬性內容
     findAttributeByString(json: any, str: string) {
+        if(!json)return;
         if (str.indexOf('.') >= 0) {
             const seq = str.split('.');
             return this.findAttributeByArray({ json: json, arr: seq });

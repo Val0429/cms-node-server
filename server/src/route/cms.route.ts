@@ -16,7 +16,17 @@ const logHelper = LogHelper.instance;
 const syncHelper = SyncHelper.instance;
 const deviceService = DeviceService.instance;
 const restFulService = RestFulService.instance;
+const eventMapping = [
+    {key:"LocalDiskError", value:"hddWriteError"},
+    {key:"BackendRecordStart", value:"RecordStart"},
+    {key:"BackendRecordStop", value:"RecordStop"}
+    
+];
 
+function sanitizeEvent(input:string):string{    
+    let found = eventMapping.find(x=>x.key == input);
+    return found ? found.value : input;
+}
 export const CmsRoute: IRouteMap = {
     path: 'cms',
     router: Router().use(bodyParser.json())
@@ -101,17 +111,15 @@ export const CmsRoute: IRouteMap = {
                 });
             });
         })
-        .post('/QueryEvent', (req, res) => {
-            parseHelper.fetchData({
-                type: Event,
-                filter: query => {
-                    query.equalTo('NvrId', req.body.NvrId)
-                        .equalTo('ChannelId', req.body.ChannelId)
-                        .equalTo('Type', req.body.Type)
-                        .greaterThanOrEqualTo('Time', req.body.StartUTC)
-                        .lessThan('Time', req.body.EndUTC)
-                }
-            }).then(events => {
+        .post('/QueryEvent', async (req, res) => {
+            console.log("req.body", req.body);
+            let where = {};
+            where['NvrId'] = req.body.NvrId;
+            where['ChannelId'] = req.body.ChannelId;
+            where['Type']= req.body.Type;
+            where['Time']= {"$gte":req.body.StartUTC, "$lte":req.body.EndUTC};            
+            console.log("QueryEvent where", where);
+            await restFulService.getData("Event",0,Number.MAX_SAFE_INTEGER, where).then(events => {
                 const totalSeconds = moment.duration(moment(Number(req.body.EndUTC)).diff(moment(Number(req.body.StartUTC)))).asSeconds();
                 if (events && events.length > 0) { // at least one event
                     // 取得所有Event與起始時間的間隔秒數
@@ -150,34 +158,6 @@ export const CmsRoute: IRouteMap = {
                 res.send(JSON.stringify({ Parts: durationArray.join('-') }));
             })
         })
-        // .post('/SysLog', (req, res) => {
-        //     // 起始日的Timestamp調整為0:00.0.0, 結束日的Timestamp調整為23:59.59.999
-        //     const startTime = req.body.StartDate
-        //         ? moment(Number(req.body.StartDate)).utc().toDate().setUTCHours(0, 0, 0, 0)
-        //         : moment(0);
-        //     const endTime = req.body.EndDate
-        //         ? moment(Number(req.body.EndDate)).utc().toDate().setUTCHours(23, 59, 59, 999)
-        //         : moment(9999999999999);
-
-        //     parseHelper.fetchPaging({
-        //         type: SysLog,
-        //         currentPage: req.body.Page || 1,
-        //         itemVisibleSize: req.body.Limit || 100,
-        //         filter: query => {
-        //             if (req.body.Keyword) {
-        //                 const querySys = [
-        //                     // queryHostEvent.matches('purpose', new RegExp(this.queryParams.purpose), 'i');
-        //                     new Parse.Query(SysLog).matches('ServerName', new RegExp(req.body.Keyword), 'i'),
-        //                     new Parse.Query(SysLog).matches('Type', new RegExp(req.body.Keyword), 'i'),
-        //                     new Parse.Query(SysLog).matches('Description', new RegExp(req.body.Keyword), 'i')
-        //                 ];
-        //                 Object.assign(query, Parse.Query.or(...querySys));
-        //             }
-        //             query.greaterThanOrEqualTo('Time', startTime)
-        //                 .lessThanOrEqualTo('Time', endTime);
-        //         }
-        //     }).then(sysLogs => res.json(sysLogs))
-        // })
         .post('/BrandCapability', (req, res) => {
             fs.readFile(path.join(__dirname, '../assets/brandXml/') + req.body.fileName, function (err, data) {
                 err ? res.json({ Devices: [] }) :
@@ -195,15 +175,18 @@ export const CmsRoute: IRouteMap = {
 
             try{                    
                 let where={};
-                where["Time"]={"$gte":req.body.StartTime};
-                where["Time"]={"$lte":req.body.EndTime};
-                where["Type"]={"$in":req.body.EventType};
+                where["Time"]={"$gte":req.body.StartTime, "$lte":req.body.EndTime};
+                let eventTypes = [];
+                for(let et of req.body.EventType){
+                    eventTypes.push(sanitizeEvent(et));
+                }
+                where["Type"]={"$in":eventTypes};
                 if (req.body.Channels && req.body.Channels.length > 0) {
                     let channel = req.body.Channels[0];
                     where["NvrId"] = channel.NvrId
                     where["ChannelId"] = channel.ChannelId; 
                 }
-                //console.log(where);
+                console.log("eventsearch where", where);
                 let totalRecord=0;let events=[];
                 const totalRecord$ = restFulService.getDataCountWithLimit("Event", where).then(res=>totalRecord=res);;
                 const count = req.body.Count || 100;
@@ -233,10 +216,13 @@ export const CmsRoute: IRouteMap = {
             try{
                 //console.log("req.body", req.body);
                 let where={};
-                    where["Time"]={"$gte":req.body.StartTime};
-                    where["Time"]={"$lte":req.body.EndTime};
-                    if(req.body.EventType && req.body.EventType.length>0){
-                        where["Type"]={"$in":req.body.EventType};
+                    where["Time"]={"$gte":req.body.StartTime, "$lte":req.body.EndTime};                    
+                    if(req.body.EventType && req.body.EventType.length>0){                        
+                        let eventTypes = [];
+                        for(let et of req.body.EventType){
+                            eventTypes.push(sanitizeEvent(et));
+                        }
+                        where["Type"]={"$in":eventTypes};
                     }
                     if (req.body.Channels && req.body.Channels.length > 0) {                    
                         let nvrs = req.body.Channels.map(x=>x.NvrId);
@@ -244,7 +230,7 @@ export const CmsRoute: IRouteMap = {
                         where["NvrId"]={"$in":nvrs};
                         where["ChannelId"] = {"$in":channels}
                     }
-                //console.log("where",where);
+                console.log("eventcalendar where",where);
                 await restFulService.getData("Event", 0, Number.MAX_SAFE_INTEGER, where).then(resultEvents => { 
                     const result: { Date: number, Events: { Type: string, Count: number }[] }[] = [];
                     for(let event of resultEvents){

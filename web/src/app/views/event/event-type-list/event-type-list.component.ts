@@ -8,6 +8,8 @@ import { EventConfigs, EventDisplaySetup } from 'app/config/event.config';
 import { Observable } from 'rxjs/Observable';
 import { StringHelper } from 'app/helper/string.helper';
 import { JsonHelper } from 'app/helper/json.helper';
+import { CameraService } from 'app/service/camera.service';
+import { NvrService } from 'app/service/nvr.service';
 
 @Component({
   selector: 'app-event-type-list',
@@ -16,6 +18,7 @@ import { JsonHelper } from 'app/helper/json.helper';
 })
 export class EventTypeListComponent implements OnInit, OnChanges {
   @Input() currentDevice: Device;
+  @Input() currentNVR:Nvr;
   @Input() currentEventHandler: EventHandler;
   @Output() reloadCallback: EventEmitter<any> = new EventEmitter();
   jsonHelper = JsonHelper.instance;
@@ -33,29 +36,15 @@ export class EventTypeListComponent implements OnInit, OnChanges {
   constructor(
     private coreService: CoreService,
     private parseService: ParseService,
-    private eventService: EventService
+    private eventService: EventService,
+    private cameraService:CameraService,
+    private nvrService:NvrService
   ) { }
 
   ngOnInit() {
     this.addActionOptions = this.eventService.getEventActionTypeOptions({ hideUploadFTP: false });
 
-    const fetchNvr$ = Observable.fromPromise(this.parseService.fetchData({
-      type: Nvr,
-      filter: query => query.limit(30000)
-    }));
-    const fetchDevice$ = Observable.fromPromise(this.parseService.fetchData({
-      type: Device,
-      filter: query => query.limit(30000)
-    }));
-
-    Observable.combineLatest(
-      fetchNvr$, fetchDevice$,
-      (response1, response2) => {
-        this.getNvrAndDeviceOptions(response1, response2);
-      }
-    )
-      .map(() => this.initBeepOptions())
-      .subscribe();
+    
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -87,28 +76,6 @@ export class EventTypeListComponent implements OnInit, OnChanges {
     return result;
   }
 
-  /** 取得固定的二階Nvr/Device選單 */
-  getNvrAndDeviceOptions(nvrs: Nvr[], devices: Device[]) {
-    if (!nvrs || !devices) {
-      return;
-    }
-    this.nvrOptions = nvrs.map(nvr => {
-      return {
-        key: nvr.Name,
-        value: nvr.Id,
-        data: nvr,
-        devices: devices.filter(dev => dev.NvrId === nvr.Id)
-          .map(dev => {
-            return {
-              key: `${dev.Channel} ${dev.Name}`,
-              value: dev.Channel,
-              data: dev
-            };
-          })
-      };
-    });
-  }
-
   /** 建立共用的BeepOptions */
   initBeepOptions() {
     this.beepTimes = [];
@@ -119,47 +86,22 @@ export class EventTypeListComponent implements OnInit, OnChanges {
     }
   }
 
-  /** 由template觸發，取得特定Nvr的Device */
-  getDeviceOptions(action: any) {
-    if (!action || !action.NvrId) {
-      return [];
-    }
-    const devices = this.nvrOptions.find(nvr => nvr.data.Id === action.NvrId).devices;
-    if (!action.DeviceId && devices.length > 0) {
-      action.DeviceId = Number(devices[0].value);
-    }
-    return devices;
+  streamMode:boolean=false;
+  currentAction:any;
+  selectedCallBack($event:any){    
+    console.debug("$event", $event);
+    this.currentAction.NvrId = $event.NvrId;
+    this.currentAction.DeviceId = $event.DeviceId;
+    this.currentAction.DigitalOutputId = $event.DigitalOutputId; 
   }
-
-  /** TriggerDO的(Stream)Id選項 */
-  getDigitalOutputIdOptions(nvrId: string, deviceChannel: number) {
-    if (!nvrId || !deviceChannel) {
-      return [];
-    }
-
-    const device = this.nvrOptions.find(nvr => nvr.data.Id === nvrId)
-      .devices.find(dev => dev.data.Channel === Number(deviceChannel)).data;
-    const stream = this.jsonHelper.findAttributeByString(device, 'Config.Stream');
-
-    if (!stream) {
-      return [];
-    }
-    return stream.map(str => str.Id.toString());
+  cleanAction(){    
+    this.currentAction = undefined;    
   }
-
-  /** 取得UploadFTP專用更新預設FileName的方法 */
-  getUploadFTPFileName(action: any) {
-    if (!action.DeviceId) {
-      action.FileName = '';
-    }
-    const device = this.nvrOptions.find(nvr => nvr.data.Id === action.NvrId)
-      .devices.find(dev => dev.data.Channel === Number(action.DeviceId)).data;
-    // const device = this.deviceConfigs.find(x => x.NvrId === action.NvrId && x.Channel === action.DeviceId);
-    if (device) {
-      action.FileName = StringHelper.addZero(device.Channel, 2) + device.Name.replace(/ |-/gi, '');
-    }
+  showDevice(action:any, streamMode:boolean=false){    
+    this.streamMode=streamMode;
+    this.currentAction = action;    
   }
-
+  
   /** 依照device資料取得可設定的EventType List, 並於EventHandler物件中的EventHandler內放入多個EventType */
   getAvailableEventTypeList() {
     if (!this.currentDevice) {
@@ -192,10 +134,17 @@ export class EventTypeListComponent implements OnInit, OnChanges {
       }
     });
 
+    //9200
+    if(this.currentDevice.Config.Brand && this.currentDevice.Config.Brand.toUpperCase() === "AXIS" && this.currentDevice.Config.Model === "P8221"){            
+      for (let i = 1; i <= 8; i++) {   
+        this.insertFakeEventHandler(EventConfigs.EventType.DigitalInput, i.toString(), true, true);
+        this.insertFakeEventHandler(EventConfigs.EventType.DigitalInput, i.toString(), false, true);
+      }
+    }
     // ISSUE: How to know SupportDO?
 
     // Issue: IOPort特殊狀況如何處理
-    if (this.currentDevice.Config.Brand === 'Axis') {
+    if (this.currentDevice.Config.Brand && this.currentDevice.Config.Brand.toUpperCase() === 'AXIS') {
       for (let i = 1; i <= 6; i++) {
         this.insertFakeEventHandler(EventConfigs.EventType.TemperatureDetection, i.toString(), true);
       }
@@ -239,10 +188,10 @@ export class EventTypeListComponent implements OnInit, OnChanges {
     // ISSUE: EnableUserDefine如何判定?
   }
 
-  insertFakeEventHandler(eventType: string, id: string = '1', value: boolean = true) {
+  insertFakeEventHandler(eventType: string, id: string = '1', value: boolean = true, forcePush:boolean = false) {
     const availableObj = this.eventService.getCameraEvent({ Type: eventType, Id: id, Value: value });
-    if (availableObj) {
-      const val = availableObj.Value ? '1' : '0';
+    
+      const val = (availableObj ? availableObj.Value : value) ? '1' : '0';
       const insertObj = {
         EventType: eventType,
         Id: id,
@@ -251,8 +200,8 @@ export class EventTypeListComponent implements OnInit, OnChanges {
         Interval: '1',
         Action: []
       };
-      this.availableEventTypeList.push(insertObj);
-    }
+
+      if(availableObj || forcePush) this.availableEventTypeList.push(insertObj);    
   }
 
   // 將EventHandler Config加入所有可用的EventType
@@ -324,7 +273,7 @@ export class EventTypeListComponent implements OnInit, OnChanges {
           Subject: `${this.currentDevice.Channel} ${this.currentDevice.Name} - `
             + `${this.currentClickedHandler.EventType} ${this.currentClickedHandler.Id}`,
           Body: `${this.currentDevice.Channel} ${this.currentDevice.Name} - `
-            + `${this.currentClickedHandler.EventType} ${this.currentClickedHandler.Id} (Server ${this.getCurrentNvr().Domain})`,
+            + `${this.currentClickedHandler.EventType} ${this.currentClickedHandler.Id} (Server ${this.currentNVR.Domain})`,
           Attach: 'true', // boolean: true/false
           NvrId: '',
           DeviceId: '',
@@ -419,14 +368,6 @@ export class EventTypeListComponent implements OnInit, OnChanges {
       .catch(alert);
   }
 
-  /** 找出currentDevice所屬的Nvr */
-  getCurrentNvr(): Nvr {
-    if (!this.currentDevice) {
-      return undefined;
-    }
-
-    return this.nvrOptions.find(nvr => nvr.data.Id === this.currentDevice.NvrId).data;
-  }
 }
 
 interface INvrOption {

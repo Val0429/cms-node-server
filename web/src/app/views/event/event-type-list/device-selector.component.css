@@ -17,11 +17,7 @@
     border-bottom: 0px;
     cursor: pointer;
     padding: 15px 20px;
-    background: #FFF
 }
 .card-header:hover{
     background: #eee;
-}
-.card-header.active {
-    background: rgba(242,189,55,0.2);
 }
