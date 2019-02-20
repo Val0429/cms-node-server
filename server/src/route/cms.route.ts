@@ -16,7 +16,17 @@ const logHelper = LogHelper.instance;
 const syncHelper = SyncHelper.instance;
 const deviceService = DeviceService.instance;
 const restFulService = RestFulService.instance;
+const eventMapping = [
+    {key:"LocalDiskError", value:"hddWriteError"},
+    {key:"BackendRecordStart", value:"RecordStart"},
+    {key:"BackendRecordStop", value:"RecordStop"}
+    
+];
 
+function sanitizeEvent(input:string):string{    
+    let found = eventMapping.find(x=>x.key == input);
+    return found ? found.value : input;
+}
 export const CmsRoute: IRouteMap = {
     path: 'cms',
     router: Router().use(bodyParser.json())
@@ -165,8 +175,12 @@ export const CmsRoute: IRouteMap = {
 
             try{                    
                 let where={};
-                where["Time"]={"$gte":req.body.StartTime, "$lte":req.body.EndTime};                
-                where["Type"]={"$in":req.body.EventType};
+                where["Time"]={"$gte":req.body.StartTime, "$lte":req.body.EndTime};
+                let eventTypes = [];
+                for(let et of req.body.EventType){
+                    eventTypes.push(sanitizeEvent(et));
+                }
+                where["Type"]={"$in":eventTypes};
                 if (req.body.Channels && req.body.Channels.length > 0) {
                     let channel = req.body.Channels[0];
                     where["NvrId"] = channel.NvrId
@@ -203,8 +217,12 @@ export const CmsRoute: IRouteMap = {
                 //console.log("req.body", req.body);
                 let where={};
                     where["Time"]={"$gte":req.body.StartTime, "$lte":req.body.EndTime};                    
-                    if(req.body.EventType && req.body.EventType.length>0){
-                        where["Type"]={"$in":req.body.EventType};
+                    if(req.body.EventType && req.body.EventType.length>0){                        
+                        let eventTypes = [];
+                        for(let et of req.body.EventType){
+                            eventTypes.push(sanitizeEvent(et));
+                        }
+                        where["Type"]={"$in":eventTypes};
                     }
                     if (req.body.Channels && req.body.Channels.length > 0) {                    
                         let nvrs = req.body.Channels.map(x=>x.NvrId);
