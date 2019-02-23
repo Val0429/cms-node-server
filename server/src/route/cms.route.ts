@@ -19,8 +19,12 @@ const restFulService = RestFulService.instance;
 const eventMapping = [
     {key:"LocalDiskError", value:"hddWriteError"},
     {key:"BackendRecordStart", value:"RecordStart"},
-    {key:"BackendRecordStop", value:"RecordStop"}
-    
+    {key:"BackendRecordStop", value:"RecordStop"},
+	{key:"VideoLoss", value:"VideoServerVideoLost"},
+	{key:"VideoRecovery", value:"VideoServerVideoRecovery"},
+	{key:"RecordResume", value:"RecordStart"},
+	{key:"NVRConnect", value:"BackendRecordStart"},
+	{key:"NVRDisconnect", value:"BackendRecordStop"}
 ];
 
 function sanitizeEvent(input:string):string{    
