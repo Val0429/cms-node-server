@@ -216,7 +216,17 @@ export class RestFulService {
         for(let include of includeArray){
             let fieldNames=include.split('.');
             let depth=fieldNames.length;
-            includeData.push({depth, fieldNames});
+
+            let tempFieldNames=[];
+            for(let f of fieldNames){
+                //console.log("f",f);
+                tempFieldNames.push(f);
+                let found = includeData.find(x=>x.depth == tempFieldNames.length && x.fieldNames.join(".") == tempFieldNames.join("."));
+                if(!found) {
+                    let pushData = Object.assign([], tempFieldNames);
+                    includeData.push({fieldNames:pushData, depth:pushData.length});
+                }
+            }
             //update max depth
             if(depth>maxDepth)maxDepth=depth;
         }
@@ -237,7 +247,7 @@ export class RestFulService {
     }
     async fetchInclude(includeRequest:string, data:any[]){
         let includes = this.constructInclude(includeRequest);
-        //console.log(includes);
+        //console.log(includes.includeData);
         for(let depth=1;depth<=includes.maxDepth;depth++){              
             // forks promises based on depth level
             let promises=[];
