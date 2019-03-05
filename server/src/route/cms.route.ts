@@ -18,8 +18,6 @@ const deviceService = DeviceService.instance;
 const restFulService = RestFulService.instance;
 const eventMapping = [
     {key:"LocalDiskError", value:"hddWriteError"},
-    {key:"BackendRecordStart", value:"RecordStart"},
-    {key:"BackendRecordStop", value:"RecordStop"},
 	{key:"VideoLoss", value:"VideoServerVideoLost"},
 	{key:"VideoRecovery", value:"VideoServerVideoRecovery"},
 	{key:"RecordResume", value:"RecordStart"},
