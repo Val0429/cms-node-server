@@ -29,6 +29,10 @@ function sanitizeEvent(input:string):string{
     let found = eventMapping.find(x=>x.key == input);
     return found ? found.value : input;
 }
+function revertEvent(input:string):string{    
+    let found = eventMapping.find(x=>x.value == input);
+    return found ? found.key : input;
+}
 export const CmsRoute: IRouteMap = {
     path: 'cms',
     router: Router().use(bodyParser.json())
@@ -196,7 +200,10 @@ export const CmsRoute: IRouteMap = {
                 const page = req.body.Page || 1;
                 const skip = (page - 1) * count;
 
-                let events$ = restFulService.getData("Event", skip, count, where).then(res=>events=res);
+                let events$ = restFulService.getData("Event", skip, count, where).then(res=>{                    
+                    events=res;
+                    for(let event of events)event.Type = revertEvent(event.Type);
+                });
                 await Promise.all([totalRecord$, events$]);
                 //console.log(events);
                 res.json({
@@ -234,6 +241,7 @@ export const CmsRoute: IRouteMap = {
                 await restFulService.getData("Event", 0, Number.MAX_SAFE_INTEGER, where).then(resultEvents => { 
                     const result: { Date: number, Events: { Type: string, Count: number }[] }[] = [];
                     for(let event of resultEvents){
+                        event.Type = revertEvent(event.Type);                        
                         const eventTime = new Date(event.Time).getDate(); // 取得Day-of-the-month作為key
                         // 檢查時間，若尚未出現就新增物件
                         if (!result.some(x => x.Date === eventTime)) {
