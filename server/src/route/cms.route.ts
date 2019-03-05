@@ -179,17 +179,22 @@ export const CmsRoute: IRouteMap = {
 
             try{                    
                 let where={};
+                //console.log("search body", req.body);
                 where["Time"]={"$gte":req.body.StartTime, "$lte":req.body.EndTime};
                 let eventTypes = [];
                 for(let et of req.body.EventType){
                     eventTypes.push(sanitizeEvent(et));
                 }
                 where["Type"]={"$in":eventTypes};
+                
                 if (req.body.Channels && req.body.Channels.length > 0) {
-                    let channel = req.body.Channels[0];
-                    where["NvrId"] = channel.NvrId
-                    where["ChannelId"] = channel.ChannelId; 
+                    let or=[];
+                    for(let channel of req.body.Channels){
+                        or.push({"$and":[{"NvrId":channel.NvrId}, {"ChannelId":channel.ChannelId}]});
+                    }
+                    where["$or"]=or;
                 }
+                
                 console.log("eventsearch where", where);
                 let totalRecord=0;let events=[];
                 const totalRecord$ = restFulService.getDataCountWithLimit("Event", where).then(res=>totalRecord=res);;
@@ -229,10 +234,11 @@ export const CmsRoute: IRouteMap = {
                         where["Type"]={"$in":eventTypes};
                     }
                     if (req.body.Channels && req.body.Channels.length > 0) {                    
-                        let nvrs = req.body.Channels.map(x=>x.NvrId);
-                        let channels = req.body.Channels.map(x=>x.ChannelId);
-                        where["NvrId"]={"$in":nvrs};
-                        where["ChannelId"] = {"$in":channels}
+                        let or=[];
+                        for(let channel of req.body.Channels){
+                            or.push({"$and":[{"NvrId":channel.NvrId}, {"ChannelId":channel.ChannelId}]});
+                        }
+                        where["$or"]=or;
                     }
                 console.log("eventcalendar where",where);
                 await restFulService.getData("Event", 0, Number.MAX_SAFE_INTEGER, where).then(resultEvents => { 
