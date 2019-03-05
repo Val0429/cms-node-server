@@ -177,7 +177,7 @@ export const CmsRoute: IRouteMap = {
 
             try{                    
                 let where={};
-                //console.log("search body", req.body);
+                console.log("search body", req.body);
                 where["Time"]={"$gte":req.body.StartTime, "$lte":req.body.EndTime};
                 let eventTypes = [];
                 for(let et of req.body.EventType){
@@ -186,11 +186,7 @@ export const CmsRoute: IRouteMap = {
                 where["Type"]={"$in":eventTypes};
                 
                 if (req.body.Channels && req.body.Channels.length > 0) {
-                    let or=[];
-                    for(let channel of req.body.Channels){
-                        or.push({"$and":[{"NvrId":channel.NvrId}, {"ChannelId":channel.ChannelId}]});
-                    }
-                    where["$or"]=or;
+                    constructDeviceFilter(req, where);
                 }
                 
                 console.log("eventsearch where", where);
@@ -232,11 +228,7 @@ export const CmsRoute: IRouteMap = {
                         where["Type"]={"$in":eventTypes};
                     }
                     if (req.body.Channels && req.body.Channels.length > 0) {                    
-                        let or=[];
-                        for(let channel of req.body.Channels){
-                            or.push({"$and":[{"NvrId":channel.NvrId}, {"ChannelId":channel.ChannelId}]});
-                        }
-                        where["$or"]=or;
+                        constructDeviceFilter(req, where);
                     }
                 console.log("eventcalendar where",where);
                 await restFulService.getData("Event", 0, Number.MAX_SAFE_INTEGER, where).then(resultEvents => { 
@@ -333,3 +325,25 @@ export const CmsRoute: IRouteMap = {
         }),
     children: []
 }
+function constructDeviceFilter(req:any, where: {}) {
+    let or = [];
+    let nvrIds = [];
+    for(let channel of req.body.Channels){
+        let found = nvrIds.find(x=>x==channel.NvrId);
+        if(found)continue;
+
+        nvrIds.push(channel.NvrId);
+        let and = [];
+        let channels = req.body.Channels.filter(x=>x.NvrId == channel.NvrId).map(x=>x.ChannelId);
+        channels.push(0);
+        and.push({ "NvrId": channel.NvrId });
+        console.log("channels", channels);
+        and.push({ "ChannelId": { "$in": channels } });
+        console.log("and", and);
+        or.push({ "$and": and });
+        
+    }   
+    
+    where["$or"] = or;
+}
+
