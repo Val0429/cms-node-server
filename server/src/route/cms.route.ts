@@ -18,18 +18,17 @@ const deviceService = DeviceService.instance;
 const restFulService = RestFulService.instance;
 const eventMapping = [
     {key:"LocalDiskError", value:"hddWriteError"},
-    {key:"BackendRecordStart", value:"RecordStart"},
-    {key:"BackendRecordStop", value:"RecordStop"},
 	{key:"VideoLoss", value:"VideoServerVideoLost"},
 	{key:"VideoRecovery", value:"VideoServerVideoRecovery"},
-	{key:"RecordResume", value:"RecordStart"},
-	{key:"NVRConnect", value:"BackendRecordStart"},
-	{key:"NVRDisconnect", value:"BackendRecordStop"}
+	{key:"RecordResume", value:"RecordStart"}
 ];
-
 function sanitizeEvent(input:string):string{    
     let found = eventMapping.find(x=>x.key == input);
     return found ? found.value : input;
+}
+function revertEvent(input:string):string{ 
+    let found = eventMapping.find(x=>x.value == input);
+    return found ? found.key : input;
 }
 export const CmsRoute: IRouteMap = {
     path: 'cms',
@@ -179,17 +178,18 @@ export const CmsRoute: IRouteMap = {
 
             try{                    
                 let where={};
+                console.log("search body", req.body);
                 where["Time"]={"$gte":req.body.StartTime, "$lte":req.body.EndTime};
                 let eventTypes = [];
                 for(let et of req.body.EventType){
                     eventTypes.push(sanitizeEvent(et));
                 }
                 where["Type"]={"$in":eventTypes};
+                
                 if (req.body.Channels && req.body.Channels.length > 0) {
-                    let channel = req.body.Channels[0];
-                    where["NvrId"] = channel.NvrId
-                    where["ChannelId"] = channel.ChannelId; 
+                    constructDeviceFilter(req, where);
                 }
+                
                 console.log("eventsearch where", where);
                 let totalRecord=0;let events=[];
                 const totalRecord$ = restFulService.getDataCountWithLimit("Event", where).then(res=>totalRecord=res);;
@@ -197,7 +197,10 @@ export const CmsRoute: IRouteMap = {
                 const page = req.body.Page || 1;
                 const skip = (page - 1) * count;
 
-                let events$ = restFulService.getData("Event", skip, count, where).then(res=>events=res);
+                let events$ = restFulService.getData("Event", skip, count, where).then(res=>{                    
+                    events=res;
+                    for(let event of events)event.Type = revertEvent(event.Type);
+                });
                 await Promise.all([totalRecord$, events$]);
                 //console.log(events);
                 res.json({
@@ -229,15 +232,13 @@ export const CmsRoute: IRouteMap = {
                         where["Type"]={"$in":eventTypes};
                     }
                     if (req.body.Channels && req.body.Channels.length > 0) {                    
-                        let nvrs = req.body.Channels.map(x=>x.NvrId);
-                        let channels = req.body.Channels.map(x=>x.ChannelId);
-                        where["NvrId"]={"$in":nvrs};
-                        where["ChannelId"] = {"$in":channels}
+                        constructDeviceFilter(req, where);
                     }
                 console.log("eventcalendar where",where);
                 await restFulService.getData("Event", 0, Number.MAX_SAFE_INTEGER, where).then(resultEvents => { 
                     const result: { Date: number, Events: { Type: string, Count: number }[] }[] = [];
                     for(let event of resultEvents){
+                        event.Type = revertEvent(event.Type);                        
                         const eventTime = new Date(event.Time).getDate(); // 取得Day-of-the-month作為key
                         // 檢查時間，若尚未出現就新增物件
                         if (!result.some(x => x.Date === eventTime)) {
@@ -329,3 +330,25 @@ export const CmsRoute: IRouteMap = {
         }),
     children: []
 }
+function constructDeviceFilter(req:any, where: {}) {
+    let or = [];
+    let nvrIds = [];
+    for(let channel of req.body.Channels){
+        let found = nvrIds.find(x=>x==channel.NvrId);
+        if(found)continue;
+
+        nvrIds.push(channel.NvrId);
+        let and = [];
+        let channels = req.body.Channels.filter(x=>x.NvrId == channel.NvrId).map(x=>x.ChannelId);
+        channels.push(0);
+        and.push({ "NvrId": channel.NvrId });
+        console.log("channels", channels);
+        and.push({ "ChannelId": { "$in": channels } });
+        console.log("and", and);
+        or.push({ "$and": and });
+        
+    }   
+    
+    where["$or"] = or;
+}
+
