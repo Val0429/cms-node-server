@@ -20,17 +20,13 @@ const eventMapping = [
     {key:"LocalDiskError", value:"hddWriteError"},
 	{key:"VideoLoss", value:"VideoServerVideoLost"},
 	{key:"VideoRecovery", value:"VideoServerVideoRecovery"},
-	{key:"RecordResume", value:"RecordStart"},
-	{key:"NVRConnect", value:"BackendRecordStart"},
-	{key:"NVRDisconnect", value:"BackendRecordStop"}
+	{key:"RecordResume", value:"RecordStart"}
 ];
-const noChange =["BackendRecordStart", "BackendRecordStop"];
 function sanitizeEvent(input:string):string{    
     let found = eventMapping.find(x=>x.key == input);
     return found ? found.value : input;
 }
 function revertEvent(input:string):string{ 
-    if(noChange.find(x=>x==input)) return input;
     let found = eventMapping.find(x=>x.value == input);
     return found ? found.key : input;
 }
