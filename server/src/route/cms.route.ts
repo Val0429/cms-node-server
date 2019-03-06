@@ -24,12 +24,13 @@ const eventMapping = [
 	{key:"NVRConnect", value:"BackendRecordStart"},
 	{key:"NVRDisconnect", value:"BackendRecordStop"}
 ];
-
+const noChange =["BackendRecordStart", "BackendRecordStop"];
 function sanitizeEvent(input:string):string{    
     let found = eventMapping.find(x=>x.key == input);
     return found ? found.value : input;
 }
-function revertEvent(input:string):string{    
+function revertEvent(input:string):string{ 
+    if(noChange.find(x=>x==input)) return input;
     let found = eventMapping.find(x=>x.value == input);
     return found ? found.key : input;
 }
