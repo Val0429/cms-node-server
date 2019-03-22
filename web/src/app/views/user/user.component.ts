@@ -30,7 +30,8 @@ export class UserComponent implements OnInit {
 
   displayUserGroup: boolean;
   currentDisplayUserGroup: UserGroup;
-
+p:number=1;
+pageSize:number=20;
   pageViewerOptions: IPageViewerOptions;
 
   queryParams: {
@@ -88,7 +89,7 @@ export class UserComponent implements OnInit {
   fetchNvrs() {
     const queryNvrs = Observable.fromPromise(this.parseService.fetchData({
       type: Nvr,
-      filter: query => query.limit(30000)
+      filter: query => query.limit(30000).ascending("SequenceNumber")
     })).map(nvrs => this.nvrList = nvrs);
     return queryNvrs;
   }

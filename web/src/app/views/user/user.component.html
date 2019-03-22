@@ -113,7 +113,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let nvr of nvrList">
+            <tr *ngFor="let nvr of nvrList | paginate: {itemsPerPage: pageSize, currentPage: p }">
               <td>
                 <input type="checkbox" [checked]="checkNVRPermission(nvr)" (change)="setNVRPermission(nvr)" [disabled]="getNvrPermissionDisabled">
               </td>
@@ -124,6 +124,8 @@
             </tr>
           </tbody>
         </table>
+        <pagination-controls           
+          (pageChange)="p = $event" *ngIf="nvrList && nvrList.length>pageSize"></pagination-controls>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" (click)="currentEditUser ? updateUser() : createUser()">
