@@ -44,7 +44,7 @@ export class EventTypeListComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.addActionOptions = this.eventService.getEventActionTypeOptions({ hideUploadFTP: false });
 
-    
+    this.initBeepOptions();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

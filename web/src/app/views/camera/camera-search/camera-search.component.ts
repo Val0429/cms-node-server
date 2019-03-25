@@ -111,7 +111,7 @@ export class CameraSearchComponent implements OnInit {
         const search$ = (modelList:any[], capability:any) => this.coreService.proxyMediaServer({
           method: 'GET',
           path: this.coreService.urls.URL_MEDIA_SEARCH_CAMERA + '?vendor=' + lowerVendor
-        }, 30000)
+        }, 120000)
           .map(result => {
             let resultArray = ArrayHelper.toArray((result && result.Camera.DATA) ? result.Camera.DATA : []);
             let searchDisplay:SearchCameraResult[]=[];

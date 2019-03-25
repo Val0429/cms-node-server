@@ -6,9 +6,11 @@
       </div>
     </div>
     <div class="col-md-8">
-      <div class="page-permission" *ngFor="let p of page.Permission">
-        {{p}}
+      <ng-container *ngFor="let p of page.Permission">
+      <div class="page-permission" *ngIf="p!='I/OEvent'"> 
+        {{p == 'Event' ? 'Event Handler' : p=='Event/LogOption'?'Event Recovery':p }}      
       </div>
+    </ng-container>
     </div>
   </div>
 </ng-container>

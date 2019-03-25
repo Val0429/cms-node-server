@@ -1,8 +1,11 @@
 <div class="form-group row">
   <div class="col-md-9">        
-      <div *ngFor="let item of deviceVendors;" class="device-vendor">
-          <input [disabled]="flag.busy" type="checkbox" (change)="setVendors($event.target.checked, item.Key)" id="{{item.Key}}"/><label for="{{item.Key}}">{{item.Name}}</label>
+      <ng-container *ngFor="let item of deviceVendors;">
+      <div class="device-vendor" *ngIf="item.Key!='Customization'">        
+          <input [disabled]="flag.busy" type="checkbox" (change)="setVendors($event.target.checked, item.Key)" id="{{item.Key}}"/>
+          <label for="{{item.Key}}">{{item.Name}}</label>
       </div>
+    </ng-container>
   </div>
   <div class="col-md-3">
     <button type="button" class="btn btn-default" (click)="clickSearch()" [disabled]="flag.busy">
