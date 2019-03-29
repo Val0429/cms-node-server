@@ -25,10 +25,6 @@ const routes: Routes = [
         loadChildren: 'app/views/server/server.module#ServerModule'
       },
       {
-        path: 'storage',
-        loadChildren: 'app/views/storage/storage.module#StorageModule'
-      },
-      {
         path: 'nvr',
         loadChildren: 'app/views/nvr/nvr.module#NvrModule'
       },
