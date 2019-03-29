@@ -38,6 +38,7 @@ export class NvrEventTypeListComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.addActionOptions = this.eventService.getEventActionTypeOptions({ hideUploadFTP: true });    
+    this.initBeepOptions();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
