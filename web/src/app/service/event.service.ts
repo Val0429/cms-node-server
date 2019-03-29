@@ -202,6 +202,10 @@ export class EventService {
     this.availableEventType.push(new CameraEvent({ Type: EventConfigs.EventType.StorageSettingNotAvailable }));
     this.availableEventType.push(new CameraEvent({ Type: EventConfigs.EventType.NVRConnect }));
     this.availableEventType.push(new CameraEvent({ Type: EventConfigs.EventType.NVRDisconnect }));
+    this.availableEventType.push(new CameraEvent({ Type: EventConfigs.EventType.UnauthorizedAccess }));
+    this.availableEventType.push(new CameraEvent({ Type: EventConfigs.EventType.Reboot }));
+    this.availableEventType.push(new CameraEvent({ Type: EventConfigs.EventType.GracefulShutdown }));
+    this.availableEventType.push(new CameraEvent({ Type: EventConfigs.EventType.AbnormalShutdown }));
   }
 
   getCameraEvent(obj: ICameraEvent) {
