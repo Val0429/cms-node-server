@@ -6,11 +6,11 @@ import { StorageComponent } from './storage.component';
 import { StorageSettingComponent } from './storage-setting/storage-setting.component';
 import { StorageEditorComponent } from './storage-editor/storage-editor.component';
 
-@NgModule({
-  imports: [
-    SharedModule,
-    StorageRoutingModule
-  ],
-  declarations: [StorageComponent, StorageSettingComponent, StorageEditorComponent]
-})
+// @NgModule({
+//   imports: [
+//     SharedModule,
+//     StorageRoutingModule
+//   ],
+//   declarations: [StorageComponent, StorageSettingComponent, StorageEditorComponent]
+// })
 export class StorageModule { }
