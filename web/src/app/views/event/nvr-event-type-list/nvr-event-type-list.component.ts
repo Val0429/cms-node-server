@@ -110,9 +110,9 @@ export class NvrEventTypeListComponent implements OnInit, OnChanges {
     this.insertFakeEventHandler(EventConfigs.EventType.StorageSettingNotAvailable);
     this.insertFakeEventHandler(EventConfigs.EventType.NVRConnect);
     this.insertFakeEventHandler(EventConfigs.EventType.NVRDisconnect);
-    this.insertFakeEventHandler(EventConfigs.EventType.UnauthorizedAccess);
+    this.insertFakeEventHandler(EventConfigs.EventType.IllegalLogin);
     this.insertFakeEventHandler(EventConfigs.EventType.Reboot);
-    this.insertFakeEventHandler(EventConfigs.EventType.GracefulShutdown);
+    this.insertFakeEventHandler(EventConfigs.EventType.Shutdown);
     this.insertFakeEventHandler(EventConfigs.EventType.AbnormalShutdown);
   }
 
