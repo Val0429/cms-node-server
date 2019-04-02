@@ -114,6 +114,10 @@ export const EventConfigs = {
         // Camera Event補完
         AbandonedObject: 'AbandonedObject',
         MissingObject: 'MissingObject',
+        IllegalLogin:'IllegalLogin',
+        Reboot:'Reboot',
+        Shutdown:'Shutdown',
+        AbnormalShutdown:'AbnormalShutdown'
     },
     EventActionType: {
         DigitalOut: 'DigitalOut',
