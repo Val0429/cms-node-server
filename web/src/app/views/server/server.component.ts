@@ -16,7 +16,6 @@ export class ServerComponent implements OnInit {
   serverConfig: Server;
   serverInfo:ServerInfo;
   mediaDiskspace: IMediaDiskspace[];
-  dbSync: DBSync;
   portOptions = [
     '80', '82', '7777', '8080', '8088'
   ];
@@ -33,8 +32,7 @@ export class ServerComponent implements OnInit {
     Observable.combineLatest(
       this.reloadServerConfig(),
       this.reloadServerInfo(),
-      this.reloadMediaDiskspace(),
-      this.reloadDBSync()
+      this.reloadMediaDiskspace()
     ).subscribe();
   }
   reloadServerInfo() {
@@ -59,11 +57,6 @@ export class ServerComponent implements OnInit {
     }).map(result => this.mediaDiskspace = ArrayHelper.toArray(result.DiskInfo.Disk));
   }
 
-  reloadDBSync() {
-    return Observable.fromPromise(this.parseService.getData({
-      type: DBSync
-    })).map(dbSync => this.dbSync = dbSync);
-  }
 
   /** 修改Storage屬性的事件，由storage component call back */
   setStorage(storage: IServerStorage) {
@@ -81,19 +74,6 @@ export class ServerComponent implements OnInit {
         parseResult: [result], path: this.coreService.urls.URL_CLASS_SERVER
       }));
 
-    const saveDBSync$ = Observable.fromPromise(this.dbSync.save())
-      .map(data => {
-        // 此主機Enable AutoSync時，將當前設定的備援Server全都改為Disable AutoSync
-        if (data.autoSync === true) {
-          data.destination.forEach(server => {
-            this.coreService.getConfig({
-              path: this.coreService.urls.URL_SET_DBSYNC_DISABLE,
-              domainUrl: `http://${server.ip}:${server.port}/parse`
-            })
-            .subscribe();
-          });
-        }
-      }); // DBSync不需要通知CMSM
 
 
     const saveServerInfo$ = Observable.fromPromise(this.serverInfo.save())
@@ -102,29 +82,14 @@ export class ServerComponent implements OnInit {
       }));
 
     saveServerInfo$
-      .switchMap(() => saveDBSync$)
       .toPromise()
       .catch(alert)
 
     saveServer$
-      .switchMap(() => saveDBSync$)
       .map(() => alert('Update Success'))
       .toPromise()
       .catch(alert)
       .then(() => this.flag.save = false);
   }
 
-  /** 建立新的備份目的地 */
-  createDBSyncDestination() {
-    if (!this.dbSync.destination) {
-      this.dbSync.destination = [];
-    }
-    this.dbSync.destination.push({ ip: '', port: 3000 });
-  }
-
-  /** 刪除一個備份目的地 */
-  removeDBSyncDestination(item: IDBSyncDestination) {
-    const index = this.dbSync.destination.indexOf(item);
-    this.dbSync.destination.splice(index, 1);
-  }
 }
