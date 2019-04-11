@@ -1,11 +1,10 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
-import { IServerInfoStorage, IMediaDiskspace } from 'lib/domain/core';
-import { ModalEditorModeEnum } from 'app/shared/enum/modalEditorModeEnum';
+import { IMediaDiskspace, IRecordPath } from 'lib/domain/core';
 import ArrayHelper from 'app/helper/array.helper';
 import MediaDiskHelper from 'app/helper/media-disk.helper';
-import { ServerInfo } from '../../../model/core';
+import { ServerInfo, RecordPath } from '../../../model/core';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -169,10 +168,7 @@ export class StorageSettingComponent implements OnInit {
     obj.Port = this.port;
     obj.MaxCapacity = 100;
     // obj.Name = 'Record Server';
-    obj.KeepDays = {
-      Enable: true,
-      Default: 10
-    };
+    
     obj.Storage = [];
     return obj;
   }
@@ -222,11 +218,12 @@ export class StorageSettingComponent implements OnInit {
       const index = this.currentRecordServer.Storage.indexOf(item);
       this.currentRecordServer.Storage.splice(index, 1);
     } else { // 原不存在就新增
-      const newObj: IServerInfoStorage = {
-        Name: letter + ' Drive',
-        KeepSpace: 50,
-        Path: `${letter}:` + `\\BackendRecord\\`
-      };
+      const newObj : RecordPath = new RecordPath();
+      newObj.Account="User";
+      newObj.Password="123456";
+      newObj.Path= `\\BackendRecord\\`;
+      newObj.Name= `NAS1`;
+      
       const index = this.findDiskInsertIndex(disk);
       this.currentRecordServer.Storage.splice(index, 0, newObj);
     }

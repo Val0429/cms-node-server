@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { Observable } from 'rxjs/Observable';
-import { IServerStorage, IMediaDiskspace, IDBSyncDestination } from 'lib/domain/core';
-import { Server, DBSync, ServerInfo } from 'app/model/core';
+import { IServerStorage, IMediaDiskspace, IDBSyncDestination, IRecordPath } from 'lib/domain/core';
+import { Server, DBSync, ServerInfo, RecordPath } from 'app/model/core';
 import ArrayHelper from 'app/helper/array.helper';
 import { Query } from 'parse';
 
@@ -59,7 +59,7 @@ export class ServerComponent implements OnInit {
 
 
   /** 修改Storage屬性的事件，由storage component call back */
-  setStorage(storage: IServerStorage) {
+  setStorage(storage: RecordPath) {
     this.serverConfig.Storage = [storage];
     this.serverInfo.TempPath = storage.Path;
   }

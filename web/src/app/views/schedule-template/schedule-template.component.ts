@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
-import { RecordScheduleTemplate, EventScheduleTemplate, ServerInfo } from 'app/model/core';
+import { RecordScheduleTemplate, EventScheduleTemplate, ServerInfo, RecordPath } from 'app/model/core';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -23,7 +23,7 @@ export class ScheduleTemplateComponent implements OnInit {
   /** 當前編輯template的類型代號, 子組件的參數, 1=RecordScheduleTemplate, 2=EventScheduleTemplate */
   templateSetupMode: number;
   /** 建立RecordScheduleTemplate時預設套用的Recorder資料 */
-  defaultRecordServerInfo: ServerInfo;
+  defaultRecordServerInfo: RecordPath;
   flag = {
     load: false
   };
@@ -86,7 +86,7 @@ export class ScheduleTemplateComponent implements OnInit {
   /** 取得RecordScheduleTemplate使用到的RecorderServer資訊 */
   getRecordServerInfo() {
     const get$ = Observable.fromPromise(this.parseService.getData({
-      type: ServerInfo,
+      type: RecordPath,
       filter: query => query
         .matches('Type', new RegExp('recordserver'), 'i')
         .limit(30000)
@@ -122,7 +122,7 @@ export class ScheduleTemplateComponent implements OnInit {
         PreRecord: 5,
         PostRecord: 30
       },
-      Recorder: this.defaultRecordServerInfo,
+      RecordPath: this.defaultRecordServerInfo,
       KeepDays: '90',
       RecordRecover:true
     });

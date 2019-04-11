@@ -1,10 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
-import { IServerInfoStorage, IServerStorage } from 'lib/domain/core';
-import { ServerInfo, RecordScheduleTemplate, RecordSchedule } from 'app/model/core';
+import { ServerInfo, RecordScheduleTemplate, RecordSchedule, RecordPath } from 'app/model/core';
 import { Observable } from 'rxjs/Observable';
-import { templateSourceUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-storage-editor',
@@ -16,7 +14,7 @@ export class StorageEditorComponent implements OnInit, OnChanges {
   @Input() storageIndex: number;
   @Output() closeEvent: EventEmitter<any> = new EventEmitter();
   @Output() reloadServerInfoEvent: EventEmitter<any> = new EventEmitter();
-  storage: IServerInfoStorage;
+  storage: RecordPath;
   /** 與serverInfo對應的RecoveryServer */
   currentRecordRecoveryServer: ServerInfo;
   /** 與serverInfo對應的SmartMediaServer */

@@ -23,6 +23,7 @@ import {
   IEventRecoverySetting,
   IRecordScheduleTemplateFullRecord,
   IRecordScheduleTemplateEventRecord,
+  IRecordPath,
 } from 'lib/domain/core';
 // import * as parse from 'parse';
 export class PagerClass{
@@ -279,21 +280,10 @@ export class ServerInfo extends Parse.Object implements IServerInfo {
   set Name(value: string) {
     super.set('Name', value);
   }
-  get KeepDays(): {
-    Enable: boolean;
-    Default: number;
-  } {
-    return super.get('KeepDays');
-  }
-  set KeepDays(value: { Enable: boolean; Default: number }) {
-    super.set('KeepDays', value);
-  }
-  get Storage(): IServerInfoStorage[] {
-    return super.get('Storage');
-  }
-  set Storage(value: IServerInfoStorage[]) {
-    super.set('Storage', value);
-  }
+
+  get Storage(): RecordPath[] { return super.get('Storage'); }
+  set Storage(value: RecordPath[]) { super.set('Storage', value); }
+
   constructor(value?: Partial<IServerInfo>) {
     super('ServerInfo');
     Object.assign(this, value);
@@ -331,12 +321,8 @@ export class Server extends Parse.Object implements IServer {
   set AP(value: { Name: string; Page: { Name: string; Config: string }[] }) {
     super.set('AP', value);
   }
-  get Storage(): IServerStorage[] {
-    return super.get('Storage');
-  }
-  set Storage(value: IServerStorage[]) {
-    super.set('Storage', value);
-  }
+  get Storage(): RecordPath[] { return super.get('Storage'); }
+  set Storage(value: RecordPath[]) { super.set('Storage', value); }
   constructor(value?: Partial<IServer>) {
     super('Server');
     Object.assign(this, value);
@@ -368,11 +354,11 @@ export class RecordScheduleTemplate extends Parse.Object implements IRecordSched
   set EventRecord(value: IRecordScheduleTemplateEventRecord) {
     super.set('EventRecord', value);
   }
-  get Recorder(): ServerInfo {
-    return super.get('Recorder');
+  get RecordPath(): RecordPath {
+    return super.get('RecordPath');
   }
-  set Recorder(value: ServerInfo) {
-    super.set('Recorder', value);
+  set RecordPath(value: RecordPath) {
+    super.set('RecordPath', value);
   }
   get KeepDays(): string {
     return super.get('KeepDays');
@@ -385,7 +371,20 @@ export class RecordScheduleTemplate extends Parse.Object implements IRecordSched
     Object.assign(this, value);
   }
 }
-
+export class RecordPath extends Parse.Object implements IRecordPath{
+  get Name(): string { return super.get('Name'); }
+  set Name(value: string) { super.set('Name', value); }
+  get Account(): string { return super.get('Account'); }
+  set Account(value: string) { super.set('Account', value); }
+  get Password(): string { return super.get('Password'); }
+  set Password(value: string) { super.set('Password', value); }
+  get Path(): string { return super.get('Path'); }
+  set Path(value: string) { super.set('Path', value); }
+  constructor(data?: Partial<IRecordPath>) {
+    super('RecordPath');
+    Object.assign(this, data);
+  }
+}
 export class RecordSchedule extends Parse.Object implements IRecordSchedule {
   get NvrId(): string {
     return super.get('NvrId');
