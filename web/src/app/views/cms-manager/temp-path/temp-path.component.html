@@ -1,0 +1,29 @@
+<div class="col-12">
+        <section class="widget">
+          <div class="widget-body">
+            <div #Server *ngIf="serverConfig">
+              <legend>
+                <strong>Server</strong>
+              </legend>
+              <div class="form-group row">
+                <label class="col-md-4  col-form-label text-md-right">Temporarily Store </label>
+                <div class="col-md-8">
+                  <app-disk-space [storageConfig]="serverConfig.Storage" [mediaDiskspace]="mediaDiskspace" (setStorageEvent)="setStorage($event)"></app-disk-space>
+                </div>
+              </div>
+            </div>      
+          </div>
+          <div class="widget-footer">
+            <div class="form-group row">
+              <label class="col-md-4  col-form-label text-md-right"></label>
+              <div class="col-md-4">
+                <button class="btn btn-primary width-100 mb-xs" role="button" (click)="clickSaveConfig()">
+                  <i *ngIf="flag.save" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
