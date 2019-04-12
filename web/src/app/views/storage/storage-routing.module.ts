@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { StorageComponent } from 'app/views/storage/storage.component';
+import { RecordPathComponent } from './record.path.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: StorageComponent
+    component: RecordPathComponent
   }
 ];
 

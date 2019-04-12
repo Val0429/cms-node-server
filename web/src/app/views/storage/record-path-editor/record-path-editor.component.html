@@ -1,0 +1,47 @@
+<ng-container *ngIf="editRecordPath">
+  <div class="form-group row">
+    <label class="col-md-4  col-form-label text-md-right">Name</label>
+    <div class="col-md-8">
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="editRecordPath.Name">
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-4  col-form-label text-md-right">Account</label>
+    <div class="col-md-8">
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="editRecordPath.Account">
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-4  col-form-label text-md-right">Password</label>
+    <div class="col-md-8">
+      <div class="input-group">
+        <input type="password" class="form-control" [(ngModel)]="editRecordPath.Password">
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-4  col-form-label text-md-right">Path</label>
+    <div class="col-md-8">
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="editRecordPath.Path">
+      </div>
+    </div>
+  </div>
+  
+  <div class="editor-footer" >
+    <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+    <button type="button" class="btn btn-danger" (click)="clickDelete()" [disabled]="flag.busy" *ngIf="currentRecordPath.id">      
+      Delete
+    </button>
+    <button type="button" class="btn btn-primary" (click)="clickSave()" [disabled]="flag.busy">      
+      Save
+    </button>
+    <button type="button" class="btn btn-gray" (click)="clickClose()" [disabled]="flag.busy">
+      Close
+    </button>
+  </div>  
+</ng-container>
