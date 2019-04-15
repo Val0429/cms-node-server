@@ -46,7 +46,7 @@
       <label class="col-md-4  col-form-label text-md-right">Recorder</label>
       <div class="col-md-8">
         <select class="select1" (change)="onChangeRecorder($event)">
-          <option *ngFor="let recorder of recorderList;" [selected]="getRecorderSelected(recorder)" value= {{recorder.id}}>{{recorder.Name}} ({{recorder.Domain}}:{{recorder.Port}})</option>
+          <option *ngFor="let recorder of recorderList;" [selected]="getRecorderSelected(recorder)" value= {{recorder.id}}>{{recorder.Name}} </option>
         </select>
       </div>
     </div>
