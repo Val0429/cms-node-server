@@ -1,0 +1,8 @@
+.input-group input[type="checkbox"]{
+    margin-right: 5px;
+    width:10%;
+}
+.input-group label{    
+    margin:0 5px;
+    width:90%;
+}

@@ -70,14 +70,14 @@ export class RecordPathComponent implements OnInit {
     }
     addRecordPath(){
         let newRecord=new RecordPath();
-        newRecord.Name="NAS Server Name";
+        newRecord.Name=`NAS Server Name ${this.recordPaths.length+1}`;
         newRecord.Path=``;
         newRecord.Account=this.cryptoService.encrypt4DB("Admin");
         newRecord.Password=this.cryptoService.encrypt4DB("123456");
         this.currentRecordPath=newRecord;
     }
 }
-interface RecordPathDisplay{
+export interface RecordPathDisplay{
     checked:boolean;
     recordPath:RecordPath;
 }

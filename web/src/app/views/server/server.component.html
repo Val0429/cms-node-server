@@ -20,9 +20,10 @@
             <th style="width:20px" >
                 <input type="checkbox" (change)="checkAll($event)" [checked]="checkedAll" >
             </th>
-            <th style="width:30%">Name</th>
-            <th>Type</th>
+            <th style="width:30%">Type</th>
+            <th>Name</th>
             <th>Domain</th>
+            <th>Port</th>
           </tr>
         </thead>
         <tbody>
@@ -30,10 +31,10 @@
             <td>
               <input type="checkbox" (change)="checkSelectedItem($event, item)" [checked]="item.checked" >
             </td>
-            <td (click)="clickSelectedItem(item);modalWindow.show()" style="cursor:pointer">{{item.serverInfo.Name}}</td>
-            <td>{{item.serverInfo.Type}}</td>
+            <td (click)="clickSelectedItem(item);modalWindow.show()" style="cursor:pointer">{{item.displayName}}</td>
+            <td>{{item.serverInfo.Name}}</td>
             <td>{{item.serverInfo.Domain}}</td>
-            
+            <td>{{item.serverInfo.Port}}</td>
           </tr>
         </tbody>
       </table>
@@ -49,7 +50,7 @@
           <h4 class="modal-title text-center fw-bold">Server Info</h4>
         </div>
         <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
-          <app-server-info-editor [flag]="flag" [currentItem]="currentItem" (closeEvent)="modalWindow.hide()" [serverTypes]="serverTypes"
+          <app-server-info-editor [flag]="flag" [currentItem]="currentItem" [listRecordPaths]="recordPaths" (closeEvent)="modalWindow.hide()" [serverTypes]="serverTypes"
             (reloadItemsEvent)="reloadItems()"></app-server-info-editor>
         </div>
       </div>
