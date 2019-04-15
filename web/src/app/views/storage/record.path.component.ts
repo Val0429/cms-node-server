@@ -3,7 +3,6 @@ import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { ServerInfo, RecordPath } from 'app/model/core';
 import { CryptoService } from 'app/service/crypto.service';
-import { IRecordPath } from 'lib/domain/core';
 
 @Component({
   selector: 'app-record-path',
@@ -11,7 +10,6 @@ import { IRecordPath } from 'lib/domain/core';
   styleUrls: ['./record.path.component.css']
 })
 export class RecordPathComponent implements OnInit {
-    recordServerList: ServerInfo[];
     recordPaths:RecordPathDisplay[];
     flag={busy:false};
     currentRecordPath: RecordPath;

@@ -1,9 +1,57 @@
-<div class="col-12">
-  <section class="widget">
-    <div class="widget-body">
-    </div>
-    <div class="widget-footer">
-     
+<section class="widget">
+    <header>
+      <legend>
+        <strong>Server List</strong>
+      </legend>
+      <div class="float-right">
+        <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>                
+        <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addItem();modalWindow.show()" [disabled]="flag.busy">
+          Create
+        </button>
+        <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="deleteItems()" [disabled]="!anyChecked || flag.busy">
+          Delete
+        </button>
+      </div>
+    </header>
+    <div class="widget-body" *ngIf="itemList && !flag.busy">
+      <table class="table table-bordered table-lg mb-lg">
+        <thead>
+          <tr>
+            <th style="width:20px" >
+                <input type="checkbox" (change)="checkAll($event)" [checked]="checkedAll" >
+            </th>
+            <th style="width:30%">Name</th>
+            <th>Type</th>
+            <th>Domain</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of itemList" >
+            <td>
+              <input type="checkbox" (change)="checkSelectedItem($event, item)" [checked]="item.checked" >
+            </td>
+            <td (click)="clickSelectedItem(item);modalWindow.show()" style="cursor:pointer">{{item.serverInfo.Name}}</td>
+            <td>{{item.serverInfo.Type}}</td>
+            <td>{{item.serverInfo.Domain}}</td>
+            
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
-</div>
+  <div bsModal #modalWindow="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header flex-column">
+          <button (click)="modalWindow.hide()" aria-label="Close" class="close ml-auto" type="button">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title text-center fw-bold">Server Info</h4>
+        </div>
+        <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
+          <app-server-info-editor [flag]="flag" [currentItem]="currentItem" (closeEvent)="modalWindow.hide()" [serverTypes]="serverTypes"
+            (reloadItemsEvent)="reloadItems()"></app-server-info-editor>
+        </div>
+      </div>
+    </div>
+  </div>
