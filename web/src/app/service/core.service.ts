@@ -332,7 +332,7 @@ const urls = {
   URL_CLASS_GROUP: '/classes/Group',
   URL_CLASS_EVENTRECOVERY: '/classes/EventRecovery',
   URL_IPCAMERA_NVRID: '/cms/IPCameraNvrId',
-  URL_LOG: '/cms/SysLog',
+  URL_RECORDPATH: '/classes/RecordPath',
   URL_BRAND_CAPABILITY: '/cms/BrandCapability',
   URL_SET_DBSYNC_DISABLE: '/cms/SetDBSyncDisable',
 
