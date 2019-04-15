@@ -19,6 +19,7 @@ export class ServerComponent implements OnInit {
     anyChecked: boolean;
     constructor(private coreService: CoreService, private parseService: ParseService, private cryptoService:CryptoService) { }
     serverTypes:ServerType[]=[
+      {Type:"SmartMediaServer", DisplayName:"Smart Media Server", DefaultPort:9966, HasStorage:false},
       {Type:"StreamServer", DisplayName:"Stream Server", DefaultPort:7004, HasStorage:false},
       {Type:"RecordServer", DisplayName:"Record Server", DefaultPort:7002, HasStorage:false},
       {Type:"ExportServer", DisplayName:"Export Server", DefaultPort:7005, HasStorage:false},
@@ -100,7 +101,7 @@ export class ServerComponent implements OnInit {
         newRecord.Domain=`localhost`;
         newRecord.Port=this.serverTypes[0].DefaultPort;
         newRecord.SSLPort=undefined;
-        newRecord.MaxCapacity= 1;
+        newRecord.MaxCapacity= this.serverTypes[0].HasStorage ? 1 : undefined;
         newRecord.Storage=this.serverTypes[0].HasStorage ? [] : undefined;
         newRecord.SubType="";
         newRecord.TempPath=undefined;        

@@ -31,6 +31,7 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
   serverTypeChange(){
       this.editItem.Port = this.currentType.DefaultPort;
       this.editItem.Storage = this.currentType.HasStorage ? []: null;
+      this.editItem.MaxCapacity = this.currentType.HasStorage ? 1 : undefined;
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes.currentItem || !this.currentItem) return;
@@ -87,12 +88,21 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
       this.currentItem.Name=this.editItem.Name; 
       this.currentItem.Domain=this.editItem.Domain;
       this.currentItem.Port=this.editItem.Port;
-      this.currentItem.MaxCapacity=this.editItem.MaxCapacity;
+      
       this.currentItem.Type = this.currentType.Type;
       this.currentItem.SSLPort=this.editItem.SSLPort;
       this.currentItem.SubType=this.editItem.SubType;      
-      this.currentItem.Storage=this.currentType.HasStorage ? this.listRecordPaths.filter(x=>x.checked).map(e=>e.recordPath) : null;      
+      if(this.currentType.HasStorage){
+        this.currentItem.Storage= this.listRecordPaths.filter(x=>x.checked).map(e=>e.recordPath); 
+        this.currentItem.MaxCapacity=this.editItem.MaxCapacity;  
+      }else{
+        this.currentItem.Storage=null;
+        this.currentItem.MaxCapacity=null;
+        delete(this.currentItem.Storage);
+        delete(this.currentItem.MaxCapacity);
+      }
       this.currentItem.TempPath=this.editItem.TempPath;          
+
       await this.currentItem.save();
       console.debug(this.currentItem);
       this.coreService.notify({path:this.coreService.urls.URL_CLASS_SERVERINFO, objectId:this.currentItem.id})
