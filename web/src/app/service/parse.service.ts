@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Rx';
 import {
   UserGroup, Group, Nvr, ServerInfo, Server,
   RecordScheduleTemplate, RecordSchedule, Event, EventScheduleTemplate,
-  EventHandler, EventRecovery, Device, General, SystemLog, DBSync
+  EventHandler, EventRecovery, Device, General, SystemLog, DBSync, RecordPath
 } from 'app/model/core';
 
 @Injectable()
@@ -75,6 +75,7 @@ export class ParseService {
     Parse.Object.registerSubclass('General', General);
     Parse.Object.registerSubclass('SystemLog', SystemLog);
     Parse.Object.registerSubclass('DBSync', DBSync);
+    Parse.Object.registerSubclass('RecordPath', RecordPath);
   }
 
   // createLiveQueryWatcher<T extends Parse.Object>(args: {

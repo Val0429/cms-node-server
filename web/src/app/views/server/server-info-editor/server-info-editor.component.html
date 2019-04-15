@@ -1,0 +1,77 @@
+<ng-container *ngIf="editItem">
+        <div class="form-group row">
+                <label class="col-md-4  col-form-label text-md-right">Type</label>
+                <div class="col-md-8">
+                  <div class="input-group">
+                      <select class="form-control" [(ngModel)]="currentType" (change)="serverTypeChange()">
+                        <option *ngFor="let serverType of serverTypes" [ngValue]="serverType">{{serverType.DisplayName}}</option>
+                      </select>                    
+                  </div>
+                </div>
+              </div>
+        <div class="form-group row">
+          <label class="col-md-4  col-form-label text-md-right">Name</label>
+          <div class="col-md-8">
+            <div class="input-group">
+              <input type="text" class="form-control" [(ngModel)]="editItem.Name">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4  col-form-label text-md-right">Domain</label>
+          <div class="col-md-8">
+            <div class="input-group">
+              <input type="text" class="form-control" [(ngModel)]="editItem.Domain">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4  col-form-label text-md-right">Port</label>
+          <div class="col-md-8">
+            <div class="input-group">
+              <input type="number" class="form-control" [(ngModel)]="editItem.Port">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="editItem.SSLPort">
+          <label class="col-md-4  col-form-label text-md-right">SSL Port</label>
+          <div class="col-md-8">
+            <div class="input-group">
+              <input type="number" class="form-control" [(ngModel)]="editItem.SSLPort">
+            </div>
+          </div>
+        </div>
+         <div class="form-group row" *ngIf="currentType.HasStorage">
+          <label class="col-md-4  col-form-label text-md-right">Max Capacity</label>
+          <div class="col-md-8">
+            <div class="input-group">
+              <input type="number" class="form-control" [(ngModel)]="editItem.MaxCapacity">
+            </div>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="currentType.HasStorage">
+                <label class="col-md-4  col-form-label text-md-right">Storage</label>
+                <div class="col-md-8">
+                    <div class="input-group" *ngFor="let item of listRecordPaths">
+                        <input type="checkbox" id="{{item.recordPath.id}}" [checked]="item.checked" class="form-control" (change)="checkRecordPath($event.target.checked, item)"/>                            
+                        <label for="{{item.recordPath.id}}">{{item.recordPath.Name}}</label>
+                    </div>
+                    <div class="input-group" *ngIf="listRecordPaths.length==0">
+                        No available Storage
+                    </div>                    
+                </div>
+              </div>
+        <div class="editor-footer" >
+          <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+          <button type="button" class="btn btn-danger" (click)="clickDelete()" [disabled]="flag.busy" *ngIf="currentItem.id">      
+            Delete
+          </button>
+          <button type="button" class="btn btn-primary" (click)="clickSave()" [disabled]="flag.busy">      
+            Save
+          </button>
+          <button type="button" class="btn btn-gray" (click)="clickClose()" [disabled]="flag.busy">
+            Close
+          </button>
+        </div>  
+      </ng-container>
+      

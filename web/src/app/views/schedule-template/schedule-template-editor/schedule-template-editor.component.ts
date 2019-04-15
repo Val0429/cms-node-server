@@ -2,7 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output, OnChanges, SimpleChange
 import * as _ from 'lodash';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
-import { ServerInfo, RecordSchedule, EventHandler } from 'app/model/core';
+import { ServerInfo, RecordSchedule, EventHandler, RecordPath } from 'app/model/core';
 import OptionHelper from 'app/helper/option.helper';
 import { WeekScheduleOptions } from 'app/config/week-scheduler.config';
 import { Observable } from 'rxjs/Observable';
@@ -20,7 +20,7 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
   @Output() updateTemplateEvent: EventEmitter<any> = new EventEmitter(); // 更新template資料後callback更新template清單
   @Output() modalHide: EventEmitter<any> = new EventEmitter();
   weekScheduleOptions: { key: string, value: string }[]; // plan選項
-  recorderList: ServerInfo[]; // Recorder選項
+  recorderList: RecordPath[]; // Recorder選項
   currentPlans: string[][]; // 要傳給week board的參數
   /** 因轉時區不可影響到原資料，故暫存Template的Schedule */
   schedules: {
@@ -108,14 +108,14 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
   /** 取得Recorder的選單 */
   getRecorderOptions() {
     const fetch$ = Observable.fromPromise(this.parseService.fetchData({
-      type: ServerInfo,
-      filter: query => query.matches('Type', new RegExp('RecordServer'), 'i')
+      type: RecordPath,
+      filter: query => query.limit(Number.MAX_SAFE_INTEGER) 
     })).do(result => this.recorderList = result);
     return fetch$;
   }
 
   /** 判斷Recorder是否為目前Template所選 */
-  getRecorderSelected(recorder: ServerInfo) {
+  getRecorderSelected(recorder: RecordPath) {
     if (!this.recorderList || !this.currentTemplate.Recorder) {
       return false;
     }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
-import { RecordScheduleTemplate, EventScheduleTemplate, ServerInfo } from 'app/model/core';
+import { RecordScheduleTemplate, EventScheduleTemplate, ServerInfo, RecordPath } from 'app/model/core';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -23,7 +23,7 @@ export class ScheduleTemplateComponent implements OnInit {
   /** 當前編輯template的類型代號, 子組件的參數, 1=RecordScheduleTemplate, 2=EventScheduleTemplate */
   templateSetupMode: number;
   /** 建立RecordScheduleTemplate時預設套用的Recorder資料 */
-  defaultRecordServerInfo: ServerInfo;
+  defaultRecordPath: RecordPath;
   flag = {
     load: false
   };
@@ -44,7 +44,7 @@ export class ScheduleTemplateComponent implements OnInit {
     this.templateSetupMode = 1;
     this.fetchRecordScheduleTemplate()
       .switchMap(() => this.fetchEventScheduleTemplate())
-      .switchMap(() => this.getRecordServerInfo())
+      .switchMap(() => this.getRecordPaths())
       .subscribe();
   }
 
@@ -84,13 +84,12 @@ export class ScheduleTemplateComponent implements OnInit {
   }
 
   /** 取得RecordScheduleTemplate使用到的RecorderServer資訊 */
-  getRecordServerInfo() {
+  getRecordPaths() {
     const get$ = Observable.fromPromise(this.parseService.getData({
-      type: ServerInfo,
-      filter: query => query
-        .matches('Type', new RegExp('recordserver'), 'i')
+      type: RecordPath,
+      filter: query => query        
         .limit(30000)
-    })).map(serverInfo => this.defaultRecordServerInfo = serverInfo);
+    })).map(recordPath => this.defaultRecordPath = recordPath);
     return get$;
   }
 
@@ -108,8 +107,8 @@ export class ScheduleTemplateComponent implements OnInit {
 
   /** 取得新的RecordScheduleTemplate物件 */
   getNewRecordScheduleTemplate() {
-    if (!this.defaultRecordServerInfo) {
-      alert('Please setup Record Server in Storage page before create Record Schedule Template');
+    if (!this.defaultRecordPath) {
+      alert('Please setup Record Path in Storage page before create Record Schedule Template');
       return undefined;
     }
     return new RecordScheduleTemplate({
@@ -122,7 +121,7 @@ export class ScheduleTemplateComponent implements OnInit {
         PreRecord: 5,
         PostRecord: 30
       },
-      Recorder: this.defaultRecordServerInfo,
+      RecordPath: this.defaultRecordPath,
       KeepDays: '90',
       RecordRecover:true
     });

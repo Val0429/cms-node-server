@@ -48,7 +48,7 @@ export interface IServer {
             Config: string
         }[]
     },
-    Storage: IServerStorage[]
+    Storage:IRecordPath[]
 }
 
 export interface IServerInfo {
@@ -59,16 +59,8 @@ export interface IServerInfo {
     Port: number,
     MaxCapacity: number,
     Name: string,
-    KeepDays: {
-        Enable: boolean,
-        Default: number
-    },
     TempPath:string,
-    Storage: {
-        Name: string,
-        Path: string,
-        KeepSpace: number,
-    }[]
+    Storage:IRecordPath[]    
 }
 
 export interface IUserGroup {
@@ -229,11 +221,16 @@ export interface IRecordScheduleTemplate {
     Name: string;
     FullRecord: any;
     EventRecord: any;
-    Recorder: IServerInfo;
+    RecordPath: IRecordPath;
     KeepDays: string;
     RecordRecover:boolean;
 }
-
+export interface IRecordPath {
+    Name:string;
+    Path:string;
+    Account:string;
+    Password:string;
+}
 export interface IRecordSchedule {
     NvrId: string;
     ChannelId: number;

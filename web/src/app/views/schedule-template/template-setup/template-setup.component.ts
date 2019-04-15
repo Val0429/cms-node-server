@@ -451,7 +451,7 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     let serverId:string;
     if(this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) { 
       lic = '00168';
-      serverId = (this.currentTemplate as RecordScheduleTemplate).Recorder.id;
+      serverId = (this.currentTemplate as RecordScheduleTemplate).RecordPath.id;
       console.debug("serverId");
     }
     if (alertMessage.length > 0) {

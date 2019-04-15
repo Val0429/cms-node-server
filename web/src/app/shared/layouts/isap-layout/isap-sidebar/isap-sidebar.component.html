@@ -16,6 +16,14 @@
         <i class="toggle fa"></i>
       </a>
     </li>
+    <li routerLinkActive="active" *ngIf="checkPagePermission('Storage')">
+      <a routerLink="/storage">
+        <span class="icon">
+          <i class="fa fa-floppy-o"></i>
+        </span> Storage
+        <i class="toggle fa"></i>
+      </a>
+    </li>
     <li routerLinkActive="active" *ngIf="checkPagePermission('NVR')">
       <a routerLink="/nvr">
         <span class="icon">

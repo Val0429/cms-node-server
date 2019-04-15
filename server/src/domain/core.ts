@@ -1,4 +1,4 @@
-import { INvr, IEvent, ISystemLog, IServer, IServerInfo, IDBSync, IDBSyncDestination, IDevice,IDeviceConfig, IGroup, IEventHandlerType, IEventHandler, IRecordScheduleTemplate, IRecordScheduleTemplateFullRecord, IRecordScheduleTemplateEventRecord, IRecordSchedule } from '../../../lib/domain/core';
+import { INvr, IEvent, ISystemLog, IServer, IServerInfo, IDBSync, IDBSyncDestination, IDevice,IDeviceConfig, IGroup, IEventHandlerType, IEventHandler, IRecordScheduleTemplate, IRecordScheduleTemplateFullRecord, IRecordScheduleTemplateEventRecord, IRecordSchedule, IRecordPath } from '../../../lib/domain/core';
 // import { IHost, IHostEvent, IVisitEvent, IVisitor } from 'lib/domain/core';
 import * as Parse from 'parse/node';
 
@@ -117,11 +117,11 @@ export class RecordScheduleTemplate extends Parse.Object implements IRecordSched
     set EventRecord(value: IRecordScheduleTemplateEventRecord) {
       super.set('EventRecord', value);
     }
-    get Recorder(): ServerInfo {
-      return super.get('Recorder');
+    get RecordPath(): RecordPath {
+      return super.get('RecordPath');
     }
-    set Recorder(value: ServerInfo) {
-      super.set('Recorder', value);
+    set RecordPath(value: RecordPath) {
+      super.set('RecordPath', value);
     }
     get KeepDays(): string {
       return super.get('KeepDays');
@@ -346,12 +346,8 @@ export class Server extends Parse.Object implements IServer {
     set MediaServer(value: {
         Port: string; SSLPort: string; DBModule: string; Domain: string;
     }) { super.set('MediaServer', value); }
-    get Storage(): {
-        Keepspace: string; Path: string;
-    }[] { return super.get('Storage'); }
-    set Storage(value: {
-        Keepspace: string; Path: string;
-    }[]) { super.set('Storage', value); }
+    get Storage(): RecordPath[] { return super.get('Storage'); }
+    set Storage(value: RecordPath[]) { super.set('Storage', value); }
     constructor(data?: Partial<IServer>) {
         super('Server');
         Object.assign(this, data);
@@ -377,16 +373,29 @@ export class ServerInfo extends Parse.Object implements IServerInfo {
     set MaxCapacity(value: number) { super.set('MaxCapacity', value); }
     get Name(): string { return super.get('Name'); }
     set Name(value: string) { super.set('Name', value); }
-    get KeepDays(): { Enable: boolean; Default: number; } { return super.get('KeepDays'); }
-    set KeepDays(value: { Enable: boolean; Default: number; }) { super.set('KeepDays', value); }
-    get Storage(): { Name: string; Path: string; KeepSpace: number; }[] { return super.get('Storage'); }
-    set Storage(value: { Name: string; Path: string; KeepSpace: number; }[]) { super.set('Storage', value); }
+    
+    get Storage(): RecordPath[] { return super.get('Storage'); }
+    set Storage(value: RecordPath[]) { super.set('Storage', value); }
     constructor(data?: Partial<IServerInfo>) {
         super('ServerInfo');
         Object.assign(this, data);
     }
 }
-
+@registerSubclass()
+export class RecordPath extends Parse.Object implements IRecordPath{
+  get Name(): string { return super.get('Name'); }
+  set Name(value: string) { super.set('Name', value); }
+  get Account(): string { return super.get('Account'); }
+  set Account(value: string) { super.set('Account', value); }
+  get Password(): string { return super.get('Password'); }
+  set Password(value: string) { super.set('Password', value); }
+  get Path(): string { return super.get('Path'); }
+  set Path(value: string) { super.set('Path', value); }
+  constructor(data?: Partial<IRecordPath>) {
+    super('RecordPath');
+    Object.assign(this, data);
+  }
+}
 @registerSubclass()
 export class DBSync extends Parse.Object implements IDBSync {
     get autoSync(): boolean { return super.get('autoSync'); }

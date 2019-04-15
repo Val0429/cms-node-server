@@ -248,31 +248,56 @@ export class RestFulService {
     async fetchInclude(includeRequest:string, data:any[]){
         let includes = this.constructInclude(includeRequest);
         //console.log(includes.includeData);
+        //console.log(data);
         for(let depth=1;depth<=includes.maxDepth;depth++){              
             // forks promises based on depth level
             let promises=[];
             for(let include of includes.includeData.filter(x=>x.depth==depth)){
                 //get parent link data
-                for(let record of data){      
-                    let target = this.getTargetField(record, include.fieldNames);
+                for(let record of data){                        
+                    let target = this.getTargetField(record, include.fieldNames);                    
                     if(!target)continue;
-                    //console.log(target);
-                    const getData$ = this.db.collection(target.className).find({_id:target.objectId}).then(res=>{ 
-                        //console.log(res);
-                        if(res&&res.length>0) {
-                            res[0].__type="Object";
-                            res[0].className=target.className;
-                            this.postProcessJson(res[0]);
-                            this.updateTargetField(record, include.fieldNames, res[0]);                           
-                        }
-                    });
-                    promises.push(getData$);                    
+                    const getData$ = !Array.isArray(target) ?
+                        this.getPointerData(target, record, include):
+                        this.getPointerArray(target, record, include);
+                    promises.push(getData$);
                 }
             }
             await Promise.all(promises);
         }
         return data;
     }
+    private async getPointerArray(target: any[], record: any, include: { fieldNames: string[]; depth: number; }) {
+        //console.log(target);
+        let resultData=[];
+        let promises=[];
+        for(let item of target){
+            const $getData = this.db.collection(item.className).find({ _id: item.objectId }).then(res => {            
+                if (res && res.length > 0) {
+                    res[0].__type = "Object";
+                    res[0].className = item.className;
+                    this.postProcessJson(res[0]);                    
+                    resultData.push(res[0]);
+                }
+            });
+            promises.push($getData);
+        }
+        await Promise.all(promises).then(()=>{
+            this.updateTargetField(record, include.fieldNames, resultData);
+        });
+    }
+    private async getPointerData(target: any, record: any, include: { fieldNames: string[]; depth: number; }) {
+        //console.log(target);            
+        return await this.db.collection(target.className).find({ _id: target.objectId }).then(res => {            
+            if (res && res.length > 0) {
+                res[0].__type = "Object";
+                res[0].className = target.className;
+                this.postProcessJson(res[0]);
+                this.updateTargetField(record, include.fieldNames, res[0]);
+            }
+        });
+    }
+
     //make it similar to parse object
     preProcessJson(data:any){  
         if(!data)return;      
@@ -314,12 +339,18 @@ export class RestFulService {
         let pointer="_p_";
         let keys = Object.keys(data);
         
-        data.objectId = data._id;
-        data.createdAt = data._created_at;
-        data.updatedAt = data._updated_at;        
-        delete(data._id);
-        delete(data._created_at);
-        delete(data._updated_at);
+        if(data._id){
+            data.objectId = data._id;
+            delete(data._id);
+        }
+        if(data._created_at){
+            data.createdAt = data._created_at;
+            delete(data._created_at);
+        }
+        if(data._updated_at){
+            data.updatedAt = data._updated_at;        
+            delete(data._updated_at);
+        }
 
         for(let key of keys){
             if(key.indexOf(pointer)>-1){
