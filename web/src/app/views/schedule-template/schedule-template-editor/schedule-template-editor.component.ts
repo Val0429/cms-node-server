@@ -119,11 +119,12 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
     if (!this.recorderList || !this.currentTemplate.Recorder) {
       return false;
     }
-    return this.currentTemplate.Recorder.id === recorder.id;
+    return this.currentTemplate.RecordPath.id === recorder.id;
   }
 
   onChangeRecorder($event: any) {
-    this.currentTemplate.Recorder = this.recorderList.find(x => x.id === $event.target.value);
+    this.currentTemplate.RecordPath = this.recorderList.find(x => x.id === $event.target.value);
+    console.debug("this.currentTemplate.RecordPath", this.currentTemplate.RecordPath);
   }
 
   /** 將所有Template的Schedule字串轉為顯示用的大陣列 */
@@ -144,8 +145,8 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
 
   clickSave() {
     // 若沒有設定Recorder就給第一筆選項當預設值
-    if (!this.currentTemplate.Recorder && this.recorderList.length > 0) {
-      this.currentTemplate.Recorder = this.recorderList[0];
+    if (!this.currentTemplate.RecordPath && this.recorderList.length > 0) {
+      this.currentTemplate.RecordPath = this.recorderList[0];
     }
 
     this.flag.save = true;

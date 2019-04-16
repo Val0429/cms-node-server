@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
-import { ServerInfo, RecordPath } from 'app/model/core';
+import { ServerInfo, RecordPath, RecordScheduleTemplate } from 'app/model/core';
 import { CryptoService } from 'app/service/crypto.service';
+import { ServerService } from 'app/service/server.service';
 
 @Component({
   selector: 'app-record-path',
@@ -15,7 +16,10 @@ export class RecordPathComponent implements OnInit {
     currentRecordPath: RecordPath;
     checkedAll: boolean;
     anyChecked: boolean;
-    constructor(private coreService: CoreService, private parseService: ParseService, private cryptoService:CryptoService) { }
+    constructor(private coreService: CoreService, 
+        private parseService: ParseService, 
+        private cryptoService:CryptoService,
+        private serverService:ServerService) { }
   
     async ngOnInit() {
         await this.reloadRecordPath();
@@ -24,10 +28,8 @@ export class RecordPathComponent implements OnInit {
         if(!confirm("Are you sure?"))return;
         try{
             this.flag.busy=true;            
-            for(let item of this.recordPaths.filter(x=>x.checked===true)){
-                await item.recordPath.destroy();
-                this.coreService.notify({path:this.coreService.urls.URL_RECORDPATH, objectId:item.recordPath.id});
-            }
+            let items = this.recordPaths.filter(x=>x.checked===true).map(x=>x.recordPath);
+            await this.serverService.deleteRecordPaths(items);
             await this.reloadRecordPath();
         }catch(err){
             console.error(err);
@@ -52,13 +54,15 @@ export class RecordPathComponent implements OnInit {
     private async reloadRecordPath() {
         this.recordPaths = [];
         await this.parseService.fetchData({ type: RecordPath, filter: query => query.limit(Number.MAX_SAFE_INTEGER) })
-            .then(results => {
+            .then(async results => {
                 for(let result of results){
                     this.recordPaths.push({checked:false,recordPath:result});
                 }
                 
             });
         this.checkSelected();
+
+        
     }
     checkSelectedPath($event:any, item :RecordPathDisplay){
         this.recordPaths.find(x=>x.recordPath==item.recordPath).checked = $event.target.checked;
@@ -70,7 +74,7 @@ export class RecordPathComponent implements OnInit {
     }
     addRecordPath(){
         let newRecord=new RecordPath();
-        newRecord.Name=`NAS Server Name ${this.recordPaths.length+1}`;
+        newRecord.Name=`NAS Server ${this.recordPaths.length+1}`;
         newRecord.Path=``;
         newRecord.Account=this.cryptoService.encrypt4DB("Admin");
         newRecord.Password=this.cryptoService.encrypt4DB("123456");
