@@ -6,6 +6,7 @@ import { Nvr, Group, ServerInfo, PagerClass } from 'app/model/core';
 import { NvrService } from 'app/service/nvr.service';
 import { NvrSearchComponent } from './nvr-search/nvr-search.component';
 import { CameraService } from 'app/service/camera.service';
+import { NvrImportComponent } from './nvr-import/nvr-import.component';
 
 
 
@@ -15,7 +16,7 @@ import { CameraService } from 'app/service/camera.service';
   styleUrls: ['./nvr.component.css']
 })
 export class NvrComponent implements OnInit {
-  
+  @ViewChild('importComponent') importComponent:NvrImportComponent;
   @ViewChild('searchComponent') searchComponent:NvrSearchComponent;
   nvrList: NvrList[];
   
