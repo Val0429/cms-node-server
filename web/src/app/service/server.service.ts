@@ -39,10 +39,10 @@ export class ServerService {
     return item.destroy().then(res=>this.coreService.notify({path:this.coreService.urls.URL_RECORDPATH, objectId:res.id}));
   }
   private async updateServerInfo(item:RecordPath, recordServers:ServerInfo[]){
-    for(let recordServer  of recordServers.filter(x=>x.Storage.length>0)){
-      let recordpathIndex = recordServer.Storage.findIndex(x=>x.id == item.id);
+    for(let recordServer  of recordServers.filter(x=>x.RecordPath.length>0)){
+      let recordpathIndex = recordServer.RecordPath.findIndex(x=>x.id == item.id);
       if(recordpathIndex<0)continue;
-      recordServer.Storage.splice(recordpathIndex, 1);
+      recordServer.RecordPath.splice(recordpathIndex, 1);
       return await recordServer.save().then(x=> this.coreService.notify({path:this.coreService.urls.URL_CLASS_SERVERINFO, objectId:x.id}));      
     }
   }

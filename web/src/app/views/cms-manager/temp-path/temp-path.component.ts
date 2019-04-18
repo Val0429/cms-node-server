@@ -60,7 +60,7 @@ export class TempPathComponent implements OnInit {
 
   /** 修改Storage屬性的事件，由storage component call back */
   setStorage(storage: RecordPath) {
-    this.serverConfig.Storage = [storage];
+    this.serverConfig.RecordPath = [storage];
     this.serverInfo.TempPath = storage.Path;
   }
 

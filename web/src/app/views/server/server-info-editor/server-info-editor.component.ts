@@ -30,7 +30,7 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
   }
   serverTypeChange(){
       this.editItem.Port = this.currentType.DefaultPort;
-      this.editItem.Storage = this.currentType.HasStorage ? []: null;
+      this.editItem.RecordPath = this.currentType.HasStorage ? []: null;
       this.editItem.MaxCapacity = this.currentType.HasStorage ? 1 : undefined;
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -38,7 +38,7 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
 
     this.currentItem = changes.currentItem.currentValue;
     for(let item of this.listRecordPaths){
-        item.checked = this.currentItem.Storage && this.currentItem.Storage.findIndex(x=>x.id == item.recordPath.id) >-1;        
+        item.checked = this.currentItem.RecordPath && this.currentItem.RecordPath.findIndex(x=>x.id == item.recordPath.id) >-1;        
     }
     this.currentType = this.serverTypes.find(x=>x.Type == this.currentItem.Type);    
     this.editItem = {
@@ -48,7 +48,7 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
       Type:this.currentType.Type,
       MaxCapacity:this.currentItem.MaxCapacity,
       SSLPort:this.currentItem.SSLPort,
-      Storage:this.currentItem.Storage,
+      RecordPath:this.currentItem.RecordPath,
       SubType:this.currentItem.SubType,
       TempPath:this.currentItem.TempPath      
     };
@@ -93,12 +93,12 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
       this.currentItem.SSLPort=this.editItem.SSLPort;
       this.currentItem.SubType=this.editItem.SubType;      
       if(this.currentType.HasStorage){
-        this.currentItem.Storage= this.listRecordPaths.filter(x=>x.checked).map(e=>e.recordPath); 
+        this.currentItem.RecordPath= this.listRecordPaths.filter(x=>x.checked).map(e=>e.recordPath); 
         this.currentItem.MaxCapacity=this.editItem.MaxCapacity;  
       }else{
-        this.currentItem.Storage=null;
+        this.currentItem.RecordPath=null;
         this.currentItem.MaxCapacity=null;
-        delete(this.currentItem.Storage);
+        delete(this.currentItem.RecordPath);
         delete(this.currentItem.MaxCapacity);
       }
       this.currentItem.TempPath=this.editItem.TempPath;          

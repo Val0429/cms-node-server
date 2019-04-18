@@ -48,7 +48,7 @@ export interface IServer {
             Config: string
         }[]
     },
-    Storage:IRecordPath[]
+    RecordPath:IRecordPath[]
 }
 
 export interface IServerInfo {
@@ -60,7 +60,7 @@ export interface IServerInfo {
     MaxCapacity: number,
     Name: string,
     TempPath:string,
-    Storage:IRecordPath[]    
+    RecordPath:IRecordPath[]    
 }
 
 export interface IUserGroup {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, group, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Group, Nvr } from 'app/model/core';
 import { CryptoService } from 'app/service/crypto.service';
 import { ParseService } from 'app/service/parse.service';

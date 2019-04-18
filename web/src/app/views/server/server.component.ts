@@ -73,8 +73,8 @@ export class ServerComponent implements OnInit {
     private async getAvailableRecordPaths(id:string){
       this.recordPaths=[];
       let occupiedPaths = [];
-      for(let item of this.itemList.filter(x=>x.serverInfo.Storage && x.serverInfo.id != id)){
-        occupiedPaths.push(...item.serverInfo.Storage.map(e=>e.id));
+      for(let item of this.itemList.filter(x=>x.serverInfo.RecordPath && x.serverInfo.id != id)){
+        occupiedPaths.push(...item.serverInfo.RecordPath.map(e=>e.id));
       }
       console.debug("occupiedPaths", occupiedPaths);
       await this.parseService.fetchData({ type: RecordPath, filter: q => q.notContainedIn("objectId", occupiedPaths).limit(Number.MAX_SAFE_INTEGER) })
@@ -102,7 +102,7 @@ export class ServerComponent implements OnInit {
         newRecord.Port=this.serverTypes[0].DefaultPort;
         newRecord.SSLPort=undefined;
         newRecord.MaxCapacity= this.serverTypes[0].HasStorage ? 1 : undefined;
-        newRecord.Storage=this.serverTypes[0].HasStorage ? [] : undefined;
+        newRecord.RecordPath=this.serverTypes[0].HasStorage ? [] : undefined;
         newRecord.SubType="";
         newRecord.TempPath=undefined;        
         this.currentItem=newRecord;
