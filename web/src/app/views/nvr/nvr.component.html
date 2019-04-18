@@ -129,6 +129,7 @@
           <app-nvr-import [flag]="flag" [groupList]="groupList" #importComponent (reloadDataEvent)="reloadData()" (closeModal)="importWindow.hide();"></app-nvr-import>
         </div>
         <div class="modal-footer">
+            <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
             <button class="btn btn-gray" type="button" (click)="importComponent.saveAll()" [disabled]="importComponent && (!importComponent.anyChecked || importComponent.flag.busy===true)">
                 Save 
               </button>
