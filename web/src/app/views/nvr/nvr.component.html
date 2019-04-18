@@ -120,7 +120,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header flex-column">
-          <button (click)="importWindow.hide()" aria-label="Close" class="close ml-auto" type="button">
+          <button (click)="importWindow.hide();importComponent.close()" aria-label="Close" class="close ml-auto" type="button">
             <span aria-hidden="true">×</span>
           </button>
           <h4 class="modal-title text-center fw-bold">Import NVR</h4>
@@ -132,7 +132,7 @@
             <button class="btn btn-gray" type="button" (click)="importComponent.saveAll()" [disabled]="importComponent && (!importComponent.anyChecked || importComponent.flag.busy===true)">
                 Save 
               </button>
-          <button type="button" class="btn btn-gray" (click)="importWindow.hide();">Close</button>
+          <button type="button" class="btn btn-gray" (click)="importWindow.hide();importComponent.close()">Close</button>
         </div>
       </div>
     </div>

@@ -287,27 +287,31 @@ export class DeviceService {
 
     async post(req:Request, res:Response){
         try{
-            let {cams, selectedSubGroup, auth, nvrObjectId} = req.body;
+            
+            let {cams, selectedSubGroup, auth, nvrObjectId, nvrId} = req.body;
+            
             coreService.auth = auth;            
             let groupList:Group [] = [] ;
             let nvr:Nvr;
+            const $getNvr = !nvrObjectId && nvrId ? 
+                parseService.getData({type:Nvr, filter:q=>q.equalTo("Id",nvrId).limit(1)}).then(res=>nvr=res):
+                parseService.getDataById({type:Nvr, objectId:nvrObjectId}).then(res=>nvr=res);
+            
             await Promise.all([
                 this.getGroupList().then(groups=>groupList = groups),
-                parseService.getDataById({type:Nvr, objectId:nvrObjectId}).then(res=>nvr=res)
+                $getNvr
             ]);
             
+            if(!nvr) throw new Error(`nvr is null ${nvrObjectId}, ${nvrId}`);
+
             let promises=[];
             let channels = await this.getNewChannelArray(nvr.Id, cams.length);
-            
+            let results=[];
             for(let i=0;i<cams.length;i++){
+                
                 let cam=cams[i];
-                let dev:Device;
 
-                if(cam.objectId){
-                    dev = await parseService.getDataById({type:Device, objectId:cam.objectId});
-                }else{
-                    dev = new Device();
-                }
+                let dev:Device = cam.objectId ? await parseService.getDataById({type:Device, objectId:cam.objectId}):new Device();
 
                 this.assignDeviceProperties(dev, cam);
                 
@@ -316,7 +320,7 @@ export class DeviceService {
                     if(dev.Name == "New Camera 0")dev.Name = `New Camera ${dev.Channel}`;                    
                 }
 
-                promises.push(this.saveCamera(dev, nvrObjectId));
+                promises.push(this.saveCamera(dev, nvrObjectId).then(x=>results.push({objectId:cam.id,NvrId:cam.NvrId,Channel:cam.Channel})));
                 
                 if(selectedSubGroup){
                     promises.push(this.setChannelGroup(groupList, { Nvr: dev.NvrId, Channel: dev.Channel }, selectedSubGroup));
@@ -328,7 +332,7 @@ export class DeviceService {
             
             await this.saveGroupList(groupList);
             
-            res.json({message:"success"});
+            res.json(results);
         }
         catch(err){
             console.error("error saving camera", err);
@@ -418,6 +422,7 @@ assignNvrPoperties(dev: Nvr, nvr: any) {
     dev.BandwidthStream = nvr.BandwidthStream;
     dev.ServerStatusCheckInterval = nvr.ServerStatusCheckInterval;
     dev.Manufacture = nvr.Manufacture;
+    dev.SequenceNumber = nvr.SequenceNumber;
     
 }
 private async getDeviceCount(nvrId?:string):Promise<number>{

@@ -3,6 +3,7 @@ import { Group, Nvr } from 'app/model/core';
 import { CryptoService } from 'app/service/crypto.service';
 import { ParseService } from 'app/service/parse.service';
 import { NvrService } from 'app/service/nvr.service';
+import { CameraService } from 'app/service/camera.service';
 // see: https://stackoverflow.com/a/46745059/1016343
 @Component({
   selector: 'app-nvr-import',
@@ -23,6 +24,7 @@ export class NvrImportComponent  implements OnInit {
     nonGroup: Group;
     checkedAll: boolean;
     constructor(private cryptoService:CryptoService, 
+        private cameraService:CameraService,
         private nvrService:NvrService,
         private parseService:ParseService){}
     ngOnInit(){
@@ -76,7 +78,7 @@ export class NvrImportComponent  implements OnInit {
         this.checkSelected();
     }
     selectAll(checked:boolean){    
-        for(let nvr of this.nvrList.filter(x=>x.error.length==0)){
+        for(let nvr of this.nvrList.filter(x=>x.error.length==0 && !x.nvrObjectId)){
           nvr.checked=checked;
         }
         this.checkSelected();
@@ -90,8 +92,9 @@ export class NvrImportComponent  implements OnInit {
         console.debug("this.anyChecked",this.anyChecked);
       }
     async checkImportStatus(newItem:NvrImportInterface, groupName:string){
-        let existInDb = await this.parseService.fetchData({type:Nvr, filter:q=>q.equalTo("Domain", newItem.nvr.Domain).limit(1)});
-        let existInList = this.nvrList.find(x=>x.nvr.Domain == newItem.nvr.Domain);
+        let existInDb = await this.parseService.fetchData({type:Nvr, filter:q=>q.equalTo("Domain", newItem.nvr.Domain)
+            .equalTo("Port", newItem.nvr.Port).limit(1)});
+        let existInList = this.nvrList.find(x=>x.nvr.Domain == newItem.nvr.Domain && x.nvr.Port == newItem.nvr.Port);
         let group = groupName ? this.groupList.find(x=>x.Name==groupName) : this.nonGroup;
         
         if(existInDb && existInDb.length>0) newItem.error.push("exist in db");
@@ -104,31 +107,42 @@ export class NvrImportComponent  implements OnInit {
         }
         
     }
-
+    close(){
+        this.resetImport();
+        this.form.nativeElement.reset();
+        this.reloadDataEvent.emit();
+        this.closeModal.emit();
+    }
     async saveAll(){    
         if (!confirm("Import and sync selected NVR(s)?")) return;
         try{
           this.flag.busy=true;
-          let promises=[];
+          let promiseImports=[];
           let checkedList = this.nvrList.filter(x=>x.checked===true);
-          console.debug("saved nvrs", checkedList);
+          //console.debug("saved nvrs", checkedList);
           for(let group of this.importGroups){
               let items = checkedList.filter(x=>x.group == group);
               if(!items || items.length==0)continue;    
               let nvrs=items.map(x=>x.nvr);
-              console.debug("nvrs", nvrs);
-              let promise = this.nvrService.saveNvr(nvrs, items[0].group.id);
-              promises.push(promise);
+              let promise = this.nvrService.saveNvr(nvrs, items[0].group.id).then(nvrImportResults=>{
+                for(let item of items){
+                    let find= nvrImportResults.find(x=>x.Domain == item.nvr.Domain && x.Port == item.nvr.Port);
+                    if(!find)continue;
+                    item.nvrObjectId = find.objectId;
+                    item.nvr.Id = find.Id;                    
+                }
+              });
+              promiseImports.push(promise);
           }
-          await Promise.all(promises);
-
-          
-          
-          alert("Save NVR(s) success");
-          this.resetImport();
-          this.form.nativeElement.reset();
-          this.reloadDataEvent.emit();
-          this.closeModal.emit();        
+          await Promise.all(promiseImports);
+          let promiseSyncDevice=[];
+          for(let item of checkedList){              
+              promiseSyncDevice.push(this.getDevice(item).then(()=>item.checked=false));
+          }
+          await Promise.all(promiseSyncDevice);
+          this.checkSelected();
+          alert("Import NVR(s) success");
+                
         }catch(err){
           console.error(err);
           alert(err);
@@ -136,7 +150,20 @@ export class NvrImportComponent  implements OnInit {
           this.flag.busy=false;      
         }
       }
-
+      async getDevice(item:NvrImportInterface){
+        try{
+            await this.nvrService.getNvrDevice(item.nvr.Id).then(async devices => {                
+                await this.cameraService.saveCamera(devices, item.nvr.Id, item.nvrObjectId, undefined, "").then(cams=> {
+                    item.deviceSynced = cams.length;
+                    item.syncResult=true;
+                }); 
+            });
+        }
+        catch(err){
+            item.syncResult=false;
+            console.debug(err);
+        }
+      }
     convertToNvr(data: string[]):Nvr {
         let i=0;
         var nvr = new Nvr();        
@@ -186,4 +213,7 @@ interface NvrImportInterface{
     error:string[];
     nvr:Nvr; 
     group:Group;
+    syncResult?:boolean;
+    deviceSynced?:number;    
+    nvrObjectId?:string;
 }

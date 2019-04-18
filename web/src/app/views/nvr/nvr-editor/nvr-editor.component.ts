@@ -211,8 +211,8 @@ export class NvrEditorComponent implements OnInit, OnChanges {
       } 
       
       await this.cameraService.deleteCam(deleteList.map(e=>e.id), this.editNvr.id);
-      await this.cameraService.saveCamera(saveList, this.editNvr, undefined, "");
-
+      await this.cameraService.saveCamera(saveList, this.editNvr.Id, this.editNvr.id, undefined, "");
+ 
   }
 
   /** 從MediaServer取得目前可選的Devices，轉換格式後取代displayDevices */

@@ -129,7 +129,7 @@ export class CameraService {
     });
     return devices;
   }
-  async saveCamera(cams:Device[], ipCameraNvr:Nvr, selectedSubGroup:string, tags:string):Promise<Device>{
+  async saveCamera(cams:Device[], nvrId:string, nvrObjectId:string, selectedSubGroup:string, tags:string):Promise<Device[]>{
     for (let currentCamera of cams){
       
       currentCamera.Name = this.coreService.stripScript(currentCamera.Name);
@@ -156,8 +156,8 @@ export class CameraService {
       cams, 
       selectedSubGroup,      
       auth, 
-      nvrObjectId:ipCameraNvr.id,
-      nvrId:ipCameraNvr.Id
+      nvrObjectId,
+      nvrId
     };
     let options=new RequestOptions({ headers:this.coreService.parseHeaders});
     

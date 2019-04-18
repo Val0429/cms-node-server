@@ -5,8 +5,8 @@
           <section class="widget">
             <header>                
               <legend>
-                <form #form>
-                    <input type="file" (change)="onFileSelect($event.target)" name="myfile"> 
+                <form #form >
+                    <input type="file" [disabled]="flag.busy" (change)="onFileSelect($event.target)" name="myfile"> 
                 </form>
                 <strong>Total Valid NVR: {{totalValidNvr}}</strong>
               </legend>                            
@@ -20,15 +20,21 @@
                     <th>Name</th>
                     <th>Domain</th>
                     <th>Port</th>
+                    <th>Import Result</th>
+                    <th>Sync Result</th>
+                    <th>Device Synced</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of nvrList | paginate: { id: 'mainNvrList', itemsPerPage: 20, currentPage: p}">
-                    <td><input type="checkbox" (click)="selectNvr(item, $event.target.checked)" [checked]="item.checked" [disabled]="flag.busy || item.error.length>0"></td>
+                    <td><input type="checkbox" (click)="selectNvr(item, $event.target.checked)" [checked]="item.checked" [disabled]="flag.busy || item.error.length>0 || item.nvrObjectId"></td>
                     <td [ngStyle]="{'background-color':item.error.length == 0 ? '#8FBC8F' : '#FFFF64'}">{{item.error.length>0?item.error.join(', '):'valid'}}</td>
                     <td>{{item.nvr.Name}}</td>
                     <td>{{item.nvr.Domain}}</td>
                     <td>{{item.nvr.Port}}</td>                    
+                    <td>{{item.nvrObjectId ? "success" : ""}}</td>
+                    <td>{{item.syncResult}}</td>  
+                    <td>{{item.deviceSynced}}</td>  
                   </tr>
                 </tbody>
               </table>

@@ -30,10 +30,22 @@ export class NvrService {
         private userService:UserService,
         private restFulService:RestFulService
         ) { }
-  async saveNvr(nvrs:Nvr[], group:string):Promise<any[]>{      
+  async saveNvr(nvrs:Nvr[], group:string, getIdFirst:boolean=false):Promise<any[]>{      
+     if(getIdFirst){
+       let ids = await this.getNewNvrId(nvrs.length);
+       for(let i=0;i<nvrs.length;i++){
+         nvrs[i].Id=ids[i].toString();
+         nvrs[i].SequenceNumber=ids[i];
+       }
+     }
       let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/nvr", { nvrs, newGroupId:group, auth:this.auth},
       new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
       return result.json();   
+  }
+  async getNewNvrId(count:number):Promise<number[]>{
+    let result = await this.httpService.get(this.parseService.parseServerUrl + `/cms/nvr/newId/${count}`,
+      new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
+      return result.json(); 
   }
   async getNvrList(page:number, pageSize:number){
     let skip=(page-1)*pageSize;
@@ -138,7 +150,7 @@ setEditModel(editNvr:Nvr, groupList:Group[], iSapP2PServerList:ServerInfo[], new
         path: `${this.coreService.urls.URL_MEDIA_GET_DEVICE_LIST}&nvr=nvr${nvrId}`,
         body: {}
       }, 30000).toPromise();        
-      
+
       const deviceConnect = JsonHelper.instance.findAttributeByString(result, 'AllDevices.DeviceConnectorConfiguration');
       return this.convertTempToDisplay(deviceConnect, nvrId);
   }
