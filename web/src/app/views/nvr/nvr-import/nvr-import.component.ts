@@ -4,6 +4,8 @@ import { CryptoService } from 'app/service/crypto.service';
 import { ParseService } from 'app/service/parse.service';
 import { NvrService } from 'app/service/nvr.service';
 import { CameraService } from 'app/service/camera.service';
+import { LicenseService } from 'app/service/license.service';
+import { environment } from 'environments/environment';
 // see: https://stackoverflow.com/a/46745059/1016343
 @Component({
   selector: 'app-nvr-import',
@@ -24,6 +26,7 @@ export class NvrImportComponent  implements OnInit {
     nonGroup: Group;
     checkedAll: boolean;
     constructor(private cryptoService:CryptoService, 
+        private licenseService:LicenseService,
         private cameraService:CameraService,
         private nvrService:NvrService,
         private parseService:ParseService){}
@@ -152,15 +155,22 @@ export class NvrImportComponent  implements OnInit {
       }
       async getDevice(item:NvrImportInterface){
         try{
+            const lic = environment.production ? this.licenseService.getNvrManufacturerLicenseCode(item.nvr.Manufacture) : "pass";
+            console.debug(lic);
+            let num = await this.licenseService.getLicenseAvailableCount(lic).toPromise();
+
             await this.nvrService.getNvrDevice(item.nvr.Id).then(async devices => {                
-                await this.cameraService.saveCamera(devices, item.nvr.Id, item.nvrObjectId, undefined, "").then(cams=> {
-                    item.deviceSynced = cams.length;
-                    item.syncResult=true;
-                }); 
+                if(num<devices.length)item.syncResult=`insufficient license for ${devices.length} device(s)`;
+                else{
+                    await this.cameraService.saveCamera(devices, item.nvr.Id, item.nvrObjectId, undefined, "").then(cams=> {
+                        item.deviceSynced = cams.length;
+                        item.syncResult="success";
+                    }); 
+                }
             });
         }
         catch(err){
-            item.syncResult=false;
+            item.syncResult="failed";
             console.debug(err);
         }
       }
@@ -213,7 +223,7 @@ interface NvrImportInterface{
     error:string[];
     nvr:Nvr; 
     group:Group;
-    syncResult?:boolean;
+    syncResult?:string;
     deviceSynced?:number;    
     nvrObjectId?:string;
 }

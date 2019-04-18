@@ -153,6 +153,7 @@ export class CameraSearchComponent implements OnInit {
       }
       await Observable.forkJoin(promises).toPromise();
     }catch(err){
+      console.error(err);
       alert(err);
     }finally{
       this.flag.busy = false;
