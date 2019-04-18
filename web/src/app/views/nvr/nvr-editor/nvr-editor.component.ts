@@ -227,9 +227,7 @@ export class NvrEditorComponent implements OnInit, OnChanges {
     await this.reloadEditData(this.currentEditModel.Group);
     await this.getDeviceList();
   }
-  
-  
-  /** 轉發CGI取得該NVR的Device */
+    
   async getDeviceList() {
     if (!this.tempDevices) {
       this.tempDevices = [];
@@ -237,88 +235,13 @@ export class NvrEditorComponent implements OnInit, OnChanges {
 
     this.flag.busy = true;
 
-    const get$ = this.coreService.proxyMediaServer({
-      method: 'GET',
-      path: `${this.coreService.urls.URL_MEDIA_GET_DEVICE_LIST}&nvr=nvr${this.editNvr.Id}`,
-      body: {}
-    }, 30000)
-      .map(result => {
-        const deviceConnect = JsonHelper.instance.findAttributeByString(result, 'AllDevices.DeviceConnectorConfiguration');
-        this.tempDevices = this.convertTempToDisplay(deviceConnect);
-        this.refreshDeviceList();
-      });
-
-    await get$
-      .toPromise()
+    const get$ = this.nvrService.getNvrDevice(this.editNvr.Id).then(result => {
+      this.tempDevices = result;
+      this.refreshDeviceList();
+    });
+    await get$      
       .catch(alert)
       .then(() => this.flag.busy = false);
-  }
-
-  /** 將media server來的tempDevice轉為CMS儲存格式 */
-  convertTempToDisplay(arr: any): Device[] {
-    if (!arr) {
-      return [];
-    }
-
-    const tempList: Device[] = [];
-    const processList = ArrayHelper.toArray(arr);
-
-    processList.forEach(dev => {
-      try {
-        this.convertTempDeviceFormat(dev);
-        const newObj = new Device({
-          NvrId: this.editNvr.Id,
-          Name: dev.DeviceSetting.Name,
-          Channel: Number(dev.DeviceID),
-          Config: dev.DeviceSetting,
-          Capability: dev.Capability
-        });
-
-        newObj.Config.Stream.forEach(str => {
-          str.Id = Number(str.Id);
-        });
-        tempList.push(newObj);
-      } catch (err) {
-        return;
-      }
-    });
-
-    return tempList;
-  }
-
-  /** 從MediaServer取得tempDevice後，由於與儲存格式名稱不同，需先轉換方便後續作業 */
-  convertTempDeviceFormat(dev: any) {
-    dev.DeviceSetting.Stream = this.convertStreamConfig(dev.DeviceSetting.StreamConfig);
-    delete dev.DeviceSetting.StreamConfig;
-    dev.DeviceSetting['Multi-Stream'] = this.convertMultiStream(dev.DeviceSetting['Multi-Stream']);
-  }
-
-  /** 將MediaServer上的Stream資料格式轉換為CMS儲存格式 */
-  convertStreamConfig(stream: any) {
-    const results = [];
-    if (!stream) {
-      return results;
-    }
-    stream = ArrayHelper.toArray(stream);
-
-    stream.forEach(str => {
-      const newItem: IDeviceStream = {
-        Id: Number(str.$.id),
-        Video: str.Video,
-        Port: {}
-      };
-      results.push(newItem);
-    });
-    return results;
-  }
-
-  /** 將MediaServer上的MultiStream資料格式轉換為CMS儲存格式 */
-  convertMultiStream(multiStream: any) {
-    return {
-      High: multiStream ? multiStream.HighProfile : undefined,
-      Medium: multiStream ? multiStream.MediumProfile : undefined,
-      Low: multiStream ? multiStream.LowProfile : undefined
-    };
   }
 
   /** 套用Server的Domain, Port至CurrentEditModel的同名資料 */
