@@ -185,7 +185,7 @@ export class NvrImportComponent  implements OnInit {
         nvr.Account=this.cryptoService.encrypt4DB(data[i++]);
         nvr.Password=this.cryptoService.encrypt4DB(data[i++]);
         nvr.SSLEnable=data[i++].toLowerCase() == "true";
-        nvr.IsListenEvent=data[i++]== "true";
+        nvr.IsListenEvent=data[i++].toLowerCase() == "true";
         nvr.BandwidthStream=Number.parseInt(data[i++]);
         nvr.ServerStatusCheckInterval=Number.parseInt(data[i++]);    
         nvr.Tags=data[i] ? data[i].split(","):[];
