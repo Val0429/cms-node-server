@@ -7,7 +7,8 @@
               <legend>
                 <form #form >
                     <input type="file" [disabled]="flag.busy" (change)="onFileSelect($event.target)" name="myfile"> 
-                </form>
+                    <button [disabled]="flag.busy || nvrList.length==0" (click)="exportAll()">Export Result</button>                    
+                </form>                
                 <strong>Total Valid NVR: {{totalValidNvr}}</strong>
               </legend>                            
             </header>

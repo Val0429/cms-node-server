@@ -6,6 +6,7 @@ import { NvrService } from 'app/service/nvr.service';
 import { CameraService } from 'app/service/camera.service';
 import { LicenseService } from 'app/service/license.service';
 import { environment } from 'environments/environment';
+import { CSVService } from 'app/service/csv.service';
 // see: https://stackoverflow.com/a/46745059/1016343
 @Component({
   selector: 'app-nvr-import',
@@ -25,10 +26,12 @@ export class NvrImportComponent  implements OnInit {
     totalValidNvr:number=0;
     nonGroup: Group;
     checkedAll: boolean;
+    headers: any[];
     constructor(private cryptoService:CryptoService, 
         private licenseService:LicenseService,
         private cameraService:CameraService,
         private nvrService:NvrService,
+        private csvService:CSVService,
         private parseService:ParseService){}
     ngOnInit(){
     }
@@ -39,12 +42,12 @@ export class NvrImportComponent  implements OnInit {
             let allTextLines = result.split(/\r|\n|\r/);
             let header = allTextLines.splice(0,1);
             this.nonGroup = this.groupList.find(x=>x.Name =="Non Sub Group");
-            let headers = header[0].split(',');
+            this.headers = header[0].split(',');
             let promises=[];
             allTextLines.forEach(item => {
                 // split content based on comma
                 let data = item.split(',');          
-                if(data.length<headers.length)return; 
+                if(data.length< this.headers.length)return; 
                 try{
                     let nvr = this.convertToNvr(data);
                     let groupName = data[data.length-1];                   
@@ -144,8 +147,7 @@ export class NvrImportComponent  implements OnInit {
           }
           await Promise.all(promiseSyncDevice);
           this.checkSelected();
-          alert("Import NVR(s) success");
-                
+          if(confirm("Import NVR(s) success, export result?")) this.exportAll();      
         }catch(err){
           console.error(err);
           alert(err);
@@ -173,6 +175,13 @@ export class NvrImportComponent  implements OnInit {
             item.syncResult="failed";
             console.debug(err);
         }
+      }
+      exportAll(){
+        this.csvService.downloadCSV({
+            header: this.headers.join(",")+",error,import result, sync result, device synced",
+            data: this.nvrList.map(item => `${item.nvr.Name},${item.nvr.Manufacture},${item.nvr.Driver},${item.nvr.Domain},${item.nvr.Port},${item.nvr.Account},${item.nvr.Password},${item.nvr.SSLEnable},${item.nvr.IsListenEvent},${item.nvr.BandwidthStream},${item.nvr.ServerStatusCheckInterval},${item.nvr.Tags},${item.group? item.group.Name:''},${item.error.join(";")},${item.nvrObjectId?'success':''},${item.syncResult ||""},${item.deviceSynced || ""}`),
+            fileName: 'import_result'
+          });
       }
     convertToNvr(data: string[]):Nvr {
         let i=0;
