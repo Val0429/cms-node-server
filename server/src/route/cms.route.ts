@@ -73,6 +73,10 @@ export const CmsRoute: IRouteMap = {
         .post('/device', async (req, res) => {            
             await deviceService.post(req, res);
         })
+        .get('/nvr/newId/:count', async (req, res) => {            
+            let result = await deviceService.getNewNvrId(req.params["count"]);
+            res.json(result);
+        })
         .delete('/nvr', async (req, res) => {            
             await deviceService.delNvr(req, res);
         })

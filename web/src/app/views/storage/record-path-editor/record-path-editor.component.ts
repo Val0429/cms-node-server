@@ -3,6 +3,7 @@ import { CoreService } from 'app/service/core.service';
 import { RecordPath } from '../../../model/core';
 import { CryptoService } from 'app/service/crypto.service';
 import { IRecordPath } from 'lib/domain/core';
+import { ServerService } from 'app/service/server.service';
 
 @Component({
   selector: 'app-record-path-editor',
@@ -13,7 +14,11 @@ export class RecordPathEditorComponent implements OnInit,OnChanges {
   @Input() flag:{busy:boolean};
   @Output() reloadRecordPathEvent: EventEmitter<any> = new EventEmitter();
   @Output() closeEvent: EventEmitter<any> = new EventEmitter();
-  constructor(private coreService:CoreService, private cryptoService:CryptoService) { }
+  constructor(
+    private coreService:CoreService, 
+    private cryptoService:CryptoService,
+    private serverService:ServerService
+    ) { }
   @Input() currentRecordPath:RecordPath;
   editRecordPath:IRecordPath;
   ngOnInit() {
@@ -35,8 +40,7 @@ export class RecordPathEditorComponent implements OnInit,OnChanges {
     if(!confirm("Are you sure?"))return;
     try{
       this.flag.busy=true;
-      await this.currentRecordPath.destroy();
-      this.coreService.notify({path:this.coreService.urls.URL_RECORDPATH, objectId:this.currentRecordPath.id})
+      await this.serverService.deleteRecordPaths([this.currentRecordPath]);      
       this.reloadRecordPathEvent.emit();
       this.closeEvent.emit();
     }catch(err){

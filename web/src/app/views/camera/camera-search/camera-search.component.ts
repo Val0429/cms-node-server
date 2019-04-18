@@ -49,7 +49,7 @@ export class CameraSearchComponent implements OnInit {
 
         let noGroup = this.groupList.find(x=>x.Name=="Non Main Group");
         let selectedSubGroup = noGroup.SubGroup[0];        
-        await this.cameraService.saveCamera(cams, this.ipCameraNvr, selectedSubGroup, "");
+        await this.cameraService.saveCamera(cams, this.ipCameraNvr.Id, this.ipCameraNvr.id, selectedSubGroup, "");
         alert("Save camera(s) sucess");
         this.checkedAll=false;
         this.searchList=[];
@@ -153,6 +153,7 @@ export class CameraSearchComponent implements OnInit {
       }
       await Observable.forkJoin(promises).toPromise();
     }catch(err){
+      console.error(err);
       alert(err);
     }finally{
       this.flag.busy = false;

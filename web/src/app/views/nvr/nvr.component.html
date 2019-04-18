@@ -20,13 +20,16 @@
           </div>
         </div> -->
         <div class="float-right">
-          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="modalWindow.show()">
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="importWindow.show()" [disabled]="flag.busy">
+              Import
+          </button>
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="modalWindow.show()" [disabled]="flag.busy">
             Search
           </button>
-          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addNVR()">
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addNVR()" [disabled]="flag.busy">
             Create
           </button>
-          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="deleteAll()" [disabled]="!anyChecked">
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="deleteAll()" [disabled]="!anyChecked || flag.busy">
               Delete
             </button>
         </div>
@@ -113,3 +116,25 @@
     </div>
   </div>
 </div>
+<div bsModal #importWindow="bs-modal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header flex-column">
+          <button (click)="importWindow.hide();importComponent.close()" aria-label="Close" class="close ml-auto" type="button">
+            <span aria-hidden="true">×</span>
+          </button>
+          <h4 class="modal-title text-center fw-bold">Import NVR</h4>
+        </div>
+        <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
+          <app-nvr-import [flag]="flag" [groupList]="groupList" #importComponent (reloadDataEvent)="reloadData()" (closeModal)="importWindow.hide();"></app-nvr-import>
+        </div>
+        <div class="modal-footer">
+            <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>
+            <button class="btn btn-gray" type="button" (click)="importComponent.saveAll()" [disabled]="importComponent && (!importComponent.anyChecked || importComponent.flag.busy===true)">
+                Save 
+              </button>
+          <button type="button" class="btn btn-gray" (click)="importWindow.hide();importComponent.close()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

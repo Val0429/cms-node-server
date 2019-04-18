@@ -330,6 +330,12 @@ export class RestFulService {
                 data["_updated_at"]=data[key];
                 delete(data[key]);
             }
+            
+            if(data[key].__type && data[key].__type=="Pointer"){
+                let newKey="_p_"+data[key].className;
+                data[newKey]=data[key].className+"$"+data[key].objectId;
+                delete(data[key]);
+            }
             if(data[key] && data[key]!=null && typeof(data[key])==="object") this.maskJson(data[key]);
         }
     }
@@ -353,10 +359,12 @@ export class RestFulService {
         }
 
         for(let key of keys){
-            if(key.indexOf(pointer)>-1){
-                let newKey=key.substring(pointer.length,key.length);
-                let link = data[key].split('$');                     
-                data[newKey]={"__type": "Pointer", "className": link[0], "objectId": link[1]};
+            if(key.indexOf(pointer)>-1){                                
+                if(data[key]){
+                    let newKey=key.substring(pointer.length,key.length);
+                    let link = data[key].split('$');                     
+                    data[newKey]={"__type": "Pointer", "className": link[0], "objectId": link[1]};                    
+                }
                 delete(data[key]);
             }
             if(data[key] && data[key]!=null && typeof(data[key])==="object") this.postProcessJson(data[key]);

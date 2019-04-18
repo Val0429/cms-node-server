@@ -30,11 +30,11 @@ export class LicenseComponent implements OnInit {
   currentServer:ServerInfo ;
   constructor(private coreService: CoreService, private licenseService: LicenseService, private parseService:ParseService) { }
   ServerType:{key:string, value:number}[] = [
-    {key:"cmsmanager", value:10},
-    {key:"recordserver", value:20},
-    {key:"recordrecoveryserver", value:30},
-    {key:"recordfailoverserver", value:40},
-    {key:"smartmedia", value:50}
+    {key:"CMSManager", value:10},
+    {key:"RecordServer", value:20},
+    {key:"RecordRecoveryServer", value:30},
+    {key:"RecordFailoverServer", value:40},
+    {key:"SmartMedia", value:50}
   ];
   
   ngOnInit() {
@@ -53,10 +53,12 @@ export class LicenseComponent implements OnInit {
       (response1,response2, response3) => {        
         this.servers = [];
         for(let server of response1){
-          let found = this.servers.find(x=>x.Domain == server.Domain && x.Port ==server.Port);
-          if(found==undefined){
+          let found = this.servers.find(x=>x.Domain == server.Domain);
+          if(!found){
             this.servers.push(server);
-          }else if(this.ServerType.find(x=>x.key == server.Type.toLowerCase()).value < this.ServerType.find(x=>x.key == found.Type.toLowerCase()).value){
+          }
+          else if(this.ServerType.find(x=>x.key == server.Type).value < this.ServerType.find(x=>x.key == found.Type).value){
+            //replace according to the order
             found = Object.assign({}, server);
           }
         }

@@ -159,7 +159,7 @@ export class CameraEditorComponent implements OnInit, OnChanges {
       this.editorParam.getStreamSaveNumberBeforeSave();
       this.editorParam.getResolutionBeforeSave();
       this.editorParam.removeAttributesBeforeSave();    
-      let result = await this.cameraService.saveCamera([this.currentCamera], this.ipCameraNvr, this.selectedSubGroup, this.tags);
+      let result = await this.cameraService.saveCamera([this.currentCamera], this.ipCameraNvr.Id, this.ipCameraNvr.id, this.selectedSubGroup, this.tags);
 
       console.debug("save result", result);
       alert('Update Success');

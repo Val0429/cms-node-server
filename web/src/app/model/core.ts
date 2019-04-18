@@ -281,8 +281,8 @@ export class ServerInfo extends Parse.Object implements IServerInfo {
     super.set('Name', value);
   }
 
-  get Storage(): RecordPath[] { return super.get('Storage'); }
-  set Storage(value: RecordPath[]) { super.set('Storage', value); }
+  get RecordPath(): RecordPath[] { return super.get('RecordPath'); }
+  set RecordPath(value: RecordPath[]) { super.set('RecordPath', value); }
 
   constructor(value?: Partial<IServerInfo>) {
     super('ServerInfo');
@@ -321,8 +321,8 @@ export class Server extends Parse.Object implements IServer {
   set AP(value: { Name: string; Page: { Name: string; Config: string }[] }) {
     super.set('AP', value);
   }
-  get Storage(): RecordPath[] { return super.get('Storage'); }
-  set Storage(value: RecordPath[]) { super.set('Storage', value); }
+  get RecordPath(): RecordPath[] { return super.get('Storage'); }
+  set RecordPath(value: RecordPath[]) { super.set('Storage', value); }
   constructor(value?: Partial<IServer>) {
     super('Server');
     Object.assign(this, value);

@@ -162,7 +162,7 @@ export class CameraEditorParam {
                 }
             });
         }
-
+        let modelCapManufacture = Array.isArray(this.modelCap.Manufacture) ? this.modelCap.Manufacture[0].toLowerCase() : this.modelCap.Manufacture.toLowerCase();
         // copy Series to CameraSetting
         if (this.jsonHelper.hasAttribute(this.modelCap, 'Series')) {
             this.currentCameraConfig.CameraSetting.Series = this.modelCap.Series;
@@ -172,7 +172,7 @@ export class CameraEditorParam {
 
         // 檢查廠牌判斷是否需選擇Resolution Mode
         this.ResolutionModeOptions = ['FULL'];
-        if (ResolutionModeBrand.indexOf(this.modelCap.Manufacture.toLowerCase()) >= 0) {
+        if (ResolutionModeBrand.indexOf(modelCapManufacture) >= 0) {
             this.ResolutionModeOptions.push('HALF');
         }
 
@@ -183,7 +183,7 @@ export class CameraEditorParam {
         }
 
         this.QualityOptions = [];
-        if (QualityBrand.indexOf(this.modelCap.Manufacture.toLowerCase()) >= 0) {
+        if (QualityBrand.indexOf(modelCapManufacture) >= 0) {
             for (let i = 1; i < 11; i++) {
                 this.QualityOptions.push((i * 10).toString());
             }
@@ -227,7 +227,7 @@ export class CameraEditorParam {
         }
 
         // show this column if the model manufacture is on list
-        this.SeamlessEdgeRecording = SeamlessEdgeRecordingBrand.indexOf(this.modelCap.Manufacture.toLowerCase()) >= 0;
+        this.SeamlessEdgeRecording = SeamlessEdgeRecordingBrand.indexOf(modelCapManufacture) >= 0;
 
         this.ChannelIdOptions = [];
         if (this.jsonHelper.hasAttribute(this.modelCap, 'NumberOfChannel')) {
@@ -253,28 +253,28 @@ export class CameraEditorParam {
 
         this.OccupancyPriorityOptions = [];
         const model = this.modelCap.Model.toLowerCase();
-        if (this.modelCap.Manufacture.toLowerCase() === 'isapsolution'
+        if (modelCapManufacture === 'isapsolution'
             && (model === 'smart patrol service' || model === 'smart monitor service')) {
             this.OccupancyPriorityOptions = OccupancyPriorityList;
         }
 
         // 檢查廠牌是否需選擇Bitrate Control
         this.BitrateControlOptions = [];
-        if (BitrateControlBrand.indexOf(this.modelCap.Manufacture.toLowerCase()) >= 0) {
+        if (BitrateControlBrand.indexOf(modelCapManufacture) >= 0) {
             this.BitrateControlOptions.push('VBR');
             this.BitrateControlOptions.push('CBR');
         }
 
         // 檢查廠牌判斷是否需選擇Resolution Mode
         this.MotionThresholdOptions = [];
-        if (MotionThresholdBrand.indexOf(this.modelCap.Manufacture.toLowerCase()) >= 0) {
+        if (MotionThresholdBrand.indexOf(modelCapManufacture) >= 0) {
             for (let i = 0; i < 11; i++) {
                 this.MotionThresholdOptions.push((i * 10).toString());
             }
         }
 
         // 檢查廠牌判斷是否應設定Resolution Region
-        this.ResolutionRegionConfig = ResolutionRegionBrand.indexOf(this.modelCap.Manufacture.toLowerCase()) >= 0;
+        this.ResolutionRegionConfig = ResolutionRegionBrand.indexOf(modelCapManufacture) >= 0;
     }
 
     /** 將單純看ModelCap非動態的選項設定預設值到currentCameraConfig */
@@ -282,9 +282,9 @@ export class CameraEditorParam {
         if (!this.modelCap) {
             return;
         }
-
+        let modelCapManufacture = Array.isArray(this.modelCap.Manufacture) ? this.modelCap.Manufacture[0].toLowerCase() : this.modelCap.Manufacture.toLowerCase();
         // 廠牌isap不需要紀錄IPAddress和Http
-        if (this.modelCap.Manufacture.toLowerCase() === 'isapsolution') {
+        if (modelCapManufacture === 'isapsolution') {
             this.currentCameraConfig.Config.IPAddress = '';
             this.currentCameraConfig.Config.Http = 0;
         }
@@ -574,7 +574,8 @@ export class CameraEditorParam {
 
     // 建構Customization(RTSP)專用欄位, 因PTZCommands非單純string, 故另外建立
     setPTZCommands() {
-        const isCustom = this.modelCap.Manufacture.toLowerCase() === 'customization';
+        let modelCapManufacture = Array.isArray(this.modelCap.Manufacture) ? this.modelCap.Manufacture[0].toLowerCase() : this.modelCap.Manufacture.toLowerCase();
+        const isCustom = modelCapManufacture === 'customization';
         if (isCustom) {
             this.currentCameraConfig.CameraSetting.PTZCommands = new PTZCommands(this.currentCameraConfig);
         } else if (!isCustom) {
@@ -875,8 +876,9 @@ export class CameraEditorParam {
     getModeOptions(): any[] {
         console.debug("this.modelCap", this.modelCap);
         const result = [];
+        let modelCapManufacture = Array.isArray(this.modelCap.Manufacture) ? this.modelCap.Manufacture[0].toLowerCase() : this.modelCap.Manufacture.toLowerCase();
         // Special case for brand:Customization(RTSP)
-        if (this.modelCap.Manufacture && this.modelCap.Manufacture.toLowerCase() === 'customization') {
+        if (modelCapManufacture === 'customization') {
             for (let i = 1; i <= 4; i++) {
                 const item = ProfileModes.find(x => x.value === i.toString());
                 if (item) {
@@ -906,7 +908,7 @@ export class CameraEditorParam {
     /** 取得LiveStream and RecordStream 使用的選單內容 */
     getStreamOptions(): any[] {
         let result: { key: string, value: number }[] = [];
-        const brand = this.modelCap.Manufacture.toLowerCase();
+        let brand = Array.isArray(this.modelCap.Manufacture) ? this.modelCap.Manufacture[0].toLowerCase() : this.modelCap.Manufacture.toLowerCase();
         const model = this.modelCap.Model.toLowerCase();
         // Special case for brand ONVIF
         if (brand === 'onvif') {
@@ -1162,7 +1164,8 @@ export class CameraEditorParam {
 
     /** 依照型號判斷是否為RTSP，移除不需儲存的屬性 */
     removeAttributesBeforeSave() {
-        if (this.modelCap.Manufacture.toLowerCase() !== 'customization') {
+        let modelCapManufacture = Array.isArray(this.modelCap.Manufacture) ? this.modelCap.Manufacture[0].toLowerCase() : this.modelCap.Manufacture.toLowerCase();
+        if (modelCapManufacture !== 'customization') {
             this.currentCameraConfig.Config.Stream.forEach(element => {
                 delete element.RTSPURI;
                 delete element.RecorderId;

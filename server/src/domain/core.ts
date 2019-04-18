@@ -346,8 +346,8 @@ export class Server extends Parse.Object implements IServer {
     set MediaServer(value: {
         Port: string; SSLPort: string; DBModule: string; Domain: string;
     }) { super.set('MediaServer', value); }
-    get Storage(): RecordPath[] { return super.get('Storage'); }
-    set Storage(value: RecordPath[]) { super.set('Storage', value); }
+    get RecordPath(): RecordPath[] { return super.get('RecordPath'); }
+    set RecordPath(value: RecordPath[]) { super.set('RecordPath', value); }
     constructor(data?: Partial<IServer>) {
         super('Server');
         Object.assign(this, data);
@@ -374,8 +374,8 @@ export class ServerInfo extends Parse.Object implements IServerInfo {
     get Name(): string { return super.get('Name'); }
     set Name(value: string) { super.set('Name', value); }
     
-    get Storage(): RecordPath[] { return super.get('Storage'); }
-    set Storage(value: RecordPath[]) { super.set('Storage', value); }
+    get RecordPath(): RecordPath[] { return super.get('RecordPath'); }
+    set RecordPath(value: RecordPath[]) { super.set('RecordPath', value); }
     constructor(data?: Partial<IServerInfo>) {
         super('ServerInfo');
         Object.assign(this, data);

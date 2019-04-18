@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { CoreService } from './core.service';
 import { ParseService } from './parse.service';
 import { CryptoService } from './crypto.service';
-import { Nvr, Group, ServerInfo } from 'app/model/core';
+import { Nvr, Group, ServerInfo, Device } from 'app/model/core';
 import { RequestOptions, Http } from '@angular/http';
 import { UserService } from './user.service';
 import { RestFulService } from './restful.service';
+import ArrayHelper from 'app/helper/array.helper';
+import { IDeviceStream } from 'lib/domain/core';
+import JsonHelper from 'app/helper/json.helper';
 
 
 
@@ -27,10 +30,22 @@ export class NvrService {
         private userService:UserService,
         private restFulService:RestFulService
         ) { }
-  async saveNvr(nvrs:Nvr[], group:string):Promise<any[]>{      
+  async saveNvr(nvrs:Nvr[], group:string, getIdFirst:boolean=false):Promise<any[]>{      
+     if(getIdFirst){
+       let ids = await this.getNewNvrId(nvrs.length);
+       for(let i=0;i<nvrs.length;i++){
+         nvrs[i].Id=ids[i].toString();
+         nvrs[i].SequenceNumber=ids[i];
+       }
+     }
       let result = await this.httpService.post(this.parseService.parseServerUrl + "/cms/nvr", { nvrs, newGroupId:group, auth:this.auth},
       new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
       return result.json();   
+  }
+  async getNewNvrId(count:number):Promise<number[]>{
+    let result = await this.httpService.get(this.parseService.parseServerUrl + `/cms/nvr/newId/${count}`,
+      new RequestOptions({ headers:this.coreService.parseHeaders})).toPromise();
+      return result.json(); 
   }
   async getNvrList(page:number, pageSize:number){
     let skip=(page-1)*pageSize;
@@ -127,7 +142,85 @@ setEditModel(editNvr:Nvr, groupList:Group[], iSapP2PServerList:ServerInfo[], new
     new RequestOptions({ headers:this.coreService.parseHeaders, body:{ objectIds: nvrIds, auth:this.auth}})).toPromise();
     return result.json();        
   }
+  /** 轉發CGI取得該NVR的Device */
+  async getNvrDevice(nvrId:string){
     
+      let result = await this.coreService.proxyMediaServer({
+        method: 'GET',
+        path: `${this.coreService.urls.URL_MEDIA_GET_DEVICE_LIST}&nvr=nvr${nvrId}`,
+        body: {}
+      }, 30000).toPromise();        
+
+      const deviceConnect = JsonHelper.instance.findAttributeByString(result, 'AllDevices.DeviceConnectorConfiguration');
+      return this.convertTempToDisplay(deviceConnect, nvrId);
+  }
+    /** 將media server來的tempDevice轉為CMS儲存格式 */
+  convertTempToDisplay(arr: any, nvrId:string): Device[] {
+    if (!arr) {
+      return [];
+    }
+
+    const tempList: Device[] = [];
+    const processList = ArrayHelper.toArray(arr);
+
+    processList.forEach(dev => {
+      try {
+        this.convertTempDeviceFormat(dev);
+        const newObj = new Device({
+          NvrId: nvrId,
+          Name: dev.DeviceSetting.Name,
+          Channel: Number(dev.DeviceID),
+          Config: dev.DeviceSetting,
+          Capability: dev.Capability
+        });
+
+        newObj.Config.Stream.forEach(str => {
+          str.Id = Number(str.Id);
+        });
+        tempList.push(newObj);
+      } catch (err) {
+        return;
+      }
+    });
+
+    return tempList;
+  }
+  /** 從MediaServer取得tempDevice後，由於與儲存格式名稱不同，需先轉換方便後續作業 */
+  convertTempDeviceFormat(dev: any) {
+    dev.DeviceSetting.Stream = this.convertStreamConfig(dev.DeviceSetting.StreamConfig);
+    delete dev.DeviceSetting.StreamConfig;
+    dev.DeviceSetting['Multi-Stream'] = this.convertMultiStream(dev.DeviceSetting['Multi-Stream']);
+  }
+  /** 將MediaServer上的Stream資料格式轉換為CMS儲存格式 */
+  convertStreamConfig(stream: any) {
+    const results = [];
+    if (!stream) {
+      return results;
+    }
+    stream = ArrayHelper.toArray(stream);
+
+    stream.forEach(str => {
+      const newItem: IDeviceStream = {
+        Id: Number(str.$.id),
+        Video: str.Video,
+        Port: {}
+      };
+      results.push(newItem);
+    });
+    return results;
+  }
+
+
+
+  /** 將MediaServer上的MultiStream資料格式轉換為CMS儲存格式 */
+  convertMultiStream(multiStream: any) {
+    return {
+      High: multiStream ? multiStream.HighProfile : undefined,
+      Medium: multiStream ? multiStream.MediumProfile : undefined,
+      Low: multiStream ? multiStream.LowProfile : undefined
+    };
+  }
+
 }
 
 export interface INvrEditModel {

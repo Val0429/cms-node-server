@@ -448,18 +448,18 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
     const alertMessage = [];
     
     let lic = 'pass';
-    let serverId:string;
-    if(this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) { 
-      lic = '00168';
-      serverId = (this.currentTemplate as RecordScheduleTemplate).RecordPath.id;
-      console.debug("serverId");
-    }
+    
+    // by passed license check for now 2019 04 18
+    // if(this.setupMode === this.setupModes.RECORD_SCHEDULE_TEMPLATE) { 
+    //   lic = '00168';            
+    // }
+
     if (alertMessage.length > 0) {
       alert(alertMessage.join('\n'));
       return Observable.of(null);
     }
 
-    return this.licenseService.getLicenseAvailableCount(lic, serverId)
+    return this.licenseService.getLicenseAvailableCount(lic)
       .switchMap(num => {
         console.debug("num", num);        
 

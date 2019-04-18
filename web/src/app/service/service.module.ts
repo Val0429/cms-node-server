@@ -15,6 +15,7 @@ import { LicenseService } from 'app/service/license.service';
 import { CSVService } from 'app/service/csv.service';
 import { NvrService } from './nvr.service';
 import { RestFulService } from './restful.service';
+import { ServerService } from './server.service';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import { RestFulService } from './restful.service';
   ],
   declarations: [],
   providers: [CoreService, IsapSidebarService, EventService, CameraService, NvrService,
-    GroupService, CryptoService, UserService, ParseService, LicenseService, RestFulService,
-    CSVService]
+    GroupService, CryptoService, UserService, ParseService, LicenseService, RestFulService, 
+    ServerService, CSVService]
 })
 export class ServiceModule { }

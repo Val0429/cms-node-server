@@ -7,6 +7,7 @@ import { Device, Nvr, Group, PagerClass } from 'app/model/core';
 import { DeviceVendor } from 'app/config/device-vendor.config';
 import { CameraService } from 'app/service/camera.service';
 import { CameraSearchComponent } from './camera-search/camera-search.component';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-camera',
@@ -75,8 +76,8 @@ export class CameraComponent implements OnInit {
     try{
       await Observable.fromPromise(this.licenseService.getLicenseAvailableCount('00171').toPromise()
       .then(num => {
-        this.availableLicense = num;
-        console.debug("num 00171", this.availableLicense);
+        console.debug("num 00171", num);
+        this.availableLicense = environment.production ? num : 50000; 
       })).toPromise();
     }catch(err){
       console.error("unable to get license", err); 
