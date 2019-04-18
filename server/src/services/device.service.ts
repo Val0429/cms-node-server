@@ -290,22 +290,11 @@ export class DeviceService {
             
             let {cams, selectedSubGroup, auth, nvrObjectId, nvrId} = req.body;
             
-            coreService.auth = auth;            
-            let groupList:Group [] = [] ;
-            let nvr:Nvr;
-            const $getNvr = !nvrObjectId && nvrId ? 
-                parseService.getData({type:Nvr, filter:q=>q.equalTo("Id",nvrId).limit(1)}).then(res=>nvr=res):
-                parseService.getDataById({type:Nvr, objectId:nvrObjectId}).then(res=>nvr=res);
+            coreService.auth = auth;
             
-            await Promise.all([
-                this.getGroupList().then(groups=>groupList = groups),
-                $getNvr
-            ]);
-            
-            if(!nvr) throw new Error(`nvr is null ${nvrObjectId}, ${nvrId}`);
-
+            let groupList = await this.getGroupList();            
+            let channels = await this.getNewChannelArray(nvrId, cams.length);
             let promises=[];
-            let channels = await this.getNewChannelArray(nvr.Id, cams.length);
             let results=[];
             for(let i=0;i<cams.length;i++){
                 
