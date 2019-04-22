@@ -179,7 +179,7 @@ export class NvrImportComponent  implements OnInit {
       exportAll(){
         this.csvService.downloadCSV({
             header: this.headers.join(",")+",error,import result, sync result, device synced",
-            data: this.nvrList.map(item => `${item.nvr.Name},${item.nvr.Manufacture},${item.nvr.Driver},${item.nvr.Domain},${item.nvr.Port},${item.nvr.Account},${item.nvr.Password},${item.nvr.SSLEnable},${item.nvr.IsListenEvent},${item.nvr.BandwidthStream},${item.nvr.ServerStatusCheckInterval},${item.nvr.Tags},${item.group? item.group.Name:''},${item.error.join(";")},${item.nvrObjectId?'success':''},${item.syncResult ||""},${item.deviceSynced || ""}`),
+            data: this.nvrList.map(item => `${item.nvr.Name},${item.nvr.Manufacture},${item.nvr.Driver},${item.nvr.Domain},${item.nvr.Port},${item.nvr.ServerPort},${item.nvr.Account},${item.nvr.Password},${item.nvr.SSLEnable},${item.nvr.IsListenEvent},${item.nvr.BandwidthStream},${item.nvr.ServerStatusCheckInterval},${item.nvr.Tags},${item.group? item.group.Name:''},${item.error.join(";")},${item.nvrObjectId?'success':''},${item.syncResult ||""},${item.deviceSynced || ""}`),
             fileName: 'import_result'
           });
       }
@@ -191,6 +191,7 @@ export class NvrImportComponent  implements OnInit {
         nvr.Driver=data[i++];
         nvr.Domain=data[i++];
         nvr.Port=Number.parseInt(data[i++]);
+        nvr.ServerPort=Number.parseInt(data[i++] || "8000");        
         nvr.Account=this.cryptoService.encrypt4DB(data[i++]);
         nvr.Password=this.cryptoService.encrypt4DB(data[i++]);
         nvr.SSLEnable=data[i++].toLowerCase() == "true";
