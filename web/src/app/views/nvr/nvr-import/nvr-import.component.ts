@@ -7,6 +7,7 @@ import { CameraService } from 'app/service/camera.service';
 import { LicenseService } from 'app/service/license.service';
 import { environment } from 'environments/environment';
 import { CSVService } from 'app/service/csv.service';
+import { stringify } from 'querystring';
 // see: https://stackoverflow.com/a/46745059/1016343
 @Component({
   selector: 'app-nvr-import',
@@ -46,11 +47,11 @@ export class NvrImportComponent  implements OnInit {
             let promises=[];
             allTextLines.forEach(item => {
                 // split content based on comma
-                let data = item.split(',');          
+                let data = item.replace(/\"/g,"").replace(/\'/g,"").split(',');                          
                 if(data.length< this.headers.length)return; 
                 try{
-                    let nvr = this.convertToNvr(data);
-                    let groupName = data[data.length-1];                   
+                    let groupName:string;
+                    let nvr = this.convertToNvr(data, groupName);                
                     let newItem:NvrImportInterface={error:[],checked:false,group:undefined, nvr}
                     let promise = this.checkImportStatus(newItem, groupName).then(()=>{
                         newItem.checked=newItem.error.length==0;
@@ -60,7 +61,7 @@ export class NvrImportComponent  implements OnInit {
                 }catch(err2){
                     console.error(err2);
                 }
-            }); 
+            });
                 
             await Promise.all(promises);
             this.totalValidNvr = this.nvrList.filter(x=>x.error.length==0).length;
@@ -179,11 +180,11 @@ export class NvrImportComponent  implements OnInit {
       exportAll(){
         this.csvService.downloadCSV({
             header: this.headers.join(",")+",error,import result, sync result, device synced",
-            data: this.nvrList.map(item => `${item.nvr.Name},${item.nvr.Manufacture},${item.nvr.Driver},${item.nvr.Domain},${item.nvr.Port},${item.nvr.ServerPort},${item.nvr.Account},${item.nvr.Password},${item.nvr.SSLEnable},${item.nvr.IsListenEvent},${item.nvr.BandwidthStream},${item.nvr.ServerStatusCheckInterval},${item.nvr.Tags},${item.group? item.group.Name:''},${item.error.join(";")},${item.nvrObjectId?'success':''},${item.syncResult ||""},${item.deviceSynced || ""}`),
+            data: this.nvrList.map(item => `${item.nvr.Name},${item.nvr.Manufacture},${item.nvr.Driver},${item.nvr.Domain},${item.nvr.Port},${item.nvr.ServerPort},${item.nvr.Account},${item.nvr.Password},${item.nvr.SSLEnable},${item.nvr.IsListenEvent},${item.nvr.BandwidthStream},${item.nvr.ServerStatusCheckInterval},${item.group? item.group.Name:''},"${item.nvr.Tags.join(",")}",${item.error.join(";")},${item.nvrObjectId?'success':''},${item.syncResult ||""},${item.deviceSynced || ""}`),
             fileName: 'import_result'
           });
       }
-    convertToNvr(data: string[]):Nvr {
+    convertToNvr(data: string[], group:string):Nvr {
         let i=0;
         var nvr = new Nvr();        
         nvr.Name=data[i++];
@@ -197,8 +198,9 @@ export class NvrImportComponent  implements OnInit {
         nvr.SSLEnable=data[i++].toLowerCase() == "true";
         nvr.IsListenEvent=data[i++].toLowerCase() == "true";
         nvr.BandwidthStream=Number.parseInt(data[i++]);
-        nvr.ServerStatusCheckInterval=Number.parseInt(data[i++]);    
-        nvr.Tags=data[i] ? data[i].split(","):[];
+        nvr.ServerStatusCheckInterval=Number.parseInt(data[i++]);
+        group = data[i++];
+        nvr.Tags=data.splice(i, data.length-i);
         return nvr;
     }
 
