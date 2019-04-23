@@ -123,10 +123,16 @@ export class NvrImportComponent  implements OnInit {
           let promiseImports=[];
           let checkedList = this.nvrList.filter(x=>x.checked===true);
           //console.debug("saved nvrs", checkedList);
+          //gives Id now otherwise there will be duplicate Id due to parallel requests
+          let ids = await this.nvrService.getNewNvrId(checkedList.length);          
+          for(let i=0;i<checkedList.length;i++){
+            checkedList[i].nvr.Id=ids[i].toString();
+            checkedList[i].nvr.SequenceNumber=ids[i];
+          }
           for(let group of this.importGroups){
               let items = checkedList.filter(x=>x.group == group);
               if(!items || items.length==0)continue;    
-              let nvrs=items.map(x=>x.nvr);
+              let nvrs=items.map(x=>x.nvr);              
               let promise = this.nvrService.saveNvr(nvrs, items[0].group.id).then(nvrImportResults=>{
                 for(let item of items){
                     let find= nvrImportResults.find(x=>x.Domain == item.nvr.Domain && x.Port == item.nvr.Port);
