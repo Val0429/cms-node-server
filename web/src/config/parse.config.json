@@ -1,7 +1,7 @@
 {
   "HOST": "localhost",
-  "PORT": 3443,
-  "IS_HTTPS": true,
+  "PORT": 3000,
+  "IS_HTTPS": false,
   "APPLICATION_ID": "CMS3-Parse-API",
   "JAVASCRIPT_KEY": "JAVASCRIPT_KEY",
   "MASTER_KEY": "MASTER_KEY"

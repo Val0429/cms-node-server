@@ -7,6 +7,7 @@ import { CameraService } from 'app/service/camera.service';
 import { LicenseService } from 'app/service/license.service';
 import { environment } from 'environments/environment';
 import { CSVService } from 'app/service/csv.service';
+import { stringify } from 'querystring';
 // see: https://stackoverflow.com/a/46745059/1016343
 @Component({
   selector: 'app-nvr-import',
@@ -46,13 +47,11 @@ export class NvrImportComponent  implements OnInit {
             let promises=[];
             allTextLines.forEach(item => {
                 // split content based on comma
-                let data = item.split(',');          
+                let data = item.replace(/\"/g,"").replace(/\'/g,"").split(',');                          
                 if(data.length< this.headers.length)return; 
                 try{
-                    let nvr = this.convertToNvr(data);
-                    let groupName = data[data.length-1];                   
-                    let newItem:NvrImportInterface={error:[],checked:false,group:undefined, nvr}
-                    let promise = this.checkImportStatus(newItem, groupName).then(()=>{
+                    let newItem = this.convertToNvr(data);                
+                    let promise = this.checkImportStatus(newItem).then(()=>{
                         newItem.checked=newItem.error.length==0;
                         this.nvrList.push(newItem);
                     });     
@@ -60,7 +59,7 @@ export class NvrImportComponent  implements OnInit {
                 }catch(err2){
                     console.error(err2);
                 }
-            }); 
+            });
                 
             await Promise.all(promises);
             this.totalValidNvr = this.nvrList.filter(x=>x.error.length==0).length;
@@ -97,19 +96,17 @@ export class NvrImportComponent  implements OnInit {
         console.debug("this.checkedAll",this.checkedAll);
         console.debug("this.anyChecked",this.anyChecked);
       }
-    async checkImportStatus(newItem:NvrImportInterface, groupName:string){
+    async checkImportStatus(newItem:NvrImportInterface){
         let existInDb = await this.parseService.fetchData({type:Nvr, filter:q=>q.equalTo("Domain", newItem.nvr.Domain)
             .equalTo("Port", newItem.nvr.Port).limit(1)});
-        let existInList = this.nvrList.find(x=>x.nvr.Domain == newItem.nvr.Domain && x.nvr.Port == newItem.nvr.Port);
-        let group = groupName ? this.groupList.find(x=>x.Name==groupName) : this.nonGroup;
+        let existInList = this.nvrList.find(x=>x.nvr.Domain == newItem.nvr.Domain && x.nvr.Port == newItem.nvr.Port);        
         
         if(existInDb && existInDb.length>0) newItem.error.push("exist in db");
         if(existInList) newItem.error.push("duplicate import");
-        if(!group) newItem.error.push("group doesn't exist");
-        else {
-            newItem.group=group;
-            let findInImportGroups = this.importGroups.find(x=>x == group);
-            if(!findInImportGroups)this.importGroups.push(group);
+        if(!newItem.group) newItem.error.push("group doesn't exist");
+        else {            
+            let findInImportGroups = this.importGroups.find(x=>x == newItem.group);
+            if(!findInImportGroups)this.importGroups.push(newItem.group);
         }
         
     }
@@ -126,10 +123,16 @@ export class NvrImportComponent  implements OnInit {
           let promiseImports=[];
           let checkedList = this.nvrList.filter(x=>x.checked===true);
           //console.debug("saved nvrs", checkedList);
+          //gives Id now otherwise there will be duplicate Id due to parallel requests
+          let ids = await this.nvrService.getNewNvrId(checkedList.length);          
+          for(let i=0;i<checkedList.length;i++){
+            checkedList[i].nvr.Id=ids[i].toString();
+            checkedList[i].nvr.SequenceNumber=ids[i];
+          }
           for(let group of this.importGroups){
               let items = checkedList.filter(x=>x.group == group);
               if(!items || items.length==0)continue;    
-              let nvrs=items.map(x=>x.nvr);
+              let nvrs=items.map(x=>x.nvr);              
               let promise = this.nvrService.saveNvr(nvrs, items[0].group.id).then(nvrImportResults=>{
                 for(let item of items){
                     let find= nvrImportResults.find(x=>x.Domain == item.nvr.Domain && x.Port == item.nvr.Port);
@@ -178,12 +181,12 @@ export class NvrImportComponent  implements OnInit {
       }
       exportAll(){
         this.csvService.downloadCSV({
-            header: this.headers.join(",")+",error,import result, sync result, device synced",
-            data: this.nvrList.map(item => `${item.nvr.Name},${item.nvr.Manufacture},${item.nvr.Driver},${item.nvr.Domain},${item.nvr.Port},${item.nvr.Account},${item.nvr.Password},${item.nvr.SSLEnable},${item.nvr.IsListenEvent},${item.nvr.BandwidthStream},${item.nvr.ServerStatusCheckInterval},${item.nvr.Tags},${item.group? item.group.Name:''},${item.error.join(";")},${item.nvrObjectId?'success':''},${item.syncResult ||""},${item.deviceSynced || ""}`),
+            header: this.headers.join(",")+`,error,"import result",ID,"sync result","device synced"`,
+            data: this.nvrList.map(item => `${item.nvr.Name},${item.nvr.Manufacture},${item.nvr.Driver},${item.nvr.Domain},${item.nvr.Port},${item.nvr.ServerPort},${item.nvr.Account},${item.nvr.Password},${item.nvr.SSLEnable},${item.nvr.IsListenEvent},${item.nvr.BandwidthStream},${item.nvr.ServerStatusCheckInterval},${item.group? item.group.Name:''},"${item.nvr.Tags.join(",")}","${item.error.join(",")}",${item.nvrObjectId?'success':''},${item.nvr.Id || ""},${item.syncResult ||""},${item.deviceSynced || ""}`),
             fileName: 'import_result'
           });
       }
-    convertToNvr(data: string[]):Nvr {
+    convertToNvr(data: string[]):NvrImportInterface {
         let i=0;
         var nvr = new Nvr();        
         nvr.Name=data[i++];
@@ -191,14 +194,18 @@ export class NvrImportComponent  implements OnInit {
         nvr.Driver=data[i++];
         nvr.Domain=data[i++];
         nvr.Port=Number.parseInt(data[i++]);
+        nvr.ServerPort=Number.parseInt(data[i++] || "8000");        
         nvr.Account=this.cryptoService.encrypt4DB(data[i++]);
         nvr.Password=this.cryptoService.encrypt4DB(data[i++]);
         nvr.SSLEnable=data[i++].toLowerCase() == "true";
         nvr.IsListenEvent=data[i++].toLowerCase() == "true";
         nvr.BandwidthStream=Number.parseInt(data[i++]);
-        nvr.ServerStatusCheckInterval=Number.parseInt(data[i++]);    
-        nvr.Tags=data[i] ? data[i].split(","):[];
-        return nvr;
+        nvr.ServerStatusCheckInterval=Number.parseInt(data[i++]);
+        let groupName = data[i++];
+        nvr.Tags=data.splice(i, data.length-i);
+        let group = groupName ? this.groupList.find(x=>x.Name==groupName && x.Level=="1") : this.nonGroup;
+        let newItem:NvrImportInterface={error:[],checked:false, group, nvr}
+        return newItem;
     }
 
     onFileSelect(input: HTMLInputElement) {

@@ -412,7 +412,7 @@ assignNvrPoperties(dev: Nvr, nvr: any) {
     dev.ServerStatusCheckInterval = nvr.ServerStatusCheckInterval;
     dev.Manufacture = nvr.Manufacture;
     dev.SequenceNumber = nvr.SequenceNumber;
-    
+    dev.ServerPort = nvr.ServerPort;
 }
 private async getDeviceCount(nvrId?:string):Promise<number>{
         
