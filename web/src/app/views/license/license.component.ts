@@ -38,12 +38,12 @@ export class LicenseComponent implements OnInit {
   ];
   
   ngOnInit() {
-    this.currentServer = undefined;
+    //this.currentServer = undefined;
 
     Observable.combineLatest(
       this.parseService.fetchData({type:ServerInfo, 
         filter: query => query
-        .notEqualTo("Type", "SmartMedia")
+        .containedIn("Type", ["SmartMediaServer","CMSManager"])
         .ascending("Type")        
         .limit(30000)
       }),
