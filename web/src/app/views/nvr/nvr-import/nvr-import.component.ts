@@ -50,10 +50,8 @@ export class NvrImportComponent  implements OnInit {
                 let data = item.replace(/\"/g,"").replace(/\'/g,"").split(',');                          
                 if(data.length< this.headers.length)return; 
                 try{
-                    let groupName:string;
-                    let nvr = this.convertToNvr(data, groupName);                
-                    let newItem:NvrImportInterface={error:[],checked:false,group:undefined, nvr}
-                    let promise = this.checkImportStatus(newItem, groupName).then(()=>{
+                    let newItem = this.convertToNvr(data);                
+                    let promise = this.checkImportStatus(newItem).then(()=>{
                         newItem.checked=newItem.error.length==0;
                         this.nvrList.push(newItem);
                     });     
@@ -98,19 +96,17 @@ export class NvrImportComponent  implements OnInit {
         console.debug("this.checkedAll",this.checkedAll);
         console.debug("this.anyChecked",this.anyChecked);
       }
-    async checkImportStatus(newItem:NvrImportInterface, groupName:string){
+    async checkImportStatus(newItem:NvrImportInterface){
         let existInDb = await this.parseService.fetchData({type:Nvr, filter:q=>q.equalTo("Domain", newItem.nvr.Domain)
             .equalTo("Port", newItem.nvr.Port).limit(1)});
-        let existInList = this.nvrList.find(x=>x.nvr.Domain == newItem.nvr.Domain && x.nvr.Port == newItem.nvr.Port);
-        let group = groupName ? this.groupList.find(x=>x.Name==groupName) : this.nonGroup;
+        let existInList = this.nvrList.find(x=>x.nvr.Domain == newItem.nvr.Domain && x.nvr.Port == newItem.nvr.Port);        
         
         if(existInDb && existInDb.length>0) newItem.error.push("exist in db");
         if(existInList) newItem.error.push("duplicate import");
-        if(!group) newItem.error.push("group doesn't exist");
-        else {
-            newItem.group=group;
-            let findInImportGroups = this.importGroups.find(x=>x == group);
-            if(!findInImportGroups)this.importGroups.push(group);
+        if(!newItem.group) newItem.error.push("group doesn't exist");
+        else {            
+            let findInImportGroups = this.importGroups.find(x=>x == newItem.group);
+            if(!findInImportGroups)this.importGroups.push(newItem.group);
         }
         
     }
@@ -184,7 +180,7 @@ export class NvrImportComponent  implements OnInit {
             fileName: 'import_result'
           });
       }
-    convertToNvr(data: string[], group:string):Nvr {
+    convertToNvr(data: string[]):NvrImportInterface {
         let i=0;
         var nvr = new Nvr();        
         nvr.Name=data[i++];
@@ -199,9 +195,11 @@ export class NvrImportComponent  implements OnInit {
         nvr.IsListenEvent=data[i++].toLowerCase() == "true";
         nvr.BandwidthStream=Number.parseInt(data[i++]);
         nvr.ServerStatusCheckInterval=Number.parseInt(data[i++]);
-        group = data[i++];
+        let groupName = data[i++];
         nvr.Tags=data.splice(i, data.length-i);
-        return nvr;
+        let group = groupName ? this.groupList.find(x=>x.Name==groupName && x.Level=="1") : this.nonGroup;
+        let newItem:NvrImportInterface={error:[],checked:false, group, nvr}
+        return newItem;
     }
 
     onFileSelect(input: HTMLInputElement) {
