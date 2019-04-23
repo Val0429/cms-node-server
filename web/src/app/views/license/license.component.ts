@@ -26,8 +26,8 @@ export class LicenseComponent implements OnInit {
   licenseProduct = LicenseProduct;
   nvrConfigs: Nvr[];
   deviceConfigs: Device[];
-  servers:ServerInfo[];
-  currentServer:ServerInfo ;
+  servers:ServerInterface[];
+  currentServer:ServerInterface;
   constructor(private coreService: CoreService, private licenseService: LicenseService, private parseService:ParseService) { }
   ServerType:{key:string, value:number}[] = [
     {key:"CMSManager", value:10},
@@ -38,8 +38,7 @@ export class LicenseComponent implements OnInit {
   ];
   
   ngOnInit() {
-    this.currentServer = new ServerInfo();
-    this.currentServer.id="";
+    this.currentServer = undefined;
 
     Observable.combineLatest(
       this.parseService.fetchData({type:ServerInfo, 
@@ -53,13 +52,18 @@ export class LicenseComponent implements OnInit {
       (response1,response2, response3) => {        
         this.servers = [];
         for(let server of response1){
-          let found = this.servers.find(x=>x.Domain == server.Domain);
+          console.debug(server.Domain, server.Port);
+          let found = this.servers.find(x=>x.domain == server.Domain);
+          
           if(!found){
-            this.servers.push(server);
+            this.servers.push({id:server.id, port:server.Port, domain:server.Domain, name:server.Name, type:server.Type});
           }
-          else if(this.ServerType.find(x=>x.key == server.Type).value < this.ServerType.find(x=>x.key == found.Type).value){
+          else if(this.ServerType.find(x=>x.key == server.Type).value < this.ServerType.find(x=>x.key == found.type).value){
             //replace according to the order
-            found = Object.assign({}, server);
+            console.debug("replace according to the order");
+            found.domain = server.Domain;
+            found.port = server.Port;
+            found.id = server.id;
           }
         }
         this.currentServer = this.servers[0];
@@ -72,7 +76,7 @@ export class LicenseComponent implements OnInit {
   setCurrentServer(id:string){
     this.statistics=undefined;
     this.licenseInfo = undefined;
-    this.currentServer = this.servers.find(x=>x.id == id);
+    //this.currentServer = this.servers.find(x=>x.id == id);
     console.debug("this.currentServer",this.currentServer);
     this.reloadLicenseInfo();
     
@@ -160,3 +164,4 @@ export class LicenseComponent implements OnInit {
     this.currentEditorMode = ModalEditorModeEnum.OFFLINE_REGISTRATION;
   }
 }
+interface ServerInterface {port:number; id:string; domain:string; type:string; name:string;};
