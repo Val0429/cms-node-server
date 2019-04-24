@@ -34,7 +34,7 @@ export class LicenseComponent implements OnInit {
     {key:"RecordServer", value:20},
     {key:"RecordRecoveryServer", value:30},
     {key:"RecordFailoverServer", value:40},
-    {key:"SmartMedia", value:50}
+    {key:"SmartMediaServer", value:50}
   ];
   
   ngOnInit() {
@@ -67,6 +67,7 @@ export class LicenseComponent implements OnInit {
           }
         }
         this.currentServer = this.servers[0];
+        //console.debug("current server", this.currentServer);
         this.nvrConfigs = response2.results;
         this.deviceConfigs = response3.results;
       }
