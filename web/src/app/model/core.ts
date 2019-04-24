@@ -321,8 +321,8 @@ export class Server extends Parse.Object implements IServer {
   set AP(value: { Name: string; Page: { Name: string; Config: string }[] }) {
     super.set('AP', value);
   }
-  get RecordPath(): RecordPath[] { return super.get('Storage'); }
-  set RecordPath(value: RecordPath[]) { super.set('Storage', value); }
+  get Storage(): IServerStorage[] { return super.get('Storage'); }
+  set Storage(value: IServerStorage[]) { super.set('Storage', value); }
   constructor(value?: Partial<IServer>) {
     super('Server');
     Object.assign(this, value);
