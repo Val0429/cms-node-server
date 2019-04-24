@@ -31,7 +31,7 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
   serverTypeChange(){
       this.editItem.Port = this.currentType.DefaultPort;
       this.editItem.RecordPath = this.currentType.HasStorage ? []: null;
-      this.editItem.MaxCapacity = this.currentType.HasStorage ? 1 : undefined;
+      this.editItem.MaxCapacity = 1;
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes.currentItem || !this.currentItem) return;
@@ -91,15 +91,13 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
       
       this.currentItem.Type = this.currentType.Type;
       this.currentItem.SSLPort=this.editItem.SSLPort;
-      this.currentItem.SubType=this.editItem.SubType;      
+      this.currentItem.SubType=this.editItem.SubType;   
+      this.currentItem.MaxCapacity=this.editItem.MaxCapacity;    
       if(this.currentType.HasStorage){
-        this.currentItem.RecordPath= this.listRecordPaths.filter(x=>x.checked).map(e=>e.recordPath); 
-        this.currentItem.MaxCapacity=this.editItem.MaxCapacity;  
+        this.currentItem.RecordPath= this.listRecordPaths.filter(x=>x.checked).map(e=>e.recordPath);          
       }else{
         this.currentItem.RecordPath=null;
-        this.currentItem.MaxCapacity=null;
         delete(this.currentItem.RecordPath);
-        delete(this.currentItem.MaxCapacity);
       }
       this.currentItem.TempPath=this.editItem.TempPath;          
 
