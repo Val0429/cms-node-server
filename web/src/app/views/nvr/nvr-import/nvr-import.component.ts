@@ -46,6 +46,8 @@ export class NvrImportComponent  implements OnInit {
             this.headers = header[0].split(',');
             let promises=[];
             allTextLines.forEach(item => {
+                //skip appended header                
+                if(item.indexOf("Name,Manufacturer,Driver")>-1)return;
                 // split content based on comma
                 let data = item.replace(/\"/g,"").replace(/\'/g,"").split(',');                          
                 if(data.length< this.headers.length)return; 
