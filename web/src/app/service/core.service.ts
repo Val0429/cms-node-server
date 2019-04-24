@@ -96,7 +96,24 @@ export class CoreService {
         return response.json();
       });
   }
-
+  async notifyParseAddress(domain:string,port:string, timeout?: number, serverId?:string) {
+    const body = {
+      method: "POST",
+      path: "/cgi-bin/sysconfig?action=saveparseserve",      
+      headers: new Headers({
+        'Authorization': 'Basic ' + btoa(`sanzhiniao:jijijiao`),
+        'Content-Type': 'text/xml'
+      }),
+      body: {"ApplicationId": "CMS3-Parse-API", domain, port}
+    };
+    
+    let url=Parse.serverURL + this.urls.MEDIA_PROXY_URL + (serverId ? `/${serverId}` : "");
+    console.debug("url", url, "body", body);
+    const options = new RequestOptions({ headers: this.parseHeaders });
+    let response = await this.http.post(url, body, options)
+          .timeout(timeout || 10000).toPromise();
+    return response.json();
+  }
   proxyMediaServer(args: IBatchRequest, timeout?: number, serverId?:string) {
     const body = {
       method: args.method,
