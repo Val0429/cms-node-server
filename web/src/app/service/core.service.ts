@@ -99,7 +99,7 @@ export class CoreService {
   async notifyParseAddress(domain:string,port:string, timeout?: number, serverId?:string) {
     const body = {
       method: "POST",
-      path: "/cgi-bin/sysconfig?action=saveparseserve",      
+      path: "/cgi-bin/sysconfig?action=saveparseserver",      
       headers: new Headers({
         'Authorization': 'Basic ' + btoa(`sanzhiniao:jijijiao`),
         'Content-Type': 'text/xml'
@@ -355,7 +355,7 @@ const urls = {
 
   MEDIA_PROXY_URL: '/proxy',
   URL_MEDIA_NOTIFY: '/cgi-bin/notify',
-  URL_MEDIA_DISKSPACE: '/cgi-bin/diskspace',
+  URL_MEDIA_DISKSPACE: '/cgi-bin/sysconfig?action=diskspace',
   URL_MEDIA_SEARCH_DEVICE: '/cgi-bin/searchdevice',
   URL_MEDIA_SEARCH_CAMERA: '/cgi-bin/searchcamera',
   URL_MEDIA_GET_DEVICE_LIST: '/cgi-bin/nvrconfig?action=getdevicelistByXMLdata',
