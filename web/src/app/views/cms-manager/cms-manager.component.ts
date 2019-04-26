@@ -47,7 +47,7 @@ export class CmsManagerComponent implements OnInit {
       .then(result => this.coreService.notifyWithParseResult({
         parseResult: [result], path: this.coreService.urls.URL_CLASS_SERVERINFO
       }));
-      await this.updateParseServerLocation();
+      setTimeout(async()=>await this.updateParseServerLocation(), 3000);
       alert('Update Success')
     }catch(err){
       alert("update failed");
