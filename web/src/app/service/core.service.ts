@@ -96,7 +96,7 @@ export class CoreService {
         return response.json();
       });
   }
-  async notifyParseAddress(domain:string,port:string, timeout?: number, serverId?:string) {
+  async notifyParseAddress(domain:string,port:number, timeout?: number, serverId?:string) {
     const body = {
       method: "POST",
       path: "/cgi-bin/sysconfig?action=saveparseserver",      
@@ -104,7 +104,7 @@ export class CoreService {
         'Authorization': 'Basic ' + btoa(`sanzhiniao:jijijiao`),
         'Content-Type': 'text/xml'
       }),
-      body: {"ApplicationId": "CMS3-Parse-API", domain, port}
+      body: {"ApplicationId": "CMS3-Parse-API", "Domain" : domain, "Port": port}
     };
     
     let url=Parse.serverURL + this.urls.MEDIA_PROXY_URL + (serverId ? `/${serverId}` : "");
