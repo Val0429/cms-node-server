@@ -236,7 +236,7 @@ export class RestFulService {
         try{
             return this.jsonPointer.get(obj, "/"+fieldNames.join("/"));
         }catch(err){
-            console.error(err.message);
+            //console.error(err.message);
             return undefined;
         }
     }

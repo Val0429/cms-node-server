@@ -46,6 +46,8 @@ export class NvrImportComponent  implements OnInit {
             this.headers = header[0].split(',');
             let promises=[];
             allTextLines.forEach(item => {
+                //skip appended header                
+                if(item.indexOf("Name,Manufacturer,Driver")>-1)return;
                 // split content based on comma
                 let data = item.replace(/\"/g,"").replace(/\'/g,"").split(',');                          
                 if(data.length< this.headers.length)return; 
@@ -181,8 +183,11 @@ export class NvrImportComponent  implements OnInit {
       }
       exportAll(){
         this.csvService.downloadCSV({
-            header: this.headers.join(",")+`,error,"import result",ID,"sync result","device synced"`,
-            data: this.nvrList.map(item => `${item.nvr.Name},${item.nvr.Manufacture},${item.nvr.Driver},${item.nvr.Domain},${item.nvr.Port},${item.nvr.ServerPort},${item.nvr.Account},${item.nvr.Password},${item.nvr.SSLEnable},${item.nvr.IsListenEvent},${item.nvr.BandwidthStream},${item.nvr.ServerStatusCheckInterval},${item.group? item.group.Name:''},"${item.nvr.Tags.join(",")}","${item.error.join(",")}",${item.nvrObjectId?'success':''},${item.nvr.Id || ""},${item.syncResult ||""},${item.deviceSynced || ""}`),
+            header: this.headers.join(",")+`,"import result",ID,"sync result","device synced",error`,
+            data: this.nvrList.map(item => `${item.nvr.Name},${item.nvr.Manufacture},${item.nvr.Driver},${item.nvr.Domain},${item.nvr.Port},`+
+                `${item.nvr.ServerPort},${item.nvr.Account},${item.nvr.Password},${item.nvr.SSLEnable},${item.nvr.IsListenEvent},`+
+                `${item.nvr.BandwidthStream},${item.nvr.ServerStatusCheckInterval},${item.group? item.group.Name:''},"${item.nvr.Tags.join(",")}",`+
+                `${item.nvrObjectId?'success':''},${item.nvr.Id || ""},${item.syncResult ||""},${item.deviceSynced || ""},"${item.error.join(",")}"`),
             fileName: 'import_result'
           });
       }
@@ -216,11 +221,13 @@ export class NvrImportComponent  implements OnInit {
             this.resetImport(); 
             console.debug("Filename: " + files[0].name);
             console.debug("Type: " + files[0].type);
-            console.debug("Size: " + files[0].size + " bytes");
-            if(files[0].type!=="application/vnd.ms-excel"){
+            console.debug("Size: " + files[0].size + " bytes");   
+            let extension = /[^.]+$/.exec(files[0].name)[0];     
+            let invalidExtension = (!extension || extension.toLowerCase() !== 'csv');
+            if (invalidExtension) {
                 alert("Invalid file format!");
                 return;
-            }
+            }    
 
             const fileToRead = files[0];
 

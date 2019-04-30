@@ -48,7 +48,7 @@ export interface IServer {
             Config: string
         }[]
     },
-    RecordPath:IRecordPath[]
+    Storage:IServerStorage[]
 }
 
 export interface IServerInfo {

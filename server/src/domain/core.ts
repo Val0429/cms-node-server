@@ -1,4 +1,4 @@
-import { INvr, IEvent, ISystemLog, IServer, IServerInfo, IDBSync, IDBSyncDestination, IDevice,IDeviceConfig, IGroup, IEventHandlerType, IEventHandler, IRecordScheduleTemplate, IRecordScheduleTemplateFullRecord, IRecordScheduleTemplateEventRecord, IRecordSchedule, IRecordPath } from '../../../lib/domain/core';
+import { INvr, IEvent, ISystemLog, IServer, IServerInfo, IDBSync, IDBSyncDestination, IDevice,IDeviceConfig, IGroup, IEventHandlerType, IEventHandler, IRecordScheduleTemplate, IRecordScheduleTemplateFullRecord, IRecordScheduleTemplateEventRecord, IRecordSchedule, IRecordPath, IServerStorage } from '../../../lib/domain/core';
 // import { IHost, IHostEvent, IVisitEvent, IVisitor } from 'lib/domain/core';
 import * as Parse from 'parse/node';
 
@@ -346,8 +346,8 @@ export class Server extends Parse.Object implements IServer {
     set MediaServer(value: {
         Port: string; SSLPort: string; DBModule: string; Domain: string;
     }) { super.set('MediaServer', value); }
-    get RecordPath(): RecordPath[] { return super.get('RecordPath'); }
-    set RecordPath(value: RecordPath[]) { super.set('RecordPath', value); }
+    get Storage(): IServerStorage[] { return super.get('Storage'); }
+    set Storage(value: IServerStorage[]) { super.set('Storage', value); }
     constructor(data?: Partial<IServer>) {
         super('Server');
         Object.assign(this, data);

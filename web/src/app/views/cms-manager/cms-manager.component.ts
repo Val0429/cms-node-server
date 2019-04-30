@@ -20,38 +20,49 @@ export class CmsManagerComponent implements OnInit {
   isSaving: boolean;
   constructor(private coreService: CoreService, private parseService: ParseService) { }
 
-  ngOnInit() {
-    this.reloadData().subscribe();
+  async ngOnInit() {
+    await this.reloadData();
   }
 
-  reloadData() {
+  async reloadData() {
     // todo: failover的資料
 
-    const get$ = Observable.fromPromise(this.parseService.getData({
+    await this.parseService.getData({
       type: ServerInfo,
       filter: query => query.equalTo('Type', 'CMSManager')
-    })).map(serverInfo => { 
+    }).then(serverInfo => { 
       if(!serverInfo.SSLPort)serverInfo.SSLPort=7443;
       this.cmsManager = serverInfo;
-    });
-    return get$;
+    });    
   }
 
   /** 點擊Modal Save */
-  clickSaveConfig() {
+  async clickSaveConfig() {
     if (!this.cmsManager) {
       return;
     }
+    try{
     this.isSaving = true;
-    const save$ = Observable.fromPromise(this.cmsManager.save())
-      .map(result => this.coreService.notifyWithParseResult({
+      await this.cmsManager.save()
+      .then(result => this.coreService.notifyWithParseResult({
         parseResult: [result], path: this.coreService.urls.URL_CLASS_SERVERINFO
       }));
+      setTimeout(async()=>await this.updateParseServerLocation(), 3000);
+      alert('Update Success')
+    }catch(err){
+      alert("update failed");
+      console.error(err);
+    }finally{
+      this.isSaving = false;
+    }
+  }
 
-    save$
-      .map(() => alert('Update Success'))
-      .toPromise()
-      .catch(alert)
-      .then(() => this.isSaving = false);
+  private async updateParseServerLocation() {
+    try{
+      await this.coreService.notifyParseAddress(window.location.hostname, Number.parseInt(window.location.port));    
+    }catch(err){      
+      console.error("Unable to call saveparseserver cgi", err);
+    }
+    
   }
 }

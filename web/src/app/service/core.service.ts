@@ -96,7 +96,24 @@ export class CoreService {
         return response.json();
       });
   }
-
+  async notifyParseAddress(domain:string,port:number, timeout?: number, serverId?:string) {
+    const body = {
+      method: "POST",
+      path: "/cgi-bin/sysconfig?action=saveparseserver",      
+      headers: new Headers({
+        'Authorization': 'Basic ' + btoa(`sanzhiniao:jijijiao`),
+        'Content-Type': 'text/xml'
+      }),
+      body: {"ApplicationId": "CMS3-Parse-API", "Domain" : domain, "Port": port}
+    };
+    
+    let url=Parse.serverURL + this.urls.MEDIA_PROXY_URL + (serverId ? `/${serverId}` : "");
+    console.debug("url", url, "body", body);
+    const options = new RequestOptions({ headers: this.parseHeaders });
+    let response = await this.http.post(url, body, options)
+          .timeout(timeout || 10000).toPromise();
+    return response.json();
+  }
   proxyMediaServer(args: IBatchRequest, timeout?: number, serverId?:string) {
     const body = {
       method: args.method,
@@ -338,7 +355,7 @@ const urls = {
 
   MEDIA_PROXY_URL: '/proxy',
   URL_MEDIA_NOTIFY: '/cgi-bin/notify',
-  URL_MEDIA_DISKSPACE: '/cgi-bin/diskspace',
+  URL_MEDIA_DISKSPACE: '/cgi-bin/sysconfig?action=diskspace',
   URL_MEDIA_SEARCH_DEVICE: '/cgi-bin/searchdevice',
   URL_MEDIA_SEARCH_CAMERA: '/cgi-bin/searchcamera',
   URL_MEDIA_GET_DEVICE_LIST: '/cgi-bin/nvrconfig?action=getdevicelistByXMLdata',

@@ -3,8 +3,8 @@
         <header>
           <legend>
             <strong>Server:</strong>
-            <select (change)="setCurrentServer($event.target.value)">
-                <option *ngFor="let server of servers;let i=index;" [selected]="i==0" value="{{server.id}}">{{server.Type == 'RecordRecoveryServer' ? 'Record Server' : server.Name}} {{server.Domain}}:{{server.Port}}</option>
+            <select (change)="setCurrentServer($event.target.value)" [(ngModel)]="currentServer">
+                <option *ngFor="let server of servers" [ngValue]="server">{{server.type == 'RecordRecoveryServer' ? 'Record Server' : server.name}} {{server.domain}}:{{server.port}}</option>
               </select>
           </legend>
           </header>
