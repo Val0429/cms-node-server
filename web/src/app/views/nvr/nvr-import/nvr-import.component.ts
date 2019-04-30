@@ -221,11 +221,13 @@ export class NvrImportComponent  implements OnInit {
             this.resetImport(); 
             console.debug("Filename: " + files[0].name);
             console.debug("Type: " + files[0].type);
-            console.debug("Size: " + files[0].size + " bytes");
-            if(files[0].type!=="application/vnd.ms-excel"){
+            console.debug("Size: " + files[0].size + " bytes");   
+            let extension = /[^.]+$/.exec(files[0].name)[0];     
+            let invalidExtension = (!extension || extension.toLowerCase() !== 'csv');
+            if (invalidExtension) {
                 alert("Invalid file format!");
                 return;
-            }
+            }    
 
             const fileToRead = files[0];
 
