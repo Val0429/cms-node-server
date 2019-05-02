@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { Observable } from 'rxjs/Observable';
@@ -26,6 +26,9 @@ export class TempPathComponent implements OnInit {
   flag = {
     save: false
   };
+
+  @Output() setStorageEvent: EventEmitter<any> = new EventEmitter();
+
   constructor(private coreService: CoreService, private parseService: ParseService) { }
 
   ngOnInit() {
@@ -86,10 +89,13 @@ export class TempPathComponent implements OnInit {
       .catch(alert)
 
     saveServer$
-      .map(() => alert('Update Success'))
+      //.map(() => alert('Update Success'))
       .toPromise()
       .catch(alert)
-      .then(() => this.flag.save = false);
+      .then(() => {
+        this.flag.save = false;
+        this.setStorageEvent.emit();
+      });
   }
 
 }

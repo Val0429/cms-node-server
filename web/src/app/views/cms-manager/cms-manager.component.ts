@@ -56,7 +56,10 @@ export class CmsManagerComponent implements OnInit {
       this.isSaving = false;
     }
   }
-
+  async setStorageEvent(){
+    console.debug("setStorageEvent");
+    await this.clickSaveConfig();
+  }
   private async updateParseServerLocation() {
     try{
       await this.coreService.notifyParseAddress(window.location.hostname, Number.parseInt(window.location.port));    
