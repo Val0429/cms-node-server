@@ -101,7 +101,7 @@ export class ServerComponent implements OnInit {
         newRecord.Domain=`localhost`;
         newRecord.Port=this.serverTypes[0].DefaultPort;
         newRecord.SSLPort=undefined;
-        newRecord.MaxCapacity= 1;
+        newRecord.MaxCapacity= 1000;
         newRecord.RecordPath=this.serverTypes[0].HasStorage ? [] : undefined;
         newRecord.SubType="";
         newRecord.TempPath=undefined;        
