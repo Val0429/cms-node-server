@@ -76,9 +76,8 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
     try{
       console.debug("ip valid", this.ipRegex.test(this.editItem.Domain));
       console.debug("domain valid", this.domainRegex.test(this.editItem.Domain));
-      let testDomain =  this.domainRegex.test(this.editItem.Domain) ||
-                        this.ipRegex.test(this.editItem.Domain) || 
-                        this.editItem.Domain=="localhost";
+      let testDomain = this.editItem.Domain!="localhost" && this.editItem.Domain!="127.0.0.1" && (this.domainRegex.test(this.editItem.Domain) || this.ipRegex.test(this.editItem.Domain)) 
+                        
       if(!testDomain){
         alert('invalid domain!')
         return;

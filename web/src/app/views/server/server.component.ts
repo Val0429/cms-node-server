@@ -98,7 +98,7 @@ export class ServerComponent implements OnInit {
         let newRecord=new ServerInfo();
         newRecord.Name=`Server Info ${this.itemList.length+1}`;
         newRecord.Type=this.serverTypes[0].Type;
-        newRecord.Domain=`localhost`;
+        newRecord.Domain=``;
         newRecord.Port=this.serverTypes[0].DefaultPort;
         newRecord.SSLPort=undefined;
         newRecord.MaxCapacity= 1000;
