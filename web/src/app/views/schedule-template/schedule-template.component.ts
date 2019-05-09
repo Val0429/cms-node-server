@@ -122,7 +122,7 @@ export class ScheduleTemplateComponent implements OnInit {
         PostRecord: 30
       },
       RecordPath: this.defaultRecordPath,
-      KeepDays: '90',
+      KeepDays: 90,
       RecordRecover:true
     });
   }

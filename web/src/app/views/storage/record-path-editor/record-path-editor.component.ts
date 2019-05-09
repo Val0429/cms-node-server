@@ -32,7 +32,8 @@ export class RecordPathEditorComponent implements OnInit,OnChanges {
       Name:this.currentRecordPath.Name, 
       Path:this.currentRecordPath.Path, 
       Password: this.cryptoService.decrypt4DB(this.currentRecordPath.Password), 
-      Account:this.cryptoService.decrypt4DB(this.currentRecordPath.Account)
+      Account:this.cryptoService.decrypt4DB(this.currentRecordPath.Account),
+      KeepSpace:this.currentRecordPath.KeepSpace
     };
     
   }
@@ -57,6 +58,7 @@ export class RecordPathEditorComponent implements OnInit,OnChanges {
       this.currentRecordPath.Path = this.editRecordPath.Path;
       this.currentRecordPath.Password = this.cryptoService.encrypt4DB(this.editRecordPath.Password);
       this.currentRecordPath.Account = this.cryptoService.encrypt4DB(this.editRecordPath.Account);
+      this.currentRecordPath.KeepSpace = this.editRecordPath.KeepSpace >= 0 && this.editRecordPath.KeepSpace<=10000 ? this.editRecordPath.KeepSpace : 30;
       await this.currentRecordPath.save();
       this.coreService.notify({path:this.coreService.urls.URL_RECORDPATH, objectId:this.currentRecordPath.id})
       this.reloadRecordPathEvent.emit();

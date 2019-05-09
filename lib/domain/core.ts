@@ -222,7 +222,7 @@ export interface IRecordScheduleTemplate {
     FullRecord: any;
     EventRecord: any;
     RecordPath: IRecordPath;
-    KeepDays: string;
+    KeepDays: number;
     RecordRecover:boolean;
 }
 export interface IRecordPath {
@@ -230,6 +230,7 @@ export interface IRecordPath {
     Path:string;
     Account:string;
     Password:string;
+    KeepSpace: number;
 }
 export interface IRecordSchedule {
     NvrId: string;
