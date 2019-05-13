@@ -8,8 +8,11 @@
     <div *ngIf="customMode.enable" class="col-md-12">
       <div class="custom-mode-select" style="background-color: white;" [class.active]="this.customMode.index === -1"
         (click)="setCustomMode(true, -1)" placement="top" tooltip="Clear"></div>
-      <div class="custom-mode-select" *ngFor="let plan of plans; let i = index" [ngStyle]="{ 'background-color': options.colors[i]}"
-        [class.active]="this.customMode.index === i" (click)="setCustomMode(true, i)" placement="top" [tooltip]="options.tooltips[i]"></div>
+        <ng-container *ngFor="let plan of plans; let i = index">
+          <div *ngIf="i==0" class="custom-mode-select" [ngStyle]="{ 'background-color': options.colors[i]}"
+            [class.active]="this.customMode.index === i" (click)="setCustomMode(true, i)" placement="top" [tooltip]="options.tooltips[i]">
+          </div>
+        </ng-container>
       <button type="button" class="btn btn-primary float-right" (click)="setCustomMode(false, 0)">
         Update
       </button>

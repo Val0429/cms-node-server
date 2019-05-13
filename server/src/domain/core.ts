@@ -123,10 +123,10 @@ export class RecordScheduleTemplate extends Parse.Object implements IRecordSched
     set RecordPath(value: RecordPath) {
       super.set('RecordPath', value);
     }
-    get KeepDays(): string {
+    get KeepDays(): number {
       return super.get('KeepDays');
     }
-    set KeepDays(value: string) {
+    set KeepDays(value: number) {
       super.set('KeepDays', value);
     }    
     constructor(value?: Partial<IRecordScheduleTemplate>) {
@@ -382,7 +382,9 @@ export class ServerInfo extends Parse.Object implements IServerInfo {
     }
 }
 @registerSubclass()
-export class RecordPath extends Parse.Object implements IRecordPath{
+export class RecordPath extends Parse.Object implements IRecordPath{  
+  get KeepSpace(): number { return super.get('KeepSpace'); }
+  set KeepSpace(value: number) { super.set('KeepSpace', value); }
   get Name(): string { return super.get('Name'); }
   set Name(value: string) { super.set('Name', value); }
   get Account(): string { return super.get('Account'); }
