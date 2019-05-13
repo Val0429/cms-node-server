@@ -44,10 +44,11 @@ private static _instance: CoreService;
       'Content-Type': 'application/json',
       'Content-Length': Buffer.byteLength(bodyString)
     };;
-
-    let protocol = configHelper.parseConfig.IS_HTTPS ? 'https' : 'http';
+    
+    let isHttps=configHelper.parseConfig.IS_HTTPS && configHelper.parseConfig.SSL_PORT;
+    let protocol = isHttps ? 'https' : 'http';    
+    let port = isHttps? configHelper.parseConfig.SSL_PORT : configHelper.parseConfig.PORT;
     let hostname = configHelper.parseConfig.HOST;
-    let port = configHelper.parseConfig.IS_HTTPS ? configHelper.parseConfig.SSL_PORT : configHelper.parseConfig.PORT;
     let path = 'parse'+ this.urls.MEDIA_PROXY_URL;    
 
     const options = {
