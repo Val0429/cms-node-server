@@ -146,11 +146,12 @@ export class NvrImportComponent  implements OnInit {
               promiseImports.push(promise);
           }
           await Promise.all(promiseImports);
-          let promiseSyncDevice=[];
+          
           for(let item of checkedList){              
-              promiseSyncDevice.push(this.getDevice(item).then(()=>item.checked=false));
+              //do it one by one to avoid license count overlapping
+             await this.getDevice(item).then(()=>item.checked=false);
           }
-          await Promise.all(promiseSyncDevice);
+          
           this.checkSelected();
           if(confirm("Import NVR(s) success, export result?")) this.exportAll();      
         }catch(err){
