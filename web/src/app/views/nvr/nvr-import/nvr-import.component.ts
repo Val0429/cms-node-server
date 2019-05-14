@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { Group, Nvr } from 'app/model/core';
+import { Group, Nvr, Device } from 'app/model/core';
 import { CryptoService } from 'app/service/crypto.service';
 import { ParseService } from 'app/service/parse.service';
 import { NvrService } from 'app/service/nvr.service';
@@ -9,6 +9,9 @@ import { environment } from 'environments/environment';
 import { CSVService } from 'app/service/csv.service';
 import { stringify } from 'querystring';
 // see: https://stackoverflow.com/a/46745059/1016343
+
+const licenseType={iSAP:"00166", thirdParty:"00167", pass:"pass"};
+
 @Component({
   selector: 'app-nvr-import',
   templateUrl: './nvr-import.component.html',
@@ -16,6 +19,7 @@ import { stringify } from 'querystring';
 })
 export class NvrImportComponent  implements OnInit {
     p=1;
+    
     @Input() flag:{busy:boolean};
     @Output() closeModal: EventEmitter<any> = new EventEmitter();
     @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
@@ -122,36 +126,17 @@ export class NvrImportComponent  implements OnInit {
         if (!confirm("Import and sync selected NVR(s)?")) return;
         try{
           this.flag.busy=true;
-          let promiseImports=[];
+         
           let checkedList = this.nvrList.filter(x=>x.checked===true);
           //console.debug("saved nvrs", checkedList);
-          //gives Id now otherwise there will be duplicate Id due to parallel requests
-          let ids = await this.nvrService.getNewNvrId(checkedList.length);          
-          for(let i=0;i<checkedList.length;i++){
-            checkedList[i].nvr.Id=ids[i].toString();
-            checkedList[i].nvr.SequenceNumber=ids[i];
-          }
-          for(let group of this.importGroups){
-              let items = checkedList.filter(x=>x.group == group);
-              if(!items || items.length==0)continue;    
-              let nvrs=items.map(x=>x.nvr);              
-              let promise = this.nvrService.saveNvr(nvrs, items[0].group.id).then(nvrImportResults=>{
-                for(let item of items){
-                    let find= nvrImportResults.find(x=>x.Domain == item.nvr.Domain && x.Port == item.nvr.Port);
-                    if(!find)continue;
-                    item.nvrObjectId = find.objectId;
-                    item.nvr.Id = find.Id;                    
-                }
-              });
-              promiseImports.push(promise);
-          }
-          await Promise.all(promiseImports);
           
-          for(let item of checkedList){              
-              //do it one by one to avoid license count overlapping
-             await this.getDevice(item).then(()=>item.checked=false);
-          }
-          
+          //save nvrs
+          await this.saveNvrs(checkedList);          
+          //gets all devices
+          await this.getDevices(checkedList);
+          //save all devices
+          await this.saveDevices(checkedList);          
+
           this.checkSelected();
           if(confirm("Import NVR(s) success, export result?")) this.exportAll();      
         }catch(err){
@@ -161,20 +146,75 @@ export class NvrImportComponent  implements OnInit {
           this.flag.busy=false;      
         }
       }
+    async saveNvrs(checkedList: NvrImportInterface[]) {
+        let promises=[];
+        //gives Id now otherwise there will be duplicate Id due to parallel requests
+        let ids = await this.nvrService.getNewNvrId(checkedList.length);          
+        for(let i=0;i<checkedList.length;i++){
+          checkedList[i].nvr.Id=ids[i].toString();
+          checkedList[i].nvr.SequenceNumber=ids[i];
+        }
+        for(let group of this.importGroups){
+            let items = checkedList.filter(x=>x.group == group);
+            if(!items || items.length==0)continue;    
+            let nvrs=items.map(x=>x.nvr);              
+            let promise = this.nvrService.saveNvr(nvrs, items[0].group.id).then(nvrImportResults=>{
+              for(let item of items){
+                  let find= nvrImportResults.find(x=>x.Domain == item.nvr.Domain && x.Port == item.nvr.Port);
+                  if(!find)continue;
+                  item.nvrObjectId = find.objectId;
+                  item.nvr.Id = find.Id;                    
+              }
+            });
+            promises.push(promise);
+        }
+        await Promise.all(promises); 
+    }
+    private async saveDevices(checkedList: NvrImportInterface[]) {
+        let promises = [];
+        let availableIsapCount = await this.licenseService.getLicenseAvailableCount(licenseType.iSAP).toPromise();
+        let available3rdPartyCount = await this.licenseService.getLicenseAvailableCount(licenseType.thirdParty).toPromise();
+        for (let item of checkedList) {
+            item.checked=false;
+            if(item.device.length <= 0) continue;
+
+            let lic = environment.production ? this.licenseService.getNvrManufacturerLicenseCode(item.nvr.Manufacture) : "pass";            
+            if (lic == licenseType.pass)
+                promises.push(this.saveCams(item));
+            else if (lic == licenseType.iSAP && item.device.length < availableIsapCount) {
+                availableIsapCount -= item.device.length;
+                promises.push(this.saveCams(item));
+            }
+            else if (lic == licenseType.thirdParty && item.device.length < available3rdPartyCount) {
+                available3rdPartyCount -= item.device.length;
+                promises.push(this.saveCams(item));
+            }
+            else
+                item.syncResult = `insufficient license for ${item.device.length} device(s)`;
+            
+        }
+        await Promise.all(promises);
+    }
+
+    private saveCams(item: NvrImportInterface): any {
+        return this.cameraService.saveCamera(item.device, item.nvr.Id, item.nvrObjectId, undefined, "").then(cams => {
+            item.deviceSynced = cams.length;
+        });
+    }
+
+    async getDevices(checkedList:NvrImportInterface[]){
+        let promises=[];
+        for(let item of checkedList){                           
+        promises.push(this.getDevice(item));
+        }
+        await Promise.all(promises);
+    }
+
       async getDevice(item:NvrImportInterface){
         try{
-            const lic = environment.production ? this.licenseService.getNvrManufacturerLicenseCode(item.nvr.Manufacture) : "pass";
-            console.debug(lic);
-            let num = await this.licenseService.getLicenseAvailableCount(lic).toPromise();
-
-            await this.nvrService.getNvrDevice(item.nvr.Id).then(async devices => {                
-                if(num<devices.length)item.syncResult=`insufficient license for ${devices.length} device(s)`;
-                else{
-                    await this.cameraService.saveCamera(devices, item.nvr.Id, item.nvrObjectId, undefined, "").then(cams=> {
-                        item.deviceSynced = cams.length;
-                        item.syncResult="success";
-                    }); 
-                }
+            await this.nvrService.getNvrDevice(item.nvr.Id).then(devices => {
+                item.device=devices;
+                item.syncResult = "success";
             });
         }
         catch(err){
@@ -182,6 +222,7 @@ export class NvrImportComponent  implements OnInit {
             console.debug(err);
         }
       }
+
       exportAll(){
         this.csvService.downloadCSV({
             header: this.headers.join(",")+`,"import result",ID,"sync result","device synced",error`,
@@ -192,6 +233,7 @@ export class NvrImportComponent  implements OnInit {
             fileName: 'import_result'
           });
       }
+
     convertToNvr(data: string[]):NvrImportInterface {
         let i=0;
         var nvr = new Nvr();        
@@ -210,7 +252,7 @@ export class NvrImportComponent  implements OnInit {
         let groupName = data[i++];
         nvr.Tags=data.splice(i, data.length-i);
         let group = groupName ? this.groupList.find(x=>x.Name==groupName && x.Level=="1") : this.nonGroup;
-        let newItem:NvrImportInterface={error:[],checked:false, group, nvr}
+        let newItem:NvrImportInterface={error:[],checked:false, group, nvr,device:[]}
         return newItem;
     }
 
@@ -250,4 +292,5 @@ interface NvrImportInterface{
     syncResult?:string;
     deviceSynced?:number;    
     nvrObjectId?:string;
+    device:Device[]
 }
