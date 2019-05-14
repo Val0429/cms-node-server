@@ -63,9 +63,11 @@ export class CmsManagerComponent implements OnInit {
   private async updateParseServerLocation() {
     try{
       await this.coreService.notifyParseAddress(window.location.hostname, Number.parseInt(window.location.port));    
+      await this.coreService.notifyUdpLogServerParseAddress(this.cmsManager);
     }catch(err){      
       console.error("Unable to call saveparseserver cgi", err);
     }
     
   }
+  
 }
