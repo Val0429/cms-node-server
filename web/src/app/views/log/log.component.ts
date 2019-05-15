@@ -142,8 +142,8 @@ export class LogComponent implements OnInit {
       rows = rows.concat(item.results);
     }
     this.csvService.downloadCSV({
-      header: 'Time,Level,Identity,Category,Message',
-      data: rows.map(log => `${this.getDate(log.Timestamp)},${log.Level},${log.Identity},${log.Category},${log.Message}`),
+      header: 'Time,Source,Level,Identity,Category,Message',
+      data: rows.map(log => `${this.getDate(log.Timestamp)},${log.Source ||""},${log.Level},${log.Identity},${log.Category},${log.Message}`),
       fileName: 'Log_Export',
       timestamp: 'YYYY-MM-DD HHmmss'
     });
@@ -153,7 +153,7 @@ export class LogComponent implements OnInit {
       type: SystemLog,
       filter: query => {
         if (this.queryParams.keyword) {
-          const keywordQueries = ['Level', 'Category', 'Identity','Message'].map(column =>
+          const keywordQueries = ['Level', 'Category', 'Identity','Message', 'Source'].map(column =>
             new Parse.Query(SystemLog)
               .contains(column, this.queryParams.keyword));
           Object.assign(query, Parse.Query.or(...keywordQueries));

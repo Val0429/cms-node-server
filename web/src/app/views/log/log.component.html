@@ -36,6 +36,7 @@
             <thead>
               <tr>
                 <th>Time</th>                
+                <th>Source</th>        
                 <th>Level</th>                
                 <th>Identity</th>
                 <th>Category</th>
@@ -45,6 +46,7 @@
             <tbody>
               <tr *ngFor="let log of dataList;">
                 <td>{{getDate(log.Timestamp)}}</td>
+                <td>{{log.Source}}</td>
                 <td>{{log.Level}}</td>
                 <td>{{log.Identity}}</td>
                 <td>{{log.Category}}</td>
