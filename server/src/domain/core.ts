@@ -303,6 +303,12 @@ export class SystemLog extends Parse.Object implements ISystemLog {
   set Identity(value: string) {
     super.set('Identity', value);
   }
+  get Source(): string {
+    return super.get('Source');
+  }
+  set Source(value: string) {
+    super.set('Source', value);
+  }
   get Message(): string {
     return super.get('Message');
   }

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { IPromise } from 'parse';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { IBatchRequest } from 'lib/domain/core';
+import { ServerInfo } from 'app/model/core';
 
 @Injectable()
 export class CoreService {
@@ -114,6 +115,19 @@ export class CoreService {
           .timeout(timeout || 10000).toPromise();
     return response.json();
   }
+
+  async notifyUdpLogServerParseAddress(serverInfo:ServerInfo, timeout?:number) {
+
+    const body = {host:window.location.hostname, port:Number.parseInt(window.location.port), source:serverInfo.Name, sourceAddress:serverInfo.Domain};
+    
+    let url=Parse.serverURL + this.urls.MEDIA_PROXY_URL + `/udp`;
+    console.debug("url", url, "body", body);
+    const options = new RequestOptions({ headers: this.parseHeaders });
+    let response = await this.http.put(url, body, options)
+          .timeout(timeout || 10000).toPromise();
+    return response.json();
+  }
+
   proxyMediaServer(args: IBatchRequest, timeout?: number, serverId?:string) {
     const body = {
       method: args.method,

@@ -30,8 +30,7 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
   }
   serverTypeChange(){
       this.editItem.Port = this.currentType.DefaultPort;
-      this.editItem.RecordPath = this.currentType.HasStorage ? []: null;
-      this.editItem.MaxCapacity = 1;
+      this.editItem.RecordPath = this.currentType.HasStorage ? []: null;      
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes.currentItem || !this.currentItem) return;
@@ -63,7 +62,7 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
     try{
       this.flag.busy=true;
       await this.currentItem.destroy();
-      this.coreService.notify({path:this.coreService.urls.URL_CLASS_SERVERINFO, objectId:this.currentItem.id})
+      this.coreService.notify({path:this.coreService.urls.URL_CLASS_SERVERINFO, objectId:this.currentItem.id});      
       this.reloadItemsEvent.emit();
       this.closeEvent.emit();
     }catch(err){
@@ -101,6 +100,7 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
       this.currentItem.TempPath=this.editItem.TempPath;          
 
       await this.currentItem.save();
+      await this.coreService.notifyUdpLogServerParseAddress(this.currentItem);
       console.debug(this.currentItem);
       this.coreService.notify({path:this.coreService.urls.URL_CLASS_SERVERINFO, objectId:this.currentItem.id})
       this.reloadItemsEvent.emit();

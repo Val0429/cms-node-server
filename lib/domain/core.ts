@@ -29,6 +29,7 @@ export interface IEvent {
 }
 
 export interface ISystemLog {
+    Source:string,
     Timestamp: number,
     Level: string,
     Category: string,
