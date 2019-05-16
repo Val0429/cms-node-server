@@ -30,8 +30,7 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
   }
   serverTypeChange(){
       this.editItem.Port = this.currentType.DefaultPort;
-      this.editItem.RecordPath = this.currentType.HasStorage ? []: null;
-      this.editItem.MaxCapacity = 1;
+      this.editItem.RecordPath = this.currentType.HasStorage ? []: null;      
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes.currentItem || !this.currentItem) return;
