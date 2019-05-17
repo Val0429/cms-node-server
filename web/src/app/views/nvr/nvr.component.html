@@ -23,7 +23,7 @@
           <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="importWindow.show()" [disabled]="flag.busy">
               Import
           </button>
-          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="modalWindow.show()" [disabled]="flag.busy">
+          <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="modalWindow.show()" [disabled]="flag.busy" *ngIf="showSearch">
             Search
           </button>
           <button class="btn btn-secondary width-100 mb-xs" role="button" (click)="addNVR()" [disabled]="flag.busy">
