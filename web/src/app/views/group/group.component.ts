@@ -95,13 +95,14 @@ export class GroupComponent implements OnInit {
     if (!confirm('Are you sure to delete ' + this.editDataModel.Name + '?')) return;
     let noGroup = this.groupList.find(x=>x.Name=="Non Sub Group");
     //move channel and nvr to "Non Sub Group"
-    if(this.currentEditData.Channel || this.currentEditData.Nvr){
-      
+    if(this.currentEditData.Nvr){      
       for(let nvrId of this.currentEditData.Nvr){
         if(!noGroup.Nvr)noGroup.Nvr=[];
         const insertIndex = InsertHelper.findInsertIndex(noGroup.Nvr, nvrId);
         noGroup.Nvr.splice(insertIndex, 0, nvrId);        
       }
+    }
+    if(this.currentEditData.Channel){
       for(let cam of this.currentEditData.Channel){
         if(!noGroup.Channel)noGroup.Channel=[];
         const insertIndex = InsertHelper.findInsertIndexForGroupChannel(noGroup.Channel, cam);
