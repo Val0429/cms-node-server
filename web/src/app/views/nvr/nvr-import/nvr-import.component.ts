@@ -8,6 +8,7 @@ import { LicenseService } from 'app/service/license.service';
 import { environment } from 'environments/environment';
 import { CSVService } from 'app/service/csv.service';
 import { stringify } from 'querystring';
+import { NvrManufacturer } from 'app/config/nvr-manufacturer.config';
 // see: https://stackoverflow.com/a/46745059/1016343
 
 const licenseType={iSAP:"00166", thirdParty:"00167", pass:"pass"};
@@ -106,7 +107,8 @@ export class NvrImportComponent  implements OnInit {
         let existInDb = await this.parseService.fetchData({type:Nvr, filter:q=>q.equalTo("Domain", newItem.nvr.Domain)
             .equalTo("Port", newItem.nvr.Port).limit(1)});
         let existInList = this.nvrList.filter(x=>x.nvr.Domain == newItem.nvr.Domain && x.nvr.Port == newItem.nvr.Port).length>1;
-        
+        let manufacturerExist = NvrManufacturer.EditorList.indexOf(newItem.nvr.Manufacture)>-1;
+        if(!manufacturerExist)newItem.error.push("manufacturer is not supported");
         if(existInDb && existInDb.length>0) newItem.error.push("exist in db");
         if(existInList) newItem.error.push("duplicate import");
         if(!newItem.group) newItem.error.push("group doesn't exist");
@@ -237,19 +239,20 @@ export class NvrImportComponent  implements OnInit {
     convertToNvr(data: string[]):NvrImportInterface {
         let i=0;
         var nvr = new Nvr();        
-        nvr.Name=data[i++];
-        nvr.Manufacture=data[i++];
-        nvr.Driver=data[i++];
-        nvr.Domain=data[i++];
-        nvr.Port=Number.parseInt(data[i++]);
-        nvr.ServerPort=Number.parseInt(data[i++] || "8000");        
-        nvr.Account=this.cryptoService.encrypt4DB(data[i++]);
-        nvr.Password=this.cryptoService.encrypt4DB(data[i++]);
+        nvr.Name=data[i++].trim();
+        nvr.Manufacture=data[i++].trim();
+        if(nvr.Manufacture.toLowerCase() == "isap")nvr.Manufacture="iSAP";
+        nvr.Driver=data[i++].trim();
+        nvr.Domain=data[i++].trim();
+        nvr.Port=Number.parseInt(data[i++].trim());
+        nvr.ServerPort=Number.parseInt(data[i++].trim() || "8000");        
+        nvr.Account=this.cryptoService.encrypt4DB(data[i++].trim());
+        nvr.Password=this.cryptoService.encrypt4DB(data[i++].trim());
         nvr.SSLEnable=data[i++].toLowerCase() == "true";
         nvr.IsListenEvent=data[i++].toLowerCase() == "true";
-        nvr.BandwidthStream=Number.parseInt(data[i++]);
-        nvr.ServerStatusCheckInterval=Number.parseInt(data[i++]);
-        let groupName = data[i++];
+        nvr.BandwidthStream=Number.parseInt(data[i++].trim());
+        nvr.ServerStatusCheckInterval=Number.parseInt(data[i++].trim());
+        let groupName = data[i++].trim();
         nvr.Tags=data.splice(i, data.length-i);
         let group = groupName ? this.groupList.find(x=>x.Name==groupName && x.Level=="1") : this.nonGroup;
         let newItem:NvrImportInterface={error:[],checked:false, group, nvr,device:[]}
