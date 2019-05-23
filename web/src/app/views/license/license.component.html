@@ -1,6 +1,6 @@
 <div class="col-12">
     <section class="widget">
-        <header>
+        <header *ngIf="showServer">
           <legend>
             <strong>Server:</strong>
             <select (change)="setCurrentServer($event.target.value)" [(ngModel)]="currentServer">
