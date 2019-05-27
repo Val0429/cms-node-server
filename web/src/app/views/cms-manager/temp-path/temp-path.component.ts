@@ -1,11 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { Observable } from 'rxjs/Observable';
-import { IServerStorage, IMediaDiskspace, IDBSyncDestination, IRecordPath } from 'lib/domain/core';
-import { Server, DBSync, ServerInfo, RecordPath } from 'app/model/core';
+import { IServerStorage, IMediaDiskspace } from 'lib/domain/core';
+import { Server, ServerInfo } from 'app/model/core';
 import ArrayHelper from 'app/helper/array.helper';
-import { Query } from 'parse';
 
 @Component({
   selector: 'app-temp-path',
@@ -30,13 +29,22 @@ export class TempPathComponent implements OnInit {
   @Output() setStorageEvent: EventEmitter<any> = new EventEmitter();
 
   constructor(private coreService: CoreService, private parseService: ParseService) { }
-
-  ngOnInit() {
-    Observable.combineLatest(
-      this.reloadServerConfig(),
-      this.reloadServerInfo(),
-      this.reloadMediaDiskspace()
-    ).subscribe();
+  @Input() cmsStatus:{isActive:boolean};
+  async ngOnInit() {
+    
+    try{
+      Observable.combineLatest(
+        this.reloadServerConfig(),
+        this.reloadServerInfo()      
+      ).subscribe();
+      console.debug(this.cmsStatus.isActive);
+      await this.reloadMediaDiskspace();
+      this.cmsStatus.isActive=true;
+      console.debug(this.cmsStatus.isActive);
+    }catch(err){
+      console.error(err);
+      this.cmsStatus.isActive=false;
+    }
   }
   reloadServerInfo() {
     return Observable.fromPromise(this.parseService.getData({
@@ -57,7 +65,7 @@ export class TempPathComponent implements OnInit {
     return this.coreService.proxyMediaServer({
       method: 'GET',
       path: this.coreService.urls.URL_MEDIA_DISKSPACE
-    }).map(result => this.mediaDiskspace = ArrayHelper.toArray(result.DiskInfo.Disk));
+    }).map(result => this.mediaDiskspace = ArrayHelper.toArray(result.DiskInfo.Disk)).toPromise();
   }
 
 
