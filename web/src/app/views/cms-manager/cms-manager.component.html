@@ -51,7 +51,7 @@
       </div> -->
     </div>
     
-    <!-- <div class="widget-footer">
+    <div class="widget-footer" *ngIf="!cmsStatus.isActive">
       <div class="form-group row">
         <label class="col-md-4  col-form-label text-md-right"></label>
         <div class="col-md-4">
@@ -61,7 +61,7 @@
           </button>
         </div>
       </div>
-    </div> -->
+    </div> 
   </section>
-  <app-temp-path (setStorageEvent)="setStorageEvent()"></app-temp-path>
+  <app-temp-path (setStorageEvent)="setStorageEvent()" [cmsStatus]="cmsStatus"></app-temp-path>
 </div>

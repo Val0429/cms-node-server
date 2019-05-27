@@ -95,24 +95,12 @@ export class GroupComponent implements OnInit {
     if (!confirm('Are you sure to delete ' + this.editDataModel.Name + '?')) return;
     let noGroup = this.groupList.find(x=>x.Name=="Non Sub Group");
     //move channel and nvr to "Non Sub Group"
-    if(this.currentEditData.Channel || this.currentEditData.Nvr){
-      
-      for(let nvrId of this.currentEditData.Nvr){
-        if(!noGroup.Nvr)noGroup.Nvr=[];
-        const insertIndex = InsertHelper.findInsertIndex(noGroup.Nvr, nvrId);
-        noGroup.Nvr.splice(insertIndex, 0, nvrId);        
-      }
-      for(let cam of this.currentEditData.Channel){
-        if(!noGroup.Channel)noGroup.Channel=[];
-        const insertIndex = InsertHelper.findInsertIndexForGroupChannel(noGroup.Channel, cam);
-        noGroup.Channel.splice(insertIndex, 0, cam);
-      }      
-    }
+    this.moveToNonGroup(this.currentEditData, noGroup);
     const deleteGroup$ = Observable.fromPromise(this.currentEditData.destroy().then(res=> noGroup.save())
       .then(group => this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_GROUP, objectId: group.id })));
     deleteGroup$
       .switchMap(() => this.updateSubGroupOfMain(this.currentEditData))
-      .switchMap(() => this.removeSubGroupsByMain(this.currentEditData))
+      .switchMap(() => this.removeSubGroupsByMain(this.currentEditData, noGroup))
       .do(() => this.coreService.notify())
       .subscribe(() => {
         if (this.editDataModel.Level === '0') {
@@ -123,6 +111,25 @@ export class GroupComponent implements OnInit {
         this.reloadGroupData();
       });
     
+  }
+
+  private moveToNonGroup(group:Group, noGroup: Group) {
+    if (group.Nvr) {
+      for (let nvrId of group.Nvr) {
+        if (!noGroup.Nvr)
+          noGroup.Nvr = [];
+        const insertIndex = InsertHelper.findInsertIndex(noGroup.Nvr, nvrId);
+        noGroup.Nvr.splice(insertIndex, 0, nvrId);
+      }
+    }
+    if (group.Channel) {
+      for (let cam of group.Channel) {
+        if (!noGroup.Channel)
+          noGroup.Channel = [];
+        const insertIndex = InsertHelper.findInsertIndexForGroupChannel(noGroup.Channel, cam);
+        noGroup.Channel.splice(insertIndex, 0, cam);
+      }
+    }
   }
 
   /** 更新DB中mainGroup底下的subGroup集合 */
@@ -139,16 +146,18 @@ export class GroupComponent implements OnInit {
   }
 
   /** 判斷若Group是Main，就找到所有對應的subGroup從DB移除 */
-  removeSubGroupsByMain(mainGroup: Group) {
+  removeSubGroupsByMain(mainGroup: Group, noGroup:Group) {
     if (mainGroup.Level === '0') {
       return Observable.fromPromise(this.parseService.fetchData({
         type: Group,
         filter: query => query.containedIn('objectId', mainGroup.SubGroup)
       }).then(subGroups => Parse.Object.destroyAll(subGroups))
-        .then(sgs => {
+        .then(async sgs => {
           sgs.forEach(sg => {
+            this.moveToNonGroup(sg, noGroup);
             this.coreService.addNotifyData({ path: this.coreService.urls.URL_CLASS_GROUP, objectId: sg.id });
           });
+          await noGroup.save();
         }));
     }
     return Observable.of(null);

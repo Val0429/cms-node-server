@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./cms-manager.component.css']
 })
 export class CmsManagerComponent implements OnInit {
+  cmsStatus:{isActive:boolean};
   cmsManager: ServerInfo;
   failoverSetupIsCollapsed = true;
   failoverConfigs: any[] = [
@@ -21,6 +22,7 @@ export class CmsManagerComponent implements OnInit {
   constructor(private coreService: CoreService, private parseService: ParseService) { }
 
   async ngOnInit() {
+    this.cmsStatus={isActive:false};
     await this.reloadData();
   }
 
@@ -48,7 +50,9 @@ export class CmsManagerComponent implements OnInit {
         parseResult: [result], path: this.coreService.urls.URL_CLASS_SERVERINFO
       }));
       setTimeout(async()=>await this.updateParseServerLocation(), 3000);
-      alert('Update Success')
+      alert('Update Success');
+      //refresh page to get cms manager data
+      if(!this.cmsStatus.isActive) setTimeout(()=>{window.location.href=window.location.href;}, 10000);
     }catch(err){
       alert("update failed");
       console.error(err);
