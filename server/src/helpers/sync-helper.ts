@@ -22,9 +22,9 @@ export class SyncHelper {
 
     constructor() {
         
-        this.setAutoSyncDefault();
-        this.syncTimeout();
-        console.log(`Addr: ${this.configHelper.parseConfig.HOST}`);
+        // this.setAutoSyncDefault();
+        // this.syncTimeout();
+        // console.log(`Addr: ${this.configHelper.parseConfig.HOST}`);
         
     }
 
@@ -72,7 +72,7 @@ export class SyncHelper {
         if (!allCollection) {
             // 此2個Collection資料量龐大, 經常納入排除清單
             excludeCollection.push('Event');
-            excludeCollection.push('SysLog');
+            excludeCollection.push('"SystemLog"');
         }
 
         const logType = 'DB Backup';
