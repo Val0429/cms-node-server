@@ -24,11 +24,11 @@ export class LogHelper {
             console.log(logMsg);
             if (!fs.existsSync(writePath)) {
                 fs.writeFile(writePath, logMsg, err =>{
-                    console.error("error writing log", err);        
+                    if(err)console.error("error writing log", err);        
                 });
             } else {
                 fs.appendFile(writePath, logMsg, err =>{
-                    console.error("error writing log", err);        
+                    if(err)console.error("error writing log", err);        
                 });
             }
         }catch(err){
