@@ -20,7 +20,7 @@ const licenseType={iSAP:"00166", thirdParty:"00167", pass:"pass"};
 })
 export class NvrImportComponent  implements OnInit {
     p=1;
-    
+    manufaturers = NvrManufacturer.EditorList.map(x=> {return {name:x, low:x.toLowerCase()}});
     @Input() flag:{busy:boolean};
     @Output() closeModal: EventEmitter<any> = new EventEmitter();
     @Output() reloadDataEvent: EventEmitter<any> = new EventEmitter();
@@ -240,9 +240,12 @@ export class NvrImportComponent  implements OnInit {
         let i=0;
         var nvr = new Nvr();        
         nvr.Name=data[i++].trim();
-        nvr.Manufacture=data[i++].trim();
-        if(nvr.Manufacture.toLowerCase() == "isap")nvr.Manufacture="iSAP";
-        nvr.Driver=data[i++].trim();
+        let manufacturer=data[i++].trim();
+        let manufacurerExists = this.manufaturers.find(x=>x.low==manufacturer.toLowerCase());
+        nvr.Manufacture = manufacurerExists ? manufacurerExists.name : manufacturer;
+        let driver=data[i++].trim();
+        let driverExists = this.manufaturers.find(x=>x.low==driver.toLowerCase());
+        nvr.Driver=driverExists ? driverExists.name : driver;
         nvr.Domain=data[i++].trim();
         nvr.Port=Number.parseInt(data[i++].trim());
         nvr.ServerPort=Number.parseInt(data[i++].trim() || "8000");        
