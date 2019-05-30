@@ -1,0 +1,1 @@
+"C:/Program Files/MongoDB/Server/3.4/bin/mongo.exe" CMS3 --eval "db.SystemLog.createIndex({Level:'text', Category:'text', Identity:'text', Message:'text', Source:'text'});"
