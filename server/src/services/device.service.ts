@@ -1,12 +1,12 @@
 
 import { Request, Response } from 'express';
 import { Nvr, Device, Group, EventHandler, RecordSchedule } from '../domain';
-import { ParseHelper } from '../helpers';
+import { ParseHelper, LogHelper } from '../helpers';
 import { CoreService, NotificationBody } from './core.service';
 import { IGroupChannel } from 'lib/domain/core';
 import { RestFulService } from './restful.service';
 
-
+const logHelper = LogHelper.instance;
 const parseService = ParseHelper.instance;
 const coreService = CoreService.instance;
 const restFulService = RestFulService.instance;
@@ -35,7 +35,7 @@ export class DeviceService {
                 await Promise.all(promises);
             })
         }catch(err){
-            console.error("error thrown from updateNvrChannel")
+            logHelper.writeLog({type:"updateNvrChannel",msg:err});            
         }
     }
     //for version 3.00.25 onward    
@@ -64,7 +64,7 @@ export class DeviceService {
 
             }
         }catch(err){
-            console.error("error thrown from noGroupCheck")
+            logHelper.writeLog({type:"noGroupCheck",msg:err});
         }
     }
     private async updateOrphanDevice(){
@@ -121,10 +121,10 @@ export class DeviceService {
             coreService.auth = req.body.auth;     
             let { nvrObjectId, cam, quantity, account, password } = req.body;         
             
-            let availableLicense = await this.getLicenseAvailableCount("00171");            
-            if(availableLicense < quantity){
-                throw new Error(`Not enough license, ${availableLicense}`);
-            }
+            // let availableLicense = await this.getLicenseAvailableCount("00171");            
+            // if(availableLicense < quantity){
+            //     throw new Error(`Not enough license, ${availableLicense}`);
+            // }
 
             if(!nvrObjectId){
                 let nvr = await this.getDefaultNvr();
@@ -139,7 +139,7 @@ export class DeviceService {
             res.json({message:"success"});
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"cloneDevice",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
@@ -156,7 +156,7 @@ export class DeviceService {
             res.json({count});
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"DeviceService",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
@@ -181,7 +181,7 @@ export class DeviceService {
             res.json(devices);
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"DeviceService",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
@@ -202,7 +202,7 @@ export class DeviceService {
             res.json(result);
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"DeviceService",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
@@ -242,7 +242,7 @@ export class DeviceService {
             res.json({message:"success"});
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"DeviceService",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
@@ -272,7 +272,7 @@ export class DeviceService {
             res.json({message:"success"});
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"DeviceService",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
@@ -324,7 +324,7 @@ export class DeviceService {
             res.json(results);
         }
         catch(err){
-            console.error("error saving camera", err);
+            logHelper.writeLog({type:"DeviceService",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
@@ -380,7 +380,7 @@ export class DeviceService {
             res.json(results);
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"DeviceService",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
