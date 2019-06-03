@@ -36,8 +36,11 @@ InstallDir "$PROGRAMFILES\CMS 3.0\Config"
 
 !macro DoUninstall UN
 Function ${UN}DoUninstall
+	#0, get old installation folder
+	ReadRegStr $R1 HKLM "Software\${PRODUCT_NAME}" ""
+	
 	# first, delete the uninstaller
-    Delete "$INSTDIR\uninstall.exe"
+    Delete "$R1\uninstall.exe"
  
    
 	# third, remove services
@@ -45,7 +48,7 @@ Function ${UN}DoUninstall
 	ExecWait '"sc" delete "${CMS_SERVICE}"'
 
 	# now delete installed files
-	RMDir /r $INSTDIR
+	RMDir /r $R1
 	
 	# remove registry info
 	DeleteRegKey HKLM "Software\${PRODUCT_NAME}"	
@@ -71,11 +74,13 @@ Function .onInit
 uninst:
 	RMDir /r "${TEMP_FOLDER}\server"
 	RMDir /r "${TEMP_FOLDER}\server"
+	
+	ReadRegStr $R1 HKLM "Software\${PRODUCT_NAME}" ""
 	;copy config first to temp folder
-	!insertmacro BackupFile "$INSTDIR\server\src\config" "parse.config.json" "${TEMP_FOLDER}\server"
-	!insertmacro BackupFile "$INSTDIR\server\src\config" "path.config.json" "${TEMP_FOLDER}\server"
-	!insertmacro BackupFile "$INSTDIR\server\src\config" "external.config.json" "${TEMP_FOLDER}\server"
-	!insertmacro BackupFile "$INSTDIR\web\dist\config" "parse.config.json" "${TEMP_FOLDER}\web"
+	!insertmacro BackupFile "$R1\server\src\config" "parse.config.json" "${TEMP_FOLDER}\server"
+	!insertmacro BackupFile "$R1\server\src\config" "path.config.json" "${TEMP_FOLDER}\server"
+	!insertmacro BackupFile "$R1\server\src\config" "external.config.json" "${TEMP_FOLDER}\server"
+	!insertmacro BackupFile "$R1\web\dist\config" "parse.config.json" "${TEMP_FOLDER}\web"
 
 
   ClearErrors
