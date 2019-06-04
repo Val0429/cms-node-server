@@ -151,13 +151,9 @@ export class LogComponent implements OnInit {
   async getData(skip:number, limit:number){
    return await this.restFulService.get({
       type: SystemLog,
+      where:this.queryParams.keyword?{"$text":{ "$search":`"${this.queryParams.keyword}"`}}:{},
       filter: query => {
-        if (this.queryParams.keyword) {
-          const keywordQueries = ['Level', 'Category', 'Identity','Message', 'Source'].map(column =>
-            new Parse.Query(SystemLog)
-              .contains(column, this.queryParams.keyword));
-          Object.assign(query, Parse.Query.or(...keywordQueries));
-        }
+        
         if (this.queryParams.startDate) {
           const date = moment(this.queryParams.startDate).format('x');
           query.greaterThanOrEqualTo('Timestamp', Number(date));
@@ -166,6 +162,7 @@ export class LogComponent implements OnInit {
           const date = moment(this.queryParams.endDate).add(1, 'd').subtract(1, 's').format('x');
           query.lessThanOrEqualTo('Timestamp', Number(date));
         }
+        
         //query.descending('createdAt');      
         query.skip(skip);
         query.limit(limit);

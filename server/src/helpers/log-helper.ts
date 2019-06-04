@@ -17,14 +17,22 @@ export class LogHelper {
 
     /** 寫入msg至指定file, 若無則寫入預設檔案 */
     writeLog(args: { type: string, msg: string }) {
-        const writeTime = moment(new Date());
-        const writePath = `${this.defaultLogDir}/${writeTime.format('YYYYMMDD')}.txt`;
-        const logMsg = `[${writeTime.format('YYYY-MM-DD HH:mm:ss')}] [${args.type}] ${args.msg}\r\n`;
-        console.log(logMsg);
-        if (!fs.existsSync(writePath)) {
-            fs.writeFileSync(writePath, logMsg);
-        } else {
-            fs.appendFileSync(writePath, logMsg);
+        try{
+            const writeTime = moment(new Date());
+            const writePath = `${this.defaultLogDir}/${writeTime.format('YYYYMMDD')}.txt`;
+            const logMsg = `[${writeTime.format('YYYY-MM-DD HH:mm:ss')}] [${args.type}] ${args.msg}\r\n`;
+            console.log(logMsg);
+            if (!fs.existsSync(writePath)) {
+                fs.writeFile(writePath, logMsg, err =>{
+                    if(err)console.error("error writing log", err);        
+                });
+            } else {
+                fs.appendFile(writePath, logMsg, err =>{
+                    if(err)console.error("error writing log", err);        
+                });
+            }
+        }catch(err){
+            console.error("error writing log", err);
         }
     }
 }

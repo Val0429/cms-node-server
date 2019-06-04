@@ -10,7 +10,8 @@ export class RestFulService{
     }
     async get<T extends Parse.Object>(args: {
         type: new (options?: any) => T,
-        filter?: (query: Parse.Query<T>) => Parse.Query<T>
+        filter?: (query: Parse.Query<T>) => Parse.Query<T>,
+        where?:any
       }) :Promise<GetResult>{  
          
         let query = new Parse.Query(args.type);   
@@ -18,7 +19,11 @@ export class RestFulService{
         if(args.filter){                
             let q = args.filter(query) as any;    
             console.debug("query", q);
-            url+=`?where=${JSON.stringify(q._where)}`;
+            
+            //extra where
+            if(args.where)url+=`?where=${JSON.stringify(Object.assign(q._where, args.where))}`;
+            else url+=`?where=${JSON.stringify(q._where)}`;
+
             if(q._order)url+=`&order=${q._order.join(",")}`;
             if(q._include)url+=`&include=${q._include.join(",")}`;
             url+=`&skip=${q._skip}`;

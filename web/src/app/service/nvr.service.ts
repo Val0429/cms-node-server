@@ -68,6 +68,7 @@ export class NvrService {
       case 'acti enterprise': return 'ACTi_E';
       case 'diviotec (linux)':
       case 'diviotec (windows)': return 'Diviotec';
+      case 'saitell': return 'Dahua';
       default: return currentEditModel.Manufacture;
     }
   }

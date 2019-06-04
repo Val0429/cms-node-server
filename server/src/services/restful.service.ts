@@ -1,6 +1,7 @@
 
-import { ConfigHelper } from '../helpers';
+import { ConfigHelper, LogHelper } from '../helpers';
 import { Request, Response } from 'express';
+const logHelper = LogHelper.instance;
 
 export class RestFulService {    
     mongoist = require('mongoist');
@@ -32,7 +33,7 @@ export class RestFulService {
             res.json(result);            
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"RESTFUL",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
@@ -55,7 +56,7 @@ export class RestFulService {
             res.json(result);
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"RESTFUL",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
@@ -104,7 +105,7 @@ export class RestFulService {
             res.json({pageSize,page,count,totalPages,results});
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"RESTFUL",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
@@ -127,7 +128,7 @@ export class RestFulService {
             res.json(result);
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"RESTFUL",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
@@ -158,7 +159,7 @@ export class RestFulService {
             res.json({count});
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"RESTFUL",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,
@@ -197,7 +198,7 @@ export class RestFulService {
             res.json(result);
         }
         catch(err){
-            console.error(err);
+            logHelper.writeLog({type:"RESTFUL",msg:err});
             res.status(err.status || 500);
             res.json({
                 message: err.message,

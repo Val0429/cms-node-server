@@ -13,13 +13,14 @@ export class LoginComponent implements OnInit {
   myform: FormGroup;
   username: FormControl;
   password: FormControl;
-
+  year:number;
   constructor(
     private router: Router,
     private coreService: CoreService,
     private userService: UserService
   ) { 
     this.createForm();
+    this.year = (new Date()).getFullYear();
   }
 createForm() {
     this.username = new FormControl('', [

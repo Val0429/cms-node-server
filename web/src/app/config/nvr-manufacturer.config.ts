@@ -25,6 +25,7 @@ export const NvrManufacturer = {
         'iSAP',
         //'iSAP Failover Server',
         'iSapP2P',
+        'Saitell'
         //'Milestone',
         //'Milestone Corporate 2016 R2',
         //'NetworkOptix',
