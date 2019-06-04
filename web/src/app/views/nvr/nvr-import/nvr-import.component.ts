@@ -246,6 +246,9 @@ export class NvrImportComponent  implements OnInit {
         let driver=data[i++].trim();
         let driverExists = this.manufaturers.find(x=>x.low==driver.toLowerCase());
         nvr.Driver=driverExists ? driverExists.name : driver;
+        // see bug #9680
+        if(nvr.Driver =='Saitell')nvr.Driver = 'Dahua';
+
         nvr.Domain=data[i++].trim();
         nvr.Port=Number.parseInt(data[i++].trim());
         nvr.ServerPort=Number.parseInt(data[i++].trim() || "8000");        
