@@ -109,7 +109,7 @@ export class ScheduleTemplateComponent implements OnInit {
   getNewRecordScheduleTemplate() {
     if (!this.defaultRecordPath) {
       alert('Please setup Record Path in Storage page before create Record Schedule Template');
-      return undefined;
+      return;
     }
     return new RecordScheduleTemplate({
       Name: 'New Template',

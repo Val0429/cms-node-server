@@ -9,8 +9,8 @@
 !define PRODUCT_URL "http://www.isapsolution.com"
 !define PATH_OUT "Release"
 !define ARP "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
-!define CMS_MONITOR "CMSConfigMonitor"
-!define CMS_SERVICE "cms30configserver.exe"
+
+
 !define TEMP_FOLDER "$TEMP\${PRODUCT_NAME}"
 
 # define name of installer
@@ -41,12 +41,17 @@ Function ${UN}DoUninstall
 	
 	# first, delete the uninstaller
     Delete "$R1\uninstall.exe"
- 
-   
-	# third, remove services
-	ExecWait '"net" stop "${CMS_SERVICE}"'
-	ExecWait '"sc" delete "${CMS_SERVICE}"'
 
+    SetOutPath $R1\server\src 
+	# third, stop and uninstall app
+	ExecWait 'app_stop.bat'
+	ExecWait 'uninstall.bat'
+
+
+	#4th, Delete PM2 Path
+	EnVar::SetHKLM
+	EnVar::Delete "PM2_HOME"
+	
 	# now delete installed files
 	RMDir /r $R1
 	
@@ -117,15 +122,15 @@ ShowInstDetails show
   !insertmacro MUI_PAGE_COMPONENTS
  
 Section "NodeJs v8.11.3-x64" SEC01
-  ExecWait 'msiexec /i "Prerequisites\node-v8.11.3-x64.msi"'
+  ExecWait 'msiexec /i "$EXEDIR\Prerequisites\node-v8.11.3-x64.msi"'
 SectionEnd 
   
 Section "MongoDb v3.4.9" SEC02
-  ExecWait 'msiexec /i "Prerequisites\mongodb-win32-x86_64-enterprise-windows-64-3.4.9-signed.msi"'
+  ExecWait 'msiexec /i "$EXEDIR\Prerequisites\mongodb-win32-x86_64-enterprise-windows-64-3.4.9-signed.msi"'
 SectionEnd 
 
 Section "MS Visual C++ Redist 2015 x64" SEC03
-  ExecWait Prerequisites\vc_redist.x64.exe
+  ExecWait $EXEDIR\Prerequisites\vc_redist.x64.exe
 SectionEnd 
 
 Section "Stand alone MongoDb service" SEC04
@@ -189,11 +194,7 @@ Section
 	
 	;install services	
 	SetOutPath $INSTDIR\server\src	
-	
-	;refresh path to enable node
-	Call RefreshProcessEnvironmentPath
-	
-	
+		
 	;restore old config	
 	
 	!insertmacro RestoreFile "${TEMP_FOLDER}\server" "parse.config.json" "$INSTDIR\server\src\config"
@@ -201,7 +202,16 @@ Section
 	!insertmacro RestoreFile "${TEMP_FOLDER}\server" "external.config.json" "$INSTDIR\server\src\config"
 	!insertmacro RestoreFile "${TEMP_FOLDER}\web" "parse.config.json" "$INSTDIR\web\dist\config"
 	
-	ExecWait '"install.bat" /s'
+	; Add PM2 to system environment
+	; Set to HKLM
+	EnVar::SetHKLM
+	EnVar::AddValue "PM2_HOME" "$INSTDIR\pm2"
+	
+	;refresh path to enable node, and pm2
+	Call RefreshProcessEnvironmentPath
+	
+	
+	ExecWait 'install.bat'
 	; wait till finish installing service	
 	Sleep 1000	
 	
@@ -213,9 +223,10 @@ Section
 	#install mongo service
 	SetOutPath "$INSTDIR\server\src\mongodb"
 	${If} ${SectionIsSelected} ${SEC04}			
-		ExecWait '"mongo_install.bat" /s'
+		ExecWait '"mongo_install.bat" /s'	
 		;start service
-		ExecWait '"net" start "${CMS_SERVICE}"'
+		SetOutPath "$INSTDIR\server\src"
+		ExecWait 'app_start.bat'
 	${Else}		
 		ExecWait '"mongo_install_replica.bat" /s'
 	${EndIf}
@@ -231,8 +242,8 @@ UninstallText "This will uninstall ${PRODUCT_NAME}. Press uninstall to continue.
 Section "uninstall"
   Call un.DoUninstall 
 	#  uninstall mongo db
-	ExecWait 'net stop "MongoDb"'
-	ExecWait 'sc delete "MongoDb"'
+	SetOutPath "$INSTDIR\server\src\mongodb"
+	ExecWait 'mongo_uninstall.bat'
 # uninstaller section end
 SectionEnd
 
