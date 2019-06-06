@@ -29,6 +29,7 @@ private static _instance: CoreService;
     };
   }
   async proxyMediaServer(args: IBatchRequest):Promise<any> {    
+    if(!this.auth)return;
     
     const body = {
       method: args.method,
