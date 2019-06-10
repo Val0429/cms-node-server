@@ -2,7 +2,9 @@
   <section class="widget">
     <header>
       <legend>
-        <strong>CMS Manager Server</strong>
+        <div><strong>CMS Manager Server</strong></div>
+        <div><span *ngIf="localhost" style="color:red">Accessing config tool from localhost address will not send parse configuration to CMS Manager</span>
+        </div>
       </legend>
     </header>
     <div class="widget-body" *ngIf="cmsManager">
