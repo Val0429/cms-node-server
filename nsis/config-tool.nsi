@@ -239,7 +239,8 @@ UninstallText "This will uninstall ${PRODUCT_NAME}. Press uninstall to continue.
 Section "uninstall"
   Call un.DoUninstall 
 	#  uninstall mongo db
-	SetOutPath "$INSTDIR\server\src\mongodb"
-	ExecWait 'mongo_uninstall.bat'
+	
+	ExecWait 'net stop mongodb'
+	ExecWait 'sc delete mongodb'
 # uninstaller section end
 SectionEnd
