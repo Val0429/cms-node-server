@@ -5,6 +5,8 @@
 !define NODE "node-v8.11.3-x64.msi"
 !define VCREDIST "vc_redist.x64.exe"
 !define OUTPUT_NAME "config-tool-setup"  
+!define PM2_HOME "$PROGRAMFILES\CMS 3.0\Config\pm2"
+
 # define installation directory
 InstallDir "$TEMP\${PRODUCT_NAME}\Temp"
 OutFile "${OUTPUT_NAME}-v${PRODUCT_VERSION}-FULL.exe"
@@ -85,11 +87,31 @@ Section
 	;delete Prerequisites
 	RMDir /r $INSTDIR\Prerequisites
 	
+	SetOutPath "${PM2_HOME}"
+	
+		; Add PM2 to system environment
+	; Set to HKLM
+	; Check for a 'PM2_HOME' variable
+	EnVar::SetHKLM
+	EnVar::Check "PM2_HOME" "NULL"
+	Pop $0
+	
+  ${If} $0 != "0"
+	; set default pm2 dir
+	EnVar::SetHKLM
+	EnVar::AddValue "PM2_HOME" "${PM2_HOME}"	
+	
 	;refresh path to enable npm
 	WriteRegStr "HKLM" "SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce" "${PRODUCT_NAME}" "$INSTDIR\${OUTPUT_NAME}-v${PRODUCT_VERSION}.exe"
 	
 	MessageBox MB_YESNO|MB_ICONQUESTION "Installation will continue after reboot, do you wish to reboot the system now?" IDNO +2
 	Reboot
+	${Else}
+	Exec "$INSTDIR\${OUTPUT_NAME}-v${PRODUCT_VERSION}.exe"
+  ${EndIf}
+
+	
+
 	
 SectionEnd
 
