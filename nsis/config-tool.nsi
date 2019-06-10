@@ -121,17 +121,6 @@ ShowInstDetails show
   !insertmacro MUI_PAGE_LICENSE "License.txt"
   !insertmacro MUI_PAGE_COMPONENTS
  
-Section "NodeJs v8.11.3-x64" SEC01
-  ExecWait 'msiexec /i "$EXEDIR\Prerequisites\node-v8.11.3-x64.msi"'
-SectionEnd 
-  
-Section "MongoDb v3.4.9" SEC02
-  ExecWait 'msiexec /i "$EXEDIR\Prerequisites\mongodb-win32-x86_64-enterprise-windows-64-3.4.9-signed.msi"'
-SectionEnd 
-
-Section "MS Visual C++ Redist 2015 x64" SEC03
-  ExecWait $EXEDIR\Prerequisites\vc_redist.x64.exe
-SectionEnd 
 
 Section "Stand alone MongoDb service" SEC04
 		
