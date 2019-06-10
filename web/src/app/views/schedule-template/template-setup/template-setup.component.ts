@@ -65,10 +65,10 @@ export class TemplateSetupComponent implements OnInit, OnChanges {
   }
 
   async ngOnChanges(changes: SimpleChanges){
-    if (changes.setupMode) {
+    if (changes.setupMode && changes.setupMode.currentValue) {
       this.setupMode = changes.setupMode.currentValue;
     }
-    if (changes.currentTemplate) {
+    if (changes.currentTemplate && changes.currentTemplate.currentValue) {
       this.currentTemplate = changes.currentTemplate.currentValue;
       await this.fetchSetupData().toPromise();  
     }

@@ -69,7 +69,7 @@ export class ScheduleTemplateEditorComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.currentTemplate) {
+    if (changes.currentTemplate && changes.currentTemplate.currentValue) {
       this.currentTemplate = changes.currentTemplate.currentValue;
       this.resetWeekScheduleOptions(); // 每次讀template都要初始化, 避免其他template的自訂內容影響當前選項
       this.initScheduleAndPlanByTemplate();
