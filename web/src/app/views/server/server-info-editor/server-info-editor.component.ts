@@ -18,7 +18,7 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
   @Input() listRecordPaths:RecordPathDisplay[];
   @Output() reloadItemsEvent: EventEmitter<any> = new EventEmitter();
   @Output() closeEvent: EventEmitter<any> = new EventEmitter();  
-  
+  @Input() localhost:boolean;
   currentType:ServerType;
   editItem:IServerInfo;
   ipRegex=new RegExp(/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/);  
@@ -100,7 +100,7 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
       this.currentItem.TempPath=this.editItem.TempPath;          
 
       await this.currentItem.save();
-      await this.coreService.notifyUdpLogServerParseAddress(this.currentItem);
+      if(!this.localhost) await this.coreService.notifyUdpLogServerParseAddress(this.currentItem);
       console.debug(this.currentItem);
       this.coreService.notify({path:this.coreService.urls.URL_CLASS_SERVERINFO, objectId:this.currentItem.id})
       this.reloadItemsEvent.emit();

@@ -9,8 +9,8 @@
 !define PRODUCT_URL "http://www.isapsolution.com"
 !define PATH_OUT "Release"
 !define ARP "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
-!define CMS_MONITOR "CMSConfigMonitor"
-!define CMS_SERVICE "cms30configserver.exe"
+
+
 !define TEMP_FOLDER "$TEMP\${PRODUCT_NAME}"
 
 # define name of installer
@@ -41,12 +41,17 @@ Function ${UN}DoUninstall
 	
 	# first, delete the uninstaller
     Delete "$R1\uninstall.exe"
- 
-   
-	# third, remove services
-	ExecWait '"net" stop "${CMS_SERVICE}"'
-	ExecWait '"sc" delete "${CMS_SERVICE}"'
 
+    SetOutPath $R1\server\src 
+	# third, stop and uninstall app
+	ExecWait 'app_stop.bat'
+	ExecWait 'uninstall.bat'
+
+
+	#4th, Delete PM2 Path
+	EnVar::SetHKLM
+	EnVar::Delete "PM2_HOME"
+	
 	# now delete installed files
 	RMDir /r $R1
 	
@@ -117,15 +122,15 @@ ShowInstDetails show
   !insertmacro MUI_PAGE_COMPONENTS
  
 Section "NodeJs v8.11.3-x64" SEC01
-  ExecWait 'msiexec /i "Prerequisites\node-v8.11.3-x64.msi"'
+  ExecWait 'msiexec /i "$EXEDIR\Prerequisites\node-v8.11.3-x64.msi"'
 SectionEnd 
   
 Section "MongoDb v3.4.9" SEC02
-  ExecWait 'msiexec /i "Prerequisites\mongodb-win32-x86_64-enterprise-windows-64-3.4.9-signed.msi"'
+  ExecWait 'msiexec /i "$EXEDIR\Prerequisites\mongodb-win32-x86_64-enterprise-windows-64-3.4.9-signed.msi"'
 SectionEnd 
 
 Section "MS Visual C++ Redist 2015 x64" SEC03
-  ExecWait Prerequisites\vc_redist.x64.exe
+  ExecWait $EXEDIR\Prerequisites\vc_redist.x64.exe
 SectionEnd 
 
 Section "Stand alone MongoDb service" SEC04
@@ -189,11 +194,7 @@ Section
 	
 	;install services	
 	SetOutPath $INSTDIR\server\src	
-	
-	;refresh path to enable node
-	Call RefreshProcessEnvironmentPath
-	
-	
+		
 	;restore old config	
 	
 	!insertmacro RestoreFile "${TEMP_FOLDER}\server" "parse.config.json" "$INSTDIR\server\src\config"
@@ -201,7 +202,13 @@ Section
 	!insertmacro RestoreFile "${TEMP_FOLDER}\server" "external.config.json" "$INSTDIR\server\src\config"
 	!insertmacro RestoreFile "${TEMP_FOLDER}\web" "parse.config.json" "$INSTDIR\web\dist\config"
 	
-	ExecWait '"install.bat" /s'
+	; Add PM2 to system environment
+	; Set to HKLM
+	EnVar::SetHKLM
+	EnVar::AddValue "PM2_HOME" "$PROFILE\.pm2"	
+		
+	
+	ExecWait 'install.bat'
 	; wait till finish installing service	
 	Sleep 1000	
 	
@@ -213,9 +220,10 @@ Section
 	#install mongo service
 	SetOutPath "$INSTDIR\server\src\mongodb"
 	${If} ${SectionIsSelected} ${SEC04}			
-		ExecWait '"mongo_install.bat" /s'
+		ExecWait '"mongo_install.bat" /s'	
 		;start service
-		ExecWait '"net" start "${CMS_SERVICE}"'
+		SetOutPath "$INSTDIR\server\src"
+		ExecWait 'app_start.bat'
 	${Else}		
 		ExecWait '"mongo_install_replica.bat" /s'
 	${EndIf}
@@ -231,90 +239,8 @@ UninstallText "This will uninstall ${PRODUCT_NAME}. Press uninstall to continue.
 Section "uninstall"
   Call un.DoUninstall 
 	#  uninstall mongo db
-	ExecWait 'net stop "MongoDb"'
-	ExecWait 'sc delete "MongoDb"'
+	
+	ExecWait 'net stop mongodb'
+	ExecWait 'sc delete mongodb'
 # uninstaller section end
 SectionEnd
-
-
-
-
-#---------------- section to refresh PATH -----------------#
-
-!include LogicLib.nsh
-!include WinCore.nsh
-!ifndef NSIS_CHAR_SIZE
-    !define NSIS_CHAR_SIZE 1
-    !define SYSTYP_PTR i
-!else
-    !define SYSTYP_PTR p
-!endif
-!ifndef ERROR_MORE_DATA
-    !define ERROR_MORE_DATA 234
-!endif
-/*!ifndef KEY_READ
-    !define KEY_READ 0x20019
-!endif*/
-
-Function RegReadExpandStringAlloc
-    System::Store S
-    Pop $R2 ; reg value
-    Pop $R3 ; reg path
-    Pop $R4 ; reg hkey
-    System::Alloc 1 ; mem
-    StrCpy $3 0 ; size
-
-    loop:
-        System::Call 'SHLWAPI::SHGetValue(${SYSTYP_PTR}R4,tR3,tR2,i0,${SYSTYP_PTR}sr2,*ir3r3)i.r0' ; NOTE: Requires SHLWAPI 4.70 (IE 3.01+ / Win95OSR2+)
-        ${If} $0 = 0
-            Push $2
-            Push $0
-        ${Else}
-            System::Free $2
-            ${If} $0 = ${ERROR_MORE_DATA}
-                IntOp $3 $3 + ${NSIS_CHAR_SIZE} ; Make sure there is room for SHGetValue to \0 terminate
-                System::Alloc $3
-                Goto loop
-            ${Else}
-                Push $0
-            ${EndIf}
-        ${EndIf}
-    System::Store L
-FunctionEnd
-
-Function RefreshProcessEnvironmentPath
-    System::Store S
-    Push ${HKEY_CURRENT_USER}
-    Push "Environment"
-    Push "Path"
-    Call RegReadExpandStringAlloc
-    Pop $0
-
-    ${IfThen} $0 <> 0 ${|} System::Call *(i0)${SYSTYP_PTR}.s ${|}
-    Pop $1
-    Push ${HKEY_LOCAL_MACHINE}
-    Push "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
-    Push "Path"
-    Call RegReadExpandStringAlloc
-    Pop $0
-
-    ${IfThen} $0 <> 0 ${|} System::Call *(i0)${SYSTYP_PTR}.s ${|}
-    Pop $2
-    System::Call 'KERNEL32::lstrlen(t)(${SYSTYP_PTR}r1)i.R1'
-    System::Call 'KERNEL32::lstrlen(t)(${SYSTYP_PTR}r2)i.R2'
-    System::Call '*(&t$R2 "",&t$R1 "",i)${SYSTYP_PTR}.r0' ; The i is 4 bytes, enough for a ';' separator and a '\0' terminator (Unicode)
-    StrCpy $3 ""
-
-    ${If} $R1 <> 0
-    ${AndIf} $R2 <> 0
-        StrCpy $3 ";"
-    ${EndIf}
-
-    System::Call 'USER32::wsprintf(${SYSTYP_PTR}r0,t"%s%s%s",${SYSTYP_PTR}r2,tr3,${SYSTYP_PTR}r1)?c'
-    System::Free $1
-    System::Free $2
-    System::Call 'KERNEL32::SetEnvironmentVariable(t"PATH",${SYSTYP_PTR}r0)'
-    System::Free $0
-    System::Store L
-FunctionEnd
-

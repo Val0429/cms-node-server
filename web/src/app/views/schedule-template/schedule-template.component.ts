@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { CoreService } from 'app/service/core.service';
 import { ParseService } from 'app/service/parse.service';
 import { RecordScheduleTemplate, EventScheduleTemplate, ServerInfo, RecordPath } from 'app/model/core';
@@ -27,7 +27,7 @@ export class ScheduleTemplateComponent implements OnInit {
   flag = {
     load: false
   };
-
+@ViewChild('modalWindow') modalWindow;
   get getNotifyPath() {
     switch (this.templateSetupMode) {
       case 1: return this.coreService.urls.URL_CLASS_RECORDSCHEDULETEMPLATE;
@@ -95,6 +95,7 @@ export class ScheduleTemplateComponent implements OnInit {
 
   /** User點擊新增任一種Template */
   createNewTemplate() {
+    this.currentEditTemplate = undefined;
     let newObj: Parse.Object;
     switch (this.templateSetupMode) {
       case 1: newObj = this.getNewRecordScheduleTemplate(); break;
@@ -102,6 +103,7 @@ export class ScheduleTemplateComponent implements OnInit {
     }
     if (newObj) {
       this.currentEditTemplate = newObj;
+      this.modalWindow.show();
     }
   }
 
@@ -109,7 +111,7 @@ export class ScheduleTemplateComponent implements OnInit {
   getNewRecordScheduleTemplate() {
     if (!this.defaultRecordPath) {
       alert('Please setup Record Path in Storage page before create Record Schedule Template');
-      return undefined;
+      return;
     }
     return new RecordScheduleTemplate({
       Name: 'New Template',

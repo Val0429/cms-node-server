@@ -17,6 +17,7 @@ export class ServerComponent implements OnInit {
     currentItem: ServerInfo;
     checkedAll: boolean;
     anyChecked: boolean;
+    localhost: boolean;
     constructor(private coreService: CoreService, private parseService: ParseService, private cryptoService:CryptoService) { }
     serverTypes:ServerType[]=[
       {Type:"SmartMediaServer", DisplayName:"Smart Media Server", DefaultPort:9966, HasStorage:false},
@@ -28,6 +29,7 @@ export class ServerComponent implements OnInit {
     ];
     async ngOnInit() {
         await this.reloadItems();
+        this.localhost = window.location.hostname=="localhost"||window.location.hostname=="127.0.0.1";
     }
     async deleteItems(){
         if(!confirm("Are you sure?"))return;

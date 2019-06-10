@@ -1,0 +1,1 @@
+npx pm2 start app.js -i max --name cms3configtool

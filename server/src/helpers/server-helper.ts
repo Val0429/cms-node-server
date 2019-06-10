@@ -44,12 +44,12 @@ export class ServerHelper {
 
     runServer() {
             
-        if (cluster.isMaster&&this.parseConfig.USE_MULTI_THREADS===true) {
-            for (var i = 0; i < numCPUs; i++) {
-                cluster.fork();
-            }
-        }
-        else {
+        // if (cluster.isMaster&&this.parseConfig.USE_MULTI_THREADS===true) {
+        //     for (var i = 0; i < numCPUs; i++) {
+        //         cluster.fork();
+        //     }
+        // }
+        // else {
             this.httpServer.listen(this.parseConfig.PORT, () =>
                 console.log(`Works served at port ${this.parseConfig.PORT}.`));
 
@@ -57,6 +57,6 @@ export class ServerHelper {
                 this.httpServerSSL.listen(this.parseConfig.SSL_PORT, () =>
                     console.log(`Works served at port ${this.parseConfig.SSL_PORT}.`));
             }
-        }
+        //}
     }
 }

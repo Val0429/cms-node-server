@@ -1,7 +1,9 @@
 <section class="widget">
     <header>
-      <legend>
-        <strong>Server List</strong>
+      <legend>        
+        <div><strong>Server List</strong></div>
+        <div><span *ngIf="localhost" style="color:red">Accessing config tool from localhost address will not send parse configuration to UDP Log Server</span>
+        </div>
       </legend>
       <div class="float-right">
         <i *ngIf="flag.busy" class="fa fa-refresh fa-spin fa-fw" style="font-size: 15px;"></i>                
@@ -50,7 +52,7 @@
           <h4 class="modal-title text-center fw-bold">Server Info</h4>
         </div>
         <div class="modal-body" style="max-height: 500px;overflow-x: hidden;overflow-y: auto;">
-          <app-server-info-editor [flag]="flag" [currentItem]="currentItem" [listRecordPaths]="recordPaths" (closeEvent)="modalWindow.hide()" [serverTypes]="serverTypes"
+          <app-server-info-editor [localhost]="localhost" [flag]="flag" [currentItem]="currentItem" [listRecordPaths]="recordPaths" (closeEvent)="modalWindow.hide()" [serverTypes]="serverTypes"
             (reloadItemsEvent)="reloadItems()"></app-server-info-editor>
         </div>
       </div>

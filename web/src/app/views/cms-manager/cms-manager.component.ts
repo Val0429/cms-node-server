@@ -19,9 +19,11 @@ export class CmsManagerComponent implements OnInit {
     { name: 'CMS-M-002', virtualIP: '192.168.1.1', ip: '192.168.1.3', port: '80', status: 'Backup' },
   ];
   isSaving: boolean;
+  localhost:boolean;
   constructor(private coreService: CoreService, private parseService: ParseService) { }
 
   async ngOnInit() {
+    this.localhost = window.location.hostname=="localhost"||window.location.hostname=="127.0.0.1";
     this.cmsStatus={isActive:false};
     await this.reloadData();
   }
@@ -66,6 +68,7 @@ export class CmsManagerComponent implements OnInit {
   }
   private async updateParseServerLocation() {
     try{
+      if(this.localhost)return;
       await this.coreService.notifyParseAddress(window.location.hostname, Number.parseInt(window.location.port));    
       await this.coreService.notifyUdpLogServerParseAddress(this.cmsManager);
     }catch(err){      
