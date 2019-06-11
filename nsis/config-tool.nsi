@@ -47,10 +47,6 @@ Function ${UN}DoUninstall
 	ExecWait 'app_stop.bat'
 	ExecWait 'uninstall.bat'
 
-
-	#4th, Delete PM2 Path
-	EnVar::SetHKLM
-	EnVar::Delete "PM2_HOME"
 	
 	# now delete installed files
 	RMDir /r $R1
@@ -121,17 +117,6 @@ ShowInstDetails show
   !insertmacro MUI_PAGE_LICENSE "License.txt"
   !insertmacro MUI_PAGE_COMPONENTS
  
-Section "NodeJs v8.11.3-x64" SEC01
-  ExecWait 'msiexec /i "$EXEDIR\Prerequisites\node-v8.11.3-x64.msi"'
-SectionEnd 
-  
-Section "MongoDb v3.4.9" SEC02
-  ExecWait 'msiexec /i "$EXEDIR\Prerequisites\mongodb-win32-x86_64-enterprise-windows-64-3.4.9-signed.msi"'
-SectionEnd 
-
-Section "MS Visual C++ Redist 2015 x64" SEC03
-  ExecWait $EXEDIR\Prerequisites\vc_redist.x64.exe
-SectionEnd 
 
 Section "Stand alone MongoDb service" SEC04
 		
@@ -204,8 +189,16 @@ Section
 	
 	; Add PM2 to system environment
 	; Set to HKLM
+	; Check for a 'PM2_HOME' variable
 	EnVar::SetHKLM
-	EnVar::AddValue "PM2_HOME" "$PROFILE\.pm2"	
+	EnVar::Check "PM2_HOME" "NULL"
+	Pop $0
+	
+  ${If} $0 != "0"
+		DetailPrint "set PM2_HOME to $PROFILE\.pm2"
+		EnVar::AddValue "PM2_HOME" "$PROFILE\.pm2"	
+  ${EndIf}
+	
 		
 	
 	ExecWait 'install.bat'
@@ -238,9 +231,17 @@ UninstallText "This will uninstall ${PRODUCT_NAME}. Press uninstall to continue.
 # uninstaller section start
 Section "uninstall"
   Call un.DoUninstall 
-	#  uninstall mongo db
-	
+  
+	#4th, Delete PM2 Path
+	EnVar::SetHKLM
+	EnVar::Delete "PM2_HOME"
+  
+	#  uninstall mongo db	
 	ExecWait 'net stop mongodb'
 	ExecWait 'sc delete mongodb'
+	
+	#reboot to clean up path
+	MessageBox MB_YESNO|MB_ICONQUESTION "Do you wish to reboot the system now?" IDNO +2
+	Reboot
 # uninstaller section end
 SectionEnd
