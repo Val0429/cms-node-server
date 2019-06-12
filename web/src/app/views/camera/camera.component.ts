@@ -78,6 +78,7 @@ export class CameraComponent implements OnInit {
       .then(num => {
         console.debug("num 00171", num);
         this.availableLicense = environment.production ? num : 50000; 
+        console.debug(environment);
       })).toPromise();
     }catch(err){
       console.error("unable to get license", err); 

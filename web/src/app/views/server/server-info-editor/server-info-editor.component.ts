@@ -5,6 +5,7 @@ import { CryptoService } from 'app/service/crypto.service';
 import { IServerInfo } from 'lib/domain/core';
 import { ServerType } from '../server.component';
 import { RecordPathDisplay } from 'app/views/storage/record.path.component';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-server-info-editor',
@@ -98,9 +99,10 @@ export class ServerInfoEditorComponent implements OnInit,OnChanges {
         delete(this.currentItem.RecordPath);
       }
       this.currentItem.TempPath=this.editItem.TempPath;          
-
+      let port=Number.parseInt(window.location.port);
+      if(!environment.production)port=3000;
       await this.currentItem.save();
-      if(!this.localhost) await this.coreService.notifyUdpLogServerParseAddress(this.currentItem);
+      if(!this.localhost) await this.coreService.notifyUdpLogServerParseAddress(this.currentItem,window.location.hostname, port);
       console.debug(this.currentItem);
       this.coreService.notify({path:this.coreService.urls.URL_CLASS_SERVERINFO, objectId:this.currentItem.id})
       this.reloadItemsEvent.emit();

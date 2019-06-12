@@ -13,7 +13,7 @@ import ArrayHelper from 'app/helper/array.helper';
 })
 export class TempPathComponent implements OnInit {
   serverConfig: Server;
-  serverInfo:ServerInfo;
+  @Input()serverInfo:ServerInfo;
   mediaDiskspace: IMediaDiskspace[];
   portOptions = [
     '80', '82', '7777', '8080', '8088'
@@ -34,8 +34,7 @@ export class TempPathComponent implements OnInit {
     
     try{
       Observable.combineLatest(
-        this.reloadServerConfig(),
-        this.reloadServerInfo()      
+        this.reloadServerConfig()
       ).subscribe();
       console.debug(this.cmsStatus.isActive);
       await this.reloadMediaDiskspace();
@@ -46,15 +45,7 @@ export class TempPathComponent implements OnInit {
       this.cmsStatus.isActive=false;
     }
   }
-  reloadServerInfo() {
-    return Observable.fromPromise(this.parseService.getData({
-      type: ServerInfo,
-      filter:query => query.contains("Type", "CMSManager")
-    })).map(serverInfo => {
-      this.serverInfo = serverInfo;
-      console.debug("this.serverInfo", this.serverInfo);
-    });
-  }
+  
   reloadServerConfig() {
     return Observable.fromPromise(this.parseService.getData({
       type: Server
@@ -80,21 +71,7 @@ export class TempPathComponent implements OnInit {
       return;
     }
     this.flag.save = true;
-    const saveServer$ = Observable.fromPromise(this.serverConfig.save())
-      .map(result => this.coreService.notifyWithParseResult({
-        parseResult: [result], path: this.coreService.urls.URL_CLASS_SERVER
-      }));
-
-
-
-    const saveServerInfo$ = Observable.fromPromise(this.serverInfo.save())
-      .map(result => this.coreService.notifyWithParseResult({
-        parseResult: [result], path: this.coreService.urls.URL_CLASS_SERVER
-      }));
-
-    saveServerInfo$
-      .toPromise()
-      .catch(alert)
+    const saveServer$ = Observable.fromPromise(this.serverConfig.save());
 
     saveServer$
       //.map(() => alert('Update Success'))

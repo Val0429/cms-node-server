@@ -115,10 +115,10 @@ export class CoreService {
           .timeout(timeout || 10000).toPromise();
     return response.json();
   }
+  
+  async notifyUdpLogServerParseAddress(serverInfo:ServerInfo, host:string, port:number, timeout?:number) {
 
-  async notifyUdpLogServerParseAddress(serverInfo:ServerInfo, timeout?:number) {
-
-    const body = {host:window.location.hostname, port:Number.parseInt(window.location.port), source:serverInfo.Name, sourceAddress:serverInfo.Domain};
+    const body = {host, port, source:serverInfo.Name, sourceAddress:serverInfo.Domain};
     
     let url=Parse.serverURL + this.urls.MEDIA_PROXY_URL + `/udp`;
     console.debug("url", url, "body", body);
@@ -143,7 +143,16 @@ export class CoreService {
       //.catch(err => Observable.throw(new Error(err.message)))
       .map((response: Response) => response.json());
   }
-
+  async getVersion(host?:string, port?:number) {
+    const options = new RequestOptions({ headers: this.parseHeaders });
+    let url = Parse.serverURL + "/proxy/version";
+    if(host || port) url+=`?host=${host}&port=${port}`;
+    
+    return this.http.get(url, options)
+      .timeout(3000)
+      //.catch(err => Observable.throw(new Error(err.message)))
+      .map((response: Response) => response.json()).toPromise();
+  }
   /** 新增batch request */
   addBatch(args: IBatchRequest) {
     // 修改時內容不可有建立與修改時間
@@ -212,9 +221,9 @@ export class CoreService {
         
         const body = Object.assign([], this.notifyList);        
         this.notifyList = [];
-        setTimeout(() => { // 避免更新後notify速度太快導致讀到舊資料, 延遲1秒notify
+        setTimeout(async() => { // 避免更新後notify速度太快導致讀到舊資料, 延遲1秒notify
           try{
-          this.proxyMediaServer({
+          await this.proxyMediaServer({
             method: 'POST',
             path: this.urls.URL_MEDIA_NOTIFY,
             body: {
