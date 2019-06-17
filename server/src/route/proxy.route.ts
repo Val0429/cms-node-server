@@ -19,18 +19,15 @@ export const ProxyRoute: IRouteMap = {
     path: 'proxy',
     router: Router().use(bodyParser.json())
         .get('/version', async (req, res) => { 
-            try{                
+            try{
                 // 先取得MediaServer的連線URL再轉發
                 let serverInfo = await restFulService.getFirstData("ServerInfo", {"Type":"CMSManager"});
                 
-                let port = serverInfo.Port;                
+                let port = req.query["port"] || serverInfo.Port;                
                 let protocol = "http";
+                let host = req.query["host"] || serverInfo.Domain;
                 
-                if(req.secure && serverInfo.SSLPort){
-                    port= serverInfo.SSLPort;
-                    protocol="https";
-                } 
-                const mediaUrl = `${protocol}://${serverInfo.Domain}:${port}`;
+                const mediaUrl = `${protocol}://${host}:${port}`;
 
                 const path = mediaUrl + "/cgi-bin/versioninfo";
 
