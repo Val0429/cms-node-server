@@ -1,1 +1,1 @@
-"C:/Program Files/MongoDB/Server/3.4/bin/mongodump.exe" -d CMS3 --archive=backup.gz --gzip
+"%MONGODB_HOME%\mongodump" -d CMS3 --archive=backup.gz --gzip

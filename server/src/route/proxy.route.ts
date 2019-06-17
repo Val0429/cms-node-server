@@ -18,7 +18,37 @@ const restFulService = RestFulService.instance;
 export const ProxyRoute: IRouteMap = {
     path: 'proxy',
     router: Router().use(bodyParser.json())
-        .get('/test', (req, res) => { res.send('Proxy Test') })
+        .get('/version', async (req, res) => { 
+            try{
+                // 先取得MediaServer的連線URL再轉發
+                let serverInfo = await restFulService.getFirstData("ServerInfo", {"Type":"CMSManager"});
+                
+                let port = req.query["port"] || serverInfo.Port;                
+                let protocol = "http";
+                let host = req.query["host"] || serverInfo.Domain;
+                
+                const mediaUrl = `${protocol}://${host}:${port}`;
+
+                const path = mediaUrl + "/cgi-bin/versioninfo";
+
+                console.log('proxy path: ', path);
+
+                const options = {
+                    uri: path,
+                    timeout: 0, 
+                    method: 'GET'
+                };
+            
+            
+                return await request(options)
+                    .then(data => convertToJsonRes(data, res))
+                    .catch(err=>logHelper.writeLog({ type: 'version', msg: err.message }));
+            }catch(err){
+                logHelper.writeLog({ type: 'Proxy', msg: err.message });                
+                res.status(500);
+                res.json({ type: 'Proxy', msg: err.message });
+            }
+         })
         .put('/udp', (req, res)=> {            
             let payload = {
                 "min_level":"debug",
@@ -125,7 +155,8 @@ export const ProxyRoute: IRouteMap = {
             
             
                 return await request(options)
-                    .then(data => convertToJsonRes(data, res));
+                    .then(data => convertToJsonRes(data, res))
+                    .catch(err=>logHelper.writeLog({ type: 'Proxy', msg: err.message }));
             }catch(err){
                 logHelper.writeLog({ type: 'Proxy', msg: err.message });                
                 res.status(500);

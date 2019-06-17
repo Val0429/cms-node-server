@@ -1,12 +1,12 @@
-if not exist "C:/Program Files/MongoDB/log" mkdir "C:/Program Files/MongoDB/log"
+if not exist "%ProgramW6432%/MongoDB/log" mkdir "%ProgramW6432%/MongoDB/log"
 cd "%~dp0mongodb"
-if not exist "C:/Program Files/MongoDB/data" (
-    mkdir "C:/Program Files/MongoDB/data"    
-    "C:/Program Files/MongoDB/Server/3.4/bin/mongod.exe" --dbpath="C:\Program Files\MongoDB\data" --logpath="C:\Program Files\MongoDB\log\log" --wiredTigerCacheSizeGB 5 --install
+if not exist "%ProgramW6432%/MongoDB/data" (
+    mkdir "%ProgramW6432%/MongoDB/data"    
+    "%MONGODB_HOME%\mongod" --dbpath="%ProgramW6432%\MongoDB\data" --logpath="%ProgramW6432%\MongoDB\log\log" --wiredTigerCacheSizeGB 5 --install
     net start "MongoDB"
     call "mongo_restore.bat"
 ) else (
-    "C:/Program Files/MongoDB/Server/3.4/bin/mongod.exe" --dbpath="C:\Program Files\MongoDB\data" --logpath="C:\Program Files\MongoDB\log\log" --wiredTigerCacheSizeGB 5 --install
+    "%MONGODB_HOME%\mongod" --dbpath="%ProgramW6432%\MongoDB\data" --logpath="%ProgramW6432%\MongoDB\log\log" --wiredTigerCacheSizeGB 5 --install
     net start "MongoDB"
 )
 

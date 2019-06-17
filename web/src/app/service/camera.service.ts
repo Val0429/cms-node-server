@@ -19,7 +19,7 @@ export class CameraService {
       let result = response.json();
       return result;
     }catch(err){
-      console.log(err);
+      console.error(err);
       return [];
     }
   }

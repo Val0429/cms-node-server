@@ -1,1 +1,1 @@
-"C:/Program Files/MongoDB/Server/3.4/bin/mongorestore.exe" --drop --archive=backup.gz --gzip --db CMS3
+"%MONGODB_HOME%\mongorestore" --drop --archive=backup.gz --gzip --db CMS3

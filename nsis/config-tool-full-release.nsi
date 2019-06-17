@@ -1,7 +1,7 @@
 !include "MUI2.nsh"
 !define PRODUCT_NAME "CMS Config Tool"
 !define PRODUCT_VERSION "3.0.0"
-!define MONGO "mongodb-win32-x86_64-enterprise-windows-64-3.4.9-signed.msi"
+!define MONGO "mongodb-win32-x86_64-enterprise-windows-64-3.6.3.exe"
 !define NODE "node-v8.11.3-x64.msi"
 !define VCREDIST "vc_redist.x64.exe"
 !define OUTPUT_NAME "config-tool-setup"  
@@ -33,13 +33,13 @@ Section "NodeJs 8.11.3-x64" SEC01
 
 SectionEnd 
   
-Section "MongoDb v3.4.9" SEC02
+Section "MongoDb v3.6.3" SEC02
   
 SectionEnd 
 
-Section "MS Visual C++ Redist 2015 x64" SEC03
+;Section "MS Visual C++ Redist 2015 x64" SEC03
   
-SectionEnd 
+;SectionEnd 
 
   
   ;!insertmacro MUI_PAGE_DIRECTORY
@@ -76,13 +76,13 @@ Section
 	
 	${If} ${SectionIsSelected} ${SEC02}	
 		File "Prerequisites\${MONGO}"
-		ExecWait 'msiexec /i "${MONGO}"'
+		ExecWait "${MONGO}"
 	${EndIf}
 	
-	${If} ${SectionIsSelected} ${SEC03}	
-		File "Prerequisites\${VCREDIST}"
-		ExecWait "${VCREDIST}"
-	${EndIf}
+	;${If} ${SectionIsSelected} ${SEC03}	
+	;	File "Prerequisites\${VCREDIST}"
+	;	ExecWait "${VCREDIST}"
+	;${EndIf}
 
 	;delete Prerequisites
 	RMDir /r $INSTDIR\Prerequisites

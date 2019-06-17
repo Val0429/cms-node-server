@@ -48,7 +48,7 @@
 
       </div>
     </section>
-    <app-nvr-event-type-list *ngIf="currentNVR && currentNVR.Id=='1'" [currentNVR]="currentNVR" [currentEventHandler]="currentNvrEventHandler" (reloadCallback)="fetchNvrAndDevice()"></app-nvr-event-type-list>
+    <!-- <app-nvr-event-type-list *ngIf="currentNVR && currentNVR.Id=='1'" [currentNVR]="currentNVR" [currentEventHandler]="currentNvrEventHandler" (reloadCallback)="fetchNvrAndDevice()"></app-nvr-event-type-list> -->
   </div>
   <div class="col-lg-6">
     <app-event-type-list *ngIf="currentDevice" [currentNVR]="currentNVR" [currentDevice]="currentDevice" [currentEventHandler]="currentEventHandler" (reloadCallback)="fetchNvrAndDevice()"></app-event-type-list>
