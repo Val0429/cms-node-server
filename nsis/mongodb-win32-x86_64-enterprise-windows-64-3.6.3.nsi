@@ -32,10 +32,10 @@ Function ${UN}DoUninstall
     Delete "$R1\uninstall.exe"
  
     # stop service
-	ExecWait "net stop MongoDB"
+	;ExecWait "net stop MongoDB"
 	
 	# delete service
-	ExecWait "sc delete MongoDB"
+	;ExecWait "sc delete MongoDB"
 	
 	# now delete installed files
 	RMDir /r $R1
@@ -54,9 +54,11 @@ FunctionEnd
 
 	
 Function .onInit
- 
   ReadRegStr $R0 HKLM "${ARP}" "UninstallString"
   StrCmp $R0 "" done
+ 
+  ReadRegStr $R1 HKLM "${ARP}" "DisplayVersion"
+  StrCmp $R1 "${PRODUCT_VERSION}" abort
  
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
   "${PRODUCT_NAME} is already installed. $\n$\nClick `OK` to remove the \
@@ -68,14 +70,20 @@ Function .onInit
 uninst:
   ClearErrors
   Call DoUninstall
- 
+  
+  WriteRegStr HKLM "Software\${PRODUCT_NAME}" "Updated" "yes"
+  
   IfErrors no_remove_uninstaller done
     ;You can either use Delete /REBOOTOK in the uninstaller or add some code
     ;here to remove the uninstaller. Use a registry key to check
     ;whether the user has chosen to uninstall. If you are using an uninstaller
     ;components page, make sure all sections are uninstalled.
   no_remove_uninstaller:
- 
+
+abort:
+  MessageBox MB_OK|MB_ICONEXCLAMATION "${PRODUCT_NAME} ${PRODUCT_VERSION} is already installed. Setup will not continue."  
+  Abort 
+  
 done:
  
 FunctionEnd
@@ -96,20 +104,6 @@ ShowInstDetails show
 ;--------------------------------
 ;Pages
 
-  ;!insertmacro MUI_PAGE_LICENSE "License.txt"
-  ;!insertmacro MUI_PAGE_COMPONENTS
- 
-;Section ".NET Framework v4.6.1" SEC01
-;  ExecWait Prerequisites\NDP461-KB3102436-x86-x64-AllOS-ENU.exe
-;SectionEnd 
-;Section "MS Visual C++ Redist 2010 x86" SEC02
-;  ExecWait Prerequisites\vcredist_x86.exe
-;SectionEnd 
-;Section "MS Visual C++ Redist 2010 x64" SEC03
-;  ExecWait Prerequisites\vcredist_x64.exe
-;SectionEnd 
-
-;SectionEnd 
   
   !insertmacro MUI_PAGE_DIRECTORY
   !insertmacro MUI_PAGE_INSTFILES
@@ -135,10 +129,15 @@ Section
  	
 	# specify file to go in output path	
 	SetOutPath "$INSTDIR\Server\3.6"		
-	File .\vcredist_x64.exe
-	ExecWait "$INSTDIR\Server\3.6\vcredist_x64.exe"
-	File /r /x *.nsi .\3.6\*
 	
+	
+	ReadRegStr $R1 HKLM "Software\${PRODUCT_NAME}" "Updated"
+	StrCmp $R1 "" 0 +3
+	File .\vcredist_x64.exe	
+	ExecWait "$INSTDIR\Server\3.6\vcredist_x64.exe"	
+	
+	File /r /x *.nsi .\3.6\*
+		
 	EnVar::SetHKLM
 	EnVar::Check "${MONGODB_HOME}" "NULL"
 	Pop $0

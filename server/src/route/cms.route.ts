@@ -277,8 +277,8 @@ export const CmsRoute: IRouteMap = {
 
             const databaseName = 'CMS3';
             const backupFileName = 'sync.gz';
-            let dumpCmd = `"C:/Program Files/MongoDB/Server/3.4/bin/mongodump.exe" --host=${req.body.sourceUrl} --archive=${backupFileName} --gzip --db ${databaseName}`;
-            const restoreCmd = `"C:/Program Files/MongoDB/Server/3.4/bin/mongorestore.exe" --drop --archive=${backupFileName} --gzip --db ${databaseName}`;
+            let dumpCmd = `"%MONGODB_HOME%/mongodump.exe" --host=${req.body.sourceUrl} --archive=${backupFileName} --gzip --db ${databaseName}`;
+            const restoreCmd = `"%MONGODB_HOME%/mongorestore.exe" --drop --archive=${backupFileName} --gzip --db ${databaseName}`;
 
             if (req.body.exclude) {
                 req.body.exclude.forEach(collectionName => {
