@@ -3,7 +3,7 @@
   "SSL_PORT": 3443,
   "IS_HTTPS": true,
   "HOST": "localhost",
-  "DATABASE_URI": "mongodb://localhost:27017/CMS3",
+  "DATABASE_URI": "mongodb://localhost:27017/CMS3?replicaSet=rsCMS3",
   "APPLICATION_ID": "CMS3-Parse-API",
   "JAVASCRIPT_KEY": "JAVASCRIPT_KEY",
   "MASTER_KEY": "MASTER_KEY",

@@ -299,38 +299,7 @@ export const CmsRoute: IRouteMap = {
                 res.json(resultMsg);
             }
 
-            // mongodb.MongoClient.connect(configHelper.parseConfig.DATABASE_URI, function (err, db) {
-            //     if (err) {
-            //         res.json(err);
-            //         return;
-            //     }
-
-            //     // const tenMinBefore = moment(new Date()).add(-10, 'm');
-            //     // const mongoCommand = { copydb: 1, fromhost: req.body.sourceUrl, fromdb: "CMS3", todb: "CMS3" };
-            //     // const mongoCommand = {
-            //     //     cloneCollection: "CMS3.nvr",
-            //     //     from: req.body.sourceUrl
-            //     // };
-            //     // const admin = db.admin();
-
-            //     // db.getSiblingDB("CMS3").runCommand({
-            //     //     cloneCollection: "CMS3.nvr",
-            //     //     from: req.body.sourceUrl,
-            //     //     query: { 'updatedAt': { $gte: tenMinBefore } }
-            //     // });
-
-            //     // db.close();
-            //     // res.send('Sync Test')
-
-            //     // admin.command(mongoCommand, function (commandErr, data) {
-            //     //     if (!commandErr) {
-            //     //         res.json(`Sync data from ${req.body.sourceUrl} success at ${moment(new Date()).format('YYYY-MM-DD HH:mm:ss')}`);
-            //     //     } else {
-            //     //         res.json(`Sync data from ${req.body.sourceUrl} failed at ${moment(new Date()).format('YYYY-MM-DD HH:mm:ss')}, message:${commandErr.errmsg}`);
-            //     //     }
-            //     //     db.close();
-            //     // });
-            // });
+            
         }),
     children: []
 }

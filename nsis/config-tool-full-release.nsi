@@ -3,7 +3,7 @@
 !define PRODUCT_VERSION "3.0.0"
 !define MONGO "mongodb-win32-x86_64-enterprise-windows-64-3.6.3.exe"
 !define NODE "node-v8.11.3-x64.msi"
-!define VCREDIST "vc_redist.x64.exe"
+;!define VCREDIST "vc_redist.x64.exe"
 !define OUTPUT_NAME "config-tool-setup"  
 !define PM2_HOME "$PROGRAMFILES\CMS 3.0\Config\pm2"
 
@@ -85,7 +85,7 @@ Section
 	;${EndIf}
 
 	;delete Prerequisites
-	RMDir /r $INSTDIR\Prerequisites
+	;RMDir /r $INSTDIR\Prerequisites
 	
 	SetOutPath "${PM2_HOME}"
 	

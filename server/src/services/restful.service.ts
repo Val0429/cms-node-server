@@ -14,7 +14,9 @@ export class RestFulService {
     private static _instance: RestFulService;
 
     constructor() {     
-        this.db = this.mongoist(`${this.config.parseConfig.DATABASE_URI}`);  
+        let dbUri = this.config.parseConfig.DATABASE_URI.indexOf("?replicaSet")>=0?this.config.parseConfig.DATABASE_URI:this.config.parseConfig.DATABASE_URI+"?replicaSet=rsCMS3";
+        console.log("dbUri mongoist", dbUri);
+        this.db = this.mongoist(dbUri);  
     }
     async getById(req:Request, res:Response){       
         try{
@@ -187,13 +189,13 @@ export class RestFulService {
             let data = req.body;
             for(let item of data){
                 item._id= this.getNewObjectId();
-                this.preProcessJson(item);
+                this.preProcessJson(item, false);
                 item._created_at=new Date();
                 item._updated_at=new Date();
             }
             let result = await this.insertMany(className, data);
             for(let item of result){
-                this.postProcessJson(item);
+                this.postProcessJson(item, false);
             }
             res.json(result);
         }
@@ -300,7 +302,7 @@ export class RestFulService {
     }
 
     //make it similar to parse object
-    preProcessJson(data:any){  
+    preProcessJson(data:any, recursive:boolean=true){  
         if(!data)return;      
         let keys = Object.keys(data);
         if(!keys || keys.length<=0)return;
@@ -310,7 +312,7 @@ export class RestFulService {
                 data["_p_"+key]=data[key].className+"$"+data[key].objectId;
                 delete(data[key]);
             }
-            if(data[key] && data[key]!=null && typeof(data[key])==="object") this.preProcessJson(data[key]);
+            if(data[key] && data[key]!=null && typeof(data[key])==="object" && recursive) this.preProcessJson(data[key]);
         }
     }
     maskJson(data:any){   
@@ -341,7 +343,7 @@ export class RestFulService {
         }
     }
     //make it similar to parse object
-    postProcessJson(data:any){
+    postProcessJson(data:any, recursive:boolean=true){
         if(!data)return;
         let pointer="_p_";
         let keys = Object.keys(data);
@@ -368,7 +370,7 @@ export class RestFulService {
                 }
                 delete(data[key]);
             }
-            if(data[key] && data[key]!=null && typeof(data[key])==="object") this.postProcessJson(data[key]);
+            if(data[key] && data[key]!=null && typeof(data[key])==="object" && recursive) this.postProcessJson(data[key]);
         }
     }
     async getFirstData(className:string, where:any, includeRequest?:string, select?:any):Promise<any>{        

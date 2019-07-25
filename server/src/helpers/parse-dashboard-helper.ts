@@ -38,7 +38,7 @@ export class ParseDashboardHelper {
             users: [
                 { user: 'admin', pass: 'iSap2017' }
             ]
-        }, { allowInsecureHTTP: true });
+        }, { allowInsecureHTTP: false });
 
         this.serverHelper.app.use(this.pathConfig.PARSE_DASHBOARD_PATH, this.parseDashboard);
         

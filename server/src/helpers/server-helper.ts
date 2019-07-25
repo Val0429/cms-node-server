@@ -4,8 +4,8 @@ import * as http from 'http';
 import * as https from 'https';
 import * as path from 'path';
 import { ConfigHelper } from './config-helper';
-const cluster = require('cluster');
-const numCPUs = require('os').cpus().length;
+// const cluster = require('cluster');
+// const numCPUs = require('os').cpus().length;
     
     
 export class ServerHelper {

@@ -26,8 +26,10 @@ export class ParseServerHelper {
     }
 
     initParseServer() {
+        let dbUri = this.parseConfig.DATABASE_URI.indexOf("?replicaSet")>=0?this.parseConfig.DATABASE_URI:this.parseConfig.DATABASE_URI+"?replicaSet=rsCMS3";
+        console.log("dbUri", dbUri);
         this.parseServer = new ParseServer({
-            databaseURI: this.parseConfig.DATABASE_URI,
+            databaseURI: dbUri,
             appId: this.parseConfig.APPLICATION_ID,
             masterKey: this.parseConfig.MASTER_KEY,
             fileKey: this.parseConfig.FILE_KEY,
